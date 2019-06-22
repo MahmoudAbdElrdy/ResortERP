@@ -1,0 +1,292 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{C22F69D9-E983-4E6B-AC16-6AD871C0C60C}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SolversTeamERP.Core</RootNamespace>
+    <AssemblyName>SolversTeamERP.Core</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ACCOUNTS_GROUP.cs" />
+    <Compile Include="AssetCompanyDetails.cs" />
+    <Compile Include="AssetOperationDetails.cs" />
+    <Compile Include="AssetDepreciationDetails.cs" />
+    <Compile Include="AssetDepreciationType.cs" />
+    <Compile Include="AssetLifeSpanUnit.cs" />
+    <Compile Include="AssetOperationMaster.cs" />
+    <Compile Include="AssetStatus.cs" />
+    <Compile Include="AssetType.cs" />
+    <Compile Include="AssetMaster.cs" />
+    <Compile Include="AssetGroup.cs" />
+    <Compile Include="AddressPartsSettings.cs" />
+    <Compile Include="Bank.cs" />
+    <Compile Include="BillCaliberTransactions.cs" />
+    <Compile Include="BILL_PAY_TYPES.cs" />
+    <Compile Include="CurrencyCategories.cs" />
+    <Compile Include="DashBoard.cs" />
+    <Compile Include="GlBank.cs" />
+    <Compile Include="GoldWorldPrice.cs" />
+    <Compile Include="HRPSLAcademicDegree.cs" />
+    <Compile Include="HrPslCity.cs" />
+    <Compile Include="HRPSLContactType.cs" />
+    <Compile Include="HrPslCountry.cs" />
+    <Compile Include="HrPslEmployee.cs" />
+    <Compile Include="HRPSLEmployeeAcademicDegree.cs" />
+    <Compile Include="HRPSLEmployeeContacts.cs" />
+    <Compile Include="HRPSLEmployeeExperience.cs" />
+    <Compile Include="HRPSLEmployeeFamilyDetails.cs" />
+    <Compile Include="HrPslEmployeeJobLevel.cs" />
+    <Compile Include="HrPslEmployeeStatus.cs" />
+    <Compile Include="HRPSLEmployeeTrainingCources.cs" />
+    <Compile Include="HrPslJobTitle.cs" />
+    <Compile Include="HrPslMartialStatus.cs" />
+    <Compile Include="HrPslNationality.cs" />
+    <Compile Include="HrPslReligion.cs" />
+    <Compile Include="ItemCaliber.cs" />
+    <Compile Include="CostCalculationType.cs" />
+    <Compile Include="NodeTree.cs" />
+    <Compile Include="Resources.cs" />
+    <Compile Include="ResourcesTranslation.cs" />
+    <Compile Include="TBUDGETACCOUNTS.cs" />
+    <Compile Include="TSTORE.cs" />
+    <Compile Include="TBOXACCOUNTS.cs" />
+    <Compile Include="KEST_OPTION.cs" />
+    <Compile Include="Income_Account_Types.cs" />
+    <Compile Include="Emails.cs" />
+    <Compile Include="ORDERS.cs" />
+    <Compile Include="NotificationType.cs" />
+    <Compile Include="NotificationsView.cs" />
+    <Compile Include="Notification.cs" />
+    <Compile Include="MessageView.cs" />
+    <Compile Include="Message.cs" />
+    <Compile Include="SHORTCUTS.cs" />
+    <Compile Include="SYSTEM_OPTIONS.cs" />
+    <Compile Include="ENTRY_SHOW_OPTIONS.cs" />
+    <Compile Include="BILL_SHOW_OPTIONS.cs" />
+    <Compile Include="ACCOUNTS_TYPES.cs" />
+    <Compile Include="ACCOUNT_DETAILS.cs" />
+    <Compile Include="BILL_DETAILS.cs" />
+    <Compile Include="BILL_EFFECTS.cs" />
+    <Compile Include="BILL_GRID_COLUMNS.cs" />
+    <Compile Include="BILL_MASTER.cs" />
+    <Compile Include="BILL_SETTINGS.cs" />
+    <Compile Include="BILL_OPTIONS.cs" />
+    <Compile Include="BILL_TYPES.cs" />
+    <Compile Include="ACCOUNTS.cs" />
+    <Compile Include="COST_CENTERS.cs" />
+    <Compile Include="COMPANY_STORES_ITEMS_GROUPS.cs" />
+    <Compile Include="ENTRY_DETAILS.cs" />
+    <Compile Include="ENTRY_GRID_COLUMNS.cs" />
+    <Compile Include="ENTRY_MASTER.cs" />
+    <Compile Include="ENTRY_SETTINGS.cs" />
+    <Compile Include="ENTRY_TYPES.cs" />
+    <Compile Include="GetCustomerSupplierData.cs" />
+    <Compile Include="RPT_ITEM_MOTION_VIEW.cs" />
+    <Compile Include="ItemStatus.cs" />
+    <Compile Include="ManufacturingWages.cs" />
+    <Compile Include="UserLogFile.cs" />
+    <Compile Include="UserMenu.cs" />
+    <Compile Include="UserModule.cs" />
+    <Compile Include="UserOperation.cs" />
+    <Compile Include="UserPrivilige.cs" />
+    <Compile Include="UserForm.cs" />
+    <Compile Include="UserGroup.cs" />
+    <Compile Include="SmartSysDataBases_View.cs" />
+    <Compile Include="UID_View.cs" />
+    <Compile Include="Currency.cs" />
+    <Compile Include="CustomerBranches.cs" />
+    <Compile Include="CustomerSon.cs" />
+    <Compile Include="Department.cs" />
+    <Compile Include="EmployeeTypes.cs" />
+    <Compile Include="ITEM_PRICES.cs" />
+    <Compile Include="SELLS_TYPES.cs" />
+    <Compile Include="SysDatabase.cs" />
+    <Compile Include="TelephonCat.cs" />
+    <Compile Include="Telephones.cs" />
+    <Compile Include="TelephoneTypes.cs" />
+    <Compile Include="TPAY_TYPES.cs" />
+    <Compile Include="CUSTOMERS.cs" />
+    <Compile Include="ITEMS_UNITS.cs" />
+    <Compile Include="COMPANY_BRANCHES.cs" />
+    <Compile Include="COMPANY_STORES.cs" />
+    <Compile Include="EMPLOYEES.cs" />
+    <Compile Include="GOVERNORATES.cs" />
+    <Compile Include="ITEMS.cs" />
+    <Compile Include="ITEMS_GROUPS.cs" />
+    <Compile Include="NATIONS.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TOWNS.cs" />
+    <Compile Include="UID.cs" />
+    <Compile Include="UNITS.cs" />
+    <Compile Include="UserPriviligeBranches.cs" />
+    <Compile Include="VILLAGES.cs" />
+    <Compile Include="VM\AccountStatementGoldMonthlyVM.cs" />
+    <Compile Include="VM\AccountStatementGoldVM.cs" />
+    <Compile Include="VM\AccountStatementMonthlyVM.cs" />
+    <Compile Include="VM\AccountStatementVM.cs" />
+    <Compile Include="VM\ACCOUNTS_GROUPVM.cs" />
+    <Compile Include="VM\AddressPartsSettingsVM.cs" />
+    <Compile Include="VM\AssetDepreciationDetailsVM.cs" />
+    <Compile Include="VM\AssetGroupVM.cs" />
+    <Compile Include="VM\AssetMasterVM.cs" />
+    <Compile Include="VM\AssetOperationDetailsVM.cs" />
+    <Compile Include="VM\AssetOperationMasterVM.cs" />
+    <Compile Include="VM\BankVM.cs" />
+    <Compile Include="VM\BillCaliberTransactionsVM.cs" />
+    <Compile Include="VM\EntryPostingSearchVM.cs" />
+    <Compile Include="VM\BillSearch.cs" />
+    <Compile Include="VM\BILL_PAY_TYPESVM.cs" />
+    <Compile Include="VM\CompanyBranchesVM.cs" />
+    <Compile Include="VM\CurrencyCategoriesVM.cs" />
+    <Compile Include="VM\AssetMasterDropDownMenu.cs" />
+    <Compile Include="VM\DropDownMenuOptionsVM.cs" />
+    <Compile Include="VM\EmployeeAssetsVM.cs" />
+    <Compile Include="VM\HrPslEmployeeVM.cs" />
+    <Compile Include="VM\GoldWorldPriceVM.cs" />
+    <Compile Include="VM\DetectionReportTotalVM.cs" />
+    <Compile Include="VM\CostCentersGuidVM.cs" />
+    <Compile Include="VM\StoresGuidVM.cs" />
+    <Compile Include="VM\AccountBalancesReportResultVM.cs" />
+    <Compile Include="VM\BillPostingSearchVM.cs" />
+    <Compile Include="VM\ItemsInventoryReportResultVM.cs" />
+    <Compile Include="VM\AccountBalancesReportSearchVM.cs" />
+    <Compile Include="VM\ItemsInventoryReportSearchVM.cs" />
+    <Compile Include="VM\PurchasingTaxViewVM.cs" />
+    <Compile Include="VM\SalesTaxViewVM.cs" />
+    <Compile Include="VM\ItemCaliberVM.cs" />
+    <Compile Include="VM\CostCalculationTypeVM.cs" />
+    <Compile Include="VM\AccountsGuidVM.cs" />
+    <Compile Include="VM\ItemsGuidVM.cs" />
+    <Compile Include="VM\ResourcesTranslationVM.cs" />
+    <Compile Include="VM\InvoiceMotionViewVM.cs" />
+    <Compile Include="VM\InvoiceMotionSearchModel.cs" />
+    <Compile Include="VM\TBudgetAccountsVM.cs" />
+    <Compile Include="VM\SystemOptionsComplexVM.cs" />
+    <Compile Include="VM\TrialBalanceGoldVM.cs" />
+    <Compile Include="VM\TStoreVM.cs" />
+    <Compile Include="VM\TBoxAccountsVM.cs" />
+    <Compile Include="VM\Kest_OptionVM.cs" />
+    <Compile Include="VM\Income_Account_TypesVM.cs" />
+    <Compile Include="VM\EmailsVM.cs" />
+    <Compile Include="VM\EntryMasterDetails.cs" />
+    <Compile Include="VM\OrdersVM.cs" />
+    <Compile Include="VM\BILL_OPTIONSVM.cs" />
+    <Compile Include="VM\ItemStatusVM.cs" />
+    <Compile Include="VM\ManufacturingWagesVM.cs" />
+    <Compile Include="VM\AssetCompanyDetailsVM.cs" />
+    <Compile Include="VM\UserPriviligeBranchesVM.cs" />
+    <Compile Include="VM\UserPermissionsVM.cs" />
+    <Compile Include="VM\ValidationRegistery.cs" />
+    <Compile Include="VM\Entry_Show_OptionsVM.cs" />
+    <Compile Include="VM\BILL_SHOW_OPTIONSVM.cs" />
+    <Compile Include="VM\Entry_DetailsVM.cs" />
+    <Compile Include="VM\Entry_Grid_ColumnsVM.cs" />
+    <Compile Include="VM\Entry_MasterVM.cs" />
+    <Compile Include="VM\Entry_TypesVM.cs" />
+    <Compile Include="VM\CostCentersVM.cs" />
+    <Compile Include="VM\CompStore_ItmGroupsVM.cs" />
+    <Compile Include="VM\Entry_SettingsVM.cs" />
+    <Compile Include="VM\LoginVM.cs" />
+    <Compile Include="VM\MessageVM.cs" />
+    <Compile Include="VM\MessageViewVM.cs" />
+    <Compile Include="VM\NotificationVM.cs" />
+    <Compile Include="VM\NotificationsViewVM.cs" />
+    <Compile Include="VM\NotificationTypeVM.cs" />
+    <Compile Include="VM\RPT_ITEM_MOTION_VIEW_VM.cs" />
+    <Compile Include="VM\CurrencyVM.cs" />
+    <Compile Include="VM\CustomerBranchesVM.cs" />
+    <Compile Include="VM\CustomerSonVM.cs" />
+    <Compile Include="VM\CustomersVM.cs" />
+    <Compile Include="VM\CustomItemUnitsVM.cs" />
+    <Compile Include="VM\DepartmentVM.cs" />
+    <Compile Include="VM\EmployeeTypesVM.cs" />
+    <Compile Include="VM\ReportOptions.cs" />
+    <Compile Include="VM\SearchingmainItems.cs" />
+    <Compile Include="VM\SearchItem.cs" />
+    <Compile Include="VM\ItemUnitsInsertedDeleted.cs" />
+    <Compile Include="VM\ShortcutsVM.cs" />
+    <Compile Include="VM\SysDatabaseVM.cs" />
+    <Compile Include="VM\System_OptionsVM.cs" />
+    <Compile Include="VM\TelephoneCatVM.cs" />
+    <Compile Include="VM\TelephoneTypesVM.cs" />
+    <Compile Include="VM\TelephoneVM.cs" />
+    <Compile Include="VM\TPAY_TYPESVM.cs" />
+    <Compile Include="VM\AccountTypeVM.cs" />
+    <Compile Include="VM\AccountVM.cs" />
+    <Compile Include="VM\BILL_DETAILSVM.cs" />
+    <Compile Include="VM\BILL_EFFECTSVM.cs" />
+    <Compile Include="VM\BILL_GRID_COLUMNSVM.cs" />
+    <Compile Include="VM\BILL_MASTERVM.cs" />
+    <Compile Include="VM\BILL_SETTINGSVM.cs" />
+    <Compile Include="VM\BILL_TYPESVM.cs" />
+    <Compile Include="VM\CompanyStoresVM.cs" />
+    <Compile Include="VM\COMPANY_BRANCHESVM.cs" />
+    <Compile Include="VM\EMPLOYEEVM.cs" />
+    <Compile Include="VM\GOVERNORATEVM.cs" />
+    <Compile Include="VM\AccountDetailVM.cs" />
+    <Compile Include="VM\ItemsGroupsVM.cs" />
+    <Compile Include="VM\ItemsUnitsVM.cs" />
+    <Compile Include="VM\ITEMSVM.cs" />
+    <Compile Include="VM\NATIONVM.cs" />
+    <Compile Include="VM\SELLS_TYPESVM.cs" />
+    <Compile Include="VM\TOWNVM.cs" />
+    <Compile Include="VM\UNITSVM.cs" />
+    <Compile Include="VM\UserForm.cs" />
+    <Compile Include="VM\UserGroupVM.cs" />
+    <Compile Include="VM\UserMenuVM.cs" />
+    <Compile Include="VM\UserModule.cs" />
+    <Compile Include="VM\UserOperation.cs" />
+    <Compile Include="VM\UserVM.cs" />
+    <Compile Include="VM\UserPriviligeVM.cs" />
+    <Compile Include="VM\VILLAGEVM.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,67 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ResortERP.Core", "ResortERP.Core\ResortERP.Core.csproj", "{C22F69D9-E983-4E6B-AC16-6AD871C0C60C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ResortERP.Repository", "ResortERP.Repository\ResortERP.Repository.csproj", "{446F2AFD-A11F-4049-9B68-25EDCC33CB7C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ResortERP.Service", "ResortERP.Service\ResortERP.Service.csproj", "{56C03CB0-27A5-4C37-A98B-95859AC594F0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ResortERP.Api", "ResortERP.Api\ResortERP.Api.csproj", "{D5527DF6-526E-4BAB-A3D4-EF4845586486}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ResortERP.UI", "ResortERP.UI\ResortERP.UI.csproj", "{EA231536-B6EC-4958-B819-AC3ACD06A185}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C22F69D9-E983-4E6B-AC16-6AD871C0C60C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C22F69D9-E983-4E6B-AC16-6AD871C0C60C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C22F69D9-E983-4E6B-AC16-6AD871C0C60C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C22F69D9-E983-4E6B-AC16-6AD871C0C60C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{446F2AFD-A11F-4049-9B68-25EDCC33CB7C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{446F2AFD-A11F-4049-9B68-25EDCC33CB7C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{446F2AFD-A11F-4049-9B68-25EDCC33CB7C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{446F2AFD-A11F-4049-9B68-25EDCC33CB7C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{56C03CB0-27A5-4C37-A98B-95859AC594F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{56C03CB0-27A5-4C37-A98B-95859AC594F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{56C03CB0-27A5-4C37-A98B-95859AC594F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{56C03CB0-27A5-4C37-A98B-95859AC594F0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D5527DF6-526E-4BAB-A3D4-EF4845586486}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D5527DF6-526E-4BAB-A3D4-EF4845586486}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D5527DF6-526E-4BAB-A3D4-EF4845586486}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D5527DF6-526E-4BAB-A3D4-EF4845586486}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EA231536-B6EC-4958-B819-AC3ACD06A185}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EA231536-B6EC-4958-B819-AC3ACD06A185}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EA231536-B6EC-4958-B819-AC3ACD06A185}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EA231536-B6EC-4958-B819-AC3ACD06A185}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 6
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = http://192.168.75.106:8080/tfs/resorterp
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = ResortERP.Api\\ResortERP.Api.csproj
+		SccProjectName1 = ResortERP.Api
+		SccLocalPath1 = ResortERP.Api
+		SccProjectUniqueName2 = ResortERP.Core\\ResortERP.Core.csproj
+		SccProjectName2 = ResortERP.Core
+		SccLocalPath2 = ResortERP.Core
+		SccProjectUniqueName3 = ResortERP.Repository\\ResortERP.Repository.csproj
+		SccProjectName3 = ResortERP.Repository
+		SccLocalPath3 = ResortERP.Repository
+		SccProjectUniqueName4 = ResortERP.Service\\ResortERP.Service.csproj
+		SccProjectName4 = ResortERP.Service
+		SccLocalPath4 = ResortERP.Service
+		SccProjectUniqueName5 = ResortERP.UI\\ResortERP.UI.csproj
+		SccProjectName5 = ResortERP.UI
+		SccLocalPath5 = ResortERP.UI
+	EndGlobalSection
+EndGlobal

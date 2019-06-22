@@ -1,0 +1,48 @@
+{
+  "name": "angular-multi-step-form",
+  "version": "1.3.0",
+  "description": "An Angular module for creating wizards and multi step forms",
+  "scripts": {
+    "clean": "del dist",
+    "build:cjs": "babel src --out-dir dist/commonjs",
+    "build:umd": "rollup -c rollup.config.js --format umd && rollup -c rollup.config.js --format umd --uglify",
+    "build:iife": "rollup -c rollup.config.js --format iife && rollup -c rollup.config.js --format iife --uglify",
+    "build": "npm run build:cjs && npm run build:umd && npm run build:iife",
+    "clog": "conventional-changelog -p angular -i CHANGELOG.md -w",
+    "test": "karma start karma.config.js --single-run --browsers Firefox",
+    "lint": "eslint src/**/*.js"
+  },
+  "main": "dist/commonjs",
+  "devDependencies": {
+    "babel-eslint": "^6.0.5",
+    "babel-preset-es2015": "^6.9.0",
+    "babel-preset-es2015-rollup": "^1.1.1",
+    "conventional-changelog": "^1.1.0",
+    "coveralls": "^2.11.9",
+    "del": "^2.2.1",
+    "eslint": "^2.13.1",
+    "karma": "~0.13.22",
+    "karma-chrome-launcher": "^1.0.1",
+    "karma-coverage": "~1.0.0",
+    "karma-coveralls": "^1.1.2",
+    "karma-firefox-launcher": "^1.0.0",
+    "karma-jasmine": "~1.0.2",
+    "rollup": "^0.32.0",
+    "rollup-plugin-babel": "^2.5.1",
+    "rollup-plugin-uglify": "^1.0.0",
+    "yargs": "^4.7.1"
+  },
+  "peerDependencies": {
+    "angular": ">=1.3.14"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/troch/angular-multi-step-form.git"
+  },
+  "author": "Thomas Roch",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/troch/angular-multi-step-form/issues"
+  },
+  "homepage": "https://github.com/troch/angular-multi-step-form"
+}

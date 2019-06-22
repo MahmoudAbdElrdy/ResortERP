@@ -1,0 +1,29 @@
+/**
+ * angular-dimmer v1.0
+ *
+ * Copyright (c) 2014 Yuthasak Tanruengsri yuthasak.tanruengsri@googlemail.com
+ * https://github.com/ytanruengsri/angular-dimmer
+ *
+ * License: MIT
+ */
+
+.dimmer {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: #000000;
+    opacity: 0.8;
+    display: none;
+}
+
+.loading {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+}
+
+.center {
+    text-align: center;
+}

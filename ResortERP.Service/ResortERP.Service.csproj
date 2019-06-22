@@ -1,0 +1,309 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{56C03CB0-27A5-4C37-A98B-95859AC594F0}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SolversTeamERP.Service</RootNamespace>
+    <AssemblyName>SolversTeamERP.Service</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AutoMapper, Version=4.1.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.4.1.1\lib\net45\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="CrystalDecisions.CrystalReports.Engine, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
+      <HintPath>..\..\..\Dlls\CrystalDecisions.CrystalReports.Engine.dll</HintPath>
+    </Reference>
+    <Reference Include="CrystalDecisions.ReportSource, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="CrystalDecisions.Shared, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.Crm.Sdk.Proxy, Version=6.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\MicrosoftDynamicsCrm2013Plugin.6.1.1\lib\net40\Microsoft.Crm.Sdk.Proxy.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin, Version=3.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.3.1.0\lib\net45\Microsoft.Owin.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Cors">
+      <HintPath>..\..\EstateRUs\packages\Microsoft.Owin.Cors.3.0.1\lib\net45\Microsoft.Owin.Cors.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Host.HttpListener">
+      <HintPath>..\..\EstateRUs\packages\Microsoft.Owin.Host.HttpListener.2.0.2\lib\net40\Microsoft.Owin.Host.HttpListener.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Host.SystemWeb">
+      <HintPath>..\..\EstateRUs\packages\Microsoft.Owin.Host.SystemWeb.3.0.1\lib\net45\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Hosting">
+      <HintPath>..\..\EstateRUs\packages\Microsoft.Owin.Hosting.2.0.2\lib\net40\Microsoft.Owin.Hosting.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security">
+      <HintPath>..\..\EstateRUs\packages\Microsoft.Owin.Security.3.0.1\lib\net45\Microsoft.Owin.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.OAuth">
+      <HintPath>..\..\EstateRUs\packages\Microsoft.Owin.Security.OAuth.3.0.1\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.ConnectionInfo, Version=12.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.SqlServer.Management.Utility, Version=12.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.SqlServer.Smo, Version=12.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.SqlServer.SmoExtended, Version=12.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.Xrm.Sdk, Version=6.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\MicrosoftDynamicsCrm2013Plugin.6.1.1\lib\net40\Microsoft.Xrm.Sdk.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
+      <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="SimpleInjector, Version=3.3.2.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
+      <HintPath>..\packages\SimpleInjector.3.3.2\lib\net45\SimpleInjector.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.DirectoryServices.AccountManagement" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AsyncHelpers.cs" />
+    <Compile Include="Extensions.cs" />
+    <Compile Include="IServices\IACCOUNTS_GROUPService.cs" />
+    <Compile Include="IServices\IReportsService.cs" />
+    <Compile Include="IServices\IAssetOperationMasterService.cs" />
+    <Compile Include="IServices\IAssetMasterService.cs" />
+    <Compile Include="IServices\IAssetGroupService.cs" />
+    <Compile Include="IServices\IDashBoardService.cs" />
+    <Compile Include="IServices\IAddressPartsSettingsService.cs" />
+    <Compile Include="IServices\IAddressService.cs" />
+    <Compile Include="IServices\IBankService.cs" />
+    <Compile Include="IServices\IBillCaliberTransactionsService.cs" />
+    <Compile Include="IServices\IBillPayTypesService.cs" />
+    <Compile Include="IServices\ICompanyBranchesService.cs" />
+    <Compile Include="IServices\ICurrencyCategoriesService.cs" />
+    <Compile Include="IServices\IGoldWorldPriceService.cs" />
+    <Compile Include="IServices\IItemCaliberService.cs" />
+    <Compile Include="IServices\ICostCalculationTypeService.cs" />
+    <Compile Include="IServices\IResourcesService.cs" />
+    <Compile Include="IServices\IResourcesTranslationService.cs" />
+    <Compile Include="IServices\ITBudgetAccountsService.cs" />
+    <Compile Include="IServices\ITStoreService.cs" />
+    <Compile Include="IServices\ITBoxAccountsService.cs" />
+    <Compile Include="IServices\IIncomeAccountTypesService.cs" />
+    <Compile Include="IServices\IKestOptionService.cs" />
+    <Compile Include="IServices\IOrdersService.cs" />
+    <Compile Include="IServices\IMessageService.cs" />
+    <Compile Include="IServices\INotificationService.cs" />
+    <Compile Include="IServices\INotificationTypeService.cs" />
+    <Compile Include="IServices\IShortcutService.cs" />
+    <Compile Include="IServices\ISystemOptionsService.cs" />
+    <Compile Include="IServices\IBillOptionService.cs" />
+    <Compile Include="IServices\IEntryShowOptionService.cs" />
+    <Compile Include="IServices\IEntryTypesService.cs" />
+    <Compile Include="IServices\IEntrySettingService.cs" />
+    <Compile Include="IServices\IEntryMasterService.cs" />
+    <Compile Include="IServices\IEntryGridColumnsService.cs" />
+    <Compile Include="IServices\IEntryDetailsService.cs" />
+    <Compile Include="IServices\IEmailsService.cs" />
+    <Compile Include="IServices\IItemStatusService.cs" />
+    <Compile Include="IServices\IManufacturingWagesService.cs" />
+    <Compile Include="IServices\IAssetCompanyDetailsService.cs" />
+    <Compile Include="IServices\IUnit_ItemsService.cs" />
+    <Compile Include="IServices\IUserFormService.cs" />
+    <Compile Include="IServices\IUserMenuService.cs" />
+    <Compile Include="IServices\IUserPriviligeBranchesService.cs" />
+    <Compile Include="IServices\IUserPriviligeService.cs" />
+    <Compile Include="IServices\IUserLogFileService.cs" />
+    <Compile Include="Services\AcountsDetailsService.cs" />
+    <Compile Include="Services\AddressPartsSettingsService.cs" />
+    <Compile Include="Services\AddressService.cs" />
+    <Compile Include="Services\ACCOUNTS_GROUPService.cs" />
+    <Compile Include="Services\ReportsService.cs" />
+    <Compile Include="Services\AssetOperationMasterService.cs" />
+    <Compile Include="Services\AssetMasterService.cs" />
+    <Compile Include="Services\AssetGroupService.cs" />
+    <Compile Include="Services\BankService.cs" />
+    <Compile Include="Services\BillCaliberTransactionsService.cs" />
+    <Compile Include="Services\BillPayTypesService.cs" />
+    <Compile Include="Services\CompanyBranchesService.cs" />
+    <Compile Include="Services\CurrencyCategoriesService.cs" />
+    <Compile Include="Services\DashBoardService.cs" />
+    <Compile Include="Services\GoldWorldPriceService.cs" />
+    <Compile Include="Services\ItemCaliberService .cs" />
+    <Compile Include="Services\CostCalculationTypeService.cs" />
+    <Compile Include="Services\ResourcesService.cs" />
+    <Compile Include="Services\ResourcesTranslationService.cs" />
+    <Compile Include="Services\TBudgetAccountsService.cs" />
+    <Compile Include="Services\TBoxAccountsService.cs" />
+    <Compile Include="Services\TStoreService.cs" />
+    <Compile Include="Services\KestOptionService.cs" />
+    <Compile Include="Services\IncomeAccountTypesService.cs" />
+    <Compile Include="Services\OrdersService.cs" />
+    <Compile Include="Services\MessageService.cs" />
+    <Compile Include="Services\NotificationService.cs" />
+    <Compile Include="Services\NotificationTypeService.cs" />
+    <Compile Include="Services\ShortcutService.cs" />
+    <Compile Include="Services\SystemOptionsService.cs" />
+    <Compile Include="Services\BillOptionService.cs" />
+    <Compile Include="Services\EntryShowOptionService.cs" />
+    <Compile Include="Services\BillShowOptionService.cs" />
+    <Compile Include="Services\EntryDetailsService.cs" />
+    <Compile Include="Services\EntryMasterService.cs" />
+    <Compile Include="Services\EntrySettingService.cs" />
+    <Compile Include="Services\EntryGridColumnsService.cs" />
+    <Compile Include="Services\EntryTypesService.cs" />
+    <Compile Include="Services\CostCentersService.cs" />
+    <Compile Include="Services\CompanyStoresItemGroupsService.cs" />
+    <Compile Include="Services\GetCustomerSupplierService.cs" />
+    <Compile Include="IServices\IBillShowOptionService.cs" />
+    <Compile Include="IServices\ICompanyStoresItemGroupsService.cs" />
+    <Compile Include="IServices\IGetCustomerSupplierService.cs" />
+    <Compile Include="IServices\IRPT_ITEM_MOTION_VIEWService.cs" />
+    <Compile Include="Services\RPT_ITEM_MOTION_VIEWService.cs" />
+    <Compile Include="IServices\ICostCentersService.cs" />
+    <Compile Include="Services\EmailsService.cs" />
+    <Compile Include="Services\TranslatorService.cs" />
+    <Compile Include="Services\ItemStatus.cs" />
+    <Compile Include="Services\ManufacturingWagesService.cs" />
+    <Compile Include="Services\AssetCompanyDetailsService.cs" />
+    <Compile Include="Services\Unit_ItemsService.cs" />
+    <Compile Include="Services\UserGroupService.cs" />
+    <Compile Include="Services\CustomerBranchesService.cs" />
+    <Compile Include="Services\CustomerSonService.cs" />
+    <Compile Include="IServices\IUserGroupService.cs" />
+    <Compile Include="IServices\ICustomerBranchesService.cs" />
+    <Compile Include="IServices\ICustomerSonService.cs" />
+    <Compile Include="IServices\IUIDViewService.cs" />
+    <Compile Include="IServices\ISmartSysDatabaseViewService.cs" />
+    <Compile Include="Services\UIDViewService.cs" />
+    <Compile Include="Services\SmartSysDatabaseViewService.cs" />
+    <Compile Include="Services\TelephoneTypeService.cs" />
+    <Compile Include="Services\TelephoneCatService.cs" />
+    <Compile Include="Services\TelephoneService.cs" />
+    <Compile Include="Services\EmployeeTypesService.cs" />
+    <Compile Include="Services\DepartmentService.cs" />
+    <Compile Include="Services\CurrencyService.cs" />
+    <Compile Include="Enums\ResortERPEnum.cs" />
+    <Compile Include="Services\CustomersService.cs" />
+    <Compile Include="IServices\ITelephoneTypeService.cs" />
+    <Compile Include="IServices\ITelephoneCatService.cs" />
+    <Compile Include="IServices\ITelephoneService.cs" />
+    <Compile Include="IServices\IEmployeeTypesService.cs" />
+    <Compile Include="IServices\IDepartmentService.cs" />
+    <Compile Include="IServices\ICurrencyService.cs" />
+    <Compile Include="IServices\ICustomersService.cs" />
+    <Compile Include="Services\TPAY_TYPESService.cs" />
+    <Compile Include="Services\AcountsTypesService.cs" />
+    <Compile Include="Services\BillDetailsService.cs" />
+    <Compile Include="Services\BillGridColumnsService.cs" />
+    <Compile Include="Services\BillMasterService.cs" />
+    <Compile Include="Services\BillSettingsService.cs" />
+    <Compile Include="Services\BillTypesService.cs" />
+    <Compile Include="Services\BillEffectsService.cs" />
+    <Compile Include="Bootstrapper.cs" />
+    <Compile Include="Services\CommonService.cs" />
+    <Compile Include="Services\CompanyStoresService.cs" />
+    <Compile Include="IServices\IAcountDetailsService.cs" />
+    <Compile Include="IServices\ITPAY_TYPESService.cs" />
+    <Compile Include="IServices\IAcountsTypesService.cs" />
+    <Compile Include="Services\SELLS_TYPESService.cs" />
+    <Compile Include="Services\EmployeeService.cs" />
+    <Compile Include="IServices\IBillDetailsService.cs" />
+    <Compile Include="IServices\IBillGridColumnsService.cs" />
+    <Compile Include="IServices\IBillMasterService.cs" />
+    <Compile Include="IServices\IBillSettingsService.cs" />
+    <Compile Include="IServices\IBillTypesService.cs" />
+    <Compile Include="IServices\IBillEffectsService.cs" />
+    <Compile Include="IServices\ICommonService.cs" />
+    <Compile Include="IServices\ICompanyStoresService.cs" />
+    <Compile Include="IServices\IEmployeeService.cs" />
+    <Compile Include="IServices\IAcountsService.cs" />
+    <Compile Include="Services\AcountsService.cs" />
+    <Compile Include="IServices\IItemsGroupsService.cs" />
+    <Compile Include="IServices\ISELLS_TYPESService.cs" />
+    <Compile Include="IServices\IItemsService.cs" />
+    <Compile Include="Services\ItemsService.cs" />
+    <Compile Include="IServices\IUnitsService.cs" />
+    <Compile Include="IServices\IUserService.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\ItemsGroupsService.cs" />
+    <Compile Include="Services\UnitsService.cs" />
+    <Compile Include="Services\UserFormService.cs" />
+    <Compile Include="Services\UserMenuService.cs" />
+    <Compile Include="Services\UserLogFileService.cs" />
+    <Compile Include="Services\UserPriviligeBranchesService.cs" />
+    <Compile Include="Services\UserPriviligeService.cs" />
+    <Compile Include="Services\UserService.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ResortERP.Core\ResortERP.Core.csproj">
+      <Project>{C22F69D9-E983-4E6B-AC16-6AD871C0C60C}</Project>
+      <Name>ResortERP.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ResortERP.Repository\ResortERP.Repository.csproj">
+      <Project>{446F2AFD-A11F-4049-9B68-25EDCC33CB7C}</Project>
+      <Name>ResortERP.Repository</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{C0C07587-41A7-46C8-8FBD-3F9C8EBE2DDC}" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
