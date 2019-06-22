@@ -1,0 +1,188 @@
+﻿<div class="app-content">
+    <div class="main-content">
+        <div class="wrap-content container" id="container">
+            <div class="container-fluid container-fullw">
+                <div class="col-xs-12 margin-top-10 margin-bottom-10">
+                    <div class="breadcrumb-wrapper no-margin">
+                        <h4 class="mainTitle no-margin">تعريف سعر الذهب</h4>
+                        <ul class="pull-right breadcrumb">
+                            <li><a href="#!"><i class="fa fa-home margin-left-5 text-large text-dark"></i>الرئيسية</a></li>
+                            <li>تعريف سعر الذهب</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-xs-12 margin-bottom-10">
+                    <div class="panel-white panel-body no-margin">
+                        <button type="button" class="btn btn-o btn-default no-border" ng-disabled="test.$invalid" ng-click="saveItemsGroup()"><i class="glyphicon glyphicon-save"></i> حفظ</button>
+                        <button type="button" class="btn btn-o btn-default no-border" ng-click="refreshData()"><i class="glyphicon glyphicon-refresh"></i> تحديث</button>
+                        <button type="button" class="btn btn-o btn-default no-border" ng-click="clearEnity()"><i class="glyphicon glyphicon-file"></i>جديد</button>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="panel">
+                        <!-- Start Panel Body -->
+                        <div class="panel-body panel-white">
+                            <div class="col-md-12">
+                                
+                                <ng-form id="test" name="test">
+                                    <div ng-class="{'has-error': test.$invalid}" class="form-group">
+                                        <div class="form-group col-md-4">
+                                            <label for="Code">الكود:</label>
+                                            <div class="help-block error" style="display:inline" ng-show="test.code.$error.required">*</div>
+                                            <input type="text" class="form-control" id="Code" placeholder="الكود" ng-model="goldWorldPrice.Code" required>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-group col-md-4">
+                                        <label for="LatName">تاريخ السعر:</label>
+                                        <input type="date" name="PriceDate" ng-model="goldWorldPrice.PriceDate" class="form-control input-sm">
+                                    </div>
+
+                                    <div class="form-group col-md-4">
+                                        <label for="Notes">السعر للجرام:</label>
+                                        <input type="text" class="form-control" id="GoldPrice" placeholder="السعر ل الجرام" ng-model="goldWorldPrice.GoldPrice" ng-change="getPrices()">
+                                    </div>
+
+                                    <div class="form-group col-md-4">
+                                        <label for="Notes">السعر للكيلو:</label>
+                                        <input type="text" class="form-control" id="GoldKilo" placeholder="السعر ل الكيلو" ng-model="goldWorldPrice.KiloPrice" ng-change="changeKilo()">
+                                    </div>
+
+                                    <div class="form-group col-md-4">
+                                        <label for="Notes">السعر للوقيه:</label>
+                                        <input type="text" class="form-control" id="GoldOunce" placeholder="السعر ل الوقيه" ng-model="goldWorldPrice.OuncePrice" ng-model-options='{ debounce: 750 }' ng-change="changeOunce()">
+                                    </div>
+
+                                    <div class="form-group col-md-4">
+                                        <label for="Notes">ملاحظات:</label>
+                                        <input type="text" class="form-control" id="Notes" placeholder="ملاحظات" ng-model="goldWorldPrice.Notes">
+                                    </div>
+
+                                    <div class="checkbox col-md-4">
+                                        <div class="checkbox clip-check check-primary margin-top-25">
+                                            <input id="turnOnOff" type="checkbox" ng-model="goldWorldPrice.Active">
+                                            <label for="turnOnOff">تعمل / لا تعمل</label>
+                                        </div>
+                                    </div>
+
+                                </ng-form>
+                            </div>
+                            <!--/.col-md-12-->
+                        </div>
+                        <!-- End Panel Body -->
+                        <!-- Start Panel Body -->
+                        <div class="panel">
+                            <div class="panel-group accordion" id="accordion">
+                                <div class="panel panel-white">
+                                    <div class="panel-heading">
+                                        <h5 class="panel-title"><a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" data-target="#collapseTwo"> <i class="icon-arrow"></i> أسعار الذهب المعرفة مسبقاً </a></h5>
+                                    </div><!--/.panel-heading-->
+                                    <div id="collapseTwo" class="collapse">
+                                        <div class="panel-body">
+                                            <div class="col-md-12">
+                                                <!--   Results:{{goldWorldPriceTotalCount}}-->
+                                                <!--<div cl-->
+                                                <div class="col-md-3 pull-left no-padding">
+                                                    <table class="table table-stylish">
+                                                        <tbody>
+                                                            <tr>
+                                                                <td class="center text-extra-large"><i class="ti-save"></i></td>
+                                                                <td><span class="text-dark block">سعر الذهب:</span></td>
+                                                                <td class="center">{{goldWorldPriceTotalCount}}</td>
+                                                                <td class="center"><i class="fa fa-caret-down text-red"></i></td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <table class="table table-bordered table-hover">
+                                                    <tr class="success center">
+                                                        <!--<th class="hidden-xs">المسلسل</th>-->
+                                                        <th class="hidden-xs">م</th>
+                                                        <th>كود</th>
+                                                        <th>الاسم عربى </th>
+                                                        <th>الاسم اللاتيني</th>
+                                                        <th class="hidden-xs"> تاريخ السعر</th>
+                                                        <th class="hidden-xs">السعر</th>
+                                                        <th class="hidden-xs">سعر الكيلو</th>
+                                                        <th class="hidden-xs">سعر الوقيه</th>
+                                                        <th class="hidden-xs">ملاحظات</th>
+                                                        <th class="hidden-xs">تعمل</th>
+                                                        <th>تعديل / حذف</th>
+                                                    </tr>
+
+                                                    <tr ng-repeat="item in goldWorldPriceList">
+                                                        <!--<td class="hidden-xs">{{ $index + 1 }}</td>-->
+                                                        <td class="hidden-xs">{{ item.ID }}</td>
+                                                        <td>{{ item.Code }}</td>
+                                                        <td>{{ item.ARName }}</td>
+                                                        <td>{{ item.LatName }}</td>
+                                                        <td>{{item.PriceDate | date: "yyyy-MM-dd"}}</td>
+                                                        <td>{{ item.GoldPrice }}</td>
+                                                        <td>{{ item.KiloPrice }}</td>
+                                                        <td>{{ item.OuncePrice }}</td>
+                                                        <td>{{ item.Notes }}</td>
+                                                        <td class="hidden-xs">
+                                                            <div class="checkbox clip-check check-primary">
+                                                                <input id="active{{item.ID}}" type="checkbox" ng-checked="item.Active" />
+                                                                <label for="active{{item.ID}}"></label>
+                                                            </div>
+                                                        </td>
+                                                        <td class="center">
+                                                            <div class="visible-md visible-lg hidden-sm hidden-xs">
+                                                                <a href="" ng-click="dirEnity(item)" class="btn btn-transparent btn-xs" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fa fa-pencil"></i></a>
+
+                                                                <a href="" ng-click="deleteEnity(item)" class="btn btn-transparent btn-xs tooltips" data-toggle="tooltip" data-placement="top" title="Remove"><i class="fa fa-times fa fa-white"></i></a>
+                                                            </div>
+                                                            <div class="visible-xs visible-sm hidden-md hidden-lg">
+                                                                <div class="btn-group dropdown ">
+                                                                    <button type="button" class="btn btn-o btn-sm dropdown-toggle" data-toggle="dropdown">
+                                                                        <i class="fa fa-cog"></i>&nbsp;<span class="caret"></span>
+                                                                    </button>
+                                                                    <ul class="dropdown-menu pull-right dropdown-light" role="menu">
+                                                                        <li>
+                                                                            <a href="" ng-click="dirEnity(item)"> تعديل </a>
+                                                                        </li>
+
+                                                                        <li>
+                                                                            <a href="" ng-click="deleteEnity(item)"> حذف </a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+
+                                                            <!--<a class="label partition-blue" href="" ng-click="dirEnity(item)">عرض</a>-->
+                                                            <!--<a class="label partition-blue" href="" ng-click="dirEnity(item)"><i class="glyphicon glyphicon-share"></i>  تعديل</a>
+                                                            <a class="label partition-red" href="" ng-click="deleteEnity(item)"><i class="glyphicon glyphicon-remove-circle"></i> حذف</a>-->
+                                                        </td>
+
+                                                    </tr>
+                                                </table>
+                                                <ul uib-pagination total-items="goldWorldPriceTotalCount" ng-model="pageNum" max-size="maxSize" class="pagination-sm" boundary-links="true" num-pages="numPages" ng-change="pageChanged()"></ul>
+                                                <pre>صفحه: {{pageNum}} / {{numPages}}</pre>
+
+                                            </div>
+                                            <!--/.col-md-12-->
+                                        </div>
+                                        <!--/.panel-body-->
+                                    </div>
+                                    <!--/.panel-collapse-->
+                                </div>
+                                <!--/.panel-->
+                            </div>
+                            <!--/.panel-group-->
+                        </div>
+                        <!--/.panel /.panel-white-->
+
+                    </div>
+                    <!--/.panel-->
+                </div>
+                <!--/.col-md-12-->
+                
+            </div>
+            <!--/.container-fluid-->
+        </div>
+        <!--/.wrap-content-->
+    </div>
+    <!--/.main-content-->
+</div>
+<!--/.app-content-->

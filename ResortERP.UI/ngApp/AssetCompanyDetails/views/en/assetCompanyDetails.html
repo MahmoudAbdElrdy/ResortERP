@@ -1,0 +1,593 @@
+﻿<div class="app-content">
+    <div class="main-content">
+        <div class="wrap-content container" id="container">
+            <div class="container-fluid container-fullw">
+                <div class="row">
+                    <div class="col-md-12">
+
+                        <div class="panel" style="height:100%;overflow:auto;">
+                            <div class="panel-heading border-bottom  panel-white">
+                                <h4 class="panel-title">
+                                    {{CustSupM}}
+                                </h4>
+                                <div class="panel-tools">
+                                    <a data-original-title="Refresh" data-toggle="tooltip" data-placement="top" data-trigger="hover" class="btn btn-transparent btn-sm panel-refresh" href="#"><i class="fa fa-circle-o"></i></a>
+                                    <a data-original-title="Expand" data-toggle="tooltip" data-placement="top" data-trigger="hover" class="btn btn-transparent btn-sm panel-expand" href="#"><i class="fa fa-compress expand-on"></i><i class="fa fa-expand expand-off"></i></a>
+                                </div>
+                            </div>
+                            <!--/.panel-heading-->
+                            <div class="panel-body panel-body panel-white">
+                                <ng-form id="test" name="test">
+                                    <div class="col-md-9">
+                                        <div ng-class="{'has-error': test.$invalid}" class="">
+                                            <div class="form-group col-md-6">
+                                                <label> {{CustSup}}Code:</label>
+                                                <div class="help-block error" style="display:inline" ng-show="test.code.$error.required">*</div>
+                                                <input type="text" class="form-control" name="code" placeholder="Code {{CustSup}}" ng-model="customer.CUST_CODE" required>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group col-md-6">
+                                            <label> {{CustSup}}Title:</label>
+                                            <input type="text" class="form-control" placeholder="Title {{CustSup}}" ng-model="customer.CUST_TITLE">
+                                        </div>
+
+                                        <div ng-class="{'has-error': test.$invalid}" class="">
+                                            <div class="form-group col-md-6">
+                                                <label>Arabic {{CustSup}}Name:</label>
+                                                <div class="help-block error" style="display:inline" ng-show="test.arname.$error.required">*</div>
+                                                <input type="text" class="form-control" name="arname" placeholder="Arabic {{CustSup}} Name" ng-model="customer.CUST_AR_NAME" required>
+                                            </div>
+                                        </div>
+
+                                        <div ng-class="{'has-error': test.$invalid}" class="">
+                                            <div class="form-group col-md-6">
+                                                <label>Latin {{CustSup}} Name : </label>
+                                                <div class="help-block error" style="display:inline" ng-show="test.enname.$error.required">*</div>
+                                                <input type="text" class="form-control" name="enname" placeholder="Latin{{CustSup}} Name" ng-model="customer.CUST_EN_NAME" required>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group col-md-6">
+                                            <label>E-Mail:</label>
+                                            <input type="text" class="form-control" placeholder="E-Mail" ng-model="customer.CUST_EMAIL">
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label>Web Site :</label>
+                                            <input type="text" class="form-control" placeholder="Web Site" ng-model="customer.CUST_WEB_SITE">
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label>Post Box:</label>
+                                            <input type="text" class="form-control" placeholder="Post Box" ng-model="customer.CUST_POST_BOX">
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label>Zip Code :</label>
+                                            <input type="text" class="form-control" placeholder="Zip Code" ng-model="customer.CUST_ZIP_CODE">
+                                        </div>
+
+                                        <div class="form-group col-md-6">
+                                            <label>Tax Number:</label>
+                                            <input type="text" class="form-control" placeholder="Tax Number" ng-model="customer.TaxNumber">
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label> Commercial Register:</label>
+                                            <input type="text" class="form-control" placeholder="Commercial Register" ng-model="customer.CommercialRegister">
+                                        </div>
+
+                                        <div class="form-group col-md-6">
+                                            <label>Selling Type :</label>
+                                            <select ng-model="customer.SELL_TYPE_ID" class="js-example-basic-hide-search js-states form-control" ng-options="x.SELL_TYPE_ID as x.SELL_TYPE_AR_NAME for x in salesTypeList">
+                                                <option value="">Choose Selling Type </option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label>Balance:</label>
+                                            <label class="form-control">{{customer.Account.ACC_CREDIT - customer.Account.ACC_DEBIT | round}}</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <div class="space12 center margin-top-25">
+                                            <img id="imgPersonal" class="img-responsive img-rounded img-thumbnail margin-bottom-15" style="width:100%;height:150px !important;" ng-src="{{imageSrc}}" alt="PickUp Photo" />
+                                            <span class="btn btn-primary btn-block fileinput-button">
+                                                <i class="glyphicon glyphicon-plus"></i>
+                                                <span>Choose Image...</span>
+                                                <input type="file" class="btn btn-primary" title="Show" style="width:100% !important;" ng-model-instant onchange="angular.element(this).scope().imageUpload(event)" />
+                                            </span>
+                                        </div>
+                                        <!--/.space12 center-->
+                                    </div>
+                                    <!--/.col-md-3-->
+
+                                    <div class="col-md-12 margin-top-20 margin-bottom-20">
+                                        <hr />
+                                    </div>
+
+
+                                    <div class="col-md-12">
+
+                                        <div class="panel">
+                                            <div class="panel-group accordion" id="accordion">
+                                                <div class="panel panel-white">
+                                                    <div class="panel-heading">
+                                                        <h5 class="panel-title"><a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" data-target="#collapseFirst"> <i class="icon-arrow"></i> {{CustSup}}Account </a></h5>
+                                                    </div>
+
+                                                    <div id="collapseFirst" class="collapse">
+                                                        <div class="panel-body">
+                                                            <div class="col-md-12 no-padding">
+                                                                <div class="col-md-6 margin-bottom-20">
+                                                                    <div class="panel panel-default panel-white">
+                                                                        <div class="panel-heading border-bottom">{{CustSup}}Account</div>
+                                                                        <div class="panel-body">
+
+                                                                            <div class="form-group col-md-12">
+                                                                                <label> {{CustSup}}Account Code:</label>
+                                                                                <input type="text" class="form-control" placeholder="Account Code {{CustSup}}" ng-model="customer.Account.ACC_CODE">
+                                                                            </div>
+                                                                            <div class="form-group col-md-12">
+                                                                                <label>Date:</label>
+                                                                                <input type="date" class="form-control" ng-model="customer.Account.ACC_DATE" />
+                                                                            </div>
+                                                                            <div class="form-group col-md-12">
+                                                                                <label>Arabic {{CustSup}} Account Name:</label>
+                                                                                <input type="text" class="form-control" placeholder="Arabic {{CustSup}} Account Name" ng-model="customer.Account.ACC_AR_NAME">
+                                                                            </div>
+                                                                            <div class="form-group col-md-12">
+                                                                                <label>Latin {{CustSup}} Account Name:</label>
+                                                                                <input type="text" class="form-control" placeholder="Latin {{CustSup}} Account Name" ng-model="customer.Account.ACC_EN_NAME">
+                                                                            </div>
+                                                                        </div>
+                                                                        <!--/.panel-body-->
+                                                                    </div>
+                                                                    <!--/.panel-->
+                                                                </div>
+                                                                <!--/.col-md-6-->
+                                                                <div class="col-md-6 margin-bottom-20">
+                                                                    <div class="panel panel-default panel-white">
+                                                                        <div class="panel-heading border-bottom">{{CustSup}}Nature</div>
+                                                                        <div class="panel-body">
+
+                                                                            <div class="form-group col-md-12">
+                                                                                <p class="tap-heading">{{CustSup}}Nature:</p>
+                                                                                <div class="input-group">
+                                                                                    <form>
+                                                                                        <div class="radio clip-radio radio-primary radio-inline">
+                                                                                            <input type="radio" id="rad_customer1" name="rad_customer" ng-model="customer.Account.ACC_DEBIT_OR_CREDIT_OR_WITHOUT" value="1" />
+                                                                                            <label for="rad_customer1"> Debit </label>
+                                                                                        </div>
+
+                                                                                        <div class="radio clip-radio radio-primary radio-inline">
+                                                                                            <input type="radio" id="rad_customer2" name="rad_customer" ng-model="customer.Account.ACC_DEBIT_OR_CREDIT_OR_WITHOUT" value="2" />
+                                                                                            <label for="rad_customer2"> Credit </label>
+                                                                                        </div>
+
+                                                                                        <div class="radio clip-radio radio-primary radio-inline">
+                                                                                            <input type="radio" id="rad_customer3" name="rad_customer" ng-model="customer.Account.ACC_DEBIT_OR_CREDIT_OR_WITHOUT" value="3" />
+                                                                                            <label for="rad_customer3"> Both </label>
+                                                                                        </div>
+                                                                                    </form>
+                                                                                </div>
+                                                                                <!--/.input-group-->
+                                                                            </div>
+                                                                            <!--/.form-group-->
+
+                                                                            <div class="form-group col-md-12">
+                                                                                <p class="tap-heading">Over Dealing Alert </p>
+                                                                                <div class="input-group">
+                                                                                    <form>
+                                                                                        <div class="radio clip-radio radio-primary radio-inline">
+                                                                                            <input type="radio" id="rad_customer4" name="rad_customer" ng-model="customer.Account.ACC_STATE" value="1" />
+                                                                                            <label for="rad_customer4"> Debit </label>
+                                                                                        </div>
+
+                                                                                        <div class="radio clip-radio radio-primary radio-inline">
+                                                                                            <input type="radio" id="rad_customer5" name="rad_customer" ng-model="customer.Account.ACC_STATE" value="2" />
+                                                                                            <label for="rad_customer5"> Credit </label>
+                                                                                        </div>
+
+                                                                                        <div class="radio clip-radio radio-primary radio-inline">
+                                                                                            <input type="radio" id="rad_customer6" name="rad_customer" ng-model="customer.Account.ACC_STATE" value="3" />
+                                                                                            <label for="rad_customer6"> Credit </label>
+                                                                                        </div>
+                                                                                    </form>
+                                                                                </div>
+                                                                            </div>
+
+                                                                            <div class="form-group col-md-6">
+                                                                                <label>Budget:</label>
+                                                                                <input class="form-control" placeholder="Budget" ng-model="customer.Account.ACC_MAX_DEBIT" only-Number>
+                                                                            </div>
+                                                                            <!--/.form-group-->
+
+                                                                            <div class="form-group col-md-6">
+                                                                                <label>Budget:</label>
+                                                                                <input class="form-control" placeholder="Budget" ng-model="customer.Account.ACC_MAX_CREDIT" only-Number>
+                                                                            </div>
+                                                                            <!--/.form-group-->
+
+                                                                        </div>
+                                                                        <!--/.panel-body-->
+                                                                    </div>
+                                                                    <!--/.panel-->
+                                                                </div>
+                                                            </div>
+                                                            <!--/.col-md-12-->
+
+                                                            <div class="col-md-12 no-padding">
+                                                                <div class="col-md-6 margin-bottom-20">
+                                                                    <div class="panel panel-default panel-white">
+                                                                        <div class="panel-heading border-bottom">Account Currency Date</div>
+                                                                        <div class="panel-body">
+                                                                            <div class="form-group col-md-6">
+                                                                                <label>Currecny :</label>
+                                                                                <select ng-model="customer.Account.CURRENCY_ID" class="js-example-basic-hide-search js-states form-control" ng-options="x.CURRENCY_ID as x.CURRENCY_AR_NAME for x in currencyList" ng-change="getPrice(customer.Account.CURRENCY_ID)">
+                                                                                    <option value="">Choose Currency </option>
+                                                                                </select>
+                                                                            </div>
+                                                                            <div class="form-group col-md-6">
+                                                                                <label>Rate :</label>
+                                                                                <input type="text" class="form-control" placeholder="Rate" ng-model="CURRENCY_RATE" disabled>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <!--/.col-md-6-->
+
+                                                                <div class="col-md-6 margin-bottom-20">
+                                                                    <div ng-class="{'has-error': test.$invalid}" class="form-group">
+                                                                        <div class="panel panel-default panel-white">
+                                                                            <div class="panel-heading border-bottom">Account Type</div>
+                                                                            <div class="panel-body">
+                                                                                <div class="form-group col-md-12">
+                                                                                    <label>Account Type:</label>
+                                                                                    <div class="input-group">
+                                                                                        <form>
+                                                                                            <div ng-repeat="option in customerSuplierList" style="display:inline-block;margin-left:20px">
+                                                                                                <div class="radio clip-radio radio-primary radio-inline">
+                                                                                                    <input type="radio" id="radio{{$index}}" name="rad_customer" ng-value="option.ACC_TYPE_ID" ng-model="customer.Account.ACC_TYPE_ID" />
+                                                                                                    <label for="radio{{$index}}"> {{ option.ACC_TYPE_AR_NAME }} </label>
+                                                                                                </div>
+                                                                                                <!-- <input type="radio" name="rad_customer" ng-value="option.ACC_TYPE_ID" ng-model="customer.Account.ACC_TYPE_ID" /><label>{{ option.ACC_TYPE_AR_NAME }}</label>-->
+                                                                                            </div>
+                                                                                        </form>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <!--/.panel-body-->
+                                                                        </div>
+                                                                        <!--/.panel panel-default panel-white-->
+                                                                    </div>
+                                                                </div>
+                                                                <!--/.col-md-6-->
+                                                            </div>
+                                                            <!--/.col-md-12-->
+                                                        </div>
+                                                        <!--/.panel-body-->
+                                                    </div>
+                                                    <!--/.panel-collapse-->
+                                                </div>
+                                                <!--/.panel-->
+                                            </div>
+                                            <!--/.panel-group-->
+                                        </div>
+                                        <!--/.panel /.panel-white-->
+
+                                        <div class="panel">
+                                            <div class="panel-group accordion" id="accordion">
+                                                <div class="panel panel-white">
+                                                    <div class="panel-heading">
+                                                        <h5 class="panel-title"><a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" data-target="#collapseSecond"> <i class="icon-arrow"></i>Branches {{CustSup}}</a></h5>
+                                                    </div>
+                                                    <div id="collapseSecond" class="collapse">
+                                                        <div class="panel-body">
+                                                            <div class="table-responsive">
+                                                                <table class="table table-striped table-bordered table-hover table-full-width ps-scrollbar-x small  panel-full-screen  fc-scroller " style="overflow:auto;" id="sample-table-2">
+                                                                    <thead>
+                                                                        <tr class="success">
+                                                                            <td class="center text-extra-large"><i class="ti-arrow-down"></i></td>
+                                                                            <td class="center"> Arabic Name </td>
+                                                                            <td class="center">Latin Name </td>
+                                                                            <td class="center">Country </td>
+                                                                            <td class="center">Governorate </td>
+                                                                            <td class="center">Address Details</td>
+                                                                            <td class="center">Notes</td>
+                                                                            <td class="center">Add / Delete</td>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <tr ng-repeat="cBran in customerBranchesList track by $index" style="max-height:50px !important;">
+                                                                            <!--track by $index-->
+                                                                            <td>{{ $index+1 }}</td>
+                                                                            <td>
+                                                                                <span e-name="ACC_BRN_AR_NAME" ng-show="rowform.$show()" editable-text="cBran.ACC_BRN_AR_NAME" e-form="rowform">{{ cBran.ACC_BRN_AR_NAME || 'empty' }}</span>
+                                                                            </td>
+                                                                            <td>
+                                                                                <span e-name="ACC_BRN_EN_NAME" ng-show="rowform.$show()" editable-text="cBran.ACC_BRN_EN_NAME" e-form="rowform">{{ cBran.ACC_BRN_EN_NAME || 'empty' }}</span>
+                                                                            </td>
+                                                                            <td>
+                                                                                <span e-name="NATION_ID" editable-select="cBran.NATION_ID" ng-show="rowform.$show()" e-form="rowform" e-ng-options="x.NATION_ID as x.NATION_AR_NAME for x in NationList" e-ng-change="getAllNastionGovernatecBran($data)">{{ showSelectedNation(cBran.NATION_ID) }}</span>
+                                                                            </td>
+                                                                            <td>
+                                                                                <span e-name="GOV_ID" editable-select="cBran.GOV_ID" ng-show="rowform.$show()" e-form="rowform" e-ng-options="x.GOV_ID as x.GOV_AR_NAME for x in GovernateListByNationIDcBran">{{ showSelectedcBranGov(cBran.GOV_ID) }}</span>
+                                                                            </td>
+                                                                            <td>
+                                                                                <span e-name="BRN_ADDR_REMARKS" ng-show="rowform.$show()" editable-text="cBran.BRN_ADDR_REMARKS" e-form="rowform">{{ cBran.BRN_ADDR_REMARKS || 'empty' }}</span>
+                                                                            </td>
+                                                                            <td>
+                                                                                <span e-name="BRN_REMARKS" ng-show="rowform.$show()" editable-text="cBran.BRN_REMARKS" e-form="rowform">{{ cBran.BRN_REMARKS || 'empty' }}</span>
+                                                                            </td>
+                                                                            <td style="white-space: nowrap">
+                                                                                <!-- form -->
+                                                                                <form editable-form name="rowform" ng-show="!rowform.$show()" class="form-buttons form-inline" shown="cBranItem == cBran" onbeforesave="insertcBranItem($data, $index)">
+                                                                                    <button type="submit" class="btn btn-info" ng-click="rowform.$show()" ng-show="hidecBranButton($index);">Add&nbsp;<i class="fa fa-plus-circle"></i></button>
+                                                                                    <button type="button" class="btn btn-danger" ng-click="removecBranGridItem($index)" ng-show="showcBranButton($index);">Delete&nbsp;<i class="fa fa-remove"></i></button>
+                                                                                </form>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                        <!--/.panel-body-->
+                                                    </div>
+                                                    <!--/.panel-collapse-->
+                                                </div>
+                                                <!--/.panel-->
+                                            </div>
+                                            <!--/.panel-group-->
+                                        </div>
+                                        <!--/.panel /.panel-white-->
+
+                                        <div class="panel">
+                                            <div class="panel-group accordion" id="accordion">
+                                                <div class="panel panel-white">
+                                                    <div class="panel-heading">
+                                                        <h5 class="panel-title"><a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" data-target="#collapseThird"> <i class="icon-arrow"></i>{{CustSup}}Data</a></h5>
+                                                    </div>
+                                                    <div id="collapseThird" class="collapse">
+                                                        <div class="panel-body">
+
+                                                            <div class="tabbable tabs-right">
+                                                                <ul id="myTab5" class="nav nav-tabs">
+                                                                    <li class="active">
+                                                                        <a href="#myTab5_example1" target="_self" data-toggle="tab"> {{CustSup}}Address</a>
+                                                                    </li>
+                                                                    <li class="">
+                                                                        <a href="#myTab5_example2" target="_self" data-toggle="tab"> Company Data </a>
+                                                                    </li>
+                                                                    <li class="">
+                                                                        <a href="#myTab5_example3" target="_self" data-toggle="tab">{{CustSup}} Phones </a>
+                                                                    </li>
+                                                                </ul>
+
+                                                                <div class="tab-content no-border">
+                                                                    <!-- First Tab Content -->
+                                                                    <div class="tab-pane no-border fade in active" id="myTab5_example1">
+                                                                        <div class="panel panel-default panel-white">
+                                                                            <div class="panel-heading border-bottom">{{CustSup}}Address</div>
+                                                                            <div class="panel-body">
+                                                                                <div class="form-group col-md-6">
+                                                                                    <label>Country : </label>
+                                                                                    <select ng-model="customer.NATION_ID" class="js-example-basic-hide-search js-states form-control" ng-options="x.NATION_ID as x.NATION_AR_NAME for x in NationList" ng-change="getAllNastionGovernate()">
+                                                                                        <option value="">Choose Country </option>
+                                                                                    </select>
+                                                                                </div>
+                                                                                <div class="form-group col-md-6">
+                                                                                    <label>Governorate :</label>
+                                                                                    <select ng-model="customer.GOV_ID" class="js-example-basic-hide-search js-states form-control" ng-options="x.GOV_ID as x.GOV_AR_NAME for x in GovernateListByNationID" ng-change="getAllGovernateTown()">
+                                                                                        <option value="">Choose Governorate </option>
+                                                                                    </select>
+                                                                                </div>
+                                                                                <div class="form-group col-md-6">
+                                                                                    <label>Town :</label>
+
+                                                                                    <select ng-model="customer.TOWN_ID" class="js-example-basic-hide-search js-states form-control" ng-options="x.TOWN_ID as x.TOWN_AR_NAME for x in TownsListByGovernateID" ng-change="getAllTownVillage()">
+                                                                                        <option value="">Choose Town </option>
+                                                                                    </select>
+                                                                                </div>
+                                                                                <div class="form-group col-md-6">
+                                                                                    <label>Village:</label>
+                                                                                    <select ng-model="customer.VILLAGE_ID" class="js-example-basic-hide-search js-states form-control" ng-options="x.VILLAGE_ID as x.VILLAGE_AR_NAME for x in VillagesListByTownID">
+                                                                                        <option value="">Choose Village</option>
+                                                                                    </select>
+                                                                                </div>
+                                                                                <div class="form-group col-md-12">
+                                                                                    <label>Address Details:</label>
+                                                                                    <input type="text" class="form-control" placeholder="Address Details" ng-model="customer.CUST_ADDR_REMARKS">
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <!-- Second Tab Content -->
+                                                                    <div class="tab-pane no-border fade" id="myTab5_example2">
+                                                                        <div class="panel panel-default panel-white">
+                                                                            <div class="panel-heading border-bottom">Company Data</div>
+                                                                            <div class="panel-body">
+                                                                                <div class="form-group col-md-6">
+                                                                                    <label>Company Branch:</label>
+                                                                                    <select ng-model="customer.Comp_Bran_ID" class="js-example-basic-hide-search js-states form-control" ng-options="x.COM_BRN_ID as x.COM_BRN_AR_NAME for x in CompanyBranchesList" ng-change="GetDepartmentByCompanyBranchID()">
+                                                                                        <option value="">Choose Company Branch</option>
+                                                                                    </select>
+                                                                                </div>
+                                                                                <div class="form-group col-md-6">
+                                                                                    <label>Department:</label>
+                                                                                    <select ng-model="customer.Dept_ID" class="js-example-basic-hide-search js-states form-control" ng-options="x.DEPT_ID as x.DEPT_AR_NAME for x in GetDepartmentByCompanyBranchIDList">
+                                                                                        <option value="">Choose Department</option>
+                                                                                    </select>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <!-- Third  Tab Content -->
+                                                                    <div class="tab-pane no-border fade" id="myTab5_example3">
+                                                                        <div class="panel panel-default panel-white">
+                                                                            <div class="panel-heading border-bottom"> {{CustSup}} Phones</div>
+                                                                            <div class="panel-body">
+                                                                                <div class="table-responsive">
+                                                                                    <table class="table table-striped table-bordered table-hover table-full-width ps-scrollbar-x small  panel-full-screen  fc-scroller " style="overflow:auto;" id="sample-table-2">
+                                                                                        <thead>
+                                                                                            <tr class="success">
+                                                                                                <td class=" text-extra-large"><i class="ti-arrow-down"></i></td>
+                                                                                                <td> Phone No. </td>
+                                                                                                <td>Phone Type </td>
+                                                                                                <td>Add / Delete</td>
+                                                                                            </tr>
+                                                                                        </thead>
+                                                                                        <tbody>
+                                                                                            <tr ng-repeat="tele in telephoneList track by $index" style="max-height:50px !important;">
+                                                                                                <!--track by $index-->
+                                                                                                <td>{{ $index+1 }}</td>
+                                                                                                <td>
+                                                                                                    <span e-name="TELE_NUMBER" ng-show="rowform.$show()" editable-text="tele.TELE_NUMBER" e-form="rowform" e-only-Number>{{ tele.TELE_NUMBER || 'empty' }}</span>
+                                                                                                </td>
+                                                                                                <td>
+                                                                                                    <span e-name="TELE_CAT_ID" editable-select="tele.TELE_CAT_ID" ng-show="rowform.$show()" e-form="rowform" e-ng-options="x.TELE_CAT_ID as x.TELE_CAT_AR_NAME for x in catList">
+                                                                                                        {{ showSelectedTeleCatTypes(tele.TELE_CAT_ID) }}
+                                                                                                    </span>
+                                                                                                </td>
+                                                                                                <td style="white-space: nowrap">
+                                                                                                    <!-- form -->
+                                                                                                    <form editable-form name="rowform" ng-show="!rowform.$show()" class="form-buttons form-inline" shown="telephoneItem == tele" onbeforesave="insertItem($data,$index)">
+                                                                                                        <button type="submit" class="btn btn-info" ng-click="rowform.$show()" ng-show="hideButton($index);">Add&nbsp;<i class="fa fa-plus-circle"></i></button>
+                                                                                                        <button type="button" class="btn btn-danger" ng-click="removeGridItem($index)" ng-show="showButton($index);">Delete&nbsp;<i class="fa fa-remove"></i></button>
+                                                                                                    </form>
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                        </tbody>
+                                                                                    </table>
+                                                                                </div>
+                                                                                <!--/.table-responsive-->
+                                                                            </div>
+                                                                            <!--/.panel-body-->
+                                                                        </div>
+                                                                        <!--/.panel-->
+                                                                    </div>
+                                                                    <!--/.tab-pane-->
+                                                                </div>
+                                                                <!--/.tab-content-->
+                                                            </div>
+                                                            <!--/.tabbable tabs-right-->
+                                                        </div>
+                                                        <!--/.panel-body-->
+                                                    </div>
+                                                    <!--/.panel-collapse-->
+                                                </div>
+                                                <!--/.panel-->
+                                            </div>
+                                            <!--/.panel-group-->
+                                        </div>
+                                        <!--/.panel-->
+
+                                    </div>
+                                    <!--/.col-md-12-->
+
+                                    <div class="col-md-12 my-btn-group margin-bottom-25 text-center">
+                                        <button type="button" class="btn btn-primary margin-top-10" ng-disabled="test.$invalid" ng-click="savecustomer()"><i class="fa fa-save"></i>Save</button>
+                                        <button type="button" class="btn btn-success margin-top-10" ng-click="refreshData()"><i class="fa fa-refresh"></i>Refresh</button>
+                                        <button type="button" class="btn btn-info margin-top-10" ng-click="clearEnity()"><i class="fa fa-paste"></i>New</button>
+                                    </div>
+                                    <!--/.my-btn-group-->
+                                </ng-form>
+                            </div>
+                        </div>
+                        <!--/.panel-->
+
+                        <div class="panel">
+                            <div class="panel-group accordion" id="accordion">
+                                <div class="panel panel-white">
+                                    <div class="panel-heading">
+                                        <h5 class="panel-title"><a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" data-target="#collapseTable"> <i class="icon-arrow"></i> Previously Defines {{CustSupM}} </a></h5>
+                                    </div>
+                                    <!--/.panel-heading-->
+
+                                    <div id="collapseTable" class="collapse">
+                                        <div class="panel-body panel-white">
+                                            <div class="col-md-12">
+                                                <div class="table-responsive">
+                                                    <div class="col-md-3 pull-left">
+                                                        <table class="table table-stylish">
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td class="center text-extra-large"><i class="ti-save"></i></td>
+                                                                    <td><span class="text-dark block">{{CustSupM}} Total :</span></td>
+                                                                    <td class="center">{{customerTotalCount}}</td>
+                                                                    <td class="center"><i class="fa fa-caret-down text-red"></i></td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+
+                                                    <div class="col-md-12">
+                                                        <table class="table  table-bordered table-hover table-full-width ps-scrollbar-x small  panel-full-screen  fc-scroller " style="height:150px;overflow:auto;" id="sample-table-2">
+                                                            <thead>
+                                                                <tr class="success">
+                                                                    <th class="hidden-xs center">#</th>
+                                                                    <th>{{CustSup}}Code</th>
+                                                                    <th>Arabic {{CustSup}} Name</th>
+                                                                    <th>Latin {{CustSup}} Name</th>
+                                                                    <th class="hidden-xs">{{CustSup}}Personal Account Code</th>
+                                                                    <th class="hidden-xs">{{CustSup}} Personal Account Name</th>
+                                                                    <th>Edit / Delete</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr ng-repeat="cust in customerList">
+                                                                    <td class="hidden-xs">{{ $index + 1 }}</td>
+                                                                    <td>{{ cust.CUST_CODE }}</td>
+                                                                    <td>{{ cust.CUST_AR_NAME }}</td>
+                                                                    <td>{{ cust.CUST_EN_NAME }}</td>
+                                                                    <td class="hidden-xs">{{ cust.Account.ACC_CODE }}</td>
+                                                                    <td class="hidden-xs">{{ cust.Account.ACC_AR_NAME }}</td>
+                                                                    <td>
+                                                                        <div class="visible-md visible-lg hidden-sm hidden-xs">
+                                                                            <a href="" ng-click="dirEnity(cust)" class="btn btn-transparent btn-xs" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fa fa-pencil"></i></a>
+                                                                            <a href="" ng-click="deleteEnity(cust)" class="btn btn-transparent btn-xs tooltips" data-toggle="tooltip" data-placement="top" title="Remove"><i class="fa fa-times fa fa-white"></i></a>
+                                                                        </div>
+                                                                        <div class="visible-xs visible-sm hidden-md hidden-lg">
+                                                                            <div class="btn-group dropdown">
+                                                                                <button type="button" class="btn btn-o btn-sm dropdown-toggle" data-toggle="dropdown">
+                                                                                    <i class="fa fa-cog"></i>&nbsp;<span class="caret"></span>
+                                                                                </button>
+                                                                                <ul class="dropdown-menu pull-right dropdown-light" role="menu">
+                                                                                    <li><a href="" ng-click="dirEnity(cust)"> Edit </a></li>
+                                                                                    <li><a href="" ng-click="deleteEnity(cust)"> Remove </a></li>
+                                                                                </ul>
+                                                                            </div>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                        <ul uib-pagination total-items="customerTotalCount" ng-model="pageNum" max-size="maxSize" class="pagination-sm" boundary-links="true" num-pages="numPages" ng-change="pageChanged()"></ul>
+                                                        <pre>Page {{pageNum}} / {{numPages}}</pre>
+                                                    </div>
+                                                    <!--/.col-md-12-->
+                                                </div>
+                                                <!--/.table-responsive-->
+                                            </div>
+                                            <!--/.col-md-12-->
+                                        </div>
+                                        <!--/.panel-body-->
+                                    </div>
+                                    <!--/.panel-collapse-->
+                                </div>
+                                <!--/.panel-->
+                            </div>
+                            <!--/.panel-group-->
+                        </div>
+                        <!--/.panel /.panel-white-->
+                    </div>
+                    <!--/.col-md-12-->
+                </div>
+                <!--/.row-->
+            </div>
+            <!--/.container-fluid-->
+        </div>
+        <!--/.wrap-content-->
+    </div>
+    <!--/.main-content-->
+</div>
+<!--/.app-content-->

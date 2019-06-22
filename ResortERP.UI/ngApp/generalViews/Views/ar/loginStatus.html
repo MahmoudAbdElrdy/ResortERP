@@ -1,0 +1,81 @@
+﻿            <div class="nav-user-wrapper">
+
+                <div class="media">
+
+
+                    <div ng-if="authentication.isAuth == true">
+
+
+                        <div class="media-left">
+                            <a class="profile-card-photo" href="#"><img alt="" src="/Content/assets/images/avatar-1.png"></a>
+                        </div>
+
+                        <div class="media-body">
+                            <!--<span class="media-heading text-white">@User.Identity.GetUserName()</span>-->
+                            <span class="media-heading text-white">{{authentication.userName}}</span>
+                            <div class="text-small text-white-transparent hello-message">
+                                مرحبا بك
+
+                            </div>
+                        </div>
+
+                        <div class="media-right media-middle">
+                           
+                            
+                            <div class="dropdown">
+                                <button href class="btn btn-transparent text-white dropdown-toggle" data-toggle="dropdown">
+                                    <i class="fa fa-caret-down"></i>
+                                </button>
+                                <ul class="dropdown-menu animated fadeInRight pull-right">
+                                    <li>
+                                        <a href="#/changePassword">تغيير كلمة المرور</a>
+                                    </li>
+                                    <li>
+                                        <a href="#/innerRegister">تسجيل جديد</a>
+                                    </li>
+                                    <li>
+                                        <a href="">إعدادات</a>
+                                    </li>
+                                    <li class="divider"></li>
+                                    <li>
+                                        <a href="" ng-click="logOut()">تسجيل الخروج</a>
+                                    </li>
+                                </ul>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div ng-if="authentication.isAuth == false || authentication.isAuth == undefined || authentication == null || authentication == undefined">
+                        <div class="media-left">
+                            <a class="profile-card-photo" href="#"><img alt="" src="/Content/assets/images/media-user.png"></a>
+                        </div>
+                        <div class="media-body">
+
+                            <span class="media-heading text-white">
+                                يجب تسجيل الدخول
+                            </span>
+                            <div class="text-small text-white-transparent">
+                                حتى يتسنى لك المتابعة
+                            </div>
+                        </div>
+                        <div class="media-right media-middle">
+                            <div class="dropdown">
+                                <button href class="btn btn-transparent text-white dropdown-toggle" data-toggle="dropdown">
+                                    <i class="fa fa-caret-down"></i>
+                                </button>
+                                <ul class="dropdown-menu animated fadeInRight pull-right">
+                                    <li><a href="">تسجيل مستخدم جديد</a></li>
+                                    <li><a href="">الدخول الي النظام</a></li>
+                                    <li class="divider"></li>
+                                    <li>
+                                        <a href="javascript:document.getElementById('logoutForm').submit()">تسجيل الخروج</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+         </div>
+
+                </div>
+            </div>

@@ -1,0 +1,161 @@
+﻿<div class="app-content">
+    <div class="main-content">
+        <div class="wrap-content container" id="container">
+            <div class="container-fluid container-fullw">
+
+                <div class="col-xs-12 margin-top-10 margin-bottom-10">
+                    <div class="breadcrumb-wrapper no-margin">
+                        <h4 class="mainTitle no-margin">حركة صندوق الذهب الكسر (سندات )</h4>
+                        <ul class="pull-right breadcrumb">
+                            <li><a href="#!"><i class="fa fa-home margin-left-5 text-large text-dark"></i>الرئيسية</a></li>
+                            <li>حركة صندوق الذهب الكسر (سندات )</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-xs-12 margin-bottom-10">
+                    <div class="panel-white panel-body no-margin">
+                        <button class="btn btn-o btn-default no-border" ng-click="fnExcelReport()" ng-show="show_print"> طباعة <i class="ti-printer"></i></button>
+                        <button class="btn btn-o btn-default no-border" ng-click="clearEnity()">جديد <i class="fa fa-refresh"></i></button>
+                        <button class="btn btn-o btn-default no-border" ng-click="GetSearchResult()"> بحث <i class="fa fa-search"></i> </button>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="panel-body panel-white">                      
+                        <!--<div class="row">-->
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>الحساب</label>
+                                <ui-select ng-model="var.ACC_ID" theme="bootstrap" id="cust_Acc_ID">
+                                    <ui-select-match placeholder="اختر الحساب">
+                                        {{$select.selected.ACC_AR_NAME}}
+                                    </ui-select-match>
+                                    <ui-select-choices repeat="value.ACC_ID as value in accountList | filter: $select.search">
+                                        <div ng-bind-html="value.ACC_AR_NAME | highlight: $select.search"></div>
+                                    </ui-select-choices>
+                                </ui-select>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <label>الفرع</label>
+                            <div ng-dropdown-multiselect="" extra-settings="dropdownSetting" class="form-control"
+                                 options="UserBranches" selected-model="SelectedBranch">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>
+                                    من تاريخ
+                                </label>
+                                <input type="date" name="firstName" ng-model="startDate" class="form-control" placeholder="من تاريخ">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="control-label">
+                                    إلى تاريخ
+                                </label>
+                                <input type="date" class="form-control" ng-model="endDate" placeholder="إلى تاريخ">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="panel">
+                        <div class="panel-group accordion" id="accordion">
+                            <div class="panel panel-white">
+                                <div class="panel-heading">
+                                    <h5 class="panel-title"><a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" data-target="#collapseTwo"> <i class="icon-arrow"></i> حساب عميل - ذهب المعرفة سابقاً </a></h5>
+                                </div>
+                                <div id="collapseTwo" class="collapse">
+                                    <div class="panel-body">
+                                        <div class="col-md-12">
+                                            <div class="table-responsive">
+
+                                                <table class="table table-bordered table-hover" id="sample-table-1">
+                                                    <thead>
+                                                        <tr class="warning">
+                                                            <th class="center">مسلسل</th>
+                                                            <th class="center">التاريخ</th>
+                                                            <th class="center">اسم السند</th>
+                                                            <th class="center">رقم السند</th>
+                                                            <th class="center">البيان</th>
+                                                            <th class="center">المناولة</th>
+
+                                                            <th class="center">24 مدين</th>
+                                                            <th class="center">24 دائن</th>
+                                                            <th class="center">الرصيد 24</th>
+
+                                                            <th class="center">22 مدين</th>
+                                                            <th class="center">22 دائن</th>
+                                                            <th class="center">الرصيد 22</th>
+
+                                                            <th class="center">21 مدين</th>
+                                                            <th class="center">21 دائن</th>
+                                                            <th class="center">الرصيد 21</th>
+
+                                                            <th class="center">18 مدين</th>
+                                                            <th class="center">18 دائن</th>
+                                                            <th class="center">الرصيد 18</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr ng-repeat="acc in entryMasterList">
+                                                            <td class="center">{{ $index + 1 }}</td>
+                                                            <td class="center">{{acc.DATE | date: "yyyy-MM-dd"}}</td>
+                                                            <td class="center">{{ acc.BILL_AR_NAME == null ? (acc.CHEET != null ? acc.CHEET : acc.NOTE) : acc.BILL_AR_NAME }}</td>
+                                                            <td class="center">{{acc.ENTRY_NUMBER }}</td>
+                                                            <td class="center">{{ acc.NOTE }}</td>
+                                                            <td class="center">{{ acc.BILL_REMARKS }}</td>
+
+                                                            <td class="center">{{ acc.CREDIT_Gold24 }}</td>
+                                                            <td class="center">{{ acc.DEBIT_Gold24 }}</td>
+                                                            <td class="center">{{ acc.BAL_Gold24 }}</td>
+
+                                                            <td class="center">{{ acc.CREDIT_Gold22 }}</td>
+                                                            <td class="center">{{ acc.DEBIT_Gold22 }}</td>
+                                                            <td class="center">{{ acc.BAL_Gold22 }}</td>
+
+                                                            <td class="center">{{ acc.CREDIT_Gold21 }}</td>
+                                                            <td class="center">{{ acc.DEBIT_Gold21 }}</td>
+                                                            <td class="center">{{ acc.BAL_Gold21 }}</td>
+
+                                                            <td class="center">{{ acc.CREDIT_Gold18 }}</td>
+                                                            <td class="center">{{ acc.DEBIT_Gold18 }}</td>
+                                                            <td class="center">{{ acc.BAL_Gold18 }}</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+
+                                            <ul uib-pagination total-items="currencyCount" ng-model="pageNum" max-size="maxSize" class="pagination" boundary-links="true" num-pages="numPages" ng-change="pageChanged()"></ul>
+                                            <pre>صفحه: {{pageNum}} / {{numPages}}</pre>
+                                        </div>
+                                        <!--/.col-md-12-->
+                                    </div>
+                                    <!--/.panel-body-->
+                                </div>
+                                <!--/.panel-collapse-->
+                            </div>
+                            <!--/.panel-->
+                        </div>
+                        <!--/.panel-group-->
+                    </div>
+                    <!--/.panel -->
+
+                </div>
+                <!--/.col-md-12-->
+            </div>
+            <!--/.container-fluid-->
+        </div>
+        <!--/.wrap-content-->
+    </div>
+    <!--/.main-content-->
+</div>
+<!--/.app-content-->
+
+<style>
+    .ui-select-toggle .ng-binding.ng-scope {
+        text-align: right;
+    }
+</style>

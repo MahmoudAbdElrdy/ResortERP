@@ -1,0 +1,204 @@
+﻿@{ ViewBag.Title = "Index"; }
+<div class="app-content">
+    <div class="main-content">
+        <div class="wrap-content container" id="container">
+            <div class="container-fluid container-fullw ">
+                <div class="col-xs-12 margin-top-10 margin-bottom-10">
+                    <div class="breadcrumb-wrapper no-margin">
+                        <h4 class="mainTitle no-margin">صفحة بحث مخازن الشركة</h4>
+                        <ul class="pull-right breadcrumb">
+                            <li>
+                                <a href="#!"><i class="fa fa-home margin-left-5 text-large text-dark"></i>الرئيسية</a>
+                            </li>
+                            <li>صفحة بحث مخازن الشركة</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-xs-12 actionBar">
+                    <div class="panel-white panel-body no-margin">
+                        <button class="btn btn-o btn-default no-border"> طباعة <i class="ti-printer"></i></button>
+                        <button class="btn btn-o btn-default no-border" ng-click="clearEnity()">جديد <i class="fa fa-refresh"></i></button>
+                        <button class="btn btn-o btn-default no-border" ng-click="GetSearchResult()"> بحث <i class="fa fa-search"></i> </button>
+                    </div>
+                </div>
+
+                <div class="col-md-4 margin-top-10">
+                    <div class="panel panel-white">
+                        <div class="panel-heading border-bottom">
+                            <div class="panel-title">تفاصيل</div>
+                        </div>
+                        <div class="panel-body min-height-350">
+                            <div class="col-xs-12">
+                                <div class="form-group">
+                                    <label>اسم الشركة</label>
+                                    <select name="companyName" ng-model="companyName" class="form-control" ng-options="x.COM_BRN_ID as x.COM_BRN_AR_NAME for x in userBranchList">
+                                        <option value="">اختر الشركة</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-xs-12" ng-hide="true">
+                                <div class="form-group">
+                                    <label>اسم المخزن</label>
+                                    <select id="storeName" ng-model="storeName" class="js-example-basic-hide-search js-states form-control" ng-options="x.COM_STORE_ID as x.COM_STORE_AR_NAME for x in compStoresList">
+                                        <option value="">اختر المخزن</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-xs-12" ng-hide="true">
+                                <div class="form-group">
+                                    <label class="control-label">مركز التكلفة</label>
+                                    <select id="storeName" ng-model="costCenter" class="js-example-basic-hide-search js-states form-control" ng-options="x.COST_CENTER_ID as x.COST_CENTER_AR_NAME for x in costCentersList">
+                                        <option value="">اختر مركز التكلفة</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-xs-6">
+                                <div class="form-group">
+                                    <label class="control-label">من تاريخ </label>
+                                    <input type="date" class="form-control" ng-model="fromDate" placeholder="من تاريخ">
+                                </div>
+                            </div>
+                            <div class="col-xs-6">
+                                <div class="form-group">
+                                    <label class="control-label">الي تاريخ</label>
+                                    <input type="date" class="form-control" ng-model="toDate" placeholder="الي تاريخ">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--/.col-md-4-->
+
+                <div class="col-md-4 no-padding col-xs-12 margin-top-10" style="min-height:270px;" ng-hide="true">
+                    <div class="panel panel-white ">
+                        <div class="panel-heading border-bottom">
+                            <div class="panel-title">الاسعار</div>
+                        </div>
+                        <div class="panel-body min-height-350">
+                            <div class="input-group">
+                                <div ng-repeat="sal in salesTypesList">
+                                    <div class="form-group checkbox clip-check check-primary">
+                                        <input type="checkbox" id="SELL_TYPE_AR_NAME{{$index}}" name="rad_customer" value="sal.SELL_TYPE_ID" />
+                                        <label for="SELL_TYPE_AR_NAME{{$index}}"> {{sal.SELL_TYPE_AR_NAME}} </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--/.panel-body-->
+                    </div>
+                    <!--/.panel .panel-white-->
+                </div>
+                <!--/.col-md-4-->
+
+                <div class="col-md-4 col-xs-12 margin-top-10">
+                    <div class="panel panel-white ">
+                        <div class="panel-heading border-bottom">
+                            <div class="panel-title">خيارات التقرير</div>
+                        </div>
+                        <div class="panel-body min-height-350">
+                            <form>
+                                <div class="checkbox clip-check check-primary">
+                                    <input type="checkbox" id="DisplayCompanies" name="rad_customer" value="sal.SELL_TYPE_ID">
+                                    <label for="DisplayCompanies"> عرض الشركات </label>
+                                </div>
+
+                                <div class="checkbox clip-check check-primary" ng-hide="true">
+                                    <input type="checkbox" id="DetailsWarehouses" name="rad_customer" value="sal.SELL_TYPE_ID">
+                                    <label for="DetailsWarehouses"> تفاصيل المخازن </label>
+                                </div>
+
+                                <div class="checkbox clip-check check-primary" ng-hide="true">
+                                    <input type="checkbox" id="ViewValidityDate" name="rad_customer" value="sal.SELL_TYPE_ID">
+                                    <label for="ViewValidityDate"> عرض تاريخ الصلاحية </label>
+                                </div>
+
+
+                                <div class="checkbox clip-check check-primary">
+                                    <input type="checkbox" id="ShowBalancesWorthZero" name="rad_customer" value="sal.SELL_TYPE_ID">
+                                    <label for="ShowBalancesWorthZero"> إظهار الارصدةالتي قيمتها صفر </label>
+                                </div>
+
+                            </form>
+                            <div class="form-group">
+                                <label class="control-label">ترتيب</label>
+                                <input type="text" class="form-control" ng-model="sort" placeholder="ترتيب">
+                            </div>
+                            <div class="form-group" ng-hide="true">
+                                <label class="control-label">سعر الجرد </label>
+                                <input type="text" class="form-control" ng-model="inventoryPrice" placeholder="سعر الجرد">
+                            </div>
+                        </div>
+                        <!--/.panel-body-->
+                    </div>
+                    <!--/.panel /.panel-white-->
+                </div>
+                <!--/.col-md-4-->
+
+
+
+                <div class="col-xs-12">
+                    <div class="panel-group accordion " id="accordion">
+                        <div class="panel panel-white">
+                            <div class="panel-heading">
+                                <h5 class="panel-title"><a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" data-target="#collapseTableTable"><i class="icon-arrow"></i> مخازن الشركة السابقه</a></h5>
+                            </div>
+                            <div id="collapseTableTable" class="collapse">
+                                <div class="panel-body">
+                                    <div class="col-md-12">
+                                        <div class="col-md-3 pull-left">
+                                            <table class="table table-stylish">
+                                                <tbody>
+                                                    <tr>
+                                                        <td class="center text-extra-large"><i class="ti-save"></i></td>
+                                                        <td><span class="text-dark block">إجمالي مخازن الشركة :</span></td>
+                                                        <td class="center">{{currencyCount}}</td>
+                                                        <td class="center"><i class="fa fa-caret-down text-red"></i></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="table-responsive col-xs-12">
+                                            <table class="table table-bordered table-hover" id="sample-table-1">
+                                                <thead>
+                                                    <tr class="success">
+                                                        <th class="center">مسلسل</th>
+                                                        <th class="center">كود العملة</th>
+                                                        <th class="center">اسم العملة العربى</th>
+                                                        <th class="center">اسم العملة اللاتينى</th>
+                                                        <th class="center">اسم جزء العملة العربى</th>
+                                                        <th class="center">اسم جزء العملة اللاتينى</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="cur in currencyList">
+                                                        <td class="center">{{$index+1}}</td>
+                                                        <td class="center"> {{cur.CURRENCY_CODE}} </td>
+                                                        <td class="center"><a href="#">{{cur.CURRENCY_AR_NAME}}</a></td>
+                                                        <td class="center">{{cur.CURRENCY_EN_NAME}}</td>
+                                                        <td class="center">{{cur.CURRENCY_SUB_AR_NAME}}</td>
+                                                        <td class="center">{{cur.CURRENCY_SUB_EN_NAME}}</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <ul uib-pagination total-items="currencyCount" ng-model="pageNum" max-size="maxSize" class="pagination" boundary-links="true" num-pages="numPages" ng-change="pageChanged()"></ul>
+                                        <pre>صفحه: {{pageNum}} / {{numPages}}</pre>
+                                    </div>
+                                </div>
+                                <!--/.panel-body-->
+                            </div>
+                            <!--/.panel-collapse-->
+                        </div>
+                        <!--/.panel-->
+                    </div>
+                </div>
+
+            </div>
+            <!--/.container-fluid-->
+        </div>
+        <!--/.wrap-content-->
+    </div>
+    <!--/.main-content-->
+</div>
+<!--/.app-content-->

@@ -1,0 +1,211 @@
+﻿<div class="app-content">
+    <div class="main-content">
+        <div class="wrap-content container" id="container">
+            <div class="container-fluid container-fullw ">
+                <div class="row">
+                    <form name="myForm">
+                        <div class="col-md-12">
+
+                            <ng-form id="test" name="test">
+                                <div class="panel-body panel-body panel-white">
+                                    <div class="col-md-12">
+
+
+                                        <div class="form-group col-md-6">
+                                            <label>الحساب الرئيسي:</label>
+                                            <select ng-model="account.PARENT_ACC_ID" class="js-example-basic-hide-search js-states form-control" ng-options="x.ACC_ID as x.ACC_AR_NAME for x in parentList" ng-change="getFinalAccByParentID()">
+                                                <option value="">اختر الحساب الرئيسي</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="form-group col-md-6">
+                                            <label>الحساب الختامي:</label>
+                                            <select ng-model="account.FINAL_ACC_ID" class="js-example-basic-hide-search js-states form-control" ng-options="x.ACC_ID as x.ACC_AR_NAME for x in finalList">
+                                                <option value=""> اختر الحساب الختامي</option>
+                                            </select>
+                                        </div>
+
+
+
+                                        <div ng-class="{'has-error': test.$invalid}" class="">
+
+                                            <div class="form-group col-md-6">
+                                                <label>الكود:</label><div class="help-block error" style="display:inline" ng-show="test.code.$error.required">*</div>
+                                                <input type="text" class="form-control" name="code" placeholder="الكود" ng-model="account.ACC_CODE" required>
+                                            </div>
+                                        </div>
+
+
+                                        <div ng-class="{'has-error': test.$invalid}" class="">
+                                            <div class="form-group col-md-6">
+                                                <label>اسم الحساب العربي:</label><div class="help-block error" style="display:inline" ng-show="test.arname.$error.required">*</div>
+                                                <input type="text" class="form-control" name="arname" placeholder="اسم الحساب العربي" ng-model="account.ACC_AR_NAME" required>
+                                            </div>
+                                        </div>
+
+                                        <div ng-class="{'has-error': test.$invalid}" class="form-group">
+                                            <div class="form-group col-md-6">
+                                                <label>اسم الحساب بالانجليزي:</label><div class="help-block error" style="display:inline" ng-show="test.enname.$error.required">*</div>
+                                                <input type="text" class="form-control" name="enname" placeholder="اسم الحساب بالانجليزي" ng-model="account.ACC_EN_NAME" required>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="form-group">
+                                            <div class="form-group col-md-6">
+                                                <label>النوع:</label>
+                                                <div class="help-block error" style="display:inline" ng-show="test.acctype.$error.required">*</div>
+                                                <select ng-model="account.ACC_TYPE_ID" name="acctype" class="js-example-basic-hide-search js-states form-control" ng-options="x.ACC_TYPE_ID as x.ACC_TYPE_AR_NAME for x in accountTypesList" required>
+                                                    <option value="">اختر النوع</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+
+                                        <!--<div class="form-group">
+                                            <div class="form-group col-md-6">
+                                                <label>تاريح الحساب:</label>
+                                                <input type="date" class="form-control" name="accdate" placeholder="تاريخ الحساب" ng-model="account.ACC_DATE">
+                                            </div>
+                                        </div>-->
+                                        <!--<div class="form-group">
+                                            <div class="form-group col-md-6">
+                                                <label>تاريخ الشيك:</label>
+                                                <input type="date" class="form-control" name="check" placeholder="تاريخ الشيك" ng-model="account.ACC_CHECK_DATE">
+                                            </div>
+                                        </div>-->
+                                        <div class="form-group">
+                                            <div class="form-group col-md-6">
+                                                <label>طبيعه الحساب:</label>
+                                                <select ng-model="account.ACC_STATE" name="state" class="js-example-basic-hide-search js-states form-control" ng-options="x.stateId as x.stateName for x in stateList">
+                                                    <option value="">اختر طبيعه الحساب</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <!--<div class="form-group">
+                                            <div class="form-group col-md-6">
+                                                <label>العمله:</label>
+                                                <select ng-model="account.CURRENCY_ID" name="currency" class="js-example-basic-hide-search js-states form-control" ng-options="x.CURRENCY_ID as x.CURRENCY_AR_NAME for x in currencyList" ng-change="getCurrencyRate()">
+                                                    <option value="">اختر العمله</option>
+                                                </select>
+                                            </div>
+                                        </div>-->
+                                        <!--<div class="form-group">
+                                            <div class="form-group col-md-6">
+                                                <label>الدائن:</label>
+                                                <input type="text" name="credit" class="form-control" placeholder="الدائن" ng-model="account.ACC_CREDIT">
+                                            </div>
+                                        </div>-->
+                                        <!--<div class="form-group">
+                                            <div class="form-group col-md-6">
+                                                <label>المدين:</label>
+                                                <input type="text" name="depit" class="form-control" placeholder="المدين" ng-model="account.ACC_DEBIT">
+                                            </div>
+                                        </div>-->
+                                        <!--<div class="form-group">
+                                            <div class="form-group col-md-6">
+                                                <label>التحذيرات:</label>
+                                                <select ng-model="account.ACC_DEBIT_OR_CREDIT_OR_WITHOUT" name="warning" class="js-example-basic-hide-search js-states form-control" ng-options="x.warningId as x.warningName for x in wariningList">
+                                                    <option value="">اختر التحذير</option>
+                                                </select>
+                                            </div>
+                                        </div>-->
+                                        <!--<div class="form-group col-md-6">
+                                            <label>نسبه الضريبه:</label>
+                                            <input type="text" class="form-control" placeholder="نسبه الضريبه" ng-model="account.VATRate">
+                                        </div>
+
+
+                                        <div class="form-group col-md-6">
+                                            <label>الحد الاقصي للدائن:</label>
+                                            <input type="text" class="form-control" placeholder="الحد الاقصي للدائن" ng-model="account.ACC_MAX_CREDIT">
+                                        </div>
+
+                                        <div class="form-group col-md-6">
+                                            <label>الحد الاقصي للمدين:</label>
+                                            <input type="text" class="form-control" placeholder="الحد الاقصي للمدين" ng-model="account.ACC_MAX_DEBIT">
+                                        </div>
+
+
+                                        <div class="form-group col-md-6">
+                                            <label>رصيد افتتاحي للدائن:</label>
+                                            <input type="text" class="form-control" placeholder="رصيد افتتاحي للدائن" ng-model="account.CreditOpeningAccount">
+                                        </div>
+
+                                        <div class="form-group col-md-6">
+                                            <label>رصيد افتتاحي للمدين:</label>
+                                            <input type="text" class="form-control" placeholder="رصيد افتتاحي للمدين" ng-model="account.DepitOpeningAccount">
+                                        </div>
+
+
+
+                                        <div class="form-group col-md-6">
+                                            <label>ملاحظات:</label>
+                                            <input type="text" class="form-control" placeholder="ملاحظات" ng-model="account.ACC_REMARKS">
+                                        </div>-->
+                                        <!--<div class="checkbox col-md-3 margin-top-30">
+                                            <div class="checkbox clip-check check-primary checkbox-inline">
+                                                <input type="checkbox" id="deactive" ng-model="account.Deactivate">
+                                                <label for="deactive"> تعطيل</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="checkbox col-md-3 margin-top-30">
+                                            <div class="checkbox clip-check check-primary checkbox-inline">
+                                                <input type="checkbox" id="checkbox1" ng-model="account.SubjectToVAT">
+                                                <label for="checkbox1"> خاضع  للضريبه</label>
+                                            </div>
+                                        </div>-->
+                                        <!--<div class="form-group">
+                                            <div class="form-group col-md-6">
+                                                <label>الفرع الخاص بالحساب:</label>
+                                                <select ng-model="account.Company_Branch_ID" name="branch_Id" class="js-example-basic-hide-search js-states form-control" ng-options="x.COM_BRN_ID as x.COM_BRN_AR_NAME for x in branchesList">
+                                                    <option value="">اختر الفرع الخاص بالحساب</option>
+                                                </select>
+                                            </div>
+                                        </div>-->
+                                        <!--<div class="col-md-12">
+                                            <div class="space12 text-left">
+                                                <div class="btn-group">
+                                                    <button class="btn btn-primary">
+                                                        <i class="fa fa-step-forward"></i>
+                                                    </button>
+                                                    <button class="btn btn-primary">
+                                                        <i class="fa fa-chevron-right"></i>
+                                                    </button>
+                                                    <button class="btn btn-primary">
+                                                        <i class="fa fa-chevron-left"></i>
+                                                    </button>
+                                                    <button class="btn btn-primary">
+                                                        <i class="fa fa-step-backward"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+
+                                        </div>-->
+                                        <!--<div class="col-md-12">
+
+
+
+                                        </div>-->
+                                    </div>
+
+                                    <div class="col-md-12 margin-bottom-25 text-center">
+                                        <button type="button" class="btn btn-primary btn-wide  margin-top-10" ng-disabled="test.$invalid" ng-click="saveAccount()">حفظ&nbsp;&nbsp;<i class="fa fa-save"></i></button>
+                                        <button type="button" class="btn btn-wide btn-success margin-top-10 " ng-click="refreshData()">تحديث&nbsp;&nbsp;<i class="fa fa-refresh"></i></button>
+                                        <button type="button" class="btn btn-wide btn-info   margin-top-10" ng-click="clearEnity()">جديد&nbsp;&nbsp;<i class="fa fa-paste"></i></button>
+
+                                    </div>
+
+                                </div>
+                            </ng-form>
+
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,136 @@
+﻿<div class="app-content">
+    <div class="main-content">
+        <div class="wrap-content container" id="container">
+            <div class="container-fluid container-fullw">
+                <div class="col-xs-12 margin-top-10 margin-bottom-10">
+                    <div class="breadcrumb-wrapper no-margin">
+                        <h4 class="mainTitle no-margin">تعريف وحدة</h4>
+                        <ul class="pull-right breadcrumb">
+                            <li><a href="#!"><i class="fa fa-home margin-left-5 text-large text-dark"></i>الرئيسية</a></li>
+                            <li>تعريف وحدة</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-xs-12 margin-bottom-10">
+                    <div class="panel-white panel-body no-margin">
+                        <button type="button" class="btn btn-o btn-default no-border"  ng-disabled="test.$invalid" ng-click="saveUnitsGroup()"><i class="fa fa-save"></i><span>حفظ</span></button>
+                        <button type="button" class="btn btn-o btn-default no-border" ng-click="refreshData()"><i class="fa fa-refresh"></i><span>تحديث</span></button>
+                        <button type="button" class="btn btn-o btn-default no-border" ng-click="clearEnity()"><i class="fa fa-paste"></i><span>جديد</span></button>
+                    </div>
+                </div>
+
+
+                
+                    <div class="col-md-12">
+                        <div class="panel">
+                            <div class="panel-body panel-white">
+                                <ng-form id="test" name="test">
+                                    <div class="col-md-12">
+                                        <div ng-class="{'has-error': test.$invalid}" class="">
+                                            <div class="form-group col-md-6">
+                                                <label>كود الوحدة:</label>
+                                                <div class="help-block error" style="display:inline" ng-show="test.code.$error.required">*</div>
+                                                <input type="text" name="code" class="form-control" placeholder="الكود" readonly ng-model="units.UNIT_CODE" required>
+                                            </div>
+                                        </div>
+                                        <div ng-class="{'has-error': test.$invalid}" class="form-group">
+                                            <div class="form-group col-md-6">
+                                                <label>اسم الوحدة العربى:</label>
+                                                <div class="help-block error" style="display:inline" ng-show="test.arname.$error.required">*</div>
+                                                <input type="text" class="form-control" name="arname" placeholder="اسم الوحدة العربى" ng-model="units.UNIT_AR_NAME" required>
+                                            </div>
+                                        </div>
+                                        <div ng-class="{'has-error': test.$invalid}" class="form-group">
+                                            <div class="form-group col-md-6">
+                                                <label>اسم الوحدة اللاتينى:</label>
+                                                <div class="help-block error" style="display:inline" ng-show="test.enname.$error.required">*</div>
+                                                <input type="text" class="form-control" name="enname" placeholder="اسم الوحدة اللاتينى" ng-model="units.UNIT_EN_NAME" required>
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label>ملاحظات:</label>
+                                            <input type="text" class="form-control" placeholder="ملاحظات" ng-model="units.UNIT_REMARKS">
+                                        </div>
+                                    </div>
+                                </ng-form>
+                            </div>
+                            <!--/.panel-body--><div class="clearfix"></div>
+<div class="panel-group accordion" id="accordion">
+    <div class="panel panel-white">
+        <div class="panel-heading">
+            <h5 class="panel-title"><a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" data-target="#collapseTwo"> <i class="icon-arrow"></i> الوحدات المعرفة مسبقاً </a></h5>
+        </div>
+        <div id="collapseTwo" class="panel-collapse collapse">
+
+            <div class="panel-body panel-white">
+                <div class="col-md-12">
+                    <table class="table table-bordered table-hover center margin-top-15">
+                        <thead>
+                            <tr class="success">
+                                <th class="center text-extra-large"><i class="ti-arrow-down"></i></th>
+                                <th class="center"> كود الوحدة </th>
+                                <th class="center">اسم الوحدة</th>
+                                <th class="center">اسم الوحدة اللاتينى</th>
+                                <th class="center">ملاحظات</th>
+                                <th>تعديل / حذف</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="unit in unitsList">
+                                <td class="hidden-xs">{{ $index + 1 }}</td>
+                                <td>{{ unit.UNIT_CODE }}</td>
+                                <td>{{ unit.UNIT_AR_NAME }}</td>
+                                <td>{{ unit.UNIT_EN_NAME }}</td>
+                                <td class="hidden-xs">{{ unit.UNIT_REMARKS }}</td>
+                                <td class="center">
+                                    <div class="visible-md visible-lg hidden-sm hidden-xs">
+                                        <a href="" ng-click="dirEnity(unit)" class="btn btn-transparent btn-xs" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fa fa-pencil"></i></a>
+                                        <a ng-click="deleteEnity(unit)" class="btn btn-transparent btn-xs tooltips" data-toggle="tooltip" data-placement="top" title="Remove"><i class="fa fa-times fa fa-white"></i></a>
+                                    </div>
+                                    <div class="visible-xs visible-sm hidden-md hidden-lg">
+                                        <div class="btn-group dropdown ">
+                                            <button type="button" class="btn btn-o btn-sm dropdown-toggle" data-toggle="dropdown">
+                                                <i class="fa fa-cog"></i>&nbsp;<span class="caret"></span>
+                                            </button>
+                                            <ul class="dropdown-menu pull-right dropdown-light" role="menu">
+                                                <li>
+                                                    <a href="" ng-click="dirEnity(unit)"> تعديل </a>
+                                                </li>
+                                                <li>
+                                                    <a href="" ng-click="deleteEnity(unit)"> حذف </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <ul uib-pagination total-items="unitsTotalCount" ng-model="pageNum" max-size="maxSize" class="pagination-sm" boundary-links="true" num-pages="numPages" ng-change="pageChanged()"></ul>
+
+                    <pre>صفحه: {{pageNum}} / {{numPages}}</pre>
+                </div>
+                <!--/.col-md-12-->
+            </div>
+            <!--/.panel-body-->
+        </div>
+        <!--/.panel-collapse-->
+    </div>
+    <!--/.panel-->
+</div>
+<!--/.panel-group-->
+                         
+                        </div>
+                        <!--/.panel-->
+                    </div>
+                    <!--/.col-md-12-->
+                
+            </div>
+            <!--/.container-fluid-->
+        </div>
+        <!--/.wrap-content-->
+    </div>
+    <!--/.main-content-->
+</div>
+<!--/.app-content-->

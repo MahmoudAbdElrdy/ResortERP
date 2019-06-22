@@ -1,0 +1,162 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head>
+    <title>Grids - Tooltip</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="../../css/samples.css" />
+    <link rel="stylesheet" href="../../css/integralui.css" />
+    <link rel="stylesheet" href="../../css/integralui.treegrid.css" />
+    <link rel="stylesheet" href="../../css/integralui.tooltip.css" />
+    <link rel="stylesheet" href="../../css/themes/theme-flat-blue.css" id="theme" />
+    <script type="text/javascript" src="../theme.selector.min.js"></script>
+    <script type="text/javascript" src="../../external/angular.min.js"></script>
+    <script type="text/javascript" src="../../js/angular.integralui.min.js"></script>
+    <script type="text/javascript" src="../../js/angular.integralui.lists.min.js"></script>
+    <script type="text/javascript" src="../../js/angular.integralui.treegrid.min.js"></script>
+    <script type="text/javascript" src="../../js/angular.integralui.tooltip.min.js"></script>
+    <script type="text/javascript">
+ 		angular
+			.module("appModule", ["integralui"])
+			.controller("appCtrl", ["$scope", "IntegralUITreeGridService", "$timeout", function($scope, $gridService, $timeout){
+				$scope.gridName = "gridSample";
+				
+				// Initilaize the Theme Selector for this sample
+                initTheme($scope, $gridService, $scope.gridName);
+
+				$scope.columns = [
+					{ name: 'Column1', headerText: 'Header1', width: 200 },
+					{ name: 'Column2', headerText: 'Header2', width: 250 },
+					{ name: 'Column3', headerText: 'Header3', width: 120 }
+				];
+
+				$scope.rows = [
+					{ 
+						id: 1,
+						text: "Item1",
+						cells: [{ text: "Item11" }, { text: "Item12" }, { text: "Item13" }],
+						rows: [
+							{ id: 11, pid: 1, text: "Item11", cells: [{ text: "Item111" }, { text: "Item112" }, { text: "Item113" }] },
+							{ 
+								id: 12,
+								pid: 1,
+								text: "Item12",
+								cells: [{ text: "Item121" }, { text: "Item122" }, { text: "Item123" }],
+								rows: [
+									{ id: 121, pid: 12, text: "Item121", cells: [{ text: "Item1211" }, { text: "Item1212" }, { text: "Item1213" }] },
+									{ 
+										id: 122,
+										pid: 12,
+										text: "Item122", 
+										cells: [{ text: "Item1221" }, { text: "Item1222" }, { text: "Item1223" }],
+										expanded: false,
+										rows: [
+											{ id: 1221, pid: 122, text: "Item1221", cells: [{ text: "Item12211" }, { text: "Item12212" }, { text: "Item12213" }] },
+											{ id: 1222, pid: 122, text: "Item1222", cells: [{ text: "Item12221" }, { text: "Item12222" }, { text: "Item12223" }] }
+										]
+									},
+									{ id: 123, pid: 12, text: "Item123", cells: [{ text: "Item1231" }, { text: "Item1232" }, { text: "Item1233" }] }
+								]
+							},
+							{ id: 13, pid: 1, text: "Item13", cells: [{ text: "Item131" }, { text: "Item132" }, { text: "Item133" }] },
+							{
+								id: 14,
+								pid: 1,
+								text: "Item14",
+								cells: [{ text: "Item141" }, { text: "Item142" }, { text: "Item143" }],
+								expanded: false,
+								rows: [
+									{ id: 141, pid: 14, text: "Item141", cells: [{ text: "Item1411" }, { text: "Item1412" }, { text: "Item1413" }] },
+									{ id: 142, pid: 14, text: "Item142", cells: [{ text: "Item1421" }, { text: "Item1422" }, { text: "Item1423" }] }
+								]
+							}
+						]
+					},
+					{
+						id: 2,
+						text: "Item2",
+						cells: [{ text: "Item21" }, { text: "Item22" }, { text: "Item23" }],
+						rows: [
+							{ id: 21, pid: 2, text: "Item21", cells: [{ text: "Item211" }, { text: "Item212" }, { text: "Item213" }] },
+							{ id: 22, pid: 2, text: "Item22", cells: [{ text: "Item221" }, { text: "Item222" }, { text: "Item223" }] },
+							{
+								id: 23,
+								pid: 2,
+								text: "Item23", 
+								cells: [{ text: "Item231" }, { text: "Item232" }, { text: "Item233" }],
+								expanded: false,
+								rows: [
+									{ id: 231, pid: 23, text: "Item231", cells: [{ text: "Item2311" }, { text: "Item2312" }, { text: "Item2313" }] },
+									{ id: 232, pid: 23, text: "Item232", cells: [{ text: "Item2321" }, { text: "Item2322" }, { text: "Item2323" }] }
+								]
+							}
+						]
+					},
+					{ id: 3, text: "Item3", cells: [{ text: "Item31" }, { text: "Item32" }, { text: "Item33" }] }
+				];
+
+				var initTimer = $timeout(function(){
+					// Set tooltip for columns
+					for (var j = 0; j < $scope.columns.length; j++)
+						$scope.columns[j].headerTooltip = { title: $scope.columns[j].headerText }
+
+					// Set tooltip for row cells
+					var list = $gridService.getFlatList($scope.gridName, true);
+					for (var i = 0; i < list.length; i++)
+						for (var j = 0; j < list[i].cells.length; j++)
+							list[i].cells[j].tooltip = { title: list[i].cells[j].text }
+
+					$timeout.cancel(initTimer);
+				}, 1);
+
+			}]);
+    </script>
+    <style type="text/css">
+		.control-panel
+		{
+			margin-left: 35px;
+			width: 250px;
+		}
+		.feature-content
+		{
+			width: 900px;
+		}
+        .directive
+        {
+        	border: thin solid #dadada;
+        	width: 600px;
+        	height: 350px;
+        }
+        .iui-tooltip
+        {
+            font-size: 0.75em;
+        }
+    </style>
+</head>
+<body ng-app="appModule" ng-controller="appCtrl">
+	<div class="header">
+        <div class="header-block">
+            <div class="header-content">
+    		    <h1><span style="color:#c60d0d">IntegralUI</span> Web <span style="font-size:0.75em; font-style:italic">for AngularJS</span></h1>
+            </div>
+            <div class="theme-selector"><label>Active Theme: <select class="theme-combo" ng-model="selTheme" ng-options="theme.name for theme in themeList"></select></label></div>
+        </div>
+        <hr class="head-separator" />
+    </div>
+    <div class="content">
+        <div class="feature">
+	        <h2 class="feature-title">Grids / Tooltip</h2>
+	        <div class="feature-content">
+                <iui-treegrid name="{{gridName}}" class="directive" columns="columns" rows="rows" show-footer="false" allow-focus="false"></iui-treegrid>
+                <br style="clear:both;"/>
+                <div class="feature-help">
+                    <p><span class="initial-space"></span>In this sample you can see how to attach a tooltip to column headers and row cells in the TreeGrid directive.</p>
+                    <p><span class="initial-space"></span>Whenever a mouse cursor enters the column header title or a row cell space, a tooltip will appear. To simplify this example, the default tooltip settings are used and only the tooltip title is set.</p>
+                    <p><span class="initial-space"></span>We are using the <a href="../tooltip/overview.html">IntegralUI Tooltip</a> directive to apply a tooltip to TreeGrid columns and rows. To apply a tooltip to column either use the <span style="color:#c60d0d">headerTooltip</span> or <span style="color:#c60d0d">footerTooltip</span> field, for grid cells use the <span style="color:#c60d0d">tooltip</span> field. These fields accepts an object with all options that determines the appearance and behavior of the tooltip.</p>
+                    <p><span class="initial-space"></span>In our example, all tooltips are set after the initial data is set. You can attach/detach a tooltip or change its settings at any time, changes are applied automatically.</p>
+               </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

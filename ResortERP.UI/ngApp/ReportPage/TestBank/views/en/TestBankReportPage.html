@@ -1,0 +1,145 @@
+﻿@{ ViewBag.Title = "Index"; }
+<div class="app-content">
+    <div class="main-content">
+        <div class="wrap-content container" id="container">
+            <div class="container-fluid container-fullw">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="panel">
+                            <!-- start: PAGE TITLE -->
+                            <div class="panel-heading border-bottom">
+                                <h4 class="panel-title">Currency Search Page</h4>
+                                <div class="panel-tools">
+                                    <a class="btn btn-transparent btn-sm panel-refresh" data-original-title="Refresh" data-placement="top" data-toggle="tooltip" data-trigger="hover" href="#"><i class="fa fa-circle-o"></i></a> <a class="btn btn-transparent btn-sm panel-expand" data-original-title="Expand" data-placement="top" data-toggle="tooltip" data-trigger="hover" href="#"><i class="fa fa-compress expand-on"></i><i class="fa fa-expand expand-off"></i></a>
+                                </div>
+                            </div>
+                            <!--/.panel-heading-->
+                            <!-- start: SEARCH RESULT -->
+                            <div class="panel-body panel-white">
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-lg-6 col-md-6 col-sm-3 col-xs-6">
+                                            <div class="form-group">
+                                                <label>Currency Code</label>
+                                                <input type="text" name="firstName" ng-model="currency.CURRENCY_CODE" class="form-control" placeholder=" Currency Code">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-md-6 col-sm-3 col-xs-6">
+                                            <div class="form-group">
+                                                <label>Currency Rate</label>
+                                                <input type="number" name="firstName" ng-model="currency.CURRENCY_RATE" class="form-control" placeholder="Currency Rate">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-md-6 col-sm-3 col-xs-6">
+                                            <div class="form-group">
+                                                <label class="control-label">Currency Arabic Name</label>
+                                                <input type="text" class="form-control" ng-model="currency.CURRENCY_AR_NAME" placeholder="Currency Arabic Name">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-md-6 col-sm-3 col-xs-6">
+                                            <div class="form-group">
+                                                <label class="control-label">Currency Latin Name</label>
+                                                <input type="text" class="form-control" ng-model="currency.CURRENCY_EN_NAME" placeholder="Currency Latin Name">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-md-6 col-sm-3 col-xs-6">
+                                            <div class="form-group">
+                                                <label class="control-label">Currency Sub Arabic Name</label>
+                                                <input type="text" class="form-control" ng-model="currency.CURRENCY_SUB_AR_NAME" placeholder="Currency Sub Arabic Name">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-md-6 col-sm-3 col-xs-6">
+                                            <div class="form-group">
+                                                <label class="control-label">Currency Sub Latin Name</label>
+                                                <input type="text" class="form-control" ng-model="currency.CURRENCY_SUB_EN_NAME" placeholder="Currency Sub Latin Name">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 my-btn-group margin-bottom-25 margin-top-15 center">
+                                            <button class="btn btn-primary margin-right-10 margin-top-10"> Print <i class="ti-printer"></i></button>
+                                            <button class="btn btn-default margin-right-10 margin-top-10" ng-click="clearEnity()">New <i class="fa fa-refresh"></i></button>
+                                            <button class="btn btn-primary margin-right-10 margin-top-10" ng-click="GetSearchResult()"> Search <i class="fa fa-search"></i> </button>
+                                        </div>
+                                    </div>
+
+
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="panel">
+                            <div class="panel-group accordion" id="accordion">
+                                <div class="panel panel-white">
+                                    <div class="panel-heading">
+                                        <h5 class="panel-title"><a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" data-target="#collapseTwo"> <i class="icon-arrow"></i>Prviously Added Currency </a></h5>
+                                    </div>
+                                    <div id="collapseTwo" class="collapse">
+                                        <div class="panel-body">
+                                            
+                                                <div class="table-responsive">
+                                                    <div class="col-md-3 pull-left">
+                                                        <table class="table table-stylish">
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td class="center text-extra-large"><i class="ti-save"></i></td>
+                                                                    <td><span class="text-dark block">Currencies Total :</span></td>
+                                                                    <td class="center">{{currencyCount}}</td>
+                                                                    <td class="center"><i class="fa fa-caret-down text-red"></i></td>
+                                                                </tr>
+
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+
+                                                    <div class="col-md-12">
+                                                        <table class="table table-bordered table-hover" id="sample-table-1">
+                                                            <thead>
+                                                                <tr class="success">
+                                                                    <th class="center">ID</th>
+                                                                    <th class="center">Currency Code</th>
+                                                                    <th class="center">Currency Arabic Name </th>
+                                                                    <th class="center">Currency Latin Name </th>
+                                                                    <th class="center">Currency Sub Arabic Name</th>
+                                                                    <th class="center">Currency Sub Lat Name</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr ng-repeat="cur in currencyList" class="center">
+                                                                    <td class="center">{{$index+1}}</td>
+                                                                    <td class="center"> {{cur.CURRENCY_CODE}} </td>
+                                                                    <td class="center"><a href="#">{{cur.CURRENCY_AR_NAME}}</a></td>
+                                                                    <td class="center">{{cur.CURRENCY_EN_NAME}}</td>
+                                                                    <td class="center">{{cur.CURRENCY_SUB_AR_NAME}}</td>
+                                                                    <td class="center">{{cur.CURRENCY_SUB_EN_NAME}}</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                               
+                                                <ul uib-pagination total-items="currencyCount" ng-model="pageNum" max-size="maxSize" class="pagination" boundary-links="true" num-pages="numPages" ng-change="pageChanged()"></ul>
+                                                <pre>Page : {{pageNum}} / {{numPages}}</pre>
+                                            </div>
+                                            <!--/.col-md-12-->
+                                        </div>
+                                        <!--/.panel-body-->
+                                    </div>
+                                    <!--/.panel-collapse-->
+                                </div>
+                                <!--/.panel-->
+                            </div>
+                            <!--/.panel-group-->
+                        </div>
+                        <!--/.panel /.panel-white-->
+
+                    </div>
+                    <!--/.col-md-12-->
+                </div>
+                <!--/.row-->
+            </div>
+            <!--/.container-fluid-->
+        </div>
+        <!--/.wrap-content-->
+    </div>
+    <!--/.main-content-->
+</div>
+<!--/.app-content-->

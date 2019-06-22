@@ -1,0 +1,78 @@
+﻿<div class="app-content">
+    <div class="main-content">
+        <div class="wrap-content container" id="container">
+            <div class="container-fluid container-fullw ">
+                <div class="row">
+                    <form name="myForm">
+                        <div class="col-md-12">
+                            <div class="panel " style="height:100%;overflow:auto;">
+                                <div class="panel-heading border-bottom  panel-white ">
+                                    <h4 class="panel-title">
+                                        شجرة الحسابات
+                                    </h4>
+                                    <div class="panel-tools">
+                                        <a data-original-title="Refresh" data-toggle="tooltip" data-placement="top" data-trigger="hover" class="btn btn-transparent btn-sm panel-refresh" href="#"><i class="fa fa-circle-o"></i></a>
+                                        <a data-original-title="Expand" data-toggle="tooltip" data-placement="top" data-trigger="hover" class="btn btn-transparent btn-sm panel-expand" href="#"><i class="fa fa-compress expand-on"></i><i class="fa fa-expand expand-off"></i></a>
+                                    </div>
+                                </div>
+                                <ng-form id="test" name="test">
+                                    <div class="panel-body panel-body panel-white">
+                                        <div class="col-md-6">
+                                            <div class="panel panel-white">
+                                                <div class="panel-heading">
+                                                    <h4 class="panel-title">Basic <span class="text-bold">Tree</span></h4>
+                                                </div>
+                                                <div class="panel-body">
+                                                    <div id="tree" class="tree-demo">
+                                                        <ul>
+                                                            <li>
+                                                                Root node 1
+                                                                <ul>
+                                                                    <li data-jstree='{ "selected" : true }'>
+                                                                        <a href="#"> Initially selected </a>
+                                                                    </li>
+                                                                    <li data-jstree='{ "icon" : "fa fa-briefcase text-green " }'>
+                                                                        custom icon URL
+                                                                    </li>
+                                                                    <li data-jstree='{ "opened" : true }'>
+                                                                        initially open
+                                                                        <ul>
+                                                                            <li data-jstree='{ "disabled" : true }'>
+                                                                                Disabled Node
+                                                                            </li>
+                                                                            <li data-jstree='{ "type" : "file" }'>
+                                                                                Another node
+                                                                            </li>
+                                                                        </ul>
+                                                                    </li>
+                                                                    <li data-jstree='{ "icon" : "fa fa-warning text-red" }'>
+                                                                        Custom icon class (bootstrap)
+                                                                    </li>
+                                                                </ul>
+                                                            </li>
+                                                            <li data-jstree='{ "type" : "file" }'>
+                                                                <a href="http://www.jstree.com"> Clickanle link node </a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </ng-form>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+     <script>
+        jQuery(document).ready(function () {
+            Main.init();
+            UITreeview.init();
+        });
+</script>
+</script>

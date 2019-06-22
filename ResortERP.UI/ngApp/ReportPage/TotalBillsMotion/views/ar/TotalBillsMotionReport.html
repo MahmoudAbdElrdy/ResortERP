@@ -1,0 +1,623 @@
+﻿@{ ViewBag.Title = "Index"; }
+<style>
+    .searchBoxInput {
+        border: 1px solid;
+        border-radius: 4px;
+        width: 100%;
+        position: relative;
+    }
+
+    .searchButtonInsideText {
+        position: relative;
+        margin: -25px 0px 1px 11px;
+        float: left;
+        background: none;
+        border: 0;
+    }
+
+    .searchButtonInsideText:hover {
+        color: black;
+    }
+</style>
+<div class="app-content">
+    <div class="main-content">
+        <div class="wrap-content container" id="container">
+            <div class="container-fluid container-fullw">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="panel">
+
+                            <div class="panel-heading border-bottom">
+                                <h4 class="panel-title">صفحة بحث حركة الفواتير</h4>
+                                <div class="panel-tools">
+                                    <a class="btn btn-transparent btn-sm panel-refresh" data-original-title="Refresh" data-placement="top" data-toggle="tooltip" data-trigger="hover" href="#"><i class="fa fa-circle-o"></i></a> <a class="btn btn-transparent btn-sm panel-expand" data-original-title="Expand" data-placement="top" data-toggle="tooltip" data-trigger="hover" href="#"><i class="fa fa-compress expand-on"></i><i class="fa fa-expand expand-off"></i></a>
+                                </div>
+                            </div>
+                            <!--Start Panel Body -->
+
+                            <div class="panel-body panel-white">
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-12 col-sm-12">
+                                            <div class="panel panel-white min-height-270">
+                                                <div class="panel-body">
+                                                    <div class="col-md-4">
+                                                        <label>الفرع</label>
+                                                        <div ng-dropdown-multiselect="" extra-settings="dropdownSetting" class="form-control"
+                                                             options="UserBranches" selected-model="SelectedBranch"></div>                                                    </div>
+                                                    <div class="col-md-4 col-sm-12">
+                                                        <div class="form-group">
+                                                            <label>العميل</label>
+                                                            <input type="text" ng-model="search.customerName" placeholder="العميل" class="searchBoxInput" press-enter="searchForCustomer()" autofocus required>
+                                                            <button ng-click="searchForCustomer()" class="searchButtonInsideText"><span class="glyphicon glyphicon-search "></span></button>
+                                                        </div>
+                                                    </div>
+                                                    <div ng-hide="true" class="col-md-4 col-sm-12">
+                                                        <div class="form-group">
+                                                            <label>المخزن</label>
+                                                            <input type="text" ng-model="search.storeName" placeholder="المخزن" class="searchBoxInput" press-enter="searchForStore()">
+                                                            <button ng-click="searchForStore()" class="searchButtonInsideText"><span class="glyphicon glyphicon-search "></span></button>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4 col-sm-12">
+                                                        <div class="form-group">
+                                                            <label class="control-label">البائع</label>
+                                                            <input type="text" ng-model="search.EmployeeName" placeholder="البائع" class="searchBoxInput" press-enter="searchForEmployee()">
+                                                            <button ng-click="searchForEmployee()" class="searchButtonInsideText"><span class="glyphicon glyphicon-search "></span></button>
+                                                            <!--<input type="text" ng-model="search.Employee" placeholder="البائع" uib-typeahead="x as x.EMP_AR_NAME for x in EmpList| filter:{EMP_AR_NAME:$viewValue} | limitTo:8" typeahead-template-url="customTemplate.html" class="form-control" typeahead-show-hint="true" typeahead-min-length="0">-->
+                                                        </div>
+                                                    </div>
+                                                    <!--<div class="col-md-4 col-sm-12">
+                                                        <div class="form-group">
+                                                            <label class="control-label">مركز التكلفة</label>
+                                                            <input type="text" ng-model="search.CostCenterName" placeholder="مركز التكلفة" class="searchBoxInput" press-enter="searchForCostCenter()">
+                                                            <button ng-click="searchForCostCenter()" class="searchButtonInsideText"><span class="glyphicon glyphicon-search "></span></button>
+                                                            <input type="text" ng-model="search.CostCenter" placeholder="مركز التكلفة" uib-typeahead="x as x.COST_CENTER_AR_NAME for x in costCentersList| filter:{COST_CENTER_AR_NAME:$viewValue} | limitTo:8" typeahead-template-url="customTemplate.html" class="form-control" typeahead-show-hint="true" typeahead-min-length="0">
+                                                        </div>
+                                                    </div>-->
+                                                    <div class="col-md-4 col-sm-12">
+                                                        <div class="form-group">
+                                                            <label class="control-label">من تاريخ</label>
+                                                            <input type="date" class="form-control" ng-model="search.StartDate" placeholder="من تاريخ">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4 col-sm-12">
+                                                        <div class="form-group">
+                                                            <label class="control-label">الي تاريخ</label>
+                                                            <input type="date" class="form-control" ng-model="search.EndDate" placeholder="الي تاريخ">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4 col-sm-12">
+                                                        <div class="form-group">
+                                                            <label class="control-label">العملة</label>
+                                                            <input type="text" ng-model="search.currency" placeholder="العملة" uib-typeahead="x as x.CURRENCY_AR_NAME for x in currencyList| filter:{CURRENCY_AR_NAME:$viewValue} | limitTo:8" typeahead-template-url="customTemplate.html" class="form-control" typeahead-show-hint="true" typeahead-min-length="0"
+                                                                    typeahead-show-on-focus typeahead-on-select="onSelect($item, $model, $label)">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4 col-sm-12">
+                                                        <div class="form-group">
+                                                            <label class="control-label">سعر الصرف</label>
+                                                            <input type="text" class="form-control" ng-model="search.currencyRate" placeholder="سعر الصرف" disabled>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4 col-sm-12">
+                                                        <div class="form-group">
+                                                            <label class="control-label">طريقة الدفع</label>
+                                                            <input type="text" ng-model="search.payTypeName" placeholder="طريقة الدفع" uib-typeahead="x as x.PAY_TYPE_AR_NAME for x in payWayList| filter:{PAY_TYPE_AR_NAME:$viewValue} | limitTo:8" typeahead-template-url="customTemplate.html" class="form-control" typeahead-show-hint="true" typeahead-min-length="0"
+                                                                    typeahead-show-on-focus typeahead-on-select="onSelectPayType($item, $model, $label)">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!--/.panel /.panel-white-->
+                                        </div>
+                                        <!--/.col-md-12-->
+
+                                        <div class="col-md-9">
+                                            <div class="panel panel-white ">
+                                                <div class="panel-heading border-bottom">
+                                                    <div class="panel-title">مصادر التقارير</div>
+                                                </div>
+
+                                                <div class="panel-body min-height-350">
+
+                                                    <!--<div class="col-md-12">
+                                                        <div class="col-md-6 col-md-offset-3 margin-bottom-10">
+                                                            <select class="form-control" ng-model="search.finalize" placeholder="تصفية">
+                                                                <option value="" disabled selected>تصفية</option>
+                                                                <option value="">بدون</option>
+                                                                <option value="1">نقدي</option>
+                                                                <option value="2">آجل</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>-->
+
+                                                    <form>
+                                                        <div ng-repeat="bil in billSettingsList">
+                                                            <div class="col-lg-3 col-md-4 col-sm-6">
+                                                                <div class="checkbox clip-check check-primary">
+                                                       
+                                                                    <input id="bil.BILL_SETTING_ID{{$index}}" type="checkbox" name="rad_bill" ng-init="bil.selected=true" value="bil.BILL_SETTING_ID" ng-checked="bil.selected" ng-model="bil.selected" />
+                                                                    <label for="bil.BILL_SETTING_ID{{$index}}"> {{bil.BILL_AR_NAME}} </label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <div class="panel panel-white">
+
+                                                <div class="panel-heading border-bottom">
+                                                    <div class="panel-title">خيارات التقارير</div>
+                                                </div>
+
+                                                <div class="panel-body min-height-350">
+                                                    <form>
+                                                        <div ng-repeat="rpt in reportOptionList">
+                                                            <div class="col-md-12">
+                                                                <div class="checkbox clip-check check-primary">
+                                                                    <input id="rpt.ID{{$index}}" type="checkbox" name="rad_rpt" ng-model="rpt.SELECTED" value="rpt.ID" />&nbsp;
+                                                                    <label for="rpt.ID{{$index}}">{{rpt.NAME}}</label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-12 my-btn-group margin-bottom-25 margin-top-15 center">
+                                            <button class="btn btn-primary margin-right-10 margin-top-10" ng-click="fnPrintReport()"><i class="ti-printer"></i>طباعة</button>
+                                            <button class="btn btn-default margin-right-10 margin-top-10" ng-click="clearEnity()"><i class="fa fa-refresh"></i>جديد</button>
+                                            <button class="btn btn-primary margin-right-10 margin-top-10" ng-click="GetSearchResult()"><i class="fa fa-search"></i>بحث</button>
+                                        </div>
+                                        <!--/.my-btn-group-->
+                                    </div>
+                                    <!--/.row-->
+                                </div>
+                                <!--/.col-md-12-->
+                            </div>
+                            <!-- End Panel Body -->
+                            <!--Start Panel Body -->
+                            <div class="panel">
+                                <div class="panel-group accordion" id="accordion">
+                                    <div class="panel panel-white">
+                                        <div class="panel-heading">
+                                            <h5 class="panel-title"><a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" data-target="#collapseTwo"> <i class="icon-arrow"></i> نتيجة البحث </a></h5>
+                                        </div>
+                                        <div id="collapseTwo" class="collapse">
+                                            <div class="panel-body">
+                                                <div class="col-md-12">
+                                                    <div class="table-responsive">
+
+                                                        <div class="col-md-3 pull-left">
+                                                            <table class="table table-stylish">
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td class="center text-extra-large"><i class="ti-save"></i></td>
+                                                                        <td><span class="text-dark block">عدد الفواتير :</span></td>
+                                                                        <td class="center">{{count}}</td>
+                                                                        <td class="center"><i class="fa fa-caret-down text-red"></i></td>
+                                                                    </tr>
+
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                        <!--/.col-md-3-->
+
+                                                        <div class="col-md-12 no-padding">
+                                                            <div class="col-md-6">
+                                                                <div class="panel-body panel-white">
+
+                                                                    <div class="col-md-6">
+                                                                        <table class="table table-striped">
+                                                                            <tbody>
+                                                                                <tr>
+                                                                                    <td>العميل</td>
+                                                                                    <td>{{search.customerName}}</td>
+                                                                                </tr>
+
+                                                                                <tr>
+                                                                                    <td>مركز التكلفة </td>
+                                                                                    <td>{{search.CostCenter.COST_CENTER_AR_NAME}}</td>
+                                                                                </tr>
+
+                                                                                <tr>
+                                                                                    <td>المخزن</td>
+                                                                                    <td>{{search.store.COM_STORE_AR_NAME}}</td>
+                                                                                </tr>
+
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
+
+                                                                    <div class="col-md-6">
+                                                                        <table class="table table-striped">
+                                                                            <tbody>
+                                                                                <tr>
+                                                                                    <td>البائع</td>
+                                                                                    <td>{{search.Employee.EMP_AR_NAME}}</td>
+                                                                                </tr>
+
+                                                                                <tr>
+                                                                                    <td>من تاريخ </td>
+                                                                                    <td>{{search.StartDate | date:'dd/MM/yyyy'}}</td>
+                                                                                </tr>
+
+                                                                                <tr>
+                                                                                    <td>الي تاريخ</td>
+                                                                                    <td>{{search.EndDate | date:'dd/MM/yyyy'}}</td>
+                                                                                </tr>
+
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
+                                                            <!--<div class="col-md-6">
+                                                                <div class="panel-body panel-white">
+                                                                    <div class="col-md-6">
+                                                                        <table class="table table-striped">
+                                                                            <tbody>
+                                                                                <tr>
+                                                                                    <td>أعلي شراء</td>
+                                                                                    <td>{{MaxPrice1}}</td>
+                                                                                </tr>
+
+                                                                                <tr>
+                                                                                    <td>أدني شراء </td>
+                                                                                    <td>{{MinPrice1}}</td>
+                                                                                </tr>
+
+                                                                                <tr>
+                                                                                    <td>متوسط الشراء</td>
+                                                                                    <td>{{AveragePrice1 | number:2}}</td>
+                                                                                </tr>
+
+                                                                                <tr>
+                                                                                    <td>المتوسط المرجح</td>
+                                                                                    <td>{{}}</td>
+                                                                                </tr>
+
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
+                                                                    <div class="col-md-6">
+                                                                        <table class="table table-striped">
+                                                                            <tbody>
+                                                                                <tr>
+                                                                                    <td>أعلي مبيع </td>
+                                                                                    <td>{{MaxPrice2}}</td>
+                                                                                </tr>
+
+                                                                                <tr>
+                                                                                    <td>أدني مبيع</td>
+                                                                                    <td>{{MinPrice2}}</td>
+                                                                                </tr>
+
+                                                                                <tr>
+                                                                                    <td>متوسط المبيع </td>
+                                                                                    <td>{{AveragePrice2 | number:2}}</td>
+                                                                                </tr>
+
+                                                                                <tr>
+                                                                                    <td>الرصيد السابق</td>
+                                                                                    <td>{{}}</td>
+                                                                                </tr>
+
+                                                                            </tbody>
+                                                                        </table>
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>-->
+                                                            <!--/.col-md-3-->
+                                                        </div>
+
+                                                        <div class="col-md-12">
+                                                            <table class="table table-bordered table-hover" id="sample-table-1">
+                                                                <!--<thead>
+                                                                    <tr class="success">
+                                                                        <th class="center" colspan="2"></th>
+                                                                        <th class="center" colspan="3">المدخلات</th>
+                                                                        <th class="center" colspan="4">المخرجات</th>
+                                                                        <th class="center" colspan="3">الرصيد</th>
+                                                                        <th class="center"></th>
+                                                                    </tr>
+                                                                </thead>-->
+                                                                <thead>
+                                                                    <tr class="success">
+                                                                        <th class="center">المسلسل</th>
+                                                                        <th class="center">الفاتورة</th>
+                                                                        <th class="center">التاريخ</th>
+                                                                        <th class="center">الشرح</th>
+                                                                        <th class="center">العميل / المورد</th>
+                                                                        <th class="center" ng-show="reportOptionList[2].SELECTED">المخزن</th>
+                                                                        <th class="center" ng-show="reportOptionList[3].SELECTED">الخصومات</th>
+                                                                        <th class="center" ng-show="reportOptionList[3].SELECTED">الاضافات</th>
+                                                                        <th class="center">القيمة المدفوعة</th>
+                                                                        <th class="center">القيمة المؤجلة</th>
+                                                                        <th class="center">الاجمالى</th>
+                                                                        <!--<th class="center">العميل</th>
+                                                                        <th class="center">الإجمالي</th>
+                                                                        <th class="center">الكمية</th>
+                                                                        <th class="center">السعر</th>
+                                                                        <th class="center">الإجمالي</th>
+                                                                        <th class="center">الوحدة</th>-->
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr ng-repeat="itm in searchList track by $index">
+                                                                        <td class="center">{{$index + 1}}</td>
+                                                                        <td class="center">{{itm.BILL_ABRV_AR}} : {{itm.BILL_NUMBER}}</td>
+                                                                        <td class="center">{{itm.BILL_DATE | date:'dd/MM/yyyy'}}</td>
+                                                                        <td class="center">{{itm.BILL_REMARKS}}</td>
+                                                                        <td class="center">{{itm.ACC_AR_NAME}}</td>
+                                                                        <td class="center" ng-show="reportOptionList[2].SELECTED">{{itm.COM_STORE_AR_NAME}}</td>
+                                                                        <td class="center" ng-show="reportOptionList[3].SELECTED">{{itm.BILL_TOTAL_DISC}}</td>
+                                                                        <td class="center" ng-show="reportOptionList[3].SELECTED">{{itm.BILL_TOTAL_EXTRA}}</td>
+                                                                        <td class="center">{{itm.TotalPaid}}</td>
+                                                                        <td class="center">{{itm.TotalRemaining}}</td>
+                                                                        <td class="center">{{itm.BILL_TOTAL}}</td>
+                                                                        <!--<td class="center">{{itm.ACC_CODE}} - {{itm.ACC_AR_NAME}}</td>
+                                                                        <td class="center">{{itm.Result2}}</td>
+                                                                        <td class="center">{{itm.QTY3}}</td>
+                                                                        <td class="center">{{itm.Price3}}</td>
+                                                                        <td class="center">{{itm.Result3}}</td>
+                                                                        <td class="center">{{itm.UNIT_CODE}} - {{itm.UNIT_AR_NAME}}</td>-->
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td class="center" colspan="{{reportOptionList[2].SELECTED && reportOptionList[3].SELECTED ?8:reportOptionList[2].SELECTED?6:reportOptionList[3].SELECTED?7:5}}">الاجمالي</td>
+                                                                        <td class="center">{{totalPaidValue}}</td>
+                                                                        <td class="center">{{totalRemainValue}}</td>
+                                                                        <td class="center">{{TotalBillResult}}</td>
+                                                                    </tr>
+                                                                    <!--<tr>
+                                                                        <td class="center">الاجمالي</td>
+                                                                        <td class="center"></td>
+                                                                        <td class="center">{{TotalQTY1}}</td>
+                                                                        <td class="center"></td>
+                                                                        <td class="center">{{TotalResult1}}</td>
+                                                                        <td class="center">{{TotalQTY2}}</td>
+                                                                        <td class="center"></td>
+                                                                        <td class="center"></td>
+                                                                        <td class="center">{{TotalResult2}}</td>
+                                                                        <td class="center">{{TotalQTY3}}</td>
+                                                                        <td class="center"></td>
+                                                                        <td class="center">{{TotalResult3}}</td>
+                                                                        <td class="center"></td>
+                                                                    </tr>-->
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+
+                                                    </div>
+                                                    <ul uib-pagination total-items="currencyCount" ng-model="pageNum" max-size="maxSize" class="pagination" boundary-links="true" num-pages="numPages" ng-change="pageChanged()"></ul>
+                                                    <pre>صفحه: {{pageNum}} / {{numPages}}</pre>
+                                                </div>
+                                                <!--/.col-md-12-->
+                                            </div>
+                                            <!--/.panel-body-->
+                                        </div>
+                                        <!--/.panel-collapse-->
+                                    </div>
+                                    <!--/.panel-->
+                                </div>
+                                <!--/.panel-group-->
+                            </div>
+                            <!--/.panel -->
+
+                        </div>
+                        <!--/.panel-->
+                    </div>
+                    <!--/.col-md-12-->
+                </div>
+                <!--/.row-->
+            </div>
+            <!--/.container-fluid-->
+        </div>
+        <!--/.wrap-content-->
+    </div>
+    <!--/.main-content-->
+</div>
+<!--/.app-content-->
+<!-- Start Modal -->
+<script type="text/ng-template" id="customerModal.html">
+    <div class="modal-header">اختر عميل</div>
+    <div class="modal-body" id="modal-body">
+        <div class="panel-body panel-body panel-white">
+            <div class="table-responsive">
+                <div class="row">
+                    <div class="col-md-6">
+                        <form role="search" class="navbar-form main-search">
+                            <div class="form-group">
+                                <input type="text" ng-model="customerSearch" placeholder="البحث بكود او اسم العميل" class="form-control">
+                                <!--<button class="btn search-button" ng-click="searchForCustomer()"></button>-->
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <table class="table table-bordered table-hover" id="tableItems">
+                    <tr class="success">
+                        <th>#</th>
+                        <th class="hidden-xs">كود العميل</th>
+                        <th>اسم العميل العربي </th>
+                        <th>اسم العميل الانجليزى</th>
+                        <!--<th>الوحدة</th>
+                        <th>التحويل</th>
+                        <th>الجملة</th>
+                        <th>المستهلك</th>-->
+                        <th></th>
+                    </tr>
+                    <tr ng-repeat="itm in searchItems | filter:customerSearch">
+                        <td class="hidden-xs">{{ $index + 1 }}</td>
+                        <td>{{ itm.CUST_CODE }}</td>
+                        <td>{{ itm.CUST_AR_NAME }}</td>
+                        <td>{{ itm.CUST_EN_NAME }}</td>
+                        <!--<td class="hidden-xs">{{ itm.Unit_Name_Ar }}</td>
+                        <td class="hidden-xs">{{ itm.Unit_Trans_Rate }}</td>
+                        <td class="hidden-xs">{{ itm.WHOLE_PRICE }}</td>
+                        <td class="hidden-xs">{{ itm.CONSUMER_PRICE }}</td>-->
+                        <td><button type="button" class="btn btn-primary" ng-click="addSelectedItm(itm)">إضافة</button></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <button type="button" id="closeItemModal" class="btn btn-danger" ng-click="cancel()">اغلاق</button>
+    </div>
+</script>
+<!-- End Modal -->
+<!-- Start Modal 2 -->
+<script type="text/ng-template" id="customTemplate.html">
+    <a><span ng-bind-html="match.label | uibTypeaheadHighlight:query"></span></a>
+</script>
+<div class="modal-demo">
+    <script type="text/ng-template" id="storeModal.html">
+        <div class="modal-header">
+            اختر مخزن
+        </div>
+        <div class="modal-body" id="modal-body">
+            <div class="panel-body panel-body panel-white">
+                <div class="table-responsive">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <form role="search" class="navbar-form main-search">
+                                <div class="form-group">
+                                    <input type="text" ng-model="storeSearch.$"placeholder="البحث بكود او اسم المخزن" class="form-control">
+                                    <!--<button class="btn search-button" ng-click="searchForStore()"></button>-->
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <br />
+                    <table class="table table-bordered table-hover" id="tableStore">
+                        <tr>
+                            <th></th>
+                            <th class="hidden-xs">كود المخزن</th>
+                            <th>اسم المخزن العربي </th>
+                            <th>اسم المخزن الانجليزى</th>
+                            <th>اسم فرع الشركة</th>
+                            <th>اسم مدير المخزن</th>
+                            <th></th>
+                        </tr>
+                        <tr ng-repeat="stor in searchStores | filter:storeSearch">
+                            <td class="hidden-xs">{{ $index + 1 }}</td>
+                            <td>{{ stor.COM_STORE_CODE }}</td>
+                            <td>{{ stor.COM_STORE_AR_NAME }}</td>
+                            <td>{{ stor.COM_STORE_EN_NAME }}</td>
+                            <td class="hidden-xs">{{ stor.CompanyBranchAR }}</td>
+                            <td class="hidden-xs">{{ stor.StoreManagerNameAr }}</td>
+                            <td><button type="button" class="btn btn-primary" ng-click="addSelectedStore(stor)">إضافة</button></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" id="closeItemModal" class="btn btn-danger" ng-click="cancel()">اغلاق</button>
+        </div>
+    </script>
+</div>
+<!-- End Modal 2 -->
+<!-- Start Modal 3 -->
+<div class="modal-demo">
+    <script type="text/ng-template" id="EmployeeModal.html">
+        <div class="modal-header">
+            اختر البائع
+        </div>
+        <div class="modal-body" id="modal-body">
+            <div class="panel-body panel-body panel-white">
+                <div class="table-responsive">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <form role="search" class="navbar-form main-search">
+                                <div class="form-group">
+                                    <input type="text" ng-model="employeeSearch.$" placeholder="البحث بكود او اسم الموظف" class="form-control">
+                                    <!--<button class="btn search-button" ng-click="searchForEmployee()"></button>-->
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <br />
+                    <table class="table table-bordered table-hover" id="tableEmployee">
+                        <tr>
+                            <th></th>
+                            <th class="hidden-xs">كود الموظف</th>
+                            <th>اسم الموظف العربي </th>
+                            <th>اسم الموظف الانجليزى</th>
+                            <th></th>
+                        </tr>
+                        <tr ng-repeat="emp in searchEmployeess | filter:employeeSearch">
+                            <td class="hidden-xs">{{ $index + 1 }}</td>
+                            <td>{{ emp.EMP_CODE }}</td>
+                            <td>{{ emp.EMP_AR_NAME }}</td>
+                            <td>{{ emp.EMP_EN_NAME }}</td>
+                            <td><button type="button" class="btn btn-primary" ng-click="addSelectedEmployee(emp)">إضافة</button></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" id="closeItemModal" class="btn btn-danger" ng-click="cancel()">اغلاق</button>
+        </div>
+    </script>
+</div>
+<!-- End Modal 3 -->
+<!-- Start Modal 4 -->
+<div class="modal-demo">
+    <script type="text/ng-template" id="CostCenterModal.html">
+        <div class="modal-header">
+            اختر مركز التكلفة
+        </div>
+        <div class="modal-body" id="modal-body">
+            <div class="panel-body panel-body panel-white">
+                <div class="table-responsive">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <form role="search" class="navbar-form main-search">
+                                <div class="form-group">
+                                    <input type="text" ng-model="costCenterSearch.$" placeholder="البحث بكود او اسم مركز التكلفة" class="form-control">
+                                    <!--<button class="btn search-button" ng-click="searchForCostCenter()"></button>-->
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <br />
+                    <table class="table table-bordered table-hover" id="tableCostCenter">
+                        <tr>
+                            <th></th>
+                            <th class="hidden-xs">كود مركز التكلفة</th>
+                            <th>اسم مركز التكلفة العربي </th>
+                            <th>اسم مركز التكلفة الانجليزى</th>
+                            <th></th>
+                        </tr>
+                        <tr ng-repeat="cost in searchCostCenters | filter:costCenterSearch">
+                            <td class="hidden-xs">{{ $index + 1 }}</td>
+                            <td>{{ cost.COST_CENTER_CODE }}</td>
+                            <td>{{ cost.COST_CENTER_AR_NAME }}</td>
+                            <td>{{ cost.COST_CENTER_EN_NAME }}</td>
+                            <td><button type="button" class="btn btn-primary" ng-click="addSelectedCostCenter(cost)">إضافة</button></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" id="closeItemModal" class="btn btn-danger" ng-click="cancel()">اغلاق</button>
+        </div>
+    </script>
+</div>
+<!-- End Modal 4 -->

@@ -1,0 +1,590 @@
+﻿<style>
+    .tab-pane {
+        padding: 0 15px !important;
+    }
+
+        .tab-pane .panel {
+            margin: 0 !important
+        }
+</style>
+<div class="app-content">
+    <div class="main-content">
+        <div class="wrap-content container" id="container">
+            <div class="container-fluid container-fullw">
+
+                <div class="col-xs-12 margin-top-10 margin-bottom-10">
+                    <div class="breadcrumb-wrapper no-margin">
+                        <h4 class="mainTitle no-margin">العملات</h4>
+                        <ul class="pull-right breadcrumb">
+                            <li><a href="#!"><i class="fa fa-home margin-left-5 text-large text-dark"></i>الرئيسية</a></li>
+                            <li>العملات</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="col-md-12">
+                    <div class="tabbable tabs-right bg-white">
+                        <ul class="nav nav-tabs no-border width-200">
+                            <li class="active"><a class="center" data-toggle="tab" href="#tab1" target="_self">{{addressParts.AddressPart1}} </a></li>
+                            <li><a class="center" data-toggle="tab" href="#tab2" target="_self">{{addressParts.AddressPart2}} </a></li>
+                            <li><a class="center" data-toggle="tab" href="#tab3" target="_self">{{addressParts.AddressPart3}} </a></li>
+                            <li><a class="center" data-toggle="tab" href="#tab4" target="_self">{{addressParts.AddressPart4}} </a></li>
+                        </ul>
+
+                        <div class="tab-content bg-body">
+                            <!--
+                            ##############################
+                            # Start Tab 1 Content
+                            ##############################
+                            -->
+                            <div id="tab1" class="tab-pane fade bg-body no-border in active">
+                                <div class="margin-bottom-10">
+                                    <div class="panel-white panel-body no-margin">
+                                        <div class="pull-right">
+                                            <h4 class="mainTitle no-margin">{{addressParts.AddressPart1}}</h4>
+                                        </div>
+                                            <div class="pull-left">
+                                                <button type="button" class="btn btn-o btn-default no-border" ng-disabled="test.$invalid" ng-click="saveNationEntity()"><i class="fa fa-save"></i>حفظ</button>
+                                                <button type="button" class="btn btn-o btn-default no-border" ng-click="refreshNation()"><i class="fa fa-refresh"></i>تحديث</button>
+                                                <button type="button" class="btn btn-o btn-default no-border" ng-click="clearNation()"><i class="fa fa-paste"></i>جديد</button>
+                                            </div>
+                                     </div>
+                                </div>                                
+                                
+                                <div class="panel">                                    
+                                    <div class="panel-body panel-white">
+                                        <div class="col-md-12">
+                                            <ng-form id="test" name="test">
+                                                <div ng-class="{'has-error': test.$invalid}" class="form-group">
+                                                    <div class="form-group col-md-6">
+                                                        <label for="NationARName">اسم {{addressParts.AddressPart1}} العربى:</label>
+                                                        <div class="help-block error" style="display:inline" ng-show="test.arname.$error.required">*</div>
+                                                        <input type="text" class="form-control" name="arname" id="NationArName" placeholder="اسم {{addressParts.AddressPart1}} العربى" ng-model="nations.NATION_AR_NAME" required>
+                                                    </div>
+                                                </div>
+                                                <div ng-class="{'has-error': test.$invalid}" class="form-group">
+                                                    <div class="form-group col-md-6">
+                                                        <label for="NationENName">اسم {{addressParts.AddressPart1}} اللاتيني:</label>
+                                                        <div class="help-block error" style="display:inline" ng-show="test.enname.$error.required">*</div>
+                                                        <input type="text" class="form-control" name="enname" id="NationEnName" placeholder="اسم {{addressParts.AddressPart1}} اللاتيني" ng-model="nations.NATION_EN_NAME" required>
+                                                    </div>
+                                                </div>
+
+                                                <div ng-class="{'has-error': test.$invalid}" class="form-group">
+                                                    <div class="form-group col-md-6">
+                                                        <label for="NationEnNat">الجنسيه بالعربي :</label>
+                                                        <div class="help-block error" style="display:inline" ng-show="test.arnat.$error.required">*</div>
+                                                        <input type="text" class="form-control" name="arnat" id="NationArNat" placeholder="الجنسيه بالعربي" ng-model="nations.NATIONALITY_AR_NAME" required>
+                                                    </div>
+                                                </div>
+
+                                                <div ng-class="{'has-error': test.$invalid}" class="form-group">
+                                                    <div class="form-group col-md-6">
+                                                        <label for="NationArNat">الجنسيه باللاتيني:</label>
+                                                        <div class="help-block error" style="display:inline" ng-show="test.ennat.$error.required">*</div>
+                                                        <input type="text" class="form-control" id="NationEnNat" name="ennat" placeholder="الجنسيه باللاتيني" ng-model="nations.NATIONALITY_EN_NAME" required>
+                                                    </div>
+                                                </div>
+                                            </ng-form>
+                                        </div>
+                                        <!--/.col-md-12-->
+                                    </div>
+                                    <!--/.panel-body-->
+                                    <div class="panel">
+                                                <div class="panel-group accordion" id="accordion">
+                                                    <div class="panel panel-white">
+                                                        <div class="panel-heading">
+                                                            <h5 class="panel-title"><a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" data-target="#collapseTwo"> <i class="icon-arrow"></i> الدول المعرفة مسبقاً </a></h5>
+                                                        </div>
+                                                        <div id="collapseTwo" class="col-md-12 panel-white collapse">
+                                                            <div class="panel-body">
+                                                                <div class="col-md-3 pull-left no-padding">
+                                                                    <table class="table table-stylish">
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td class="center text-extra-large"><i class="ti-save"></i></td>
+                                                                                <td><span class="text-dark block">{{addressParts.AddressPart1}}  :</span></td>
+                                                                                <td class="center">{{nationTotalCount}}</td>
+                                                                                <td class="center"><i class="fa fa-caret-down text-red"></i></td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+
+                                                                <table class="table table-bordered table-hover">
+                                                                    <tr class="success">
+                                                                        <th class="hidden-xs">#</th>
+                                                                        <th>اسم {{addressParts.AddressPart1}} العربي </th>
+                                                                        <th>اسم {{addressParts.AddressPart1}} اللاتيني</th>
+                                                                        <th>الجنسيه بالعربي</th>
+                                                                        <th>الجنسيه باللاتيني</th>
+                                                                        <th>تعديل / حذف</th>
+                                                                    </tr>
+                                                                    <tr ng-repeat="item in nationsList" class="center">
+                                                                        <td class="hidden-xs">{{ item.COM_BRN_ID }}</td>
+                                                                        <td>{{ item.NATION_AR_NAME }}</td>
+                                                                        <td>{{ item.NATION_EN_NAME }}</td>
+                                                                        <td>{{ item.NATIONALITY_AR_NAME }}</td>
+                                                                        <td>{{ item.NATIONALITY_EN_NAME }}</td>
+                                                                        <td class="center">
+                                                                            <div class="visible-md visible-lg hidden-sm hidden-xs">
+                                                                                <a href="" ng-click="EditNation(item)" class="btn btn-transparent btn-xs" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fa fa-pencil"></i></a>
+                                                                                <a href="" ng-click="deleteNationEntity(item)" class="btn btn-transparent btn-xs tooltips" data-toggle="tooltip" data-placement="top" title="Remove"><i class="fa fa-times fa fa-white"></i></a>
+                                                                            </div>
+                                                                            <div class="visible-xs visible-sm hidden-md hidden-lg">
+                                                                                <div class="btn-group dropdown ">
+                                                                                    <button type="button" class="btn btn-o btn-sm dropdown-toggle" data-toggle="dropdown">
+                                                                                        <i class="fa fa-cog"></i>&nbsp;<span class="caret"></span>
+                                                                                    </button>
+                                                                                    <ul class="dropdown-menu pull-right dropdown-light" role="menu">
+                                                                                        <li>
+                                                                                            <a href="" ng-click="EditNation(item)"> تعديل </a>
+                                                                                        </li>
+                                                                                        <li>
+                                                                                            <a href="" ng-click="deleteNationEntity(item)"> حذف </a>
+                                                                                        </li>
+                                                                                    </ul>
+                                                                                </div>
+                                                                            </div>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+
+                                                                <ul uib-pagination total-items="nationTotalCount" ng-model="nationsPageNum" max-size="nationMaxSize" class="pagination-sm" boundary-links="true" num-pages="numPages" ng-change="nationPageChanged()"></ul>
+                                                                <pre>صفحه: {{nationsPageNum}} / {{nationPagesCount}}</pre>
+                                                            </div>
+                                                            <!--/.panel-body-->
+                                                        </div>
+                                                        <!--/.panel-collapse-->
+                                                    </div>
+                                                    <!--/.panel-->
+                                                </div>
+                                                <!--/.panel-group-->
+
+                                            </div>
+                                            <!--/.panel /.panel-white-->
+                                </div>
+                                <!--/.panel panel-white-->
+                            </div>
+                            <!--
+                            ##############################
+                            # Start Tab 2 Content
+                            ##############################
+                            -->
+                            <div id="tab2" class="tab-pane fade bg-body no-border ">
+                                <div class="margin-bottom-10">
+                                    <div class="panel-white panel-body no-margin">
+                                        <div class="pull-right">
+                                            <h4 class="mainTitle no-margin">{{addressParts.AddressPart2}}</h4>
+                                        </div>
+                                        <div class="pull-left">
+                                            <button type="button" class="btn btn-o btn-default no-border" ng-disabled="test2.$invalid" ng-click="saveGovernEntity()"><i class="fa fa-save"></i>حفظ</button>
+                                            <button type="button" class="btn btn-o btn-default no-border" ng-click="refreshGovern()"><i class="fa fa-refresh"></i>تحديث</button>
+                                            <button type="button" class="btn btn-o btn-default no-border" ng-click="clearGovern()"><i class="fa fa-paste"></i>جديد</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="panel">
+                                    <div class="panel-body panel-white">                                        
+                                        <!--<form>-->
+                                        <ng-form id="test2" name="test2">
+                                            <div ng-class="{'has-error': test2.$invalid}" class="form-group">
+                                                <div class="form-group col-md-6">
+                                                    <label for="GovArName">اسم {{addressParts.AddressPart2}} العربى:</label>
+                                                    <div class="help-block error" style="display:inline" ng-show="test2.arname2.$error.required">*</div>
+                                                    <input type="text" class="form-control" name="arname2" id="GovArName" placeholder="اسم {{addressParts.AddressPart2}} العربى" ng-model="governs.GOV_AR_NAME" required>
+                                                </div>
+                                            </div>
+
+                                            <div ng-class="{'has-error': test2.$invalid}" class="form-group">
+                                                <div class="form-group col-md-6">
+                                                    <label for="GovENName">اسم {{addressParts.AddressPart2}} اللاتيني:</label>
+                                                    <div class="help-block error" style="display:inline" ng-show="test2.enname2.$error.required">*</div>
+                                                    <input type="text" class="form-control" name="enname2" id="GovENName" placeholder="اسم {{addressParts.AddressPart2}} اللاتيني" ng-model="governs.GOV_EN_NAME" required>
+                                                </div>
+                                            </div>
+
+                                            <div ng-class="{'has-error': test2.$invalid}" class="form-group">
+                                                <div class="form-group col-md-6">
+                                                    <label for="GovNation">{{addressParts.AddressPart1}} </label>
+                                                    <div class="help-block error" style="display:inline" ng-show="test2.g2.$error.required">*</div>
+                                                    <select ng-model="governs.NATION_ID" name="g2" class="js-example-basic-hide-search js-states form-control" ng-options="x.NATION_ID as x.NATION_AR_NAME for x in nationsList" required>
+                                                        <option value="">اختر {{addressParts.AddressPart1}}</option>
+                                                    </select>
+                                                </div>
+                                            </div>                                            
+                                        </ng-form>
+                                        <!--/form>-->
+                                    </div>
+                                    <!--/.panel-body-->
+                                    
+                                        <div class="panel">
+                                            <div class="panel-group accordion" id="accordion">
+                                                <div class="panel panel-white">
+                                                    <div class="panel-heading">
+                                                        <h5 class="panel-title"><a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" data-target="#collapseTable2"> <i class="icon-arrow"></i> الامارات المعرفة مسبقاً </a></h5>
+                                                    </div>
+                                                    <div id="collapseTable2" class="col-md-12 panel-white collapse">
+                                                        <div class="panel-body">
+                                                            <div class="col-md-3 pull-left">
+                                                                <table class="table table-stylish">
+                                                                    <tbody>
+                                                                        <tr>
+                                                                            <td class="center text-extra-large"><i class="ti-save"></i></td>
+                                                                            <td><span class="text-dark block">{{addressParts.AddressPart2}}  :</span></td>
+                                                                            <td class="center">{{governTotalCount}}</td>
+                                                                            <td class="center"><i class="fa fa-caret-down text-red"></i></td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                            <div class="col-md-12">
+                                                                <table class="table table-bordered table-hover">
+                                                                    <tr class="success">
+
+                                                                        <th class="hidden-xs">#</th>
+                                                                        <th>اسم {{addressParts.AddressPart2}} العربي </th>
+                                                                        <th>اسم {{addressParts.AddressPart2}} اللاتيني</th>
+                                                                        <th>اسم {{addressParts.AddressPart1}}</th>
+                                                                        <th>تعديل / حذف</th>
+                                                                    </tr>
+                                                                    <tr ng-repeat="item in governList" class="center">
+                                                                        <td class="hidden-xs">{{ item.GOV_ID }}</td>
+                                                                        <td>{{ item.GOV_AR_NAME }}</td>
+                                                                        <td>{{ item.GOV_EN_NAME }}</td>
+                                                                        <td>{{ item.NationName }}</td>
+                                                                        <td class="center">
+                                                                            <div class="visible-md visible-lg hidden-sm hidden-xs">
+                                                                                <a href="" ng-click="EditGoverns(item)" class="btn btn-transparent btn-xs" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fa fa-pencil"></i></a>
+                                                                                <a href="" ng-click="deletegovernEntity(item)" class="btn btn-transparent btn-xs tooltips" data-toggle="tooltip" data-placement="top" title="Remove"><i class="fa fa-times fa fa-white"></i></a>
+                                                                            </div>
+                                                                            <div class="visible-xs visible-sm hidden-md hidden-lg">
+                                                                                <div class="btn-group dropdown ">
+                                                                                    <button type="button" class="btn  btn-o btn-sm dropdown-toggle" data-toggle="dropdown">
+                                                                                        <i class="fa fa-cog"></i>&nbsp;<span class="caret"></span>
+                                                                                    </button>
+                                                                                    <ul class="dropdown-menu pull-right dropdown-light" role="menu">
+                                                                                        <li><a href="" ng-click="EditGoverns(item)"> Edit </a></li>
+                                                                                        <li><a href="" ng-click="deletegovernEntity(item)"> Remove </a></li>
+                                                                                    </ul>
+                                                                                </div>
+                                                                            </div>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </div>
+                                                            <!--/.col-md-12-->
+                                                            <ul uib-pagination total-items="governTotalCount" ng-model="governPageNum" max-size="governMaxSize" class="pagination-sm" boundary-links="true" num-pages="numPages" ng-change="governPageChanged()"></ul>
+                                                            <pre>صفحه: {{governPageNum}} / {{governPagesCount}}</pre>
+                                                        </div>
+                                                    </div>
+                                                    <!--/.panel-collapse-->
+                                                </div>
+                                                <!--/.panel-->
+                                            </div>
+                                            <!--/.panel-group-->
+                                        </div>
+                                        <!--/.panel /.panel-white-->
+                                    
+                                </div>
+                                <!--/.panel panel-white-->
+                            </div>
+                            <!--/.tab-pane-->
+                            <!--
+                            ##############################
+                            # Start Tab 3 Content
+                            ##############################
+                            -->
+                            <div id="tab3" class="tab-pane fade bg-body no-border ">
+                                <div class="margin-bottom-10">
+                                    <div class="panel-white panel-body no-margin">
+                                        <div class="pull-right">
+                                            <h4 class="mainTitle no-margin">{{addressParts.AddressPart3}}</h4>
+                                        </div>
+                                        <div class="pull-left">
+                                            <button type="button" class="btn btn-o btn-default no-border" ng-disabled="test3.$invalid" ng-click="saveTownEntity()"><i class="fa fa-save"></i>حفظ</button>
+                                            <button type="button" class="btn btn-o btn-default no-border" ng-click="refreshTown()"><i class="fa fa-refresh"></i> تحديث</button>
+                                            <button type="button" class="btn btn-o btn-default no-border" ng-click="clearTowns()"><i class="fa fa-paste"></i>جديد</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="panel">                                    
+                                    <div class="panel-body panel-white">
+                                        <!--<form>-->
+                                        <ng-form id="test3" name="test3">
+                                            <div ng-class="{'has-error': test3.$invalid}" class="form-group">
+                                                <div class="form-group col-md-6">
+                                                    <label for="TownArName">اسم {{addressParts.AddressPart3}} العربى:</label>
+                                                    <div class="help-block error" style="display:inline" ng-show="test3.arname3.$error.required">*</div>
+                                                    <input type="text" class="form-control" name="arname3" id="TownArName" placeholder="اسم {{addressParts.AddressPart3}} العربى" ng-model="towns.TOWN_AR_NAME" required>
+                                                </div>
+                                            </div>
+                                            <div ng-class="{'has-error': test3.$invalid}" class="">
+                                                <div class="form-group col-md-6">
+                                                    <label for="TownENName">اسم {{addressParts.AddressPart3}} اللاتيني:</label>
+                                                    <div class="help-block error" style="display:inline" ng-show="test3.enname3.$error.required">*</div>
+                                                    <input type="text" class="form-control" id="TownENName" name="enname3" placeholder="اسم {{addressParts.AddressPart3}} اللاتيني" ng-model="towns.TOWN_EN_NAME" required>
+                                                </div>
+                                            </div>
+                                            <div ng-class="{'has-error': test3.$invalid}" class="">
+                                                <div class="form-group col-md-6">
+                                                    <label>{{addressParts.AddressPart1}} :</label>
+                                                    <div class="help-block error" style="display:inline" ng-show="test3.g3.$error.required">*</div>
+                                                    <select ng-model="towns.NationId" class="js-example-basic-hide-search js-states form-control" name="g3" ng-options="x.NATION_ID as x.NATION_AR_NAME for x in nationsList" ng-change="getGovernoratesByNationId()" required>
+                                                        <option value="">اختر {{addressParts.AddressPart1}}</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div ng-class="{'has-error': test3.$invalid}" class="">
+                                                <div class="form-group col-md-6">
+                                                    <label>{{addressParts.AddressPart2}}:</label>
+                                                    <div class="help-block error" style="display:inline" ng-show="test3.t3.$error.required">*</div>
+                                                    <select ng-model="towns.GOV_ID" class="js-example-basic-hide-search js-states form-control" name="t3" ng-options="x.GOV_ID as x.GOV_AR_NAME for x in ddlTownGovList" required>
+                                                        <option value="">اختر {{addressParts.AddressPart3}}</option>
+                                                    </select>
+                                                </div>
+                                                <!--/.form-group-->
+                                            </div>
+                                        </ng-form>
+                                        <!--</form>-->                                        
+                                    </div>
+                                    <!--/.panel-body-->
+                                    <div class="panel">
+                                        <div class="panel-group accordion" id="accordion">
+                                            <div class="panel panel-white">
+                                                <div class="panel-heading">
+                                                    <h5 class="panel-title"><a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" data-target="#collapseTable3"> <i class="icon-arrow"></i> الولايات المعرفة مسبقاُ </a></h5>
+                                                </div>
+                                                <div id="collapseTable3" class="col-md-12 panel-white collapse">
+                                                    <div class="panel-body">
+                                                        <div class="col-md-3 pull-left no-padding">
+                                                            <table class="table table-stylish">
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td class="center text-extra-large"><i class="ti-save"></i></td>
+                                                                        <td><span class="text-dark block">المدن  :</span></td>
+                                                                        <td class="center">{{townTotalCount}}</td>
+                                                                        <td class="center"><i class="fa fa-caret-down text-red"></i></td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+
+                                                        <table class="table table-bordered table-hover">
+                                                            <tr class="success">
+                                                                <th class="hidden-xs">#</th>
+                                                                <th>اسم {{addressParts.AddressPart3}} العربي </th>
+                                                                <th>اسم {{addressParts.AddressPart3}} اللاتيني</th>
+                                                                <th>تعديل / حذف</th>
+                                                            </tr>
+
+                                                            <tr ng-repeat="item in townsList" class="center">
+                                                                <td class="hidden-xs">{{ item.TOWN_ID }}</td>
+                                                                <td>{{ item.TOWN_AR_NAME }}</td>
+                                                                <td>{{ item.TOWN_EN_NAME }}</td>
+                                                                <td class="center">
+                                                                    <div class="visible-md visible-lg hidden-sm hidden-xs">
+                                                                        <a href="" ng-click="EditTown(item)" class="btn btn-transparent btn-xs" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fa fa-pencil"></i></a>
+                                                                        <a href="" ng-click="deleteTownEntity(item)" class="btn btn-transparent btn-xs tooltips" data-toggle="tooltip" data-placement="top" title="Remove"><i class="fa fa-times fa fa-white"></i></a>
+                                                                    </div>
+                                                                    <div class="visible-xs visible-sm hidden-md hidden-lg">
+                                                                        <div class="btn-group dropdown ">
+                                                                            <button type="button" class="btn  btn-o btn-sm dropdown-toggle" data-toggle="dropdown">
+                                                                                <i class="fa fa-cog"></i>&nbsp;<span class="caret"></span>
+                                                                            </button>
+                                                                            <ul class="dropdown-menu pull-right dropdown-light" role="menu">
+                                                                                <li>
+                                                                                    <a href="" ng-click="EditTown(item)"> تعديل </a>
+                                                                                </li>
+                                                                                <li>
+                                                                                    <a href="" ng-click="deleteTownEntity(item)"> حذف </a>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </div>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+
+                                                        <ul uib-pagination total-items="townTotalCount" ng-model="townPageNum" max-size="townMaxSize" class="pagination-sm" boundary-links="true" num-pages="numPages" ng-change="townPageChanged()"></ul>
+                                                        <pre>صفحه: {{townPageNum}} / {{townPagesCount}}</pre>
+
+                                                    </div>
+                                                    <!--/.panel-body-->
+
+
+                                                </div>
+                                                <!--/.panel-collapse-->
+                                            </div>
+                                            <!--/.panel-->
+                                        </div>
+                                        <!--/.panel-group-->
+                                    </div>
+                                    <!--/.panel /.panel-white-->
+                                </div>
+                                <!--/.panel panel-white-->
+                            </div>
+
+
+                            <!--
+                            ##############################
+                            # Start Tab 4 Content
+                            ##############################
+                            -->
+                            <div id="tab4" class="tab-pane fade bg-body no-border ">
+                                <div class="margin-bottom-10">
+                                    <div class="panel-white panel-body no-margin">
+                                        <div class="pull-right">
+                                            <h4 class="mainTitle no-margin">{{addressParts.AddressPart4}}</h4>
+                                        </div>
+                                        <div class="pull-left">
+                                            <button type="button" class="btn btn-o btn-default no-border" ng-disabled="test4.$invalid" ng-click="saveVillageEntity()"><i class="fa fa-save"></i>حفظ</button>
+                                            <button type="button" class="btn btn-o btn-default no-border" ng-click="refreshVillage()"><i class="fa fa-refresh"></i>تحديث</button>
+                                            <button type="button" class="btn btn-o btn-default no-border" ng-click="clearVillage()"><i class="fa fa-paste"></i>جديد</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="panel">                                    
+                                    <div class="panel-body panel-white">
+                                            <!--<form>-->
+                                            <ng-form id="test4" name="test4">
+                                                <div ng-class="{'has-error': test4.$invalid}" class="form-group">
+                                                    <div class="form-group col-md-6">
+                                                        <label for="VillArName">اسم {{addressParts.AddressPart4}} العربى:</label>
+                                                        <div class="help-block error" style="display:inline" ng-show="test4.code.$error.required">*</div>
+                                                        <input type="text" class="form-control" id="VillArName" placeholder="اسم  {{addressParts.AddressPart4}} العربى" ng-model="village.VILLAGE_AR_NAME" required>
+                                                    </div>
+                                                </div>
+
+                                                <div ng-class="{'has-error': test4.$invalid}" class="form-group">
+                                                    <div class="form-group col-md-6">
+                                                        <label for="VillENName">اسم {{addressParts.AddressPart4}} اللاتيني:</label>
+                                                        <div class="help-block error" style="display:inline" ng-show="test4.code.$error.required">*</div>
+                                                        <input type="text" class="form-control" id="VillENName" placeholder="اسم  {{addressParts.AddressPart4}} اللاتيني" ng-model="village.VILLAGE_EN_NAME" required>
+                                                    </div>
+                                                </div>
+
+                                                <div ng-class="{'has-error': test4.$invalid}" class="form-group">
+                                                    <div class="form-group col-md-6">
+                                                        <label>{{addressParts.AddressPart1}} :</label>
+                                                        <div class="help-block error" style="display:inline" ng-show="test4.code.$error.required">*</div>
+                                                        <select ng-model="village.NationId" class="js-example-basic-hide-search js-states form-control" ng-options="x.NATION_ID as x.NATION_AR_NAME for x in nationsList" ng-change="getVillGovernByNationId()" required>
+                                                            <option value="">اختر {{addressParts.AddressPart1}}</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                                <div ng-class="{'has-error': test4.$invalid}" class="form-group">
+                                                    <div class="form-group col-md-6">
+                                                        <label>{{addressParts.AddressPart2}}:</label>
+                                                        <div class="help-block error" style="display:inline" ng-show="test4.code.$error.required">*</div>
+                                                        <select ng-model="village.GovId" class="js-example-basic-hide-search js-states form-control" ng-options="x.GOV_ID as x.GOV_AR_NAME for x in ddlVillGovList" ng-change="getVillTownByGovern()" required>
+                                                            <option value="">اختر {{addressParts.AddressPart2}}</option>
+                                                        </select>
+
+                                                    </div>
+                                                </div>
+
+                                                <div ng-class="{'has-error': test4.$invalid}" class="form-group">
+                                                    <div class="form-group col-md-6">
+                                                        <label>{{addressParts.AddressPart3}}:</label>
+                                                        <div class="help-block error" style="display:inline" ng-show="test4.code.$error.required">*</div>
+
+                                                        <select ng-model="village.TOWN_ID" class="js-example-basic-hide-search js-states form-control" ng-options="x.TOWN_ID as x.TOWN_AR_NAME for x in ddlVillTownList" required>
+                                                            <option value="">اختر {{addressParts.AddressPart3}}</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </ng-form>
+                                            <!--</form>-->
+                                    </div>
+                                    <!--/.panel-body-->
+                                    <div class="panel">
+                                        <div class="panel-group accordion" id="accordion">
+                                            <div class="panel panel-white">
+                                                <div class="panel-heading">
+                                                    <h5 class="panel-title"><a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" data-target="#collapseTable4"> <i class="icon-arrow"></i> المدن المعرفة مسبقاً </a></h5>
+                                                </div>
+                                                <div id="collapseTable4" class="col-md-12 panel-white collapse">
+                                                    <!-- Start Panel Body 4th Tab-->
+                                                    <div class="panel-body">
+                                                        <div class="col-md-3 pull-left no-padding">
+                                                            <table class="table table-stylish">
+                                                                <tbody>
+                                                                    <tr class="success">
+                                                                        <td class="center text-extra-large"><i class="ti-save"></i></td>
+                                                                        <td><span class="text-dark block">{{addressParts.AddressPart4}}  :</span></td>
+                                                                        <td class="center">{{villageTotalCount}}</td>
+                                                                        <td class="center"><i class="fa fa-caret-down text-red"></i></td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                        <table class="table table-bordered table-hover">
+                                                            <tr class="success">
+                                                                <th class="hidden-xs">#</th>
+                                                                <th>اسم {{addressParts.AddressPart4}} العربي </th>
+                                                                <th>اسم {{addressParts.AddressPart4}} اللاتيني</th>
+                                                                <th> تعديل / حذف</th>
+                                                            </tr>
+                                                            <tr ng-repeat="item in villageList" class="center">
+                                                                <td class="hidden-xs">{{ item.VILLAGE_ID }}</td>
+                                                                <td>{{ item.VILLAGE_AR_NAME }}</td>
+                                                                <td>{{ item.VILLAGE_EN_NAME }}</td>
+                                                                <td class="center">
+                                                                    <div class="visible-md visible-lg hidden-sm hidden-xs">
+                                                                        <a href="" ng-click="EditVillage(item)" class="btn btn-transparent btn-xs" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fa fa-pencil"></i></a>
+                                                                        <a href="" ng-click="deleteVillageEntity(item)" class="btn btn-transparent btn-xs tooltips" data-toggle="tooltip" data-placement="top" title="Remove"><i class="fa fa-times fa fa-white"></i></a>
+                                                                    </div>
+                                                                    <div class="visible-xs visible-sm hidden-md hidden-lg">
+                                                                        <div class="btn-group dropdown ">
+                                                                            <button type="button" class="btn btn-o btn-sm dropdown-toggle" data-toggle="dropdown">
+                                                                                <i class="fa fa-cog"></i>&nbsp;<span class="caret"></span>
+                                                                            </button>
+                                                                            <ul class="dropdown-menu pull-right dropdown-light" role="menu">
+                                                                                <li>
+                                                                                    <a href="" ng-click="EditVillage(item)"> تعديل </a>
+                                                                                </li>
+                                                                                <li>
+                                                                                    <a href="" ng-click="deleteVillageEntity(item)"> حذف </a>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </div>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                        <ul uib-pagination total-items="villageTotalCount" ng-model="villagePageNum" max-size="villagePageSize" class="pagination-sm" boundary-links="true" num-pages="numPages" ng-change="villagePageChanged()"></ul>
+                                                        <pre>صفحه: {{villagePageNum}} / {{villagePagesCount}}</pre>
+                                                    </div>
+                                                    <!-- End Panel Body 4th Tab -->
+                                                </div>
+                                                <!--/.panel-collapse-->
+                                            </div>
+                                            <!--/.panel-->
+                                        </div>
+                                        <!--/.panel-group-->
+                                    </div>
+                                    <!--/.panel /.panel-white-->
+                                </div>
+                                <!--/.panel panel-white-->
+                            </div>
+                            <!--/.tab-pane fade bg-body no-border-->
+
+                        </div>
+                    </div>
+                    
+                    <!--/.tab-content-->
+                </div>
+                <!--/.col-md-12-->
+            </div>
+            <!--/.container-fluid container-fullw-->
+        </div>
+        <!--/.wrap-content container-->
+    </div>
+    <!--/.main-content-->
+</div>
+<!--/.app-content-->

@@ -1,0 +1,71 @@
+﻿<div class="app-content">
+    <div class="main-content">
+        <div class="wrap-content container" id="container">
+            <div class="container-fluid container-fullw">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div ng-switch on="selection">
+                            <div class="panel panel-white">
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group col-md-4" style="float:right !important">
+                                                <label for="form-field-select-2">
+                                                    أختر المستخدم
+                                                </label>
+                                                <ui-select ng-model="userPrivBran.ID" ng-change="getUserBranch()" theme="bootstrap">
+                                                    <ui-select-match>
+                                                        {{$select.selected.UID}}
+                                                    </ui-select-match>
+                                                    <ui-select-choices repeat="value.ID as value in usersList | filter: $select.search">
+                                                        {{value.UID}}
+                                                        <!--<div ng-bind-html="value.name | highlight: $select.search"></div>-->
+                                                    </ui-select-choices>
+                                                </ui-select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div ng-switch on="selection">
+                            <div class="panel panel-white">
+
+                              
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group col-md-4" style="float:right !important">
+                                                    <fieldset class="panel panel-white panel-default col-md-6" style="width:45%; margin-left:5%">
+                                                        <legend>
+                                                            أختر الفرع
+                                                        </legend>
+
+                                                        <div class="panel-body">
+                                                            <div ng-repeat="role in companyBranchesList">
+                                                                <input type="checkbox" ng-model="role.SELECTED"  value="role.COM_BRN_ID" ng-change="change(role.COM_BRN_ID)"> {{role.COM_BRN_AR_NAME}}
+                                                            </div>
+                                                        </div>
+                                                    </fieldset>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <button type="button" class="btn btn-primary btn-wide margin-top-10" ng-disabled="test.$invalid" ng-click="savePrivilge()">حفظ&nbsp;&nbsp;<i class="fa fa-save"></i></button>
+                </div>
+            </div>
+</div>
+        </div>
+
+

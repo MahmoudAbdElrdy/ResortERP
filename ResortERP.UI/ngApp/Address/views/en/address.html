@@ -1,0 +1,549 @@
+﻿<style>
+    .tab-pane {
+        padding: 0 15px !important;
+    }
+
+        .tab-pane .panel {
+            margin: 0 !important
+        }
+</style>
+
+<div class="app-content">
+    <div class="main-content">
+        <div class="wrap-content container" id="container">
+            <div class="container-fluid container-fullw">               
+                    <div class="col-md-12 tabbable tabs-left bg-white">
+                        <ul class="nav nav-tabs no-border width-200">
+                            <li class="active"><a class="center" data-toggle="tab" href="#tab1" target="_self">{{addressParts.AddressPart1}} </a></li>
+                            <li><a class="center" data-toggle="tab" href="#tab2" target="_self">{{addressParts.AddressPart2}} </a></li>
+                            <li><a class="center" data-toggle="tab" href="#tab3" target="_self">{{addressParts.AddressPart3}} </a></li>
+                            <li><a class="center" data-toggle="tab" href="#tab4" target="_self">{{addressParts.AddressPart4}} </a></li>
+                        </ul>
+                        <!--/.nav nav-tabs-->
+                        <div class="tab-content panel-white">
+                            <!--
+                            ##############################
+                            # Start Tab 1 Content
+                            ##############################
+                            -->
+                            <div id="tab1" class="tab-pane fade bg-body no-border in active">
+                                <div class="panel panel-white">
+                                    <div class="panel-heading border-bottom">
+                                        <h4 class="panel-title">{{addressParts.AddressPart1}}</h4>
+                                        <div class="panel-tools">
+                                            <a data-original-title="Refresh" data-toggle="tooltip" data-placement="top" data-trigger="hover" class="btn btn-transparent btn-sm panel-refresh" href="#"><i class="fa fa-circle-o"></i></a>
+                                            <a data-original-title="Expand" data-toggle="tooltip" data-placement="top" data-trigger="hover" class="btn btn-transparent btn-sm panel-expand" href="#"><i class="fa fa-compress expand-on"></i><i class="fa fa-expand expand-off"></i></a>
+                                        </div>
+                                    </div>
+                                    <div class="panel-body">
+                                        <div class="col-md-12">
+                                            <!--<form>-->
+                                            <ng-form id="test" name="test">
+                                                <div ng-class="{'has-error': test.$invalid}" class="form-group">
+                                                    <div class="form-group col-md-6">
+                                                        <label for="NationARName">Arabic {{addressParts.AddressPart1}} Name:</label>
+                                                        <div class="help-block error" style="display:inline" ng-show="test.arname.$error.required">*</div>
+                                                        <input type="text" class="form-control" name="arname" id="NationArName" placeholder="Arabic {{addressParts.AddressPart1}} Name" ng-model="nations.NATION_AR_NAME" required>
+                                                    </div>
+                                                </div>
+
+                                                <div ng-class="{'has-error': test.$invalid}" class="form-group">
+                                                    <div class="form-group col-md-6">
+                                                        <label for="NationENName">English {{addressParts.AddressPart1}} Name:</label>
+                                                        <div class="help-block error" style="display:inline" ng-show="test.enname.$error.required">*</div>
+                                                        <input type="text" class="form-control" name="enname" id="NationEnName" placeholder="English {{addressParts.AddressPart1}} Name" ng-model="nations.NATION_EN_NAME" required>
+                                                    </div>
+                                                </div>
+
+                                                <div ng-class="{'has-error': test.$invalid}" class="form-group">
+                                                    <div class="form-group col-md-6">
+                                                        <label for="NationEnNat">Arabic Nationality :</label>
+                                                        <div class="help-block error" style="display:inline" ng-show="test.arnat.$error.required">*</div>
+                                                        <input type="text" class="form-control" name="arnat" id="NationArNat" placeholder="Arabic Nationality" ng-model="nations.NATIONALITY_AR_NAME" required>
+                                                    </div>
+                                                </div>
+
+                                                <div ng-class="{'has-error': test.$invalid}" class="form-group">
+                                                    <div class="form-group col-md-6">
+                                                        <label for="NationArNat">English Nationality:</label>
+                                                        <div class="help-block error" style="display:inline" ng-show="test.ennat.$error.required">*</div>
+                                                        <input type="text" class="form-control" name="ennat" id="NationEnNat" placeholder="English Nationality" ng-model="nations.NATIONALITY_EN_NAME" required>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-12 center my-btn-group margin-bottom-15 margin-top-10">
+                                                    <button type="button" class="btn btn-primary margin-top-10" ng-disabled="test.$invalid" ng-click="saveNationEntity()"> <i class="fa fa-save"></i>Save</button>
+                                                    <button type="button" class="btn btn-success margin-top-10 " ng-click="refreshNation()"><i class="fa fa-refresh"></i>Refresh</button>
+                                                    <button type="button" class="btn btn-info margin-top-10" ng-click="clearNation()"> <i class="fa fa-paste"></i>New</button>
+                                                </div>
+                                                <!--</form>-->
+                                            </ng-form>
+                                        </div>
+                                        <!--/.col-md-12-->
+                                        <!-- Start Horizontal Line -->
+                                        <div class="col-md-12">
+                                            <hr />
+                                        </div>
+                                        <!-- Start Horizontal Line -->
+
+                                        <div class="panel-body">
+                                            <div class="col-md-3 pull-left">
+                                                <table class="table table-stylish">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td class="center text-extra-large"><i class="ti-save"></i></td>
+                                                            <td><span class="text-dark block">{{addressParts.AddressPart1}} :</span></td>
+                                                            <td class="center">{{nationTotalCount}}</td>
+                                                            <td class="center"><i class="fa fa-caret-down text-red"></i></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+
+                                            <div class="col-md-12">
+                                                <table class="table table-bordered table-hover">
+                                                    <tr class="success">
+                                                        <th class="hidden-xs">#</th>
+                                                        <th>Arabic {{addressParts.AddressPart1}} Name </th>
+                                                        <th>English {{addressParts.AddressPart1}} Name</th>
+                                                        <th>Arabic Nationality</th>
+                                                        <th>English Nationality</th>
+                                                        <th>Edit / Delete</th>
+                                                    </tr>
+                                                    <tr ng-repeat="item in nationsList" class="center">
+                                                        <td class="hidden-xs">{{ item.COM_BRN_ID }}</td>
+                                                        <td>{{ item.NATION_AR_NAME }}</td>
+                                                        <td>{{ item.NATION_EN_NAME }}</td>
+                                                        <td>{{ item.NATIONALITY_AR_NAME }}</td>
+                                                        <td>{{ item.NATIONALITY_EN_NAME }}</td>
+                                                        <td class="center">
+                                                            <div class="visible-md visible-lg hidden-sm hidden-xs">
+                                                                <a href="" ng-click="EditNation(item)" class="btn btn-transparent btn-xs" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fa fa-pencil"></i></a>
+                                                                <a href="" ng-click="deleteNationEntity(item)" class="btn btn-transparent btn-xs tooltips" data-toggle="tooltip" data-placement="top" title="Remove"><i class="fa fa-times fa fa-white"></i></a>
+                                                            </div>
+                                                            <div class="visible-xs visible-sm hidden-md hidden-lg">
+                                                                <div class="btn-group dropdown ">
+                                                                    <button type="button" class="btn btn-o btn-sm dropdown-toggle" data-toggle="dropdown">
+                                                                        <i class="fa fa-cog"></i>&nbsp;<span class="caret"></span>
+                                                                    </button>
+                                                                    <ul class="dropdown-menu pull-right dropdown-light" role="menu">
+                                                                        <li>
+                                                                            <a href="" ng-click="EditNation(item)"> Edit </a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <a href="" ng-click="deleteNationEntity(item)"> Delete </a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+
+                                                <ul uib-pagination total-items="nationTotalCount" ng-model="nationsPageNum" max-size="nationMaxSize" class="pagination-sm" boundary-links="true" num-pages="numPages" ng-change="nationPageChanged()"></ul>
+
+                                                <pre>Page: {{nationsPageNum}} / {{nationPagesCount}}</pre>
+                                            </div>
+                                        </div>
+                                        <!--/.panel-body-->
+                                    </div>
+                                    <!--/.panel-body-->
+                                </div>
+                                <!--/.panel panel-white-->
+                            </div>
+                            <!--/.tab-pane fade bg-body no-border-->
+                            <!--
+                            ##############################
+                            # Start Tab 2 Content
+                            ##############################
+                            -->
+                            <div id="tab2" class="tab-pane fade bg-body no-border ">
+                                <div class="panel panel-white">
+                                    <div class="panel-heading border-bottom">
+                                        <h4 class="panel-title">{{addressParts.AddressPart2}}</h4>
+                                        <div class="panel-tools">
+                                            <a data-original-title="Refresh" data-toggle="tooltip" data-placement="top" data-trigger="hover" class="btn btn-transparent btn-sm panel-refresh" href="#"><i class="fa fa-circle-o"></i></a>
+                                            <a data-original-title="Expand" data-toggle="tooltip" data-placement="top" data-trigger="hover" class="btn btn-transparent btn-sm panel-expand" href="#"><i class="fa fa-compress expand-on"></i><i class="fa fa-expand expand-off"></i></a>
+                                        </div>
+                                    </div>
+                                    <div class="panel-body">
+                                        <div class="col-md-12">
+                                            <ng-form id="test2" name="test2">
+                                                <div ng-class="{'has-error': test2.$invalid}" class="form-group">
+                                                    <div class="form-group col-md-6">
+                                                        <label for="GovArName">Arabic {{addressParts.AddressPart2}} Name:</label>
+                                                        <div class="help-block error" style="display:inline" ng-show="test2.arname2.$error.required">*</div>
+                                                        <input type="text" class="form-control" name="arname2" id="GovArName" placeholder="Arabic {{addressParts.AddressPart2}} Name" ng-model="governs.GOV_AR_NAME" required>
+                                                    </div>
+                                                </div>
+
+                                                <div ng-class="{'has-error': test2.$invalid}" class="form-group">
+                                                    <div class="form-group col-md-6">
+                                                        <label for="GovENName">English {{addressParts.AddressPart2}} Name:</label>
+                                                        <div class="help-block error" style="display:inline" ng-show="test2.enname2.$error.required">*</div>
+                                                        <input type="text" class="form-control" name="enname2" id="GovENName" placeholder="English {{addressParts.AddressPart2}} Name" ng-model="governs.GOV_EN_NAME" required>
+                                                    </div>
+                                                </div>
+
+                                                <div ng-class="{'has-error': test2.$invalid}" class="form-group">
+                                                    <div class="form-group col-md-6">
+                                                        <label for="GovNation">{{addressParts.AddressPart1}} :</label>
+                                                        <div class="help-block error" style="display:inline" ng-show="test2.ddln2.$error.required">*</div>
+                                                        <select ng-model="governs.NATION_ID" name="ddln2" class="js-example-basic-hide-search js-states form-control" ng-options="x.NATION_ID as x.NATION_AR_NAME for x in nationsList" required>
+                                                            <option value="">Choose {{addressParts.AddressPart1}}</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-12 center my-btn-group margin-bottom-15 margin-top-10">
+                                                    <button type="button" class="btn btn-primary margin-top-10" ng-disabled="test2.$invalid" ng-click="saveGovernEntity()"><i class="fa fa-save"></i>Save</button>
+                                                    <button type="button" class="btn btn-success margin-top-10 " ng-click="refreshGovern()"><i class="fa fa-refresh"></i>Refresh</button>
+                                                    <button type="button" class="btn btn-info margin-top-10" ng-click="clearGovern()"><i class="fa fa-paste"></i>New</button>
+                                                </div>
+                                            </ng-form>
+                                        </div>
+                                        <!--/.col-md-12-->
+                                        <!-- Start Horizontal Line -->
+                                        <div class="col-md-12">
+                                            <hr />
+                                        </div>
+                                        <!-- Start Horizontal Line -->
+
+                                        <div class="col-md-3 pull-left">
+                                            <table class="table table-stylish">
+                                                <tbody>
+                                                    <tr>
+                                                        <td class="center text-extra-large"><i class="ti-save"></i></td>
+                                                        <td><span class="text-dark block">{{addressParts.AddressPart2}} :</span></td>
+                                                        <td class="center">{{governTotalCount}}</td>
+                                                        <td class="center"><i class="fa fa-caret-down text-red"></i></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <!--/.col-md-3 pull-left-->
+
+                                        <div class="col-md-12">
+                                            <table class="table table-bordered table-hover">
+                                                <tr class="success">
+                                                    <th class="hidden-xs">#</th>
+                                                    <th>Arabic {{addressParts.AddressPart2}} Name </th>
+                                                    <th>English {{addressParts.AddressPart2}} Name</th>
+                                                    <th>{{addressParts.AddressPart1}}</th>
+                                                    <th>Edit / Delete</th>
+                                                </tr>
+                                                <tr ng-repeat="item in governList" class="center">
+                                                    <td class="hidden-xs">{{ item.GOV_ID }}</td>
+                                                    <td>{{ item.GOV_AR_NAME }}</td>
+                                                    <td>{{ item.GOV_EN_NAME }}</td>
+                                                    <td>{{ item.NationName }}</td>
+                                                    <td class="center">
+                                                        <div class="visible-md visible-lg hidden-sm hidden-xs">
+                                                            <a href="" ng-click="EditGoverns(item)" class="btn btn-transparent btn-xs" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fa fa-pencil"></i></a>
+                                                            <a href="" ng-click="deletegovernEntity(item)" class="btn btn-transparent btn-xs tooltips" data-toggle="tooltip" data-placement="top" title="Remove"><i class="fa fa-times fa fa-white"></i></a>
+                                                        </div>
+                                                        <div class="visible-xs visible-sm hidden-md hidden-lg">
+                                                            <div class="btn-group dropdown ">
+                                                                <button type="button" class="btn btn-o btn-sm dropdown-toggle" data-toggle="dropdown">
+                                                                    <i class="fa fa-cog"></i>&nbsp;<span class="caret"></span>
+                                                                </button>
+                                                                <ul class="dropdown-menu pull-right dropdown-light" role="menu">
+                                                                    <li><a href="" ng-click="EditGoverns(item)"> Edit </a></li>
+                                                                    <li><a href="" ng-click="deletegovernEntity(item)"> Remove </a></li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+
+                                            <ul uib-pagination total-items="governTotalCount" ng-model="governPageNum" max-size="governMaxSize" class="pagination-sm" boundary-links="true" num-pages="numPages" ng-change="governPageChanged()"></ul>
+                                            <pre>Page: {{governPageNum}} / {{governPagesCount}}</pre>
+                                        </div>
+                                        <!--/.col-md-12-->
+                                    </div>
+                                    <!--/.panel-body-->
+                                </div>
+                                <!--/.panel panel-white-->
+                            </div>
+                            <!--/.tab-pane fade bg-body no-border-->
+                            <!--
+                            ##############################
+                            # Start Tab 3 Content
+                            ##############################
+                            -->
+                            <div id="tab3" class="tab-pane fade bg-body no-border">
+                                <div class="panel panel-white">
+                                    <div class="panel-heading border-bottom">
+                                        <h4 class="panel-title">{{addressParts.AddressPart3}}</h4>
+                                        <div class="panel-tools">
+                                            <a data-original-title="Refresh" data-toggle="tooltip" data-placement="top" data-trigger="hover" class="btn btn-transparent btn-sm panel-refresh" href="#"><i class="fa fa-circle-o"></i></a>
+                                            <a data-original-title="Expand" data-toggle="tooltip" data-placement="top" data-trigger="hover" class="btn btn-transparent btn-sm panel-expand" href="#"><i class="fa fa-compress expand-on"></i><i class="fa fa-expand expand-off"></i></a>
+                                        </div>
+                                    </div>
+
+                                    <div class="panel-body">
+                                        <div class="col-md-12">
+                                            <!--<form>-->
+                                            <ng-form id="test3" name="test3">
+                                                <div ng-class="{'has-error': test3.$invalid}" class="form-group">
+                                                    <div class="form-group col-md-6">
+                                                        <label for="TownArName">Arabic {{addressParts.AddressPart3}} Name:</label>
+                                                        <div class="help-block error" style="display:inline" ng-show="test3.arname3.$error.required">*</div>
+                                                        <input type="text" class="form-control" name="arname3" id="TownArName" placeholder="Arabic {{addressParts.AddressPart3}} Name" ng-model="towns.TOWN_AR_NAME" required>
+                                                    </div>
+                                                </div>
+
+                                                <div ng-class="{'has-error': test3.$invalid}" class="form-group">
+                                                    <div class="form-group col-md-6">
+                                                        <label for="TownENName">English {{addressParts.AddressPart3}} Name:</label>
+                                                        <div class="help-block error" style="display:inline" ng-show="test3.enname3.$error.required">*</div>
+                                                        <input type="text" class="form-control" name="enname3" id="TownENName" placeholder="English {{addressParts.AddressPart3}} Name" ng-model="towns.TOWN_EN_NAME" required>
+                                                    </div>
+                                                </div>
+
+                                                <div ng-class="{'has-error': test3.$invalid}" class="form-group">
+                                                    <div class="form-group col-md-6">
+                                                        <label>{{addressParts.AddressPart1}} :</label>
+                                                        <div class="help-block error" style="display:inline" ng-show="test3.ddln3.$error.required">*</div>
+                                                        <select ng-model="towns.NationId" name="ddln3" class="js-example-basic-hide-search js-states form-control" ng-options="x.NATION_ID as x.NATION_AR_NAME for x in nationsList" ng-change="getGovernoratesByNationId()" required>
+                                                            <option value="">Choose {{addressParts.AddressPart1}}</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                                <div ng-class="{'has-error': test3.$invalid}" class="form-group">
+                                                    <div class="form-group col-md-6">
+                                                        <label>{{addressParts.AddressPart2}}:</label>
+                                                        <div class="help-block error" style="display:inline" ng-show="test3.ddlg3.$error.required">*</div>
+                                                        <select ng-model="towns.GOV_ID" name="ddlg3" class="js-example-basic-hide-search js-states form-control" ng-options="x.GOV_ID as x.GOV_AR_NAME for x in ddlTownGovList" required>
+                                                            <option value="">Choose {{addressParts.AddressPart2}}</option>
+                                                        </select>
+
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-12 center my-btn-group margin-bottom-15 margin-top-10">
+                                                    <button type="button" class="btn btn-primary margin-top-10" ng-disabled="test3.$invalid" ng-click="saveTownEntity()"><i class="fa fa-save"></i><i class="fa fa-paste"></i>Save</button>
+                                                    <button type="button" class="btn btn-success margin-top-10 " ng-click="refreshTown()"><i class="fa fa-refresh"></i>Refresh</button>
+                                                    <button type="button" class="btn btn-info margin-top-10" ng-click="clearTowns()">New</button>
+                                                </div>
+                                            </ng-form>
+                                            <!--</form>-->
+                                        </div>
+                                        <!--/.col-md-12-->
+                                        <!-- Start Horizontal Line -->
+                                        <div class="col-md-12">
+                                            <hr />
+                                        </div>
+                                        <!-- Start Horizontal Line -->
+
+                                        <div class="panel-body">
+                                            <div class="col-md-3 pull-left">
+                                                <table class="table table-stylish">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td class="center text-extra-large"><i class="ti-save"></i></td>
+                                                            <td><span class="text-dark block">{{addressParts.AddressPart3}} :</span></td>
+                                                            <td class="center">{{townTotalCount}}</td>
+                                                            <td class="center"><i class="fa fa-caret-down text-red"></i></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+
+                                            <div class="col-md-12">
+                                                <table class="table table-bordered table-hover">
+                                                    <tr class="success">
+                                                        <th class="hidden-xs">#</th>
+                                                        <th>Arabic {{addressParts.AddressPart3}} Name </th>
+                                                        <th>English {{addressParts.AddressPart3}} Name</th>
+                                                        <th>Edit / Delete</th>
+                                                    </tr>
+                                                    <tr ng-repeat="item in townsList" class="center">
+                                                        <td class="hidden-xs">{{ item.TOWN_ID }}</td>
+                                                        <td>{{ item.TOWN_AR_NAME }}</td>
+                                                        <td>{{ item.TOWN_EN_NAME }}</td>
+                                                        <td class="center">
+                                                            <div class="visible-md visible-lg hidden-sm hidden-xs">
+                                                                <a href="" ng-click="EditTown(item)" class="btn btn-transparent btn-xs" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fa fa-pencil"></i></a>
+                                                                <a href="" ng-click="deleteTownEntity(item)" class="btn btn-transparent btn-xs tooltips" data-toggle="tooltip" data-placement="top" title="Remove"><i class="fa fa-times fa fa-white"></i></a>
+                                                            </div>
+                                                            <div class="visible-xs visible-sm hidden-md hidden-lg">
+                                                                <div class="btn-group dropdown ">
+                                                                    <button type="button" class="btn btn-o btn-sm dropdown-toggle" data-toggle="dropdown">
+                                                                        <i class="fa fa-cog"></i>&nbsp;<span class="caret"></span>
+                                                                    </button>
+                                                                    <ul class="dropdown-menu pull-right dropdown-light" role="menu">
+                                                                        <li>
+                                                                            <a href="" ng-click="EditTown(item)"> Edit </a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <a href="" ng-click="deleteTownEntity(item)"> Remove </a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+
+                                                <ul uib-pagination total-items="townTotalCount" ng-model="townPageNum" max-size="townMaxSize" class="pagination-sm" boundary-links="true" num-pages="numPages" ng-change="townPageChanged()"></ul>
+
+                                                <pre>Page: {{townPageNum}} / {{townPagesCount}}</pre>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--/.panel-body-->
+                                </div>
+                                <!--/.panel panel-white-->
+                            </div>
+                            <!--/.tab-pane fade bg-body no-border-->
+                            <!--
+                            ##############################
+                            # Start Tab 4 Content
+                            ##############################
+                            -->
+                            <div id="tab4" class="tab-pane fade bg-body no-border">
+                                <div class="panel panel-white">
+                                    <div class="panel-heading border-bottom">
+                                        <h4 class="panel-title">{{addressParts.AddressPart4}}</h4>
+                                        <div class="panel-tools">
+                                            <a data-original-title="Refresh" data-toggle="tooltip" data-placement="top" data-trigger="hover" class="btn btn-transparent btn-sm panel-refresh" href="#"><i class="fa fa-circle-o"></i></a>
+                                            <a data-original-title="Expand" data-toggle="tooltip" data-placement="top" data-trigger="hover" class="btn btn-transparent btn-sm panel-expand" href="#"><i class="fa fa-compress expand-on"></i><i class="fa fa-expand expand-off"></i></a>
+                                        </div>
+                                    </div>
+
+                                    <div class="panel-body">
+                                        <div class="col-md-12">
+                                            <!--<form>-->
+                                            <ng-form id="test4" name="test4">
+                                                <div ng-class="{'has-error': test4.$invalid}" class="form-group">
+                                                    <div class="form-group col-md-6">
+                                                        <label for="VillArName">Arabic {{addressParts.AddressPart4}} Name:</label>
+                                                        <div class="help-block error" style="display:inline" ng-show="test4.arname4.$error.required">*</div>
+                                                        <input type="text" class="form-control" id="VillArName" name="arname4" placeholder="Arabic {{addressParts.AddressPart4}} Name" ng-model="village.VILLAGE_AR_NAME" required>
+                                                    </div>
+                                                </div>
+
+                                                <div ng-class="{'has-error': test4.$invalid}" class="form-group">
+                                                    <div class="form-group col-md-6">
+                                                        <label for="VillENName">English {{addressParts.AddressPart4}} Name:</label>
+                                                        <div class="help-block error" style="display:inline" ng-show="test4.enname4.$error.required">*</div>
+                                                        <input type="text" class="form-control" name="enname4" id="VillENName" placeholder="English {{addressParts.AddressPart4}} Name" ng-model="village.VILLAGE_EN_NAME" required>
+                                                    </div>
+                                                </div>
+
+                                                <div ng-class="{'has-error': test4.$invalid}" class="form-group">
+                                                    <div class="form-group col-md-6">
+                                                        <label>{{addressParts.AddressPart1}} :</label>
+                                                        <div class="help-block error" style="display:inline" ng-show="test4.ddln4.$error.required">*</div>
+                                                        <select ng-model="village.NationId" name="ddln4" class="js-example-basic-hide-search js-states form-control" ng-options="x.NATION_ID as x.NATION_AR_NAME for x in nationsList" ng-change="getVillGovernByNationId()" required>
+                                                            <option value="">Choose {{addressParts.AddressPart1}}</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                                <div ng-class="{'has-error': test4.$invalid}" class="form-group">
+                                                    <div class="form-group col-md-6">
+                                                        <label>{{addressParts.AddressPart2}}:</label>
+                                                        <div class="help-block error" style="display:inline" ng-show="test4.ddlg4.$error.required">*</div>
+                                                        <select ng-model="village.GovId" name="ddlg4" class="js-example-basic-hide-search js-states form-control" ng-options="x.GOV_ID as x.GOV_AR_NAME for x in ddlVillGovList" ng-change="getVillTownByGovern()" required>
+                                                            <option value="">Choose {{addressParts.AddressPart2}}</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                                <div ng-class="{'has-error': test4.$invalid}" class="form-group">
+                                                    <div class="form-group col-md-6">
+                                                        <label>{{addressParts.AddressPart3}}:</label>
+                                                        <div class="help-block error" style="display:inline" ng-show="test4.ddlv4.$error.required">*</div>
+                                                        <select ng-model="village.TOWN_ID" name="ddlv4" class="js-example-basic-hide-search js-states form-control" ng-options="x.TOWN_ID as x.TOWN_AR_NAME for x in ddlVillTownList" required>
+                                                            <option value="">Choose {{addressParts.AddressPart3}}</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-12 center my-btn-group margin-bottom-15 margin-top-10">
+                                                    <button type="button" class="btn btn-primary margin-top-10" ng-disabled="test.$invalid" ng-click="saveVillageEntity()">Save<i class="fa fa-save"></i></button>
+                                                    <button type="button" class="btn btn-success margin-top-10 " ng-click="refreshVillage()">Refresh<i class="fa fa-refresh"></i></button>
+                                                    <button type="button" class="btn btn-info margin-top-10" ng-click="clearVillage()">New<i class="fa fa-paste"></i></button>
+                                                </div>
+
+                                            </ng-form>
+                                            <!--</form>-->
+                                        </div>
+
+                                        <div class="col-md-12">
+                                            <hr />
+                                        </div>
+
+                                        <!-- Start Panel Body 4th Tab-->
+                                        <div class="panel-body">
+                                            <div class="col-md-3 pull-left ">
+                                                <table class="table table-stylish">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td class="center text-extra-large"><i class="ti-save"></i></td>
+                                                            <td><span class="text-dark block">{{addressParts.AddressPart4}} :</span></td>
+                                                            <td class="center">{{villageTotalCount}}</td>
+                                                            <td class="center"><i class="fa fa-caret-down text-red"></i></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+
+                                            <div class="col-md-12">
+                                                <table class="table table-bordered table-hover">
+                                                    <tr class="success">
+                                                        <th class="hidden-xs">#</th>
+                                                        <th>Arabic {{addressParts.AddressPart4}} Name </th>
+                                                        <th>English {{addressParts.AddressPart4}} Name</th>
+                                                        <th>Edit / Delete</th>
+                                                    </tr>
+
+                                                    <tr ng-repeat="item in villageList" class="center">
+                                                        <td class="hidden-xs">{{ item.VILLAGE_ID }}</td>
+                                                        <td>{{ item.VILLAGE_AR_NAME }}</td>
+                                                        <td>{{ item.VILLAGE_EN_NAME }}</td>
+                                                        <td class="center">
+                                                            <div class="visible-md visible-lg hidden-sm hidden-xs">
+                                                                <a href="" ng-click="EditVillage(item)" class="btn btn-transparent btn-xs" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fa fa-pencil"></i></a>
+                                                                <a href="" ng-click="deleteVillageEntity(item)" class="btn btn-transparent btn-xs tooltips" data-toggle="tooltip" data-placement="top" title="Remove"><i class="fa fa-times fa fa-white"></i></a>
+                                                            </div>
+                                                            <div class="visible-xs visible-sm hidden-md hidden-lg">
+                                                                <div class="btn-group dropdown">
+                                                                    <button type="button" class="btn btn-o btn-sm dropdown-toggle" data-toggle="dropdown"><i class="fa fa-cog"></i>&nbsp;<span class="caret"></span></button>
+
+                                                                    <ul class="dropdown-menu pull-right dropdown-light" role="menu">
+                                                                        <li><a href="" ng-click="EditVillage(item)"> Edit </a></li>
+                                                                        <li><a href="" ng-click="deleteVillageEntity(item)"> Remove </a></li>
+                                                                    </ul>
+                                                                </div>
+                                                                <!--/.btn-group-->
+                                                            </div>
+                                                            <!--/.visible-xs visible-sm-->
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                                <ul uib-pagination total-items="villageTotalCount" ng-model="villagePageNum" max-size="villagePageSize" class="pagination-sm" boundary-links="true" num-pages="numPages" ng-change="villagePageChanged()"></ul>
+                                                <pre>Page: {{villagePageNum}} / {{villagePagesCount}}</pre>
+                                            </div>
+                                            <!-- End Panel Body 4th Tab -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--/.tab-pane fade bg-body no-border-->
+                        </div>
+                        <!--/.tab-content-->
+                    </div>
+                    <!--/.col-md-12-->               
+            </div>
+            <!--/.container-fluid container-fullw-->
+        </div>
+        <!--/.wrap-content container-->
+    </div>
+    <!--/.main-content-->
+</div>
+<!--/.app-content-->

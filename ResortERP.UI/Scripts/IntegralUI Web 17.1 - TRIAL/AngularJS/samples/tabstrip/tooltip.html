@@ -1,0 +1,114 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head>
+    <title>TabStrip - Tooltip</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="../../css/samples.css" />
+    <link rel="stylesheet" href="../../css/integralui.tabstrip.css" />
+    <link rel="stylesheet" href="../../css/integralui.tooltip.css" />
+    <link rel="stylesheet" href="../../css/themes/theme-flat-blue.css" id="theme" />
+    <script type="text/javascript" src="../theme.selector.min.js"></script>
+    <script type="text/javascript" src="../../external/angular.min.js"></script>
+    <script type="text/javascript" src="../../js/angular.integralui.min.js"></script>
+    <script type="text/javascript" src="../../js/angular.integralui.tabstrip.min.js"></script>
+    <script type="text/javascript" src="../../js/angular.integralui.tooltip.min.js"></script>
+    <script type="text/javascript">
+ 		angular
+			.module("appModule", ["integralui"])
+			.controller("appCtrl", ["$scope", "IntegralUITabStripService", function($scope, $ctrlService){
+                initTheme($scope);
+
+                $scope.ctrlName = "ctrlSample";
+
+                $scope.tabs = [
+                    { 
+                        name: 'tab1',
+                        text: 'Tab 1',
+                        tooltip: { title: 'Tab 1' },
+                        body: 'Curabitur pretium tincidunt lacus. Nulla gravida orci a odio. Nullam varius, turpis et commodo pharetra, est eros bibendum elit, nec luctus magna felis sollicitudin mauris. Integer in mauris eu nibh euismod gravida. Duis ac tellus et risus vulputate vehicula. Donec lobortis risus a elit. Etiam tempor.'
+                    },
+                    { 
+                        name: 'tab2',
+                        text: 'Tab 2',
+                        tooltip: { title: 'Tab 2' },
+                        body: 'Pellentesque malesuada nulla a mi. Duis sapien sem, aliquet nec, commodo eget, consequat quis, neque. Aliquam faucibus, elit ut dictum aliquet, felis nisl adipiscing sapien, sed malesuada diam lacus eget erat. Cras mollis scelerisque nunc. Nullam arcu. Aliquam consequat.'
+                    },
+                    { 
+                        name: 'tab3',
+                        text: 'Tab 3',
+                        tooltip: { title: 'Tab 3' },
+                        body: 'Fusce convallis, mauris imperdiet gravida bibendum, nisl turpis suscipit mauris, sed placerat ipsum urna sed risus. In convallis tellus a mauris. Curabitur non elit ut libero tristique sodales. Mauris a lacus. Donec mattis semper leo. In hac habitasse platea dictumst.'
+                    }
+                ];
+		}]);
+    </script>
+    <style type="text/css">
+        .directive
+        {
+            height: 200px;
+        }
+        .custom-content
+        {
+            margin: 0;
+            padding: 5px;
+        }
+        .iui-contextmenu-block
+        {
+            border-radius: 0;
+            padding: 2px;
+        }
+        .iui-contextmenu-item
+        {
+            width: 140px;
+        }
+        .icons
+        {
+            margin-right: 5px;
+            vertical-align: middle;
+        }
+        .check-mark
+        {
+            background-position: -96px -48px;
+        }
+        .iui-tooltip
+        {
+            font-size: 0.75em;
+        }
+    </style>
+</head>
+<body ng-app="appModule" ng-controller="appCtrl">
+    <div class="header">
+        <div class="header-block">
+            <div class="header-content">
+                <h1><span style="color:#c60d0d">IntegralUI</span> Web <span style="font-size:0.75em; font-style:italic">for AngularJS</span></h1>
+            </div>
+            <div class="theme-selector"><label>Active Theme: <select class="theme-combo" ng-model="selTheme" ng-options="theme.name for theme in themeList"></select></label></div>
+        </div>
+        <hr class="head-separator" />
+    </div>
+    <div class="content">
+        <div class="feature">
+	        <h2 class="feature-title">TabStrip / Tooltip</h2>
+	        <div class="feature-content">
+                <iui-tabstrip name="{{ctrlName}}" class="directive" tabs="tabs" iui-contextmenu="tabMenu" tab-added="onTabAdded(e)" tab-removed="onTabRemoved(e)" iui-style="background:{{ctrlBackground}};border:{{ctrlBorder}}">
+                    <iui-tab ng-repeat="tab in tabs" name="{{tab.name}}">
+                        <iui-tab-header iui-tooltip="tab.tooltip">
+                            {{tab.text}}
+                        </iui-tab-header>
+                        <p class="custom-content">{{tab.body}}</p>
+                    </iui-tab>
+                </iui-tabstrip>
+                <div class="control-panel" style="margin-left:50px;">
+                </div>
+                <br style="clear:both;"/>
+                <div class="feature-help">
+                    <p><span class="initial-space"></span>In this sample you can see how to attach a tooltip to the TabStrip tabs.</p>
+                    <p><span class="initial-space"></span>Whenever a mouse cursor enters the tab space, a tooltip will appear. To simplify this example, the default tooltip settings are used and only the tooltip title is set.</p>
+                    <p><span class="initial-space"></span>We are using the <a href="../tooltip/overview.html">IntegralUI Tooltip</a> directive to apply a tooltip to each tab. This directive accepts an object with all options that determines the appearance and behavior of the tooltip.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

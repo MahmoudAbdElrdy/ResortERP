@@ -1,0 +1,108 @@
+﻿﻿<div class="app-content">
+
+    <div class="main-content">
+        <div class="wrap-content container" id="container">
+            <div class="container-fluid container-fullw">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="panel panel-white">
+                            <div class="panel-heading border-bottom">
+                                <h4 class="panel-title">Unit Definition</h4>
+                                <div class="panel-tools">
+                                    <a data-original-title="Refresh" data-toggle="tooltip" data-placement="top" data-trigger="hover" class="btn btn-transparent btn-sm panel-refresh" href="#"><i class="fa fa-circle-o"></i></a>
+                                    <a data-original-title="Expand" data-toggle="tooltip" data-placement="top" data-trigger="hover" class="btn btn-transparent btn-sm panel-expand" href="#"><i class="fa fa-compress expand-on"></i><i class="fa fa-expand expand-off"></i></a>
+                                </div>
+                            </div>
+
+                            <div class="panel-body">
+
+                                <div class="col-md-6">
+
+                                    <div class="form-group col-md-12">
+                                        <label>Unit Code :</label>
+                                        <input type="text" class="form-control" placeholder="Code" ng-model="units.UNIT_CODE" required>
+                                    </div>
+                                    <div class="form-group col-md-12">
+                                        <label>Arabic Unit Name : </label>
+                                        <input type="text" class="form-control" placeholder="Arabic Unit Name " ng-model="units.UNIT_AR_NAME" required>
+                                    </div>
+                                    <div class="form-group col-md-12">
+                                        <label>Latin Unit Name : </label>
+                                        <input type="text" class="form-control" placeholder="Latin Unit Name " ng-model="units.UNIT_EN_NAME" required>
+                                    </div>
+                                    <div class="form-group col-md-12">
+                                        <label>Notes : </label>
+                                        <input type="text" class="form-control" placeholder="Notes " ng-model="units.UNIT_REMARKS">
+                                    </div>
+
+                                </div>
+                                <div class="col-md-6">
+
+                                    <div class="space12 center">
+                                        <div class="btn-group">
+                                            <button class="btn btn-primary">
+                                                <i class="fa fa-step-forward"></i>
+                                            </button>
+
+
+                                            <button class="btn btn-primary">
+                                                <i class="fa fa-chevron-right"></i>
+                                            </button>
+
+                                            <button class="btn btn-primary">
+                                                <i class="fa fa-chevron-left"></i>
+                                            </button>
+                                            <button class="btn btn-primary">
+                                                <i class="fa fa-step-backward"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 margin-bottom-25 text-center">
+                                    <button type="button" class="btn btn-primary btn-wide  margin-top-10" ng-click="saveUnitsGroup()">Save&nbsp;&nbsp;<i class="fa fa-save"></i></button>
+                                    <button type="button" class="btn btn-wide btn-success margin-top-10 " ng-click="refreshData()">Refresh&nbsp;&nbsp;<i class="fa fa-refresh"></i></button>
+                                    <button type="button" class="btn btn-wide btn-info   margin-top-10" ng-click="clearEnity()">New&nbsp;&nbsp;<i class="fa fa-paste"></i></button>
+                                </div>
+                                <hr />
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <table class="table table-bordered table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th class="center text-extra-large"><i class="ti-arrow-down"></i></th>
+                                                    <th class="center"> Unit Code  </th>
+                                                    <th class="center">Unit Arabic Name </th>
+                                                    <th class="center">Unit Latin Name</th>
+                                                    <th class="center">Notes</th>
+                                                    <th></th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="unit in unitsList">
+                                                    <td class="hidden-xs">{{ $index + 1 }}</td>
+                                                    <td>{{ unit.UNIT_CODE }}</td>
+                                                    <td>{{ unit.UNIT_AR_NAME }}</td>
+                                                    <td>{{ unit.UNIT_EN_NAME }}</td>
+                                                    <td class="hidden-xs">{{ unit.UNIT_REMARKS }}</td>
+                                                    <td>
+                                                        <a class="label partition-blue" href="" ng-click="dirEnity(unit)"><i class="glyphicon glyphicon-share"></i> Edit </a>
+                                                    </td>
+                                                    <td>
+                                                        <a class="label partition-red" href="" ng-click="deleteEnity(unit)"><i class="glyphicon glyphicon-remove-circle"></i> Delete </a>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <ul uib-pagination total-items="unitsTotalCount" ng-model="pageNum" max-size="maxSize" class="pagination-sm" boundary-links="true" num-pages="numPages" ng-change="pageChanged()"></ul>
+                                        <pre>Page: {{pageNum}} / {{numPages}}</pre>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

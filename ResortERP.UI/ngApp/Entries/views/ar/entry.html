@@ -1,0 +1,2287 @@
+﻿<div class="app-content">
+    <div class="main-content">
+        <div class="wrap-content container" id="container">
+            <div class="container-fluid container-fullw ">
+
+                <div class="col-xs-12 margin-top-10 margin-bottom-10">
+                    <div class="breadcrumb-wrapper no-margin">
+                        <h4 class="mainTitle text-center text-bold text-primary no-margin" >{{entrySetting.ENTRY_SETTING_AR_NAME}}  </h4>
+                        <ul class="pull-right breadcrumb">
+                            <li><a href="#!"><i class="fa fa-home margin-left-5 text-large text-dark"></i>الرئيسية</a></li>
+                            <li>{{entrySetting.ENTRY_SETTING_AR_NAME}}  </li>
+                        </ul>
+                    </div>
+                </div>
+                <!--/.col-xs-12-->
+
+                <div class="col-xs-12 actionBar">
+                    <div class="panel-white panel-body no-margin">
+                        <div class="pull-right">
+                            <button type="button" ng-if="!isPopUp" ng-click="clearEnity()" class="btn btn-o btn-default no-border"><i class="glyphicon glyphicon-file"></i><span>جديد</span></button>
+                            <button type="button" ng-if="!isPopUp" ng-click="saveEntry()" class="btn btn-o btn-default no-border"><i class="glyphicon glyphicon-save"></i><span>حفظ</span></button>
+                            <button type="button" ng-if="!isPopUp" ng-click="deleteEnity(entryMaster)" class="btn btn-o btn-default no-border"><i class="glyphicon glyphicon-trash"></i> <span>حذف</span></button>
+                            <button type="button" ng-if="!isPopUp" class="btn btn-o btn-default no-border" ng-click="openEntryPopup()"><i class="glyphicon glyphicon-folder-close"></i><span> سند {{dailyEntryID}}</span></button>
+                            <button type="button" ng-if="!isPopUp" ng-disabled="hidePrintOnNewBill()" ng-click="printDiv('Bill')" class="btn btn-o btn-default no-border"><i class="glyphicon glyphicon-print"></i><span>طباعة</span></button>
+                            <button type="button" ng-if="!isPopUp" ng-disabled="hidePrintOnNewBill()" ng-click='printDiv( "BillWithEntry")' class="btn btn-o btn-default no-border"><i class="glyphicon glyphicon-print"></i>طباعة مع القيد</button>
+                            <button type="button" ng-if="!isPopUp" class="btn btn-o btn-default no-border"><i class="glyphicon glyphicon-trash"></i><span>معاينة</span></button>
+                            <button type="button" ng-if="!isPopUp" class="btn btn-o btn-default no-border"><i class="glyphicon glyphicon-search"></i><span>بحث</span></button>
+                            <button type="button" ng-if="!isPopUp" class="btn btn-o btn-default no-border"><i class="glyphicon glyphicon-ban-circle"></i> <span>الغاء</span> </button>
+                            <!--<button type="button" ng-show="getNotShow()==10||getNotShow()==11" ng-disabled="isPopUp" ng-click="addNotification()" class="btn btn-o btn-default no-border">
+                                <i class="glyphicon glyphicon-save"></i>
+                                اضافة اشعار
+                            </button>-->
+                            <button type="button" ng-if="!isPopUp" ng-click="addComplexEntryRow()" ng-show="IsEntryMode" class="btn btn-o btn-default no-border accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" data-target="#ENTRY_SETTING_AR_NAME">
+                                <i class="glyphicon glyphicon-save"></i>
+                                اضافه
+                            </button>
+                            <button type="button" ng-if="isPopUp" ng-click="printEntryData()" class="btn btn-o btn-default no-border"><i class="glyphicon glyphicon-print"></i><span>طباعة القيد</span></button>
+                        </div>
+                        <div class="pull-left">
+                            <button class="btn btn-o btn-default radius-10 btn-wide" ng-click="goldCredit(entryMaster.CustAccID)">رصيد عميل</button>
+                            <button class="btn btn-o btn-default radius-10 btn-wide" ng-click="goldCredit(entryMaster.ACC_ID)">صندوق النقد</button>
+                        </div>
+                    </div>
+                </div>
+                <!--/.col-xs-12-->
+
+                <div class="col-md-12">
+                    <div class="panel panel-white main-side-border">
+
+                        <!--<div class="col-md-6">-->
+                        <div class="hidden" ng-hide="flagHide">
+                            <p>&nbsp; {{accountBalance.accName}}</p>
+                            <table class="table table-bordered table-hover">
+                                <tr class="success">
+                                    <th>24 عيار </th>
+                                    <th>22 عيار</th>
+                                    <th>21 عيار</th>
+                                    <th>18 عيار </th>
+                                    <th>نقد</th>
+                                </tr>
+                                <tr>
+                                    <td>{{ accountBalance.c24 }}&nbsp;</td>
+                                    <td>{{ accountBalance.c22 }}&nbsp;</td>
+                                    <td>{{ accountBalance.c21 }}&nbsp;</td>
+                                    <td>{{ accountBalance.c18 }}&nbsp;</td>
+                                    <td>{{ accountBalance.money }}&nbsp;</td>
+                                </tr>
+                            </table>
+                        </div>
+
+
+                        <div class="panel-body margin-bottom-10">
+                            <div class="form-group col-lg-2 col-md-3">
+                                <label>كود {{entrySetting.ENTRY_SETTING_AR_NAME}}</label>
+                                <input type="number" name="ENTRY_NUMBER" ng-model="entryMaster.ENTRY_NUMBER" class="form-control input-sm" placeholder="كود {{entrySetting.ENTRY_SETTING_AR_NAME}}" press-enter="searchEntry()">
+                            </div>
+
+                            <div class="form-group col-lg-2 col-md-3">
+                                <label>التاريخ</label>
+                                <input type="date" name="ENTRY_DATE" ng-model="entryMaster.ENTRY_DATE" class="form-control input-sm">
+                            </div>
+
+                            <div class="form-group col-lg-2 col-md-3" ng-show="IsEntryMode">
+                                <label>حساب عميل / مورد</label>
+                                <select ng-model="entryMaster.CustAccID" ng-options="x.ACC_ID as x.ACC_AR_NAME for x in complexEntryCustomersAccounts" class="js-example-basic-hide-search js-states form-control input-sm" ng-change="addComplexEntryRowInverse()"></select>
+                            </div>
+
+                            <div class="form-group col-lg-2 col-md-3">
+                                <label>مناوله</label>
+                                <input type="text" ng-model="entryMaster.DeliveryPersonName" id="form-field-mask-1" class="form-control input-sm text-extra-small input-mask-date">
+                            </div>
+
+
+                            <div class="form-group col-lg-2 col-md-3" ng-show="IsEntryMode">
+                                <label>القيمة</label>
+                                <input type="text" ng-model="entryMaster.EntryVal" id="form-field-mask-1" class="form-control input-sm text-extra-small input-mask-date">
+                            </div>
+
+                            <div class="form-group col-lg-2 col-md-3" ng-hide="getNotShow()==10||getNotShow()==11">
+                                <label ng-hide="getTypeOfShow()==4||getTypeOfShow()==5">الحساب </label>
+                                <label ng-show="getTypeOfShow()==4||getTypeOfShow()==5">البنك</label>
+                                <div class="input-group">
+                                    <select ng-model="entryMaster.ACC_ID" ng-options="x.ACC_ID as x.ACC_AR_NAME for x in BoxAccounts" class="js-example-basic-hide-search js-states form-control input-sm" ng-change="changeAccountBalance(entryMaster.ACC_ID)"></select>
+                                    <span class="input-group-btn"><button class="btn btn-primary input-sm text-small" type="button" ng-click="cancel(); openAccountPopup()">+</button></span>
+                                    <span class="input-group-btn"><span class="text-small" ng-click="goldCredit(entryMaster.ACC_ID)"><i class="glyphicon glyphicon-info-sign"></i></span></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group col-lg-2 col-md-3" ng-hide="true">
+                                <label>مندوب التحصيل</label>
+                                <div class="input-group">
+                                    <select ng-model="entryMaster.EMP_ID" ng-options="x.EMP_ID as x.EMP_AR_NAME for x in EmployeesSales" class="js-example-basic-hide-search js-states form-control input-sm"><optgroup label="مندوب التحصيل"></optgroup></select>
+                                    <span class="input-group-btn"><button class="btn btn-primary input-sm text-small" type="button" ng-click="cancel(); openEmployeePopup()">+</button></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group col-lg-2 col-md-3" ng-show="getTypeOfShow()==4||getTypeOfShow()==5">
+                                <label>تاريخ الشيك</label>
+                                <input type="date" ng-model="entryMaster.CHECK_DATE" id="form-field-mask-1" class="form-control input-sm text-extra-small input-mask-date">
+                            </div>
+
+                            <div ng-hide="getTypeOfShow()==1 || getTypeOfShow()==2 || getTypeOfShow()==10 || getTypeOfShow()==11  || getTypeOfShow()==4 || getTypeOfShow()==5"  class="form-group col-lg-2 col-md-3" >
+                                <label>الوقت</label>
+                                <input type="time" name="ENTRY_DATE" ng-model="entryMaster.ENTRY_DATE" class="form-control input-sm">
+                            </div>
+
+                            <div class="form-group col-lg-2 col-md-3" ng-hide="true">
+                                <label>العملة</label>
+                                <div class="input-group">
+                                    <select ng-model="entryMaster.CURRENCY_ID" ng-options="x.CURRENCY_ID as x.CURRENCY_AR_NAME for x in currenciesList" ng-change="changeCurrencyRate()" class="js-example-basic-hide-search js-states form-control input-sm"><optgroup label="العملة"></optgroup></select>
+                                    <span class="input-group-btn"><button class="btn btn-primary input-sm text-small" type="button" ng-click="cancel(); openCurrencyPopup()">+</button></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group col-lg-2 col-md-3" ng-hide="true">
+                                <label>سعر الصرف</label>
+                                <input type="text" ng-model="entryMaster.CURRENCY_RATE" id="form-field-mask-1" ng-change="calculateTotals()" class="form-control input-sm text-extra-small input-mask-date">
+                            </div>
+
+                            <div ng-show="getTypeOfShow()==4||getTypeOfShow()==5" class="form-group col-lg-2 col-md-3">
+                                <label>رقم الشيك</label>
+                                <input type="text" ng-model="entryMaster.CHECK_NUMBER" id="form-field-mask-1" class="form-control input-sm text-extra-small input-mask-date">
+                            </div>
+                            <div ng-hide="getTypeOfShow()==1 || getTypeOfShow()==2 || getTypeOfShow()==10 || getTypeOfShow()==11  || getTypeOfShow()==4 || getTypeOfShow()==5" class="form-group col-lg-2 col-md-3">
+                                <label>رقم الافاده</label>
+                                <input type="text" ng-model="entryMaster.ExternalNumber" id="form-field-mask-1" class="form-control input-sm text-extra-small input-mask-date">
+                            </div>
+
+
+
+                            <div ng-hide="getTypeOfShow()==1 || getTypeOfShow()==2 || getTypeOfShow()==10 || getTypeOfShow()==11  || getTypeOfShow()==4 || getTypeOfShow()==5" class="form-group col-lg-2 col-md-3">
+                                <label>نسبه ضريبه المعفي</label>
+                                <input type="text" ng-model="entryMaster.ExemptVatRate" id="form-field-mask-1" class="form-control input-sm text-extra-small input-mask-date" readonly>
+                            </div>
+
+                            <div ng-hide="getTypeOfShow()==1 || getTypeOfShow()==2 || getTypeOfShow()==10 || getTypeOfShow()==11  || getTypeOfShow()==4 || getTypeOfShow()==5" class="form-group col-lg-2 col-md-3">
+                                <label>نسبه الضريبه الاساسيه</label>
+                                <input type="text" ng-model="entryMaster.MainVatRate" id="form-field-mask-1" class="form-control input-sm text-extra-small input-mask-date" readonly>
+                            </div>
+
+
+                            <div ng-hide="getTypeOfShow()==1 || getTypeOfShow()==2 || getTypeOfShow()==10 || getTypeOfShow()==11  || getTypeOfShow()==4 || getTypeOfShow()==5" class="form-group col-lg-2 col-md-3">
+                                <label>&nbsp;</label>
+                                <div class="checkbox clip-check check-primary">
+                                    <input type="checkbox" ng-model="entryMaster.Taxable" id="form-mask-2" class="" ng-change="changeTax()">
+                                    <label for="form-mask-2"> خاضع للضريبه </label>
+                                </div>
+                            </div>
+
+                            <div ng-hide="getTypeOfShow()==1 || getTypeOfShow()==2 || getTypeOfShow()==10 || getTypeOfShow()==11  || getTypeOfShow()==4 || getTypeOfShow()==5" class="form-group col-lg-2 col-md-3">
+                                <label>نسبه ضريبه السند</label>
+                                <input type="text" ng-model="entryMasterTaxRate" id="form-field-mask-1" class="form-control input-sm text-extra-small input-mask-date" readonly>
+                            </div>
+                            <div ng-hide="getTypeOfShow()==3 || getTypeOfShow()==7 || getTypeOfShow()==8 || getTypeOfShow()==9" class="form-group col-lg-2 col-md-3">
+                              
+                                <label> الرقم الضريبي</label>
+                                <input type="text" ng-model="entryMaster.TaxNumber" id="form-field-mask-1" class="form-control input-sm text-extra-small input-mask-date">
+                            </div>
+
+                            <!--<div class="form-group col-md-3" ng-show="getNotShow()==10||getNotShow()==11">
+                                                <label>قيمة {{entrySetting.ENTRY_SETTING_AR_NAME}}</label>
+                                                <input name="notmoney" ng-model="notification.moneyValue" class="form-control input-sm" placeholder="قيمة {{entrySetting.ENTRY_SETTING_AR_NAME}}">
+                                            </div>-->
+
+                            <div class="form-group col-lg-2 col-md-3" ng-show="!flagHide && (getNotShow()==10||getNotShow()==11)">
+                                <label>عيار 24 {{entrySetting.ENTRY_SETTING_AR_NAME}}</label>
+                                <input name="notgold24" ng-model="notification.gold24" class="form-control input-sm" placeholder="عيار24  {{entrySetting.ENTRY_SETTING_AR_NAME}}">
+                            </div>
+
+                            <div class="form-group col-lg-2 col-md-3" ng-show="!flagHide && (getNotShow()==10||getNotShow()==11)">
+                                <label>عيار 22 {{entrySetting.ENTRY_SETTING_AR_NAME}}</label>
+                                <input name="notgold22" ng-model="notification.gold22" class="form-control input-sm" placeholder="عيار 22 {{entrySetting.ENTRY_SETTING_AR_NAME}}">
+                            </div>
+
+                            <div class="form-group col-lg-2 col-md-3" ng-show="!flagHide && (getNotShow()==10||getNotShow()==11)">
+                                <label>عيار 21 {{entrySetting.ENTRY_SETTING_AR_NAME}}</label>
+                                <input name="notgold21" ng-model="notification.gold21" class="form-control input-sm" placeholder="عيار 21 {{entrySetting.ENTRY_SETTING_AR_NAME}}">
+                            </div>
+
+                            <div class="form-group col-lg-2 col-md-3" ng-show="!flagHide && (getNotShow()==10||getNotShow()==11)">
+                                <label>عيار 18 {{entrySetting.ENTRY_SETTING_AR_NAME}}</label>
+                                <input name="notgold18" ng-model="notification.gold18" class="form-control input-sm" placeholder="عيار 18 {{entrySetting.ENTRY_SETTING_AR_NAME}}">
+                            </div>
+
+                            <div class="form-group col-lg-4 col-md-12" ng-hide="IsBillRemarks">
+                                <label>بيان {{entrySetting.ENTRY_SETTING_AR_NAME}}</label>
+                                <textarea style="height:30px" name="Text1" cols="40" rows="1" ng-model="entryMaster.ENTRY_REMARKS" class="form-control input-sm text-extra-small input-mask-date"></textarea>
+                            </div>
+
+
+                            <div class="form-group col-lg-4 col-md-12" ng-show="isEditReasonshow">
+                                <label>سبب التعديل</label>
+                                <textarea style="height:30px" name="Text1" cols="40" rows="2" ng-model="entryMaster.EditReason" class="form-control input-sm text-extra-small input-mask-date"></textarea>
+                            </div>
+                            
+                        </div>
+                        <!--/.panel-body-->
+                    </div>
+                    <!--/.panel-->
+                </div>
+                <!--/.col-md-12-->
+                
+                <div class="col-md-12">
+
+                    <div class="panel panel-white lightBlue-side-border margin-bottom-10" ng-hide="BILL_SHORTCUT">
+
+                        <div class="panel-heading border-light">
+                            <h4 class="panel-title text-primary">تفاصيل {{entrySetting.ENTRY_SETTING_AR_NAME}}</h4>
+                            <div class="panel-tools">
+                                <a data-original-title="Collapse" data-toggle="tooltip" data-placement="top" class="btn btn-transparent btn-sm panel-collapse" href="#"><i class="ti-minus collapse-off"></i><i class="ti-plus collapse-on"></i></a>
+                            </div>
+                        </div>
+
+                        <div class="panel-body">
+
+                            <div class="row">
+                               
+                            <!-- المدين -->
+                                <div class="col-xs-12 margin-top-5">
+
+                                    <h4 ng-show="IsEntryMode" class="col-xs-12 no-margin">مدين</h4>
+
+                                    <!--<div class="col-xs-6">
+                                        <div class="input-group col-md-6 pull-left">
+                                            <input type="text" class="form-control" placeholder="بحث" press-enter="searchForAccounts()" ng-model="search" />
+                                            <span class="input-group-addon"><i class="fa fa-search" ng-click="searchForAccounts()"></i></span>
+                                        </div>
+                                    </div>-->
+
+                                    <div class="row">
+                                        <div class="col-xs-12 ">
+                                            <div class=" my-Table-responsive margin-bottom-20 fatoora">
+                                                <table class="table table-bordered table-hover" id="sample-table-1">
+                                                    <tr class="success" style="font-weight: bold">
+                                                        <td>#</td>
+                                                        <td ng-show="IsCheckDate">{{gridData.ARCheckDate}}</td>
+                                                        <td ng-show="IsCheckIssueDate" >{{gridData.ARCheckIssueDate}}</td>
+
+                                                        <td>{{gridData.ARCode}}</td>
+                                                        <td ng-if="isPopUp">الحساب الرئيسى</td>
+                                                        <td style="width: 20%;">{{gridData.ARAccountName}}</td>
+                                                        <td ng-show="isGridCredit">{{gridData.ARCredit}}</td>
+                                                        <td ng-show="isDepit">{{gridData.ARDepit}}</td>
+                                                        <td ng-show="!flagHide && isGridCredit24"> {{gridData.ARCredit24}} </td>
+                                                        <td ng-show="!flagHide && isGoldDepit24"> {{gridData.ARDepit24}} </td>
+                                                        <td ng-show="!flagHide && isGridCredit22">{{gridData.ARCredit22}} </td>
+                                                        <td ng-show="!flagHide && isGoldDepit22"> {{gridData.ARDepit22}} </td>
+                                                        <td ng-show="!flagHide && isGridCredit21"> {{gridData.ARCredit21}} </td>
+                                                        <td ng-show="!flagHide && isGoldDepit21"> {{gridData.ARDepit21}}</td>
+                                                        <td ng-show="!flagHide && isGridCredit18"> {{gridData.ARCredit18}} </td>
+                                                        <td ng-show="!flagHide && isGoldDepit18">{{gridData.ARDepit18}}</td>
+                                                        <td ng-show="isCostCenter">{{gridData.ARCostCenter}}</td>
+                                                        <td ng-show="isRemarks">{{gridData.ARRemarks}}</td>
+
+                                                        <td ng-show="IsExemptOfTax">معفي<!--{{gridData.ARExemptOfTax}}--></td>
+
+                                                        <td ng-show="isTaxable">خاضع<!--{{gridData.ARTaxable}}--></td>
+                                                        <td ng-show="isTaxRate">{{gridData.ARTaxRate}}</td>
+                                                        <td ng-show="isTaxValue">{{gridData.ARTaxValue}}</td>
+
+                                                        <td ng-show="IsCheckNumber">{{gridData.ARCheckNumber}}</td>
+                                                        <td>حذف</td>
+                                                    </tr>
+                                                    <tr class="center" ng-repeat="item in entryDetails track by $index ">
+                                                        <td>{{ $index+1 }}</td>
+                                                        <td ng-show="IsCheckDate" ng-disabled="false"><input type="date" ng-model="item.CheckDate" /></td>
+                                                        <td ng-show="IsCheckIssueDate" ng-disabled="false"><input type="date" ng-model="item.CheckIssueDate" /></td>
+
+                                                        <td><span e-name="ACC_AR_NAME" ng-show="rowform.$show()" editable-text="item.ACC_CODE" e-form="rowform" e-press-enter="searchCodeName($data)" e-ng-readonly="item.isComplixDepit">{{ item.ACC_CODE || 'empty' }}</span></td>
+                                                        <td ng-if="isPopUp">{{item.Parent_ACC_AR_NAME || ''}}</td>
+                                                        <td><span e-name="ACC_AR_NAME" ng-show="rowform.$show()" editable-text="item.ACC_AR_NAME" e-form="rowform" e-press-enter="searchCodeName($data)" e-ng-readonly="item.isComplixDepit">{{ item.ACC_AR_NAME || 'empty' }}</span></td>
+                                                        <td ng-show="isGridCredit"><span e-name="ENTRY_CREDIT" e-ng-model-options='{ debounce: 750 }' e-ng-change="updateItemListOnChange('ENTRY_CREDIT',$data,$index)" ng-show="rowform.$show()" editable-text="item.ENTRY_CREDIT" e-form="rowform">{{ item.ENTRY_CREDIT || 0 }}</span></td>
+                                                        <td class="hidden-xs" ng-show="isDepit"><span editable-text="item.ENTRY_DEBIT" e-ng-model-options='{ debounce: 750 }' e-ng-change="updateItemListOnChange('ENTRY_DEBIT',$data,$index)" e-name="ENTRY_DEBIT" ng-show="rowform.$show()" e-form="rowform" e-ng-readonly="item.isComplixDepit">{{ item.ENTRY_DEBIT || 'empty' }}</span></td>
+                                                        <td ng-show="!flagHide && isGridCredit24"><span e-name="ENTRY_GOLD24_CREDIT" e-ng-model-options='{ debounce: 750 }' e-ng-change="updateItemListOnChange('GOLD_CREDIT24',$data,$index)" ng-show="rowform.$show()" editable-text="item.ENTRY_GOLD24_CREDIT" e-form="rowform">{{ item.ENTRY_GOLD24_CREDIT || 0 }}</span></td>
+                                                        <td ng-show="!flagHide && isGoldDepit24"><span editable-text="item.ENTRY_GOLD24_DEBIT" e-ng-model-options='{ debounce: 750 }' e-ng-change="updateItemListOnChange('GOLD_DEBIT24',$data,$index)" e-name="ENTRY_GOLD24_DEBIT" ng-show="rowform.$show()" e-form="rowform">{{ item.ENTRY_GOLD24_DEBIT || 'empty' }}</span></td>
+                                                        <td ng-show="!flagHide && isGridCredit22"><span e-name="ENTRY_GOLD22_CREDIT" e-ng-model-options='{ debounce: 750 }' e-ng-change="updateItemListOnChange('GOLD_CREDIT22',$data,$index)" ng-show="rowform.$show()" editable-text="item.ENTRY_GOLD22_CREDIT" e-form="rowform">{{ item.ENTRY_GOLD22_CREDIT || 0 }}</span></td>
+                                                        <td ng-show="!flagHide && isGoldDepit22"><span editable-text="item.ENTRY_GOLD22_DEBIT" e-ng-model-options='{ debounce: 750 }' e-ng-change="updateItemListOnChange('GOLD_DEBIT22',$data,$index)" e-name="ENTRY_GOLD22_DEBIT" ng-show="rowform.$show()" e-form="rowform">{{ item.ENTRY_GOLD22_DEBIT || 'empty' }}</span></td>
+                                                        <td ng-show="!flagHide && isGridCredit21"><span e-name="ENTRY_GOLD21_CREDIT" e-ng-model-options='{ debounce: 750 }' e-ng-change="updateItemListOnChange('GOLD_CREDIT21',$data,$index)" ng-show="rowform.$show()" editable-text="item.ENTRY_GOLD21_CREDIT" e-form="rowform">{{ item.ENTRY_GOLD21_CREDIT || 0 }}</span></td>
+                                                        <td ng-show="!flagHide && isGoldDepit21"><span editable-text="item.ENTRY_GOLD21_DEBIT" e-ng-model-options='{ debounce: 750 }' e-ng-change="updateItemListOnChange('GOLD_DEBIT21',$data,$index)" e-name="ENTRY_GOLD21_DEBIT" ng-show="rowform.$show()" e-form="rowform">{{ item.ENTRY_GOLD21_DEBIT || 'empty' }}</span></td>
+                                                        <td ng-show="!flagHide && isGridCredit18"><span e-name="ENTRY_GOLD18_CREDIT" e-ng-model-options='{ debounce: 750 }' e-ng-change="updateItemListOnChange('GOLD_CREDIT18',$data,$index)" ng-show="rowform.$show()" editable-text="item.ENTRY_GOLD18_CREDIT" e-form="rowform">{{ item.ENTRY_GOLD18_CREDIT || 0 }}</span></td>
+                                                        <td ng-show="!flagHide && isGoldDepit18"><span editable-text="item.ENTRY_GOLD18_DEBIT" e-ng-model-options='{ debounce: 750 }' e-ng-change="updateItemListOnChange('GOLD_DEBIT18',$data,$index)" e-name="ENTRY_GOLD18_DEBIT" ng-show="rowform.$show()" e-form="rowform">{{ item.ENTRY_GOLD18_DEBIT || 'empty' }}</span></td>
+                                                        <td ng-show="isCostCenter"><span editable-select="item.COST_CENTER_ID" e-ng-change="updateCostCenter($data,$index)" e-placeholder="اختر مركز التكلفه" e-name="costCenter" ng-show="rowform.$show()" e-form="rowform" e-ng-options="x.COST_CENTER_ID as x.COST_CENTER_AR_NAME for x in costCentersList">{{ item.COST_CENTER_ID || 0 }}</span></td>
+                                                        <td ng-show="isRemarks"><span editable-text="item.ENTRY_DETAILS_REMARKS" e-name="ENTRY_DETAILS_REMARKS" e-ng-model-options='{ debounce: 750 }' e-ng-change="updateItemListOnChange('ENTRY_DETAILS_REMARKS',$data,$index)" ng-show="rowform.$show()" e-form="rowform">{{ item.ENTRY_DETAILS_REMARKS || '' }}</span></td>
+
+                                                        <td ng-show="IsExemptOfTax">
+                                                            <div class="checkbox clip-check check-primary" style="margin: 0 !important"><input id="my1{{$index}}" type="checkbox" name="" ng-model="item.IsExemptOfTax" ng-change="updateItemListOnChange('IsExemptOfTax',$data, $index)"><label for="my1{{$index}}"></label></div>
+                                                        </td>
+
+                                                        <td ng-show="isTaxable">
+                                                            <div class="checkbox clip-check check-primary" style="margin: 0 !important"><input id="my{{$index}}" type="checkbox" name="" ng-model="item.Taxable" ng-disabled="IsEnableTaxEdit" ng-change="updateItemListOnChange('Taxable',$data, $index)"><label for="my{{$index}}"></label></div>
+                                                        </td>
+                                                        <td ng-show="isTaxRate" ng-disabled="false"><span editable-text="item.TaxRate" e-name="TaxRate" ng-show="rowform.$show()" e-ng-model-options='{ debounce: 750 }' e-ng-change="updateItemListOnChange('TaxRate',$data,$index)" e-form="rowform" e-ng-disabled="IsEnableTaxEdit">{{ item.TaxRate || 0 }}</span></td>
+                                                        <td ng-show="isTaxValue" ng-disabled="false"><span editable-text="item.TaxValue" e-name="TaxValue" ng-show="rowform.$show()" e-ng-model-options='{ debounce: 750 }' e-ng-change="updateItemListOnChange('TaxValue',$data,$index)" e-form="rowform" e-ng-disabled="IsEnableTaxEdit">{{ item.TaxValue || 0 }}</span></td>
+                                                        <td ng-show="IsCheckNumber" ng-disabled="false"><span editable-text="item.CheckNumber" e-name="CheckNumber" ng-show="rowform.$show()" e-ng-model-options='{ debounce: 750 }' e-ng-change="updateItemListOnChange('CheckNumber',$data,$index)" e-form="rowform">{{ item.CheckNumber || '' }}</span></td>
+                                                        <td class="center" style="white-space: nowrap">
+                                                            <form editable-form name="rowform" onbeforesave="calculateTotals()" ng-show="rowform.$show()" class="form-buttons form-inline" shown="inserted == item"></form>
+                                                            <div class="buttons" ng-show="!rowform.$show()">
+                                                                <div class="visible-md visible-lg hidden-sm hidden-xs">
+                                                                    <a ng-hide="$last" ng-disabled="isPopUp" ng-click="removeGridBillDetailsItem($index)" class="btn btn-transparent btn-xs tooltips" data-toggle="tooltip" data-placement="top" title="حذف"><i class="fa fa-times fa fa-white"></i></a>
+                                                                </div>
+                                                                <div class="visible-xs visible-sm hidden-md hidden-lg">
+                                                                    <div class="btn-group dropdown ">
+                                                                        <button type="button" class="btn btn-o btn-sm dropdown-toggle" data-toggle="dropdown">
+                                                                            <i class="fa fa-cog"></i>&nbsp;<span class="caret"></span>
+                                                                        </button>
+                                                                        <ul class="dropdown-menu pull-right dropdown-light" role="menu">
+                                                                            <li><a ng-disabled="isPopUp" ng-click="removeGridBillDetailsItem($index)"> حذف </a></li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+
+                                                    <tfoot>
+                                                        <tr  style="background: #ccffff">
+                                                            <td></td>
+                                                            <td ng-show="IsCheckDate"></td>
+                                                            <td ng-show="IsCheckIssueDate"></td>
+
+                                                            <td></td>
+                                                            <td ng-if="isPopUp"></td>
+                                                            <td style="font-weight: bold"> اجمالي المدين</td>
+                                                            <td ng-show="isGridCredit">{{entryMaster.TotalCredit}}</td>
+                                                            <td ng-show="isDepit">{{entryMaster.TotalDepit}}</td>
+                                                            <td ng-show="!flagHide && isGridCredit24"> {{entryMaster.TotalGoldCredit24}} </td>
+                                                            <td ng-show="!flagHide && isGoldDepit24"> {{entryMaster.TotalGoldDepit24}} </td>
+                                                            <td ng-show="!flagHide && isGridCredit22">{{entryMaster.TotalGoldCredit22}} </td>
+                                                            <td ng-show="!flagHide && isGoldDepit22"> {{entryMaster.TotalGoldDepit22}} </td>
+                                                            <td ng-show="!flagHide && isGridCredit21"> {{entryMaster.TotalGoldCredit21}} </td>
+                                                            <td ng-show="!flagHide && isGoldDepit21"> {{entryMaster.TotalGoldDepit21}}</td>
+                                                            <td ng-show="!flagHide && isGridCredit18"> {{entryMaster.TotalGoldCredit18}} </td>
+                                                            <td ng-show="!flagHide && isGoldDepit18">{{entryMaster.TotalGoldDepit18}}</td>
+                                                            <td ng-show="isCostCenter"></td>
+                                                            <td ng-show="isRemarks"></td>
+
+                                                            <td ng-show="IsExemptOfTax"></td>
+
+                                                            <td ng-show="isTaxable"></td>
+                                                            <td ng-show="isTaxRate"></td>
+                                                            <td ng-show="isTaxValue"></td>
+
+                                                            <td ng-show="IsCheckNumber"></td>
+                                                            <td></td>
+                                                        </tr>
+                                                    </tfoot>
+                                                </table>
+                                            </div>
+                                            <!--/first grid-->
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                                
+                            
+                            <!-- الدائن -->
+                            <div class="col-xs-12">
+                                    <!--second grid-->
+                                    <div class="panel-body" ng-show="IsEntryMode">
+
+                                        <h4 ng-show="IsEntryMode" class="col-xs-12 no-margin">دائن</h4>
+
+                                        <!--<div class="col-xs-6">
+                                            <div class="input-group col-md-6 pull-left">
+                                                <input type="text" class="form-control" press-enter="searchForAccountsGrid2()" ng-model="search2" />
+                                                <span class="input-group-addon"><i class="fa fa-search" ng-click="searchForAccountsGrid2()"></i></span>
+                                            </div>
+                                        </div>-->
+                                        
+                                        <div class="row">
+
+                                            <div class="col-xs-12 ">
+                                                <div class="my-Table-responsive fatoora">
+                                                    <table class="table table-bordered table-hover" id="sample-table-1">
+                                                        <tr class="success" style="font-weight: bold; background: #eae0a8">
+                                                            <td>#</td>
+                                                            <td ng-show="IsCheckDate">{{gridData.ARCheckDate}}</td>
+                                                            <td ng-show="IsCheckIssueDate" >{{gridData.ARCheckIssueDate}}</td>
+                                                            <td>{{gridData.ARCode}}</td>
+                                                            <td ng-if="isPopUp">الحساب الرئيسى</td>
+                                                            <td style="width: 20%;">{{gridData.ARAccountName}}</td>
+                                                            <td ng-show="isCredit">{{gridData.ARCredit}}</td>
+                                                            <td ng-show="!flagHide && isGoldCredit24"> {{gridData.ARCredit24}} </td>
+                                                            <td ng-show="!flagHide && isGoldCredit22">{{gridData.ARCredit22}} </td>
+                                                            <td ng-show="!flagHide && isGoldCredit21"> {{gridData.ARCredit21}} </td>
+                                                            <td ng-show="!flagHide && isGoldCredit18"> {{gridData.ARCredit18}} </td>
+                                                            <td ng-show="isCostCenter">{{gridData.ARCostCenter}}</td>
+                                                            <td ng-show="isRemarks">{{gridData.ARRemarks}}</td>
+
+                                                            <td ng-show="IsExemptOfTax">معفي<!--{{gridData.ARExemptOfTax}}--></td>
+
+                                                            <td ng-show="isTaxable">خاضع<!--{{gridData.ARTaxable}}--></td>
+                                                            <td ng-show="isTaxRate">{{gridData.ARTaxRate}}</td>
+                                                            <td ng-show="isTaxValue">{{gridData.ARTaxValue}}</td>
+                                                            <td ng-show="IsCheckNumber">{{gridData.ARCheckNumber}}</td>
+                                                            <td>حذف</td>
+                                                        </tr>
+                                                        <tr ng-repeat="item in entryDetails2 track by $index ">
+                                                            <td>{{ $index+1 }}</td>
+                                                            <td ng-show="IsCheckDate" ng-disabled="false"><input type="date" ng-model="item.CheckDate" /></td>
+                                                            <td ng-show="IsCheckIssueDate" ng-disabled="false"><input type="date" ng-model="item.CheckIssueDate" /> </td>
+
+                                                            <td><span e-name="ACC_AR_NAME" ng-show="rowform.$show()" editable-text="item.ACC_CODE" e-form="rowform" e-press-enter="searchCodeName2($data)" e-ng-readonly="item.isComplixCredit">{{ item.ACC_CODE || 'empty' }}</span></td>
+                                                            <td ng-if="isPopUp">{{item.Parent_ACC_AR_NAME || ''}}</td>
+                                                            <td><span e-name="ACC_AR_NAME" ng-show="rowform.$show()" editable-text="item.ACC_AR_NAME" e-form="rowform" e-press-enter="searchCodeName2($data)" e-ng-readonly="item.isComplixCredit">{{ item.ACC_AR_NAME || 'empty' }}</span></td>
+                                                            <td ng-show="isCredit"><span e-name="ENTRY_CREDIT" e-ng-model-options='{ debounce: 750 }' e-ng-change="updateItemListOnChange2('ENTRY_CREDIT',$data,$index)" ng-show="rowform.$show()" editable-text="item.ENTRY_CREDIT" e-ng-readonly="item.isComplixCredit" e-form="rowform">{{ item.ENTRY_CREDIT || 0 }}</span></td>
+                                                            <td ng-show="!flagHide && isGoldCredit24"><span e-name="ENTRY_GOLD24_CREDIT" e-ng-model-options='{ debounce: 750 }' e-ng-change="updateItemListOnChange2('GOLD_CREDIT24',$data,$index)" ng-show="rowform.$show()" editable-text="item.ENTRY_GOLD24_CREDIT" e-form="rowform">{{ item.ENTRY_GOLD24_CREDIT || 0 }}</span></td>
+                                                            <td ng-show="!flagHide && isGoldCredit22"><span e-name="ENTRY_GOLD22_CREDIT" e-ng-model-options='{ debounce: 750 }' e-ng-change="updateItemListOnChange2('GOLD_CREDIT22',$data,$index)" ng-show="rowform.$show()" editable-text="item.ENTRY_GOLD22_CREDIT" e-form="rowform">{{ item.ENTRY_GOLD22_CREDIT || 0 }}</span></td>
+                                                            <td ng-show="!flagHide && isGoldCredit21"><span e-name="ENTRY_GOLD21_CREDIT" e-ng-model-options='{ debounce: 750 }' e-ng-change="updateItemListOnChange2('GOLD_CREDIT21',$data,$index)" ng-show="rowform.$show()" editable-text="item.ENTRY_GOLD21_CREDIT" e-form="rowform">{{ item.ENTRY_GOLD21_CREDIT || 0 }}</span></td>
+                                                            <td ng-show="!flagHide && isGoldCredit18"><span e-name="ENTRY_GOLD18_CREDIT" e-ng-model-options='{ debounce: 750 }' e-ng-change="updateItemListOnChange2('GOLD_CREDIT18',$data,$index)" ng-show="rowform.$show()" editable-text="item.ENTRY_GOLD18_CREDIT" e-form="rowform">{{ item.ENTRY_GOLD18_CREDIT || 0 }}</span></td>
+                                                            <td ng-show="isCostCenter"><span editable-select="item.COST_CENTER_ID" e-ng-change="updateCostCenter($data,$index)" e-placeholder="اختر مركز التكلفه" e-name="costCenter" ng-show="rowform.$show()" e-form="rowform" e-ng-options="x.COST_CENTER_ID as x.COST_CENTER_AR_NAME for x in costCentersList">{{ item.COST_CENTER_ID || 0 }}</span></td>
+                                                            <td ng-show="isRemarks"><span editable-text="item.ENTRY_DETAILS_REMARKS" e-name="ENTRY_DETAILS_REMARKS" e-ng-model-options='{ debounce: 750 }' e-ng-change="updateItemListOnChange2('ENTRY_DETAILS_REMARKS',$data,$index)" ng-show="rowform.$show()" e-form="rowform">{{ item.ENTRY_DETAILS_REMARKS || '' }}</span></td>
+
+                                                            <td ng-show="IsExemptOfTax">
+                                                                <div class="checkbox clip-check check-primary" style="margin: 0 !important"><input id="my3{{$index}}" type="checkbox" name="" ng-model="item.IsExemptOfTax" ng-change="updateItemListOnChange2('IsExemptOfTax',$data, $index)"><label for="my3{{$index}}"></label></div>
+                                                            </td>
+
+                                                            <td ng-show="isTaxable">
+                                                                <div class="checkbox clip-check check-primary" style="margin: 0 !important"><input id="my2{{$index}}" type="checkbox" name="" ng-model="item.Taxable" ng-disabled="IsEnableTaxEdit" ng-change="updateItemListOnChange2('Taxable',$data, $index)"><label for="my2{{$index}}"></label></div>
+                                                            </td>
+                                                            <td ng-show="isTaxRate" ng-disabled="false"><span editable-text="item.TaxRate" e-name="TaxRate" ng-show="rowform.$show()" e-ng-model-options='{ debounce: 750 }' e-ng-change="updateItemListOnChange2('TaxRate',$data,$index)" e-form="rowform" e-ng-disabled="IsEnableTaxEdit">{{ item.TaxRate || 0 }}</span></td>
+                                                            <td ng-show="isTaxValue" ng-disabled="false"><span editable-text="item.TaxValue" e-name="TaxValue" ng-show="rowform.$show()" e-ng-model-options='{ debounce: 750 }' e-ng-change="updateItemListOnChange2('TaxValue',$data,$index)" e-form="rowform" e-ng-disabled="IsEnableTaxEdit">{{ item.TaxValue || 0 }}</span></td>
+                                                            <td ng-show="IsCheckNumber" ng-disabled="false"><span editable-text="item.CheckNumber" e-name="CheckNumber" ng-show="rowform.$show()" e-ng-model-options='{ debounce: 750 }' e-ng-change="updateItemListOnChange2('CheckNumber',$data,$index)" e-form="rowform">{{ item.CheckNumber || '' }}</span></td>
+                                                            <td class="center" style="white-space: nowrap">
+                                                                <form editable-form name="rowform" onbeforesave="calculateTotals()" ng-show="rowform.$show()" class="form-buttons form-inline" shown="inserted == item"></form>
+                                                                <div class="buttons" ng-show="!rowform.$show()">
+                                                                    <div class="visible-md visible-lg hidden-sm hidden-xs">
+                                                                        <a ng-hide="$last" ng-disabled="isPopUp" ng-click="removeGridBillDetailsItem2($index)" class="btn btn-transparent btn-xs tooltips" data-toggle="tooltip" data-placement="top" title="حذف"><i class="fa fa-times fa fa-white"></i></a>
+                                                                    </div>
+                                                                    <div class="visible-xs visible-sm hidden-md hidden-lg">
+                                                                        <div class="btn-group dropdown ">
+                                                                            <button type="button" class="btn btn-o btn-sm dropdown-toggle" data-toggle="dropdown">
+                                                                                <i class="fa fa-cog"></i>&nbsp;<span class="caret"></span>
+                                                                            </button>
+                                                                            <ul class="dropdown-menu pull-right dropdown-light" role="menu">
+                                                                                <li><a ng-disabled="isPopUp" ng-click="removeGridBillDetailsItem2($index)"> حذف </a></li>
+                                                                            </ul>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+
+                                                        </tr>
+
+                                                        <tfoot>
+                                                            <tr style="background: #eae0a8">
+                                                                <td></td>
+                                                                <td ng-show="IsCheckDate"></td>
+                                                                <td ng-show="IsCheckIssueDate"></td>
+                                                                <td></td>
+                                                                <td ng-if="isPopUp"></td>
+                                                                <td style="font-weight: bold"> اجمالي الدائن</td>
+                                                                <td ng-show="isCredit">{{entryMaster.TotalCredit}}</td>
+                                                                <td ng-show="!flagHide && isGoldCredit24"> {{entryMaster.TotalGoldCredit24}} </td>
+                                                                <td ng-show="!flagHide && isGoldCredit22">{{entryMaster.TotalGoldCredit22}} </td>
+                                                                <td ng-show="!flagHide && isGoldCredit21"> {{entryMaster.TotalGoldCredit21}} </td>
+                                                                <td ng-show="!flagHide && isGoldCredit18"> {{entryMaster.TotalGoldCredit18}} </td>
+                                                                <td ng-show="isCostCenter"></td>
+                                                                <td ng-show="isRemarks"></td>
+
+                                                                <td ng-show="IsExemptOfTax"></td>
+
+                                                                <td ng-show="isTaxable"></td>
+                                                                <td ng-show="isTaxRate"></td>
+                                                                <td ng-show="isTaxValue"></td>
+                                                                <td ng-show="IsCheckNumber"></td>
+                                                                <td></td>
+                                                            </tr>
+                                                        </tfoot>
+                                                    </table>
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <!--/second grid-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!--/.col-md-12-->
+                     <!--  اجماليات -->
+                <div class="col-xs-12">
+                    <div ng-show="IsShowTaxesBox">
+                        <div class="panel panel-white margin-bottom-10 lightGreen-side-border">
+                            <div class="panel-heading border-light">
+                                <h4 class="panel-title text-primary">اجماليات<!--الضرائب--></h4>
+                                <div class="panel-tools">
+                                    <a data-original-title="Collapse" data-toggle="tooltip" data-placement="top" class="btn btn-transparent btn-sm panel-collapse" href="#"><i class="ti-minus collapse-off"></i><i class="ti-plus collapse-on"></i></a>
+                                </div>
+                            </div>
+                            <div class="panel-body">
+                                <div class="col-xs-12">
+                                    <table class="table table-bordered">
+                                        <thead class="">
+                                            <tr class="success">
+                                                <th class="">اجمالي المعفي من الضريبه للمدين</th>
+                                                <th class="">الضريبه علي المعفي للمدين</th>
+                                                <th class=""> اجمالي الضريبه الاساسيه للمدين</th>
+                                                <th class="">قيمه الضريبه الاساسيه للمدين </th>
+                                                <th class="">المبلغ الخاضع بنسبه صفر للمدين% </th>
+                                                <th class="">الضريبه علي الخاضع بنسبه صفر% للمدين</th>
+                                            </tr>
+                                        </thead>
+
+                                        <tbody>
+                                            <tr>
+                                                <th>{{entryMaster.TotalDepitExemptOfTax}} &nbsp;</th>
+                                                <th>{{entryMaster.ExemptDepitOfTaxValue}} &nbsp;</th>
+                                                <th> {{entryMaster.TotalDepitTotalMainVat}} &nbsp;</th>
+                                                <th>{{entryMaster.MainDepitVatValue}} &nbsp;</th>
+                                                <th>{{entryMaster.TotalDepitTotalZeroVat}}&nbsp;</th>
+                                                <th>{{entryMaster.ZeroDepitVatValue}}&nbsp;</th>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                               
+                                    <div class="col-xs-12">
+                                        <table class="table table-bordered creditor">
+                                            <thead class="">
+                                                <tr class="success">
+                                                    <th class="">اجمالي المعفي من الضريبه للدائن</th>
+                                                    <th class="">الضريبه علي المعفي للدائن</th>
+                                                    <th class=""> اجمالي الضريبه الاساسيه للدائن</th>
+                                                    <th class="">قيمه الضريبه الاساسيه للدائن </th>
+                                                    <th class="">المبلغ الخاضع بنسبه صفر للدائن% </th>
+                                                    <th class="">الضريبه علي الخاضع بنسبه صفر% للدائن</th>
+
+                                                </tr>
+                                            </thead>
+
+                                            <tbody>
+                                                <tr class="center">
+                                                    <th class="center">{{entryMaster.TotalCreditExemptOfTax}} &nbsp;</th>
+                                                    <th>{{entryMaster.ExemptCreditOfTaxValue}} &nbsp;</th>
+                                                    <th> {{entryMaster.TotalCreditTotalMainVat}} &nbsp;</th>
+                                                    <th>{{entryMaster.MainCreditVatValue}} &nbsp;</th>
+                                                    <th>{{entryMaster.TotalCreditTotalZeroVat}}&nbsp;</th>
+                                                    <th>{{entryMaster.ZeroCreditVatValue}}&nbsp;</th>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                        </div>
+                    </div>
+                </div>
+                <!--/.col-xs-12-->
+
+                <!--<div class="col-xs-12">
+                    <div class="panel panel-white blue-side-border margin-bottom-10">
+                        <div class="panel-heading border-light">
+                            <h4 class="panel-title text-primary">ملخص {{entrySetting.ENTRY_SETTING_AR_NAME}}</h4>
+                            <div class="panel-tools">
+                                <a data-original-title="Collapse" data-toggle="tooltip" data-placement="top" class="btn btn-transparent btn-sm panel-collapse" href="#"><i class="ti-minus collapse-off"></i><i class="ti-plus collapse-on"></i></a>
+                            </div>
+                        </div>
+                        <div class="panel-body">
+                            <div ng-if="!ShowEntryTotalsSammaryAsTable">
+                                <div class="col-md-6">
+                                    <div class="my-box col-xs-12">
+                                        <div class="col-md-6" ng-show="isCredit">
+                                            <div class="form-group has-success">
+                                                <label class="small"> اجمالي دائن </label>
+                                                <input type="number" name="totalCredit" ng-model="entryMaster.TotalCredit" class="form-control" placeholder="اجمالي دائن " disabled="disabled">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6" ng-show="isDepit">
+                                            <div class="form-group has-success">
+                                                <label class="small"> اجمالي مدين </label>
+                                                <input type="text" name="totalDepit" ng-model="entryMaster.TotalDepit" class="form-control" placeholder=" اجمالي مدين " disabled="disabled">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6" ng-show="isGoldCredit24">
+                                            <div class="form-group has-success">
+                                                <label class="small">  اجمالي دائن 24</label>
+                                                <input type="number" name="totalGoldCredit24" ng-model="entryMaster.TotalGoldCredit24" class="form-control" placeholder=" اجمالي دائن 24 " disabled="disabled">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6" ng-show="isGoldDepit24">
+                                            <div class="form-group has-success">
+                                                <label class="small">اجمالي مدين 24</label>
+                                                <input type="number" name="totalGoldDepit24" ng-model="entryMaster.TotalGoldDepit24" class="form-control" placeholder="اجمالي مدين 24 " disabled="disabled">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6" ng-show="isGoldCredit22">
+                                            <div class="form-group has-success">
+                                                <label class="small">  اجمالي دائن 22</label>
+                                                <input type="number" name="totalGoldCredit22" ng-model="entryMaster.TotalGoldCredit22" class="form-control" placeholder=" اجمالي دائن 22 " disabled="disabled">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6" ng-show="isGoldDepit22">
+                                            <div class="form-group has-success">
+                                                <label class="small">اجمالي مدين 22</label>
+                                                <input type="number" name="totalGoldDepit22" ng-model="entryMaster.TotalGoldDepit22" class="form-control" placeholder="اجمالي مدين 22 " disabled="disabled">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6" ng-show="isGoldCredit21">
+                                            <div class="form-group has-success">
+                                                <label class="small">  اجمالي دائن 21</label>
+                                                <input type="number" name="totalGoldCredit21" ng-model="entryMaster.TotalGoldCredit21" class="form-control" placeholder=" اجمالي دائن 21 " disabled="disabled">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6" ng-show="isGoldDepit21">
+                                            <div class="form-group has-success">
+                                                <label class="small">اجمالي مدين 21</label>
+                                                <input type="number" name="totalGoldDepit21" ng-model="entryMaster.TotalGoldDepit21" class="form-control" placeholder="اجمالي مدين 21 " disabled="disabled">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6" ng-show="isGoldCredit18">
+                                            <div class="form-group has-success">
+                                                <label class="small">  اجمالي دائن 18</label>
+                                                <input type="number" name="totalGoldCredit18" ng-model="entryMaster.TotalGoldCredit18" class="form-control" placeholder=" اجمالي دائن 18 " disabled="disabled">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6" ng-show="isGoldDepit18">
+                                            <div class="form-group has-success">
+                                                <label class="small">اجمالي مدين 18</label>
+                                                <input type="number" name="totalGoldDepit18" ng-model="entryMaster.TotalGoldDepit18" class="form-control" placeholder="اجمالي مدين 18 " disabled="disabled">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="my-box col-xs-12">
+                                        <div class="col-md-6" ng-show="isCredit">
+                                            <div class="form-group has-success">
+                                                <label class="small"> اجمالي الدائن بالعمله </label>
+                                                <input type="number" name="totalDepit" ng-model="entryMaster.TotalCurrencyCredit" class="form-control" placeholder=" اجمالي الدائن بالعمله " disabled="disabled">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6" ng-show="isDepit">
+                                            <div class="form-group has-success">
+                                                <label class="small"> اجمالي المدين بالعمله </label>
+                                                <input type="number" name="totalDepit" ng-model="entryMaster.TotalCurrenctDepit" class="form-control" placeholder=" اجمالي المدين بالعمله " disabled="disabled">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6" ng-show="isGoldCredit24">
+                                            <div class="form-group has-success">
+                                                <label class="small">  اجمالي عمله دائن 24</label>
+                                                <input type="number" name="totalCurGoldCredit24" ng-model="entryMaster.TotalCurGoldCredit24" class="form-control" placeholder=" اجمالي دائن 24 عمله " disabled="disabled">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6" ng-show="isGoldDepit24">
+                                            <div class="form-group has-success">
+                                                <label class="small">اجمالي عمله مدين 24</label>
+                                                <input type="number" name="totalCurGoldDepit24" ng-model="entryMaster.TotalCurGoldDepit24" class="form-control" placeholder="اجمالي مدين 24 عمله " disabled="disabled">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6" ng-show="isGoldCredit22">
+                                            <div class="form-group has-success">
+                                                <label class="small">  اجمالي عمله دائن 22</label>
+                                                <input type="number" name="totalCurGoldCredit22" ng-model="entryMaster.TotalCurGoldCredit22" class="form-control" placeholder=" اجمالي دائن 22 عمله " disabled="disabled">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6" ng-show="isGoldDepit22">
+                                            <div class="form-group has-success">
+                                                <label class="small">اجمالي عمله مدين 22</label>
+                                                <input type="number" name="totalCurGoldDepit22" ng-model="entryMaster.TotalCurGoldDepit22" class="form-control" placeholder="اجمالي مدين 22 عمله " disabled="disabled">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6" ng-show="isGoldCredit21">
+                                            <div class="form-group has-success">
+                                                <label class="small">  اجمالي عمله دائن 21</label>
+                                                <input type="number" name="totalCurGoldCredit21" ng-model="entryMaster.TotalCurGoldCredit21" class="form-control" placeholder=" اجمالي دائن 21 عمله " disabled="disabled">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6" ng-show="isGoldDepit21">
+                                            <div class="form-group has-success">
+                                                <label class="small">اجمالي عمله مدين 21</label>
+                                                <input type="number" name="totalCurGoldDepit21" ng-model="entryMaster.TotalCurGoldDepit21" class="form-control" placeholder="اجمالي مدين 21 عمله " disabled="disabled">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6" ng-show="isGoldCredit18">
+                                            <div class="form-group has-success">
+                                                <label class="small">  اجمالي عمله دائن 18</label>
+                                                <input name="totalCurGoldCredit18" ng-model="entryMaster.TotalCurGoldCredit18" class="form-control" placeholder=" اجمالي دائن 18 عمله " disabled="disabled">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6" ng-show="isGoldDepit18">
+                                            <div class="form-group has-success">
+                                                <label class="small">اجمالي عمله مدين 18</label>
+                                                <input name="totalCurGoldDepit18" ng-model="entryMaster.TotalCurGoldDepit18" class="form-control" placeholder="اجمالي مدين 18 عمله " disabled="disabled">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3" ng-show="isTaxValue">
+                                    <div class="my-box col-xs-12">
+                                        <div class="col-md-12" ng-show="isTaxRate">
+                                            <div class="form-group has-success">
+                                                <label class="small"> اجمالي نسبة الضريبة دائن </label>
+                                                <input type="text" name="totalTaxCredit1" ng-model="entryMaster.TotalTaxRateCredit" class="form-control" placeholder="اجمالي نسبة الضريبة دائن" disabled="disabled">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-12" ng-show="isTaxRate">
+                                            <div class="form-group has-success">
+                                                <label class="small">اجمالي نسبة الضريبة مدين</label>
+                                                <input type="number" name="totalTaxDebit1" ng-model="entryMaster.TotalTaxRateDebit" class="form-control" placeholder="اجمالي نسبة الضريبة مدين" disabled="disabled">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="col-md-3" ng-show="isTaxValue">
+                                    <div class="my-box col-xs-12">
+                                        <div class="col-md-12" ng-show="isTaxValue">
+                                            <div class="form-group has-success">
+                                                <label class="small"> اجمالي قيمة الضريبة دائن </label>
+                                                <input type="number" name="totalTaxCredit" ng-model="entryMaster.TotalTaxValueCredit" class="form-control" placeholder="اجمالي قيمة الضريبة دائن" disabled="disabled">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-12" ng-show="isTaxValue">
+                                            <div class="form-group has-success">
+                                                <label class="small">اجمالي قيمة الضريبة مدين</label>
+                                                <input type="number" name="totalTaxDebit" ng-model="entryMaster.TotalTaxValueDebit" class="form-control" placeholder="اجمالي قيمة الضريبة مدين" disabled="disabled">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3" ng-show="isTaxValue">
+                                    <div class="my-box col-xs-12">
+                                        <div class="col-md-12" ng-show="isTaxValue">
+                                            <div class="form-group has-success">
+                                                <label class="small"> اجمالي غير خاضع الضريبة دائن </label>
+                                                <input type="number" name="totalNotTaxCredit" ng-model="entryMaster.TotalNotTaxCredit" class="form-control" placeholder="اجمالي غير خاضع للضريبة دائن" disabled="disabled">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-12" ng-show="isTaxValue">
+                                            <div class="form-group has-success">
+                                                <label class="small">اجمالي غير خاضع الضريبة مدين</label>
+                                                <input type="number" name="totalNotTaxDebit" ng-model="entryMaster.TotalNotTaxDebit" class="form-control" placeholder="اجمالي غير خاضع الضريبة مدين" disabled="disabled">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <div class="my-box col-xs-12">
+                                        <div class="col-md-12">
+                                            <div class="form-group has-success">
+                                                <label class="small"> اجمالي الدائن بضريبة السند    </label>
+                                                <input type="text" name="totalCreditWithTax" ng-model="entryMaster.TotalCreditWithTax" class="form-control" placeholder=" اجمالي الدائن بالضريبه  " disabled="disabled">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-12">
+                                            <div class="form-group has-success">
+                                                <label class="small"> اجمالي المدين بضريبة السند </label>
+                                                <input type="text" name="totalDepitWithTax" ng-model="entryMaster.TotalDepitWithTax" class="form-control" placeholder="اجمالي المدين بالضريبه" disabled="disabled">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div ng-if="ShowEntryTotalsSammaryAsTable">
+                               
+                              
+                                    <h4 class="margin-10">اجماليات المدين</h4>
+                                    
+                                    <div class="my-Table-responsive margin-bottom-20">
+                                        <table class="table table-bordered table-hover">
+                                            <tr class="success" style="font-weight: bold">
+                                                <th>اجمالي مدين</th>
+                                                <th>اجمالي المدين بالعمله</th>
+                                                <th>اجمالى عيار 24</th>
+                                                <th>اجمالى عيار 22</th>
+                                                <th>اجمالى عيار 21</th>
+                                                <th>اجمالى عيار 18</th>
+                                            </tr>
+                                            <tr>
+                                                <td>{{entryMaster.TotalDepit}}</td>
+                                                <td>{{entryMaster.TotalCurrenctDepit}}</td>
+                                                <td>{{entryMaster.TotalGoldDepit24}}</td>
+                                                <td>{{entryMaster.TotalGoldDepit22}}</td>
+                                                <td>{{entryMaster.TotalGoldDepit21}}</td>
+                                                <td>{{entryMaster.TotalGoldDepit18}}</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                
+                               
+                               
+                                    <h4 class="margin-10">اجماليات الدائن</h4>
+                                    <div class="my-Table-responsive margin-bottom-20">
+                                        <table class="table table-bordered table-hover">
+                                            <tr class="success" style="font-weight: bold">
+                                                <th>اجمالي دائن</th>
+                                                <th>اجمالي الدائن بالعمله</th>
+                                                <th>اجمالى عيار 24</th>
+                                                <th>اجمالى عيار 22</th>
+                                                <th>اجمالى عيار 21</th>
+                                                <th>اجمالى عيار 18</th>
+                                            </tr>
+                                            <tr>
+                                                <td>{{entryMaster.TotalCredit}}</td>
+                                                <td>{{entryMaster.TotalCurrencyCredit}}</td>
+                                                <td>{{entryMaster.TotalGoldCredit24}}</td>
+                                                <td>{{entryMaster.TotalGoldCredit22}}</td>
+                                                <td>{{entryMaster.TotalGoldCredit21}}</td>
+                                                <td>{{entryMaster.TotalGoldCredit18}}</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                
+
+                            </div>
+                        </div>
+                    </div>
+                    /.panel
+                </div>-->
+            <!--/.col-xs-12-->
+                
+            
+            
+            
+
+            <!-- Show Grid bottom Page ( قــيد -------- مسبقاً)-->
+                <div class="col-xs-12">
+                    <div class="panel-group accordion margin-bottom-10" id="accordion">
+                        <div class="panel panel-white ">
+                            <div class="panel-heading">
+                                <h5 class="panel-title"><a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" data-target="#collapseTable"> <i class="icon-arrow"></i> {{entrySetting.ENTRY_SETTING_AR_NAME}} المعرفة مسبقاً </a></h5>
+                            </div>
+                            <div id="collapseTable" class="collapse">
+                                <div class="panel-body">
+                                    <table class="table table-bordered table-hover">
+                                        <tr class="success">
+                                            <th>#</th>
+                                            <th class="hidden-xs">كود {{entrySetting.ENTRY_SETTING_AR_NAME}} </th>
+                                            <th>التاريخ </th>
+                                            <th>الحساب</th>
+                                            <th class="hidden-xs">بيان {{entrySetting.ENTRY_SETTING_AR_NAME}}</th>
+                                            <th class="hidden-xs">مندوب التحصيل</th>
+                                            <th class="hidden-xs">رقم التحصيل</th>
+                                            <th class="hidden-xs">العمله</th>
+                                            <th class="hidden-xs">سعر الصرف</th>
+                                            <th ng-show="getTypeOfShow()==4||getTypeOfShow()==5" class="hidden-xs">رقم الشيك</th>
+                                            <th ng-show="getTypeOfShow()==4||getTypeOfShow()==5" class="hidden-xs">تاريخ الشيك</th>
+                                            <th>تعديل / حذف</th>
+                                        </tr>
+
+                                        <tr ng-repeat="item in entryMasters">
+                                            <td class="hidden-xs">{{ $index + 1 }}</td>
+                                            <td>{{ item.ENTRY_NUMBER }}</td>
+                                            <td>{{ item.ENTRY_DATE| date: "yyyy-MM-dd" }}</td>
+                                            <td>{{ item.AccountName }}</td>
+                                            <td class="hidden-xs">{{ item.ENTRY_REMARKS }}</td>
+                                            <td class="hidden-xs">{{ item.EmpName }}</td>
+                                            <td class="hidden-xs">{{ item.COLLECT_ENTRY_CODE }}</td>
+                                            <td class="hidden-xs">{{ item.CurrencyName }}</td>
+                                            <td class="hidden-xs">{{ item.CURRENCY_RATE }}</td>
+                                            <td ng-show="getTypeOfShow()==4||getTypeOfShow()==5" class="hidden-xs">{{ item.CHECK_NUMBER }}</td>
+                                            <td ng-show="getTypeOfShow()==4||getTypeOfShow()==5" class="hidden-xs">{{ item.CHECK_DATE | date: "yyyy-MM-dd"}}</td>
+                                            <td class="center">
+                                                <div class="visible-md visible-lg hidden-sm hidden-xs">
+                                                    <a ng-disabled="isPopUp" href="" ng-click="dirEnity(item)" class="btn btn-transparent btn-xs" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fa fa-pencil"></i></a>
+                                                    <a href="" ng-disabled="isPopUp" ng-click="deleteEnity(item)" class="btn btn-transparent btn-xs tooltips" data-toggle="tooltip" data-placement="top" title="Remove"><i class="fa fa-times fa fa-white"></i></a>
+                                                </div>
+                                                <div class="visible-xs visible-sm hidden-md hidden-lg">
+                                                    <div class="btn-group dropdown ">
+                                                        <button type="button" class="btn btn-o btn-sm dropdown-toggle" data-toggle="dropdown">
+                                                            <i class="fa fa-cog"></i>&nbsp;<span class="caret"></span>
+                                                        </button>
+                                                        <ul class="dropdown-menu pull-right dropdown-light" role="menu">
+                                                            <li><a ng-disabled="isPopUp" href="" ng-click="dirEnity(item)"> تعديل </a></li>
+                                                            <li><a href="" ng-disabled="isPopUp" ng-click="deleteEnity(item)"> حذف </a></li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <ul uib-pagination total-items="entryTotalCount" ng-model="pageNum" max-size="maxSize" class="pagination-sm" boundary-links="true" num-pages="numPages" ng-change="pageChanged()"></ul>
+                                    <pre>صفحه: {{pageNum}} / {{numPages}}</pre>
+                                </div>
+                                <!--/.panel-body-->
+                            </div>
+                            <!--/.panel-collapse-->
+                        </div>
+                        <!--/.panel-->
+                    </div>
+                    <!--/.panel-group-->
+                </div>
+                <!--/.col-xs-12-->
+
+            
+            
+
+            </div>
+            <!--/.container-fluid-->
+        </div>
+        <!--/.wrap-content-->
+    </div>
+    <!--/.main-content-->
+</div>
+<!--/.app-content-->
+
+<div class="modal-demo">
+    <script type="text/ng-template" id="myModalContent.html">
+        <div class="modal-body" id="modal-body">
+            <div class="panel-body panel-body panel-white">
+                <div class="table-responsive">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <form role="search" class="navbar-form main-search">
+                                <div class="form-group">
+                                    <input type="text" ng-model="search" ng-click="searchForAccounts()" press-enter="searchForItems()" placeholder="البحث عن الكود او اسم المنتج" class="form-control">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <table class="table table-bordered table-hover" id="sample-table-Item">
+                        <tr>
+                            <th></th>
+                            <th></th>
+                            <th class="hidden-xs">كود الحساب</th>
+                            <th>الاسم عربى </th>
+                            <th>الاسم انجليزى</th>
+                        </tr>
+                        <tr ng-repeat="item in searchItems">
+                            <td><input type="checkbox" ng-model="item.Selected"></td>
+                            <td class="hidden-xs">{{ $index + 1 }}</td>
+                            <td>{{ item.ACC_CODE }}</td>
+                            <td>{{ item.ACC_AR_NAME }}</td>
+                            <td>{{ item.ACC_EN_NAME }}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-primary" ng-click="cancel(); openAccountPopup()">حساب جديد</button>
+            <button type="button" id="closeItemModal" class="btn btn-primary" ng-click="checkSelected(); cancel()">اضافة واغلاق</button>
+            <button type="button" class="btn btn-primary" ng-click="checkSelected()">إضافة</button>
+            <button type="button" id="closeItemModal" class="btn btn-danger" ng-click="cancel()">اغلاق</button>
+        </div>
+    </script>
+</div>
+
+<div class="modal-demo">
+    <script type="text/ng-template" id="myModalContent2.html">
+        <div class="modal-body" id="modal-body">
+            <div class="panel-body panel-body panel-white">
+                <div class="table-responsive">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <form role="search" class="navbar-form main-search">
+                                <div class="form-group">
+                                    <input type="text" ng-model="search2" ng-click="searchForAccounts2()" press-enter="searchForItems2()" placeholder="البحث عن الكود او اسم المنتج" class="form-control">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <table class="table table-bordered table-hover" id="sample-table-Item">
+                        <tr>
+                            <th></th>
+                            <th></th>
+                            <th class="hidden-xs">كود الحساب</th>
+                            <th>الاسم عربى </th>
+                            <th>الاسم انجليزى</th>
+                        </tr>
+                        <tr ng-repeat="item in searchItems2">
+                            <td><input type="checkbox" ng-model="item.Selected"></td>
+                            <td class="hidden-xs">{{ $index + 1 }}</td>
+                            <td>{{ item.ACC_CODE }}</td>
+                            <td>{{ item.ACC_AR_NAME }}</td>
+                            <td>{{ item.ACC_EN_NAME }}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-primary" ng-click="cancel(); openAccountPopup()">حساب جديد</button>
+            <button type="button" id="closeItemModal" class="btn btn-primary" ng-click="checkSelected2(); cancel()">اضافة واغلاق</button>
+            <button type="button" class="btn btn-primary" ng-click="checkSelected2()">إضافة</button>
+            <button type="button" id="closeItemModal" class="btn btn-danger" ng-click="cancel()">اغلاق</button>
+        </div>
+    </script>
+</div>
+
+<!--####################
+Start entry data Modal
+#######################-->
+<div class="modal-demo">
+    <script type="text/ng-template" id="EntryDataModalContent.html">
+        <div class="modal-header">
+            <h4 class="modal-title">قيود السند</h4>
+        </div>
+        <div class="modal-body" id="modal-body">
+            <div class="panel-body panel-body panel-white">
+                <div class="row">
+                    <div class="col-md-4 col-md-offset-5">
+                        <label>رقم السند:</label>
+                        <label>{{dailyEntryID}}</label>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover" id="sample-table-Item">
+                        <tr>
+                            <th>#</th>
+                            <th class="hidden-xs">كود الحساب</th>
+                            <th>الاسم عربى </th>
+                            <th>الاسم انجليزى</th>
+                            <th>دائن</th>
+                            <th>مدين</th>
+                        </tr>
+                        <tr ng-repeat="item in EntryContent">
+                            <td class="hidden-xs">{{ $index + 1 }}</td>
+                            <td>{{ item.ACC_CODE }}</td>
+                            <td>{{ item.ACC_AR_NAME }}</td>
+                            <td>{{ item.ACC_EN_NAME }}</td>
+                            <td>{{ item.ENTRY_CREDIT }}</td>
+                            <td>{{ item.ENTRY_DEBIT }}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" id="closeItemModal" class="btn btn-danger" ng-click="cancel()">اغلاق</button>
+        </div>
+    </script>
+</div>
+
+<script type="text/ng-template" id="x.html">
+    {{data.name}}
+    <h2>nada</h2>
+</script>
+
+<div ng-include src="'../Accounts/views/ar/accounts.html'"></div>
+
+<div id="divTotals" class="printSection">
+
+    <table class="table table-hover" border="1">
+        <tr style="font-weight: bold" ng-hide="true">
+            <td colspan="4" ng-hide="true">مسلسل:{{entryMaster.ENTRY_NUMBER}}</td>
+            <td colspan="4">التاريخ:{{entryMaster.ENTRY_DATE | date: "yyyy-MM-dd"}}</td>
+        </tr>
+
+
+        <tr style="font-weight: bold">
+            <td colspan="4">الوقت:{{getCurrentTime()}}</td>
+        </tr>
+
+        <tr style="font-weight: bold">
+            <td colspan="4">الكاشير :{{getCurrentEmployeeName()}}</td>
+            <td colspan="4"> الحساب :{{getAccountName()}}</td>
+        </tr>
+
+        <tr style="font-weight: bold">
+            <td ng-hide="true">كود</td>
+            <td colspan="2">الحساب</td>
+            <td>دائن</td>
+            <td>مدين</td>
+            <td ng-if="!flagHide">دائن 24</td>
+            <td ng-if="!flagHide">مدين 24</td>
+            <td ng-if="!flagHide">دائن 22</td>
+            <td ng-if="!flagHide">مدين 22</td>
+            <td ng-if="!flagHide"> دائن 21</td>
+            <td ng-if="!flagHide">مدين 21</td>
+            <td ng-if="!flagHide"> دائن 18</td>
+            <td ng-if="!flagHide"> مدين 18</td>
+            <td> الضريبه</td>
+        </tr>
+
+        <tr ng-repeat="item in entryDetails track by $index">
+            <td>{{ item.ACC_CODE}}</td>
+            <td colspan="2">{{ item.ACC_AR_NAME}}</td>
+            <td>{{ item.ENTRY_CREDIT}}</td>
+            <td>{{item.ENTRY_DEBIT}}</td>
+            <td ng-if="!flagHide">{{ item.ENTRY_GOLD24_CREDIT}}</td>
+            <td ng-if="!flagHide">{{ item.ENTRY_GOLD24_DEBIT}}</td>
+            <td ng-if="!flagHide">{{ item.ENTRY_GOLD22_CREDIT}}</td>
+            <td ng-if="!flagHide">{{ item.ENTRY_GOLD22_DEBIT}}</td>
+            <td ng-if="!flagHide">{{item.ENTRY_GOLD21_CREDIT}}</td>
+            <td ng-if="!flagHide">{{ item.ENTRY_GOLD21_DEBIT}}</td>
+            <td ng-if="!flagHide">{{ item.ENTRY_GOLD18_CREDIT}}</td>
+            <td ng-if="!flagHide">{{ item.ENTRY_GOLD18_DEBIT}}</td>
+            <td>{{ item.TaxValue}}</td>
+        </tr>
+
+        <tr style="font-weight: bold" ng-hide="true">
+            <td colspan="4">اجمالي الدائن </td>
+            <td colspan="4">{{totalCredit||0}} {{getCurrencyName()}}</td>
+        </tr>
+
+        <tr style="font-weight: bold">
+            <td colspan="4">اجمالي المدين</td>
+            <td colspan="4">{{totalDepit||0.0}} {{getCurrencyName()}}</td>
+        </tr>
+
+        <tr style="font-weight: bold" ng-if="!flagHide">
+            <td colspan="4">إجمالي دائن 24</td>
+            <td colspan="4">{{totalGoldCredit24||0.0}} {{getCurrencyName()}}</td>
+        </tr>
+        <tr style="font-weight: bold" ng-if="!flagHide">
+            <td colspan="4">اجمالي مدين 24</td>
+            <td colspan="4">{{totalGoldDepit24||0.0}} {{getCurrencyName()}}</td>
+        </tr>
+        <tr style="font-weight: bold" ng-if="!flagHide">
+            <td colspan="4">اجمالي دائن 22</td>
+            <td colspan="4">{{totalGoldCredit22||0.0}} {{getCurrencyName()}}</td>
+        </tr> 
+        <tr style="font-weight: bold" ng-if="!flagHide">
+            <td colspan="4">اجمالي مدين 22</td>
+            <td colspan="4">{{totalGoldDepit22||0.0}} {{getCurrencyName()}}</td>
+        </tr>
+        <tr style="font-weight: bold" ng-if="!flagHide">
+            <td colspan="4">اجمالي دائن 21</td>
+            <td colspan="4">{{totalGoldCredit21||0.0}} {{getCurrencyName()}}</td>
+        </tr>
+        <tr style="font-weight: bold" ng-if="!flagHide">
+            <td colspan="4">اجمالي مدين 21</td>
+            <td colspan="4">{{totalGoldDepit21||0.0}} {{getCurrencyName()}}</td>
+        </tr>
+        <tr style="font-weight: bold" ng-if="!flagHide">
+            <td colspan="4">اجمالي دائن 18</td>
+            <td colspan="4">{{totalGoldCredit18||0.0}} {{getCurrencyName()}}</td>
+        </tr>
+        <tr style="font-weight: bold" ng-if="!flagHide">
+            <td colspan="4">اجمالي مدين 18</td>
+            <td colspan="4">{{totalGoldDepit18||0.0}} {{getCurrencyName()}}</td>
+        </tr>
+        <tr style="font-weight: bold">
+            <td colspan="4">اجمالي الضريبة دائن </td>
+            <td colspan="4">{{totalTaxCredit||0.0}} {{getCurrencyName()}}</td>
+        </tr>
+        <tr style="font-weight: bold">
+            <td colspan="4">اجمالي الضريبة مدين</td>
+            <td colspan="4">{{totalTaxDebit||0.0}} {{getCurrencyName()}}</td>
+        </tr>
+        <tr style="font-weight: bold">
+            <td colspan="4">اجمالي غير خاضع الضريبة دائن</td>
+            <td colspan="4">{{totalNotTaxCredit||0.0}} {{getCurrencyName()}}</td>
+        </tr>
+        <tr style="font-weight: bold">
+            <td colspan="4">اجمالي غير خاضع الضريبة مدين</td>
+            <td colspan="4">{{totalNotTaxDebit||0.0}} {{getCurrencyName()}}</td>
+        </tr>
+    </table>
+</div>
+
+<!-- طباعة طباعة قبض ريال -->
+<div id="divPrintGetReyal" class="printSection">
+
+    <div class="fatoraHeader">
+
+        <table border="0">
+
+            <tr style="border: none">
+                <td style="border: none; width: 35%">
+                    <img style="max-width:100% !important; margin-right: -5px" src="../../../../Content/assets/images/companyName-Ar.png" />
+
+                    <p style="margin: 0 !important">الفرع : <b>{{ReportData.ReportBranchName}} </b></p>
+                    <p style="margin-bottom: 5px !important"> الرقم الضريبي :{{ReportData.CompanyTaxNumber}}</p>
+                    <p style="margin: 0 !important">{{ReportData.ReportEnDate}}</p>
+                    <p style="margin: 0 !important">الموافق {{ReportData.ReportHigriDate}}</p>
+                </td>
+
+                <td style="border: none;text-align: center;width: 30%">
+                    <img style="max-width:40% !important; margin: -50px auto 10px !important" src="../../../../Content/assets/images/LOGO.JPG" />
+                    <h1 style="margin: -20px auto 0 !important;">قبض ريال</h1>
+                    <p style="color: red !important; font-size: 22px !important; font-weight: bold !important"> رقم ({{entryMaster.ENTRY_NUMBER}})</p>
+                </td>
+
+                <td style="border: none; text-align:left; width: 35%">
+                    <img style="max-width:100% !important" src="../../../../Content/assets/images/companyName-En.png" />
+                    <p style="margin: 0 !important">Branch : <b>{{ReportData.ReportBranchEnName}} </b></p>
+                    <p style="margin-bottom: 5px !important">VAT No. :{{ReportData.CompanyTaxNumber}}</p>
+                    <p style="margin:  0 !important">&nbsp;</p>
+                    <p style="margin:  0 !important">&nbsp;</p>
+                </td>
+            </tr>
+        </table>
+        <table style="margin: 0 !important">
+            <tr>
+                <td style="border: none; text-align:right">
+                    <p style="margin: 0 !important; font-weight: bold !important"><b> المستلم من الساده/{{ReportData.custAccountName != null?ReportData.custAccountName : billMaster.DeliveryPersonName }}</b></p>
+                    <p style="margin: 0 !important;  font-weight: bold !important">  مناوله / {{entryMaster.DeliveryPersonName}}</p>
+                </td>
+                <td style="border: none; text-align:left">
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="fatoora-body">
+        
+        <p style="margin-bottom: 0 !important"><span style="font-weight:bold !important; border-bottom: 1px solid ">المبلغ - ريال</span></p>
+        <table>
+            <tr>
+                <td>{{entryMaster.TotalDepit}}</td>
+                <td>{{ReportData.CURRENCY_Name}} </td>
+                <td> {{ReportData.TotalNoTafqeet}} </td>
+            </tr>
+        </table>
+
+        <table>
+            <tr>
+                <td style="width: 20% !important"><b>طريقة السداد : </b></td>
+                <td>نقدا</td>
+            </tr>
+        </table>
+        
+        <div style="border: 1px solid ; padding:10px ; margin: 15px 0">
+            <p style="margin: 0 !important"><b>البيان</b></p>
+            <p  style="margin: 0 !important">{{entryMaster.ENTRY_REMARKS}}</p>
+        </div>
+
+        <div ng-if="PrintEntryDetailsWithBill">
+            <div style="text-align:center;font-weight:bold;">
+                <h4 style="border-bottom:1px solid;display: inline-block">تفاصيل القيد</h4>
+            </div>
+            <h3 style="border-bottom:1px solid;display: inline-block">مدين</h3>
+            <table>
+                <tr class="success" style="font-weight: bold">
+                    <td>#</td>
+                    <td>كود</td>
+                    <td>الحساب الرئيسى</td>
+                    <td>الحساب</td>
+                    <td>مدين</td>
+                    <td ng-if="!flagHide">مدين 24</td>
+                    <td ng-if="!flagHide">مدين 22</td>
+                    <td ng-if="!flagHide">مدين 21</td>
+                    <td ng-if="!flagHide">مدين 18</td>
+                </tr>
+                <tr ng-repeat="item in DebitEntries | filter : {ACC_ID : ''} track by $index ">
+                    <td>{{ $index+1 }}</td>
+                    <td>{{ item.ACC_CODE || '' }}</td>
+                    <td>{{ item.Parent_ACC_AR_NAME || '' }}</td>
+                    <td>{{ item.ACC_AR_NAME || '' }}</td>
+                    <td>{{ item.ENTRY_DEBIT || 0 }}</td>
+                    <td ng-if="!flagHide">{{ item.ENTRY_GOLD24_DEBIT || 0 }}</td>
+                    <td ng-if="!flagHide">{{ item.ENTRY_GOLD22_DEBIT || 0 }}</td>
+                    <td ng-if="!flagHide">{{ item.ENTRY_GOLD21_DEBIT || 0 }}</td>
+                    <td ng-if="!flagHide">{{ item.ENTRY_GOLD18_DEBIT || 0 }}</td>
+                </tr>
+            </table>
+
+            <h3 style="border-bottom:1px solid;display: inline-block">دائن</h3>
+            <table> 
+                <tr class="success" style="font-weight: bold">
+                    <td>#</td>
+                    <td>كود</td>
+                    <td>الحساب الرئيسى</td>
+                    <td>الحساب</td>
+                    <td>دائن</td>
+                    <td ng-if="!flagHide">دائن 24</td>
+                    <td ng-if="!flagHide">دائن 22</td>
+                    <td ng-if="!flagHide">دائن 21</td>
+                    <td ng-if="!flagHide">دائن 18</td>
+                </tr>
+                <tr ng-repeat="item in CreditEntries | filter : {ACC_ID : ''} track by $index ">
+                    <td>{{ $index+1 }}</td>
+                    <td>{{ item.ACC_CODE || '' }}</td>
+                    <td>{{ item.Parent_ACC_AR_NAME || '' }}</td>
+                    <td>{{ item.ACC_AR_NAME || '' }}</td>
+                    <td>{{ item.ENTRY_CREDIT || 0 }}</td>
+                    <td ng-if="!flagHide">{{ item.ENTRY_GOLD24_CREDIT || 0 }}</td>
+                    <td ng-if="!flagHide">{{ item.ENTRY_GOLD22_CREDIT || 0 }}</td>
+                    <td ng-if="!flagHide">{{ item.ENTRY_GOLD21_CREDIT || 0 }}</td>
+                    <td ng-if="!flagHide">{{ item.ENTRY_GOLD18_CREDIT || 0 }}</td>
+                </tr>
+            </table>
+        </div>
+
+        <table cellspacing="10" style="margin:15px 0">
+            <tr style="height: 100px">
+                <td style="width:33.333%;text-align: center; margin: 10px">
+                    <p><b>امين الصندوق</b></p>
+                    <p></p>
+                </td>
+                <td style="width:33.333%; text-align: center;">
+                    <p ><b>المســلم </b></p>
+                    <p><b>{{ReportData.custAccountName != null?ReportData.custAccountName : billMaster.DeliveryPersonName }}</b></p>
+                </td>
+                <td style="width:33.333%; text-align: center;">
+                    <p><b>المدير المسئول </b></p>
+                    <p></p>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div id="fatoraFooter" style="position:absolute;bottom: 0; left:0;right:0;">
+        <table>
+            <tr>
+                <td style="border: 1px solid !important">{{ReportData.ReportBranchName}} - {{ReportData.CompanyARName}} - هاتف {{ReportData.COMPANY_TELEPHONE}} - س.ت: {{ReportData.CommercialRegister}}</td>
+            </tr>
+        </table>
+    </div>
+
+</div>
+<!--/.نهاية طباعة قبض ريال -->
+
+<!-- طباعة طباعة صرف ريال -->
+<div id="divPrintExchangeReyal" class="printSection">
+
+    <div class="fatoraHeader" >
+        <table border="0">
+            <tr style="border: none">
+                <td style="border: none; width: 35%">
+                    <img style="max-width:100% !important; margin-right: -5px" src="../../../../Content/assets/images/companyName-Ar.png" />
+
+                    <p style="margin: 0 !important">الفرع : <b>{{ReportData.ReportBranchName}} </b></p>
+                    <p style="margin-bottom: 5px !important"> الرقم الضريبي :{{ReportData.CompanyTaxNumber}}</p>
+                    <p style="margin: 0 !important">{{ReportData.ReportEnDate}}</p>
+                    <p style="margin: 0 !important">الموافق {{ReportData.ReportHigriDate}}</p>
+
+                </td>
+                <td style="border: none;text-align: center;width: 30%">
+                    <img style="max-width:40% !important; margin: -50px auto 10px !important" src="../../../../Content/assets/images/LOGO.JPG" />
+                    <h1 style="margin: -20px auto 0 !important;">صرف ريال</h1>
+                    <p style="color: red !important; font-size: 22px !important; font-weight: bold !important"> رقم ({{entryMaster.ENTRY_NUMBER}})</p>
+
+                </td>
+                <td style="border: none; text-align:left; width: 35%">
+                    <img style="max-width:100% !important" src="../../../../Content/assets/images/companyName-En.png" />
+                    <p style="margin: 0 !important">Branch : <b>{{ReportData.ReportBranchEnName}} </b></p>
+                    <p style="margin-bottom: 5px !important">VAT Number : <b>{{ReportData.CompanyTaxNumber}}</b></p>
+                    <p style="margin:  0 !important">&nbsp;</p>
+                    <p style="margin:  0 !important">&nbsp;</p>
+
+                    
+                </td>
+            </tr>
+        </table>
+
+        <table style="margin: 0 !important">
+            <tr>
+                <td style="border: none; text-align:right">
+                    <p style="margin: 0 !important; font-size: 16px !important; font-weight: bold !important">منصرف للسادة : <b> {{ReportData.custAccountName}} </b></p>
+                    <p style="margin: 0 !important"> مناوله / {{entryMaster.DeliveryPersonName}}</p>
+                </td>
+                <td style="border: none; text-align:left">
+                    <p>رقم حساب/ {{ReportData.custAccountNumber}}</p>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="fatoora-body">
+        
+        <table>
+            <tr>
+                <td>{{entryMaster.TotalCredit}}</td>
+                <td>{{ReportData.CURRENCY_Name}} </td>
+                <td> {{ReportData.TotalCreditTafqeet}} </td>
+            </tr>
+        </table>
+
+        
+
+        <table>
+            <tr>
+                <td style="width:20%">تفاصيل المبلغ : </td>
+                <td>نقدا</td>
+            </tr>
+        </table>
+
+        <div style="border: 1px solid ; padding:10px ; margin: 15px 0">
+            <p style="margin: 0 !important"><b>البيان</b></p>
+            <p>{{entryMaster.ENTRY_REMARKS}}</p>
+        </div>
+
+       
+        <table>
+            <!--<tr>
+                <td>رسوم البريد شاملة ضريبة القيمة المضافة : {{entryMaster.ENTRY_REMARKS}} </td>
+
+            </tr>-->
+        </table>
+
+        <div ng-if="PrintEntryDetailsWithBill">
+            <div style="text-align:center;font-weight:bold;">
+                <h4 style="border-bottom:1px solid;display: inline-block">تفاصيل القيد</h4>
+            </div>
+            <h3 style="border-bottom:1px solid;display: inline-block">مدين</h3>
+            <table>
+                <tr class="success" style="font-weight: bold">
+                    <td>#</td>
+                    <td>كود</td>
+                    <td>الحساب الرئيسى</td>
+                    <td>الحساب</td>
+                    <td>مدين</td>
+                    <td ng-if="!flagHide">مدين 24</td>
+                    <td ng-if="!flagHide">مدين 22</td>
+                    <td ng-if="!flagHide">مدين 21</td>
+                    <td ng-if="!flagHide">مدين 18</td>
+                </tr>
+                <tr ng-repeat="item in DebitEntries | filter : {ACC_ID : ''} track by $index ">
+                    <td>{{ $index+1 }}</td>
+                    <td>{{ item.ACC_CODE || '' }}</td>
+                    <td>{{ item.Parent_ACC_AR_NAME || '' }}</td>
+                    <td>{{ item.ACC_AR_NAME || '' }}</td>
+                    <td>{{ item.ENTRY_DEBIT || 0 }}</td>
+                    <td ng-if="!flagHide">{{ item.ENTRY_GOLD24_DEBIT || 0 }}</td>
+                    <td ng-if="!flagHide">{{ item.ENTRY_GOLD22_DEBIT || 0 }}</td>
+                    <td ng-if="!flagHide">{{ item.ENTRY_GOLD21_DEBIT || 0 }}</td>
+                    <td ng-if="!flagHide">{{ item.ENTRY_GOLD18_DEBIT || 0 }}</td>
+                </tr>
+            </table>
+
+            <h3 style="border-bottom:1px solid;display: inline-block">دائن</h3>
+            <table>
+                <tr class="success" style="font-weight: bold">
+                    <td>#</td>
+                    <td>كود</td>
+                    <td>الحساب الرئيسى</td>
+                    <td>الحساب</td>
+                    <td>دائن</td>
+                    <td ng-if="!flagHide">دائن 24</td>
+                    <td ng-if="!flagHide">دائن 22</td>
+                    <td ng-if="!flagHide">دائن 21</td>
+                    <td ng-if="!flagHide">دائن 18</td>
+                </tr>
+                <tr ng-repeat="item in CreditEntries | filter : {ACC_ID : ''} track by $index ">
+                    <td>{{ $index+1 }}</td>
+                    <td>{{ item.ACC_CODE || '' }}</td>
+                    <td>{{ item.Parent_ACC_AR_NAME || '' }}</td>
+                    <td>{{ item.ACC_AR_NAME || '' }}</td>
+                    <td>{{ item.ENTRY_CREDIT || 0 }}</td>
+                    <td ng-if="!flagHide">{{ item.ENTRY_GOLD24_CREDIT || 0 }}</td>
+                    <td ng-if="!flagHide">{{ item.ENTRY_GOLD22_CREDIT || 0 }}</td>
+                    <td ng-if="!flagHide">{{ item.ENTRY_GOLD21_CREDIT || 0 }}</td>
+                    <td ng-if="!flagHide">{{ item.ENTRY_GOLD18_CREDIT || 0 }}</td>
+                </tr>
+            </table>
+        </div>
+
+        <table cellspacing="10" style="margin:10px 0">
+            <tr style="height: 100px">
+                <td style="width:33.333%;text-align: center !important; margin: 10px">
+                    <p><b>امين الصندوق</b></p>
+                    <p></p>
+                </td>
+                <td style="width:33.333%; text-align: center !important">
+                    <p ><b>المســتلم </b></p>
+                    <p><b>{{ReportData.custAccountName}}</b></p>
+                </td>
+                <td style="width:33.333%; text-align: center !important">
+                    <p><b>المدير المسئول </b></p>
+                    <!--<p>البريد السعودي</p>-->
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div id="fatoraFooter" style="position:absolute;bottom: 0; left:0;right:0; ">
+        <table>
+            <tr>
+                <td style="border: 1px solid !important">{{ReportData.ReportBranchName}} - {{ReportData.CompanyARName}} - هاتف {{ReportData.COMPANY_TELEPHONE}} - س.ت: {{ReportData.CommercialRegister}}</td>
+            </tr>
+        </table>
+    </div>
+
+</div>
+<!--/.نهاية طباعة صرف ريال -->
+
+<!-- طباعة طباعة صرف شيكات -->
+<div id="divPrintExchangeCheck" class="printSection">
+
+    <div class="fatoraHeader">
+        <table style="margin: 0 !important">
+            <tr style="border: none">
+                <td style="border: none; width: 35%">
+                    <img style="max-width:100% !important; margin-right: -5px" src="../../../../Content/assets/images/companyName-Ar.png" />
+
+                    <p style="margin: 0 !important">الفرع : <b>{{ReportData.ReportBranchName}} </b></p>
+                    <p style="margin-bottom: 5px !important"> الرقم الضريبي :{{ReportData.CompanyTaxNumber}}</p>
+                    <p style="margin: 0 !important">{{ReportData.ReportEnDate}}</p>
+                    <p style="margin: 0 !important">الموافق {{ReportData.ReportHigriDate}}</p>
+                </td>
+                
+                <td style="border: none;text-align: center;width: 30%">
+                    <img style="max-width:40% !important; margin: -50px auto 10px !important" src="../../../../Content/assets/images/LOGO.JPG" />
+                    <h1 style="margin: -20px auto 0 !important;">صرف شيكات</h1>
+                    <p style="color: red !important; font-size: 22px !important; font-weight: bold !important"> رقم ({{entryMaster.ENTRY_NUMBER}})</p>
+                </td>
+        
+                <td style="border: none; text-align:left; width: 35%">
+                    <img style="max-width:100% !important" src="../../../../Content/assets/images/companyName-En.png" />
+                    <p style="margin: 0 !important">Branch : <b>{{ReportData.ReportBranchEnName}} </b></p>
+                    <p>VAT Number : <b>{{ReportData.CompanyTaxNumber}}</b></p>
+                    <p style="margin:  0 !important">&nbsp;</p>
+                    <p style="margin:  0 !important">&nbsp;</p>
+
+                </td>
+            </tr>
+        </table>
+
+        <table style="border: none !important; margin: 0 !important">
+            <tr style="border: none !important">
+                <td style="border: none !important; text-align:right">
+                    <p style="margin: 0 !important; font-size: 16px !important; font-weight: bold !important">منصرف للسادة : {{ReportData.custAccountName}}</p>
+                    <p style="margin: 0 !important"><b> مناوله /{{entryMaster.DeliveryPersonName}}</b></p>
+                </td>
+                <td style="border: none !important; text-align:left">
+                    <p>رقم حساب/ {{ReportData.custAccountNumber}}</p>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="fatoora-body">
+        
+        <table>
+            <tr>
+                <td>{{entryMaster.TotalDepit}}</td>
+               <td> {{ReportData.CURRENCY_Name}} </td>
+                <td> {{ReportData.TotalDebitCheckTafqeet}} </td>
+            </tr>
+        </table>
+
+
+        <table>
+            <tr>
+                <td>شيك رقم</td>
+                <td>{{entryMaster.CHECK_NUMBER}} </td>
+                <td>بتاريخ</td>
+                <td>{{ReportData.ReportCheckDate}} </td>
+                <td>مسحوب على </td>
+                <td>{{ReportData.ReportBankName}} </td>
+            </tr>
+        </table>
+                
+        <div style="border: 1px solid ; padding:10px ; margin: 15px 0">
+            <p style="margin: 0 !important"><b>البيان</b></p>            
+            <p>{{entryMaster.ENTRY_REMARKS}}</p>
+        </div>
+
+        <div ng-if="PrintEntryDetailsWithBill">
+            <div style="text-align:center;font-weight:bold;">
+                <h4 style="border-bottom:1px solid;display: inline-block">تفاصيل القيد</h4>
+            </div>
+            <h3 style="border-bottom:1px solid;display: inline-block">مدين</h3>
+            <table>
+                <tr class="success" style="font-weight: bold">
+                    <td>#</td>
+                    <td>كود</td>
+                    <td>الحساب الرئيسى</td>
+                    <td>الحساب</td>
+                    <td>مدين</td>
+                    <td ng-if="!flagHide">مدين 24</td>
+                    <td ng-if="!flagHide">مدين 22</td>
+                    <td ng-if="!flagHide">مدين 21</td>
+                    <td ng-if="!flagHide">مدين 18</td>
+                </tr>
+                <tr ng-repeat="item in DebitEntries | filter : {ACC_ID : ''} track by $index ">
+                    <td>{{ $index+1 }}</td>
+                    <td>{{ item.ACC_CODE || '' }}</td>
+                    <td>{{ item.Parent_ACC_AR_NAME || '' }}</td>
+                    <td>{{ item.ACC_AR_NAME || '' }}</td>
+                    <td>{{ item.ENTRY_DEBIT || 0 }}</td>
+                    <td ng-if="!flagHide">{{ item.ENTRY_GOLD24_DEBIT || 0 }}</td>
+                    <td ng-if="!flagHide">{{ item.ENTRY_GOLD22_DEBIT || 0 }}</td>
+                    <td ng-if="!flagHide">{{ item.ENTRY_GOLD21_DEBIT || 0 }}</td>
+                    <td ng-if="!flagHide">{{ item.ENTRY_GOLD18_DEBIT || 0 }}</td>
+                </tr>
+            </table>
+
+            <h3 style="border-bottom:1px solid;display: inline-block">دائن</h3>
+            <table>
+                <tr class="success" style="font-weight: bold">
+                    <td>#</td>
+                    <td>كود</td>
+                    <td>الحساب الرئيسى</td>
+                    <td>الحساب</td>
+                    <td>دائن</td>
+                    <td ng-if="!flagHide">دائن 24</td>
+                    <td ng-if="!flagHide">دائن 22</td>
+                    <td ng-if="!flagHide">دائن 21</td>
+                    <td ng-if="!flagHide">دائن 18</td>
+                </tr>
+                <tr ng-repeat="item in CreditEntries | filter : {ACC_ID : ''} track by $index ">
+                    <td>{{ $index+1 }}</td>
+                    <td>{{ item.ACC_CODE || '' }}</td>
+                    <td>{{ item.Parent_ACC_AR_NAME || '' }}</td>
+                    <td>{{ item.ACC_AR_NAME || '' }}</td>
+                    <td>{{ item.ENTRY_CREDIT || 0 }}</td>
+                    <td ng-if="!flagHide">{{ item.ENTRY_GOLD24_CREDIT || 0 }}</td>
+                    <td ng-if="!flagHide">{{ item.ENTRY_GOLD22_CREDIT || 0 }}</td>
+                    <td ng-if="!flagHide">{{ item.ENTRY_GOLD21_CREDIT || 0 }}</td>
+                    <td ng-if="!flagHide">{{ item.ENTRY_GOLD18_CREDIT || 0 }}</td>
+                </tr>
+            </table>
+        </div>
+
+        <table cellspacing="10" style="margin:15px 0">
+            <tr style="height: 100px">
+                <td style="width:33.333%;text-align: center; margin: 10px">
+                    <p  ><b>امين الصندوق</b></p>
+                    <p></p>
+                </td>
+                <td style="width:33.333%;text-align: center">
+                    <p  ><b>المســتلم </b></p>
+                    <p>{{ReportData.custAccountName}}</p>
+
+                </td>
+                <td style="width:33.333%;text-align: center">
+                    <p  ><b>المدير المسئول </b></p>
+                    <!--<p>البريد السعودي</p>-->
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div id="fatoraFooter" style="bottom: 0; left:0;right:0;">
+        <table>
+            <tr>
+                <td style="border: 1px solid !important">{{ReportData.ReportBranchName}} - {{ReportData.CompanyARName}} - هاتف {{ReportData.COMPANY_TELEPHONE}} - س.ت: {{ReportData.CommercialRegister}}</td>
+            </tr>
+        </table>
+    </div>
+
+</div>
+<!--/.نهاية طباعة صرف شيكات -->
+
+<!-- طباعة طباعة قيض شيكات -->
+<div id="divPrintGetCheck" class="printSection">
+
+    <div class="fatoraHeader" style="border-bottom: 1px solid ">
+
+        <table border="0">            
+            <tr style="border: none">
+                <td style="border: none; width: 35%">
+                    <img style="max-width:100% !important; margin-right: -5px" src="../../../../Content/assets/images/companyName-Ar.png" />
+
+                    <p><b>{{ReportData.ReportBranchName}} (الرقم الضريبي : {{ReportData.CompanyTaxNumber}})</b></p>
+                    <p style="margin: 0 !important">{{ReportData.ReportEnDate}}</p>
+                    <p style="margin: 0 !important">الموافق {{ReportData.ReportHigriDate}}</p>
+                </td>
+                
+                <td style="border: none;text-align: center;width: 30%">
+                    <img style="max-width:40% !important; margin: -50px auto 10px !important" src="../../../../Content/assets/images/LOGO.JPG" />
+                    <h1 style="margin: -20px auto 0 !important;">قبض شيكات</h1>
+                    <p style="color: red !important; font-size: 22px !important; font-weight: bold !important"> رقم ({{entryMaster.ENTRY_NUMBER}})</p>
+
+                </td>
+        
+                <td style="border: none; text-align:left; width: 35%">
+                    <img style="max-width:100% !important" src="../../../../Content/assets/images/companyName-En.png" />
+                    <p style="margin: 0 !important">Branch : <b>{{ReportData.ReportBranchEnName}} </b></p>
+                    <p>VAT Number : <b>{{ReportData.CompanyTaxNumber}}</b></p>
+                    
+                </td>
+            </tr>
+        </table>
+
+        <table style="margin: 0 !important">
+            <tr>
+                <td style="border: none; text-align:right">
+                    <p style="margin: 0 !important"></p>
+                    <p style="margin: 0 !important"> مناوله / {{entryMaster.DeliveryPersonName}}</p>
+                </td>
+                <td style="border: none; text-align:left">
+                    <p>العنوان:<b>{{ReportData.customerAddressRemark}}</b></p>
+                    <p>رقم حساب/ {{ReportData.custAccountNumber}}</p>
+
+                </td>
+            </tr>
+        </table>
+
+    </div>
+
+    <div class="fatoora-body">
+       
+        <table>
+            <tr>
+                <td>{{entryMaster.TotalCurrencyCredit}}</td>
+                <td>{{ReportData.CURRENCY_Name}} </td>
+                <td> {{ReportData.TotalCreditCheckTafqeet}} </td>
+            </tr>
+        </table>
+
+        <table style="width:20% !important">
+            <tr>
+                <td>شيك رقم</td>
+                <td>{{entryMaster.CHECK_NUMBER}} </td>
+            </tr>
+        </table>
+
+        <table style="width:50% !important">
+            <tr>
+                <td>بتاريخ</td>
+                <td>{{ReportData.ReportCheckDate}} </td>
+            </tr>
+        </table>
+
+        <table style="width:50% !important">
+            <tr>
+                <td>مسحوب على </td>
+                <td>{{ReportData.ReportBankName}} </td>
+            </tr>
+        </table>
+
+        <div style="border: 1px solid ; padding:10px ; margin: 15px 0">
+            <p style="margin: 0 !important">البيان</p>
+            <p style="margin: 0 !important">{{entryMaster.ENTRY_REMARKS}}</p>
+        </div>
+
+        <div ng-if="PrintEntryDetailsWithBill">
+            <div style="text-align:center;font-weight:bold;">
+                <h4 style="border-bottom:1px solid;display: inline-block">تفاصيل القيد</h4>
+            </div>
+            <h3 style="border-bottom:1px solid;display: inline-block">مدين</h3>
+            <table>
+                <tr class="success" style="font-weight: bold">
+                    <td>#</td>
+                    <td>كود</td>
+                    <td>الحساب الرئيسى</td>
+                    <td>الحساب</td>
+                    <td>مدين</td>
+                    <td ng-if="!flagHide">مدين 24</td>
+                    <td ng-if="!flagHide">مدين 22</td>
+                    <td ng-if="!flagHide">مدين 21</td>
+                    <td ng-if="!flagHide">مدين 18</td>
+                </tr>
+                <tr ng-repeat="item in DebitEntries | filter : {ACC_ID : ''} track by $index ">
+                    <td>{{ $index+1 }}</td>
+                    <td>{{ item.ACC_CODE || '' }}</td>
+                    <td>{{ item.Parent_ACC_AR_NAME || '' }}</td>
+                    <td>{{ item.ACC_AR_NAME || '' }}</td>
+                    <td>{{ item.ENTRY_DEBIT || 0 }}</td>
+                    <td ng-if="!flagHide">{{ item.ENTRY_GOLD24_DEBIT || 0 }}</td>
+                    <td ng-if="!flagHide">{{ item.ENTRY_GOLD22_DEBIT || 0 }}</td>
+                    <td ng-if="!flagHide">{{ item.ENTRY_GOLD21_DEBIT || 0 }}</td>
+                    <td ng-if="!flagHide">{{ item.ENTRY_GOLD18_DEBIT || 0 }}</td>
+                </tr>
+            </table>
+
+            <h3 style="border-bottom:1px solid;display: inline-block">دائن</h3>
+            <table>
+                <tr class="success" style="font-weight: bold">
+                    <td>#</td>
+                    <td>كود</td>
+                    <td>الحساب الرئيسى</td>
+                    <td>الحساب</td>
+                    <td>دائن</td>
+                    <td ng-if="!flagHide">دائن 24</td>
+                    <td ng-if="!flagHide">دائن 22</td>
+                    <td ng-if="!flagHide">دائن 21</td>
+                    <td ng-if="!flagHide">دائن 18</td>
+                </tr>
+                <tr ng-repeat="item in CreditEntries | filter : {ACC_ID : ''} track by $index ">
+                    <td>{{ $index+1 }}</td>
+                    <td>{{ item.ACC_CODE || '' }}</td>
+                    <td>{{ item.Parent_ACC_AR_NAME || '' }}</td>
+                    <td>{{ item.ACC_AR_NAME || '' }}</td>
+                    <td>{{ item.ENTRY_CREDIT || 0 }}</td>
+                    <td ng-if="!flagHide">{{ item.ENTRY_GOLD24_CREDIT || 0 }}</td>
+                    <td ng-if="!flagHide">{{ item.ENTRY_GOLD22_CREDIT || 0 }}</td>
+                    <td ng-if="!flagHide">{{ item.ENTRY_GOLD21_CREDIT || 0 }}</td>
+                    <td ng-if="!flagHide">{{ item.ENTRY_GOLD18_CREDIT || 0 }}</td>
+                </tr>
+            </table>
+        </div>
+
+        <table cellspacing="10" style="margin:15px 0">
+            <tr style="height: 100px">
+                <td style="width:33.333%;text-align: center; margin: 10px">
+                    <p  ><b>امين الصندوق</b></p>
+                    <p></p>
+                </td>
+                <td style="width:33.333%;text-align: center">
+                    <p  ><b>المســتلم </b></p>
+                    <p></p>
+
+                </td>
+                <td style="width:33.333%;text-align: center">
+                    <p  ><b>المدير المسئول </b></p>
+                    <p></p>
+                </td>
+            </tr>
+        </table>
+
+    </div>
+
+    <div id="fatoraFooter" style="bottom: 0; left:0;right:0">
+
+        <table>
+            <tr>
+                <td style="border: 1px solid !important">{{ReportData.ReportBranchName}} - {{ReportData.CompanyARName}} - هاتف {{ReportData.COMPANY_TELEPHONE}} - س.ت: {{ReportData.CommercialRegister}}</td>
+            </tr>
+        </table>
+
+    </div>
+
+</div>
+<!--/.نهاية طباعة قيض شيكات -->
+
+<!-- طباعة اشعار مدين -->
+<div id="entryDebit" class="printSection">
+
+    <div class="fatoraHeader" style="border-bottom: 1px solid ">
+        <table border="0">
+            <tr style="border: none">
+                <td style="border: none; width: 35%">
+                    <img style="max-width:100% !important; margin-right: -5px" src="../../../../Content/assets/images/companyName-Ar.png" />
+
+                    <p style="margin: 0 !important">الفرع : <b>{{ReportData.ReportBranchName}} </b></p>
+                    <p style="margin-bottom: 5px !important"> الرقم الضريبي :{{ReportData.CompanyTaxNumber}}</p>
+                    <p style="margin: 0 !important">{{ReportData.ReportEnDate}}</p>
+                    <p style="margin: 0 !important">الموافق {{ReportData.ReportHigriDate}}</p>
+                </td>
+                
+                <td style="border: none;text-align: center;width: 30%">
+                    <img style="max-width:40% !important; margin: -50px auto 10px !important" src="../../../../Content/assets/images/LOGO.JPG" />
+                    <h1 style="margin: -20px auto 0 !important;">اشعار مدين</h1>
+                    <p style="color: red !important; font-size: 22px !important; font-weight: bold !important"> رقم ({{entryMaster.ENTRY_NUMBER}})</p>
+
+                </td>
+        
+                <td style="border: none; text-align:left; width: 35%">
+                    <img style="max-width:100% !important" src="../../../../Content/assets/images/companyName-En.png" />
+                    <p style="margin: 0 !important">Branch : <b>{{ReportData.ReportBranchEnName}} </b></p>
+                    <p style="margin-bottom: 5px !important">VAT No. :{{ReportData.CompanyTaxNumber}}</p>
+                    <p style="margin:  0 !important">&nbsp;</p>
+                    <p style="margin:  0 !important">&nbsp;</p>
+
+                </td>
+            </tr>
+        </table>
+        <table style="margin: 0 !important">
+            <tr>
+                <td style="border: none; text-align:right">
+                    <p style="margin: 0 !important; font-size: 16px !important; font-weight: bold !important"><b> السادة : {{ReportData.custAccountName}}</b></p>
+                    <p style="margin: 0 !important"> <b>مناوله / {{entryMaster.DeliveryPersonName}}</b></p>
+                </td>
+                <td style="border: none; text-align:left">
+                    <p>العنوان:<b>{{ReportData.customerAddressRemark}}</b></p>
+                    <p>رقم حساب/ {{ReportData.custAccountNumber}}</p>
+                </td>
+            </tr>
+        </table>        
+    </div>
+
+    <div class="fatoora-body">
+        <p style="border-bottom:1px solid;display: inline-block"><b>قيدنا عليكم</b> :</p>
+        <table>
+            <tr>
+                <td>{{entryMaster.TotalCurrenctDepit}}</td>
+                <td>{{ReportData.CURRENCY_Name}}</td>
+                <td>{{ReportData.TotalDebitCheckTafqeet}}</td>
+            </tr>
+            <tr ng-if="!flagHide">
+                <td>{{entryMaster.TotalGoldDepit24}}</td>
+                <td>ذهب 24</td>
+                <td>{{ReportData.Total24Tafqeet}}</td>
+            </tr>
+            <tr ng-if="!flagHide">
+                <td>{{entryMaster.TotalGoldDepit22}}</td>
+                <td>ذهب 22</td>
+                <td>{{ReportData.Total22Tafqeet}}</td>
+            </tr>
+            <tr ng-if="!flagHide">
+                <td>{{entryMaster.TotalGoldDepit21}}</td>
+                <td>ذهب 21</td>
+                <td>{{ReportData.Total21Tafqeet}}</td>
+            </tr>
+            <tr ng-if="!flagHide">
+                <td>{{entryMaster.TotalGoldDepit18}}</td>
+                <td>ذهب 18</td>
+                <td>{{ReportData.Total18Tafqeet}}</td>
+            </tr>
+
+        </table>
+        <div style="border: 1px solid ; padding:10px ; margin: 15px 0">
+            <p style="margin: 0 !important"><b>البيان</b></p>
+            <p>{{entryMaster.ENTRY_REMARKS}}</p>
+        </div>
+
+        <div ng-if="PrintEntryDetailsWithBill">
+            <div style="text-align:center;font-weight:bold;">
+                <h4 style="border-bottom:1px solid;display: inline-block">تفاصيل القيد</h4>
+            </div>
+            <h3 style="border-bottom:1px solid;display: inline-block">مدين</h3>
+            <table>
+                <tr class="success" style="font-weight: bold">
+                    <td>#</td>
+                    <td>كود</td>
+                    <td>الحساب الرئيسى</td>
+                    <td>الحساب</td>
+                    <td>مدين</td>
+                    <td ng-if="!flagHide">مدين 24</td>
+                    <td ng-if="!flagHide">مدين 22</td>
+                    <td ng-if="!flagHide">مدين 21</td>
+                    <td ng-if="!flagHide">مدين 18</td>
+                </tr>
+                <tr ng-repeat="item in DebitEntries | filter : {ACC_ID : ''} track by $index ">
+                    <td>{{ $index+1 }}</td>
+                    <td>{{ item.ACC_CODE || '' }}</td>
+                    <td>{{ item.Parent_ACC_AR_NAME || '' }}</td>
+                    <td>{{ item.ACC_AR_NAME || '' }}</td>
+                    <td>{{ item.ENTRY_DEBIT || 0 }}</td>
+                    <td ng-if="!flagHide">{{ item.ENTRY_GOLD24_DEBIT || 0 }}</td>
+                    <td ng-if="!flagHide">{{ item.ENTRY_GOLD22_DEBIT || 0 }}</td>
+                    <td ng-if="!flagHide">{{ item.ENTRY_GOLD21_DEBIT || 0 }}</td>
+                    <td ng-if="!flagHide">{{ item.ENTRY_GOLD18_DEBIT || 0 }}</td>
+                </tr>
+            </table>
+
+            <h3 style="border-bottom:1px solid;display: inline-block">دائن</h3>
+            <table>
+                <tr class="success" style="font-weight: bold">
+                    <td>#</td>
+                    <td>كود</td>
+                    <td>الحساب الرئيسى</td>
+                    <td>الحساب</td>
+                    <td>دائن</td>
+                    <td ng-if="!flagHide">دائن 24</td>
+                    <td ng-if="!flagHide">دائن 22</td>
+                    <td ng-if="!flagHide">دائن 21</td>
+                    <td ng-if="!flagHide">دائن 18</td>
+                </tr>
+                <tr ng-repeat="item in CreditEntries | filter : {ACC_ID : ''} track by $index ">
+                    <td>{{ $index+1 }}</td>
+                    <td>{{ item.ACC_CODE || '' }}</td>
+                    <td>{{ item.Parent_ACC_AR_NAME || '' }}</td>
+                    <td>{{ item.ACC_AR_NAME || '' }}</td>
+                    <td>{{ item.ENTRY_CREDIT || 0 }}</td>
+                    <td ng-if="!flagHide">{{ item.ENTRY_GOLD24_CREDIT || 0 }}</td>
+                    <td ng-if="!flagHide">{{ item.ENTRY_GOLD22_CREDIT || 0 }}</td>
+                    <td ng-if="!flagHide">{{ item.ENTRY_GOLD21_CREDIT || 0 }}</td>
+                    <td ng-if="!flagHide">{{ item.ENTRY_GOLD18_CREDIT || 0 }}</td>
+                </tr>
+            </table>
+        </div>
+
+        <table cellspacing="10" style="margin:15px 0">
+            <tr style="height: 100px">
+                <td style="width:33.333%;text-align: center; margin: 10px">
+                    <p><b>العميل</b></p>
+                    <p style="font-weight: bold !important">{{ReportData.custAccountName}}</p>
+                </td>
+                <td style="width:33.333%;text-align: center">
+                    <p><b>تمت بمعرفة </b></p>
+                    <p></p>
+
+                </td>
+                <td style="width:33.333%;text-align: center">
+                    <p><b>المدير المسئول </b></p>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div id="fatoraFooter" style="position:absolute;bottom: 0; left:0;right:0;">
+        <table>
+            <tr>
+                <td style="border: 1px solid !important">{{ReportData.ReportBranchName}} - {{ReportData.CompanyARName}} - هاتف {{ReportData.COMPANY_TELEPHONE}} - س.ت: {{ReportData.CommercialRegister}}</td>
+            </tr>
+        </table>
+    </div>
+
+</div>
+<!--/.نهاية طباعة اشعار مدين-->
+
+<!-- طباعة اشعار دائن -->
+<div id="entryCredit" class="printSection">
+    <div class="fatoraHeader" >
+        <table border="0">            
+            <tr style="border: none">
+                <td style="border: none; width: 35%">
+                    <img style="max-width:100% !important; margin-right: -5px" src="../../../../Content/assets/images/companyName-Ar.png" />
+
+                    <p style="margin: 0 !important">الفرع : <b>{{ReportData.ReportBranchName}} </b></p>
+                    <p style="margin-bottom: 5px !important"> الرقم الضريبي :{{ReportData.CompanyTaxNumber}}</p>
+                    <p style="margin: 0 !important">{{ReportData.ReportEnDate}}</p>
+                    <p style="margin: 0 !important">الموافق {{ReportData.ReportHigriDate}}</p>
+                </td>
+                
+                <td style="border: none;text-align: center;width: 30%">
+                    <img style="max-width:40% !important; margin: -50px auto 10px !important" src="../../../../Content/assets/images/LOGO.JPG" />
+                    <h1 style="margin: -20px auto 0 !important;">اشعار دائن</h1>
+                    <p style="color: red !important; font-size: 22px !important; font-weight: bold !important"> رقم ({{entryMaster.ENTRY_NUMBER}})</p>
+
+                </td>
+        
+                <td style="border: none; text-align:left; width: 35%">
+                    <img style="max-width:100% !important" src="../../../../Content/assets/images/companyName-En.png" />
+                    <p style="margin: 0 !important">Branch : <b>{{ReportData.ReportBranchEnName}} </b></p>
+                    <p style="margin-bottom: 5px !important">VAT No. :{{ReportData.CompanyTaxNumber}}</p>
+                    <p style="margin:  0 !important">&nbsp;</p>
+                    <p style="margin:  0 !important">&nbsp;</p>
+                </td>
+            </tr>
+
+        </table>
+        
+        <table style="margin: 0 !important">
+            <tr>
+                <td style="border: none; text-align:right">
+                    <p style="margin: 0 !important; font-size: 16px !important; font-weight: bold !important"><b>السادة : {{ReportData.custAccountName}}</b></p>
+                    <p style="margin: 0 !important"> <b>مناوله / {{entryMaster.DeliveryPersonName}}</b></p>
+                </td>
+                <td style="border: none; text-align:left">
+                    <p>رقم حساب/ {{ReportData.custAccountNumber}}</p>
+                </td>
+            </tr>
+        </table>
+
+    </div>
+
+    <div class="fatoora-body">
+
+        <p style="border-bottom:1px solid;display: inline-block"><b>قيدنا لـكم</b> :</p>
+
+        <table>
+            <tr>
+                <td>{{entryMaster.TotalCurrencyCredit}}</td>
+                <td>{{ReportData.CURRENCY_Name}}</td>
+                <td>{{ReportData.TotalCreditCheckTafqeet}}</td>
+            </tr>
+            <tr ng-if="!flagHide">
+                <td>{{entryMaster.TotalGoldCredit24}}</td>
+                <td>ذهب 24</td>
+                <td>{{ReportData.Total24TafqeetCredit}}</td>
+            </tr>
+            <tr ng-if="!flagHide">
+                <td>{{entryMaster.TotalGoldCredit22}}</td>
+                <td>ذهب 22</td>
+                <td>{{ReportData.Total22TafqeetCredit}}</td>
+            </tr>
+            <tr ng-if="!flagHide">
+                <td>{{entryMaster.TotalGoldCredit21}}</td>
+                <td>ذهب 21</td>
+                <td>{{ReportData.Total21TafqeetCredit}}</td>
+            </tr>
+            <tr ng-if="!flagHide">
+                <td>{{entryMaster.TotalGoldCredit18}}</td>
+                <td>ذهب 18</td>
+                <td>{{ReportData.Total18TafqeetCredit}}</td>
+            </tr>
+        </table>
+
+
+        <div style="border: 1px solid ; padding:10px ; margin: 15px 0">
+            <p style="margin: 0 !important"><b>البيان</b></p>
+            <p style="margin: 0 !important">{{entryMaster.ENTRY_REMARKS}}</p>
+        </div>
+
+        <div ng-if="PrintEntryDetailsWithBill">
+            <div style="text-align:center;font-weight:bold;">
+                <h4 style="border-bottom:1px solid;display: inline-block">تفاصيل القيد</h4>
+            </div>
+            <h3 style="border-bottom:1px solid;display: inline-block">مدين</h3>
+            <table>
+                <tr class="success" style="font-weight: bold">
+                    <td>#</td>
+                    <td>كود</td>
+                    <td>الحساب الرئيسى</td>
+                    <td>الحساب</td>
+                    <td>مدين</td>
+                    <td ng-if="!flagHide">مدين 24</td>
+                    <td ng-if="!flagHide">مدين 22</td>
+                    <td ng-if="!flagHide">مدين 21</td>
+                    <td ng-if="!flagHide">مدين 18</td>
+                </tr>
+                <tr ng-repeat="item in DebitEntries | filter : {ACC_ID : ''} track by $index ">
+                    <td>{{ $index+1 }}</td>
+                    <td>{{ item.ACC_CODE || '' }}</td>
+                    <td>{{ item.Parent_ACC_AR_NAME || '' }}</td>
+                    <td>{{ item.ACC_AR_NAME || '' }}</td>
+                    <td>{{ item.ENTRY_DEBIT || 0 }}</td>
+                    <td ng-if="!flagHide">{{ item.ENTRY_GOLD24_DEBIT || 0 }}</td>
+                    <td ng-if="!flagHide">{{ item.ENTRY_GOLD22_DEBIT || 0 }}</td>
+                    <td ng-if="!flagHide">{{ item.ENTRY_GOLD21_DEBIT || 0 }}</td>
+                    <td ng-if="!flagHide">{{ item.ENTRY_GOLD18_DEBIT || 0 }}</td>
+                </tr>
+            </table>
+
+            <h3 style="border-bottom:1px solid;display: inline-block">دائن</h3>
+            <table>
+                <tr class="success" style="font-weight: bold">
+                    <td>#</td>
+                    <td>كود</td>
+                    <td>الحساب الرئيسى</td>
+                    <td>الحساب</td>
+                    <td>دائن</td>
+                    <td ng-if="!flagHide">دائن 24</td>
+                    <td ng-if="!flagHide">دائن 22</td>
+                    <td ng-if="!flagHide">دائن 21</td>
+                    <td ng-if="!flagHide">دائن 18</td>
+                </tr>
+                <tr ng-repeat="item in CreditEntries | filter : {ACC_ID : ''} track by $index ">
+                    <td>{{ $index+1 }}</td>
+                    <td>{{ item.ACC_CODE || '' }}</td>
+                    <td>{{ item.Parent_ACC_AR_NAME || '' }}</td>
+                    <td>{{ item.ACC_AR_NAME || '' }}</td>
+                    <td>{{ item.ENTRY_CREDIT || 0 }}</td>
+                    <td ng-if="!flagHide">{{ item.ENTRY_GOLD24_CREDIT || 0 }}</td>
+                    <td ng-if="!flagHide">{{ item.ENTRY_GOLD22_CREDIT || 0 }}</td>
+                    <td ng-if="!flagHide">{{ item.ENTRY_GOLD21_CREDIT || 0 }}</td>
+                    <td ng-if="!flagHide">{{ item.ENTRY_GOLD18_CREDIT || 0 }}</td>
+                </tr>
+            </table>
+        </div>
+
+        <table cellspacing="10" style="margin:15px 0">
+            <tr style="height: 100px">
+                <td style="width:33.333%;text-align: center; margin: 10px">
+                    <p style=""><b>العميل</b></p>
+                    <p style="font-weight: bold !important">{{ReportData.custAccountName}}</p>
+                </td>
+                <td style="width:33.333%;text-align: center">
+                    <p><b>تمت بمعرفة </b></p>
+                    <p></p>
+
+                </td>
+                <td style="width:33.333%;text-align: center">
+                    <p  ><b>المدير المسئول </b></p>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div id="fatoraFooter" style="bottom: 0; left:0;right:0;">
+        <table>
+            <tr>
+                <td style="border: 1px solid !important">{{ReportData.ReportBranchName}} - {{ReportData.CompanyARName}} - هاتف {{ReportData.COMPANY_TELEPHONE}} - س.ت: {{ReportData.CommercialRegister}}</td>
+
+            </tr>
+        </table>
+    </div>
+</div>
+<!--/.نهاية طباعة اشعار دائن-->
+
+<!-- طباعة القيود -->
+<div id="PopupEntriesPrintDiv" class="printSection">
+    <div class="fatoraHeader" style="border-bottom: 1px solid ">
+        <table border="0">
+           
+            <tr style="border: none">
+                <td style="border: none; width: 35%">
+                    <img style="max-width:100% !important; margin-right: -5px" src="../../../../Content/assets/images/companyName-Ar.png" />
+
+                    <p><b>{{ReportData.ReportBranchName}} (الرقم الضريبي : {{ReportData.CompanyTaxNumber}})</b></p>
+                    <p style="margin: 0 !important">{{ReportData.ReportEnDate}}</p>
+                    <p style="margin: 0 !important">الموافق {{ReportData.ReportHigriDate}}</p>
+
+                </td>
+                
+                <td style="border: none;text-align: center;width: 30%">
+                    <img style="max-width:40% !important; margin: -50px auto 10px !important" src="../../../../Content/assets/images/LOGO.JPG" />
+                    <h1 style="margin: -20px auto 0 !important;">تفاصيل القيد</h1>
+                    <p style="color: red !important; font-size: 22px !important; font-weight: bold !important"> رقم ({{billMaster.BILL_NUMBER}})</p>
+
+                </td>
+        
+                <td style="border: none; text-align:left; width: 35%">
+                    <img style="max-width:100% !important" src="../../../../Content/assets/images/companyName-En.png" />
+                    <p style="margin: 0 !important">Branch : <b>{{ReportData.ReportBranchEnName}} </b></p>
+                    <p>VAT Number : <b>{{ReportData.CompanyTaxNumber}}</b></p>
+                </td>
+            </tr>
+        </table>
+
+        <table style="margin: 0 !important">
+            <tr>
+                <td style="border: none; text-align:right">
+                    <p style="margin: 0 !important; font-size: 16px !important; font-weight: bold !important">مباع الي الساده/{{ReportData.custAccountName != null?ReportData.custAccountName : billMaster.DeliveryPersonName }}</p>
+                    <p style="margin: 0 !important"> مناوله / {{billMaster.DeliveryPersonName}}</p>
+                </td>
+                <td style="border: none; text-align:left">
+                    <p><b>رقم القيد: </b><span>{{entryMaster.ENTRY_NUMBER}}</span></p>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="fatoora-body">
+        <h3 style="border-bottom:1px solid;display: inline-block">مدين</h3>
+        <table>
+            <tr class="success" style="font-weight: bold">
+                <td>#</td>
+                <td>{{gridData.ARCode}}</td>
+                <td>الحساب الرئيسى</td>
+                <td>{{gridData.ARAccountName}}</td>
+                <td>{{gridData.ARDepit}}</td>
+                <td ng-if="!flagHide">{{gridData.ARDepit24}}</td>
+                <td ng-if="!flagHide">{{gridData.ARDepit22}}</td>
+                <td ng-if="!flagHide">{{gridData.ARDepit21}}</td>
+                <td ng-if="!flagHide">{{gridData.ARDepit18}}</td>
+            </tr>
+            <tr ng-repeat="item in entryDetails | filter : {ACC_ID : ''} track by $index ">
+                <td>{{ $index+1 }}</td>
+                <td>{{ item.ACC_CODE || 'empty' }}</td>
+                <td>{{ item.Parent_ACC_AR_NAME || '' }}</td>
+                <td>{{ item.ACC_AR_NAME || 'empty' }}</td>
+                <td>{{ item.ENTRY_DEBIT || 0 }}</td>
+                <td ng-if="!flagHide">{{ item.ENTRY_GOLD24_DEBIT || 0 }}</td>
+                <td ng-if="!flagHide">{{ item.ENTRY_GOLD22_DEBIT || 0 }}</td>
+                <td ng-if="!flagHide">{{ item.ENTRY_GOLD21_DEBIT || 0 }}</td>
+                <td ng-if="!flagHide">{{ item.ENTRY_GOLD18_DEBIT || 0 }}</td>
+            </tr>
+        </table>
+
+        <h3 style="border-bottom:1px solid;display: inline-block">دائن</h3>
+        <table>
+            <tr class="success" style="font-weight: bold">
+                <td>#</td>
+                <td>{{gridData.ARCode}}</td>
+                <td>الحساب الرئيسى</td>
+                <td>{{gridData.ARAccountName}}</td>
+                <td>{{gridData.ARCredit}}</td>
+                <td ng-if="!flagHide">{{gridData.ARCredit24}}</td>
+                <td ng-if="!flagHide">{{gridData.ARCredit22}}</td>
+                <td ng-if="!flagHide">{{gridData.ARCredit21}}</td>
+                <td ng-if="!flagHide">{{gridData.ARCredit18}}</td>
+            </tr>
+            <tr ng-repeat="item in entryDetails2 | filter : {ACC_ID : ''} track by $index ">
+                <td>{{ $index+1 }}</td>
+                <td>{{ item.ACC_CODE || 'empty' }}</td>
+                <td>{{ item.Parent_ACC_AR_NAME || '' }}</td>
+                <td>{{ item.ACC_AR_NAME || 'empty' }}</td>
+                <td>{{ item.ENTRY_CREDIT || 0 }}</td>
+                <td ng-if="!flagHide">{{ item.ENTRY_GOLD24_CREDIT || 0 }}</td>
+                <td ng-if="!flagHide">{{ item.ENTRY_GOLD22_CREDIT || 0 }}</td>
+                <td ng-if="!flagHide">{{ item.ENTRY_GOLD21_CREDIT || 0 }}</td>
+                <td ng-if="!flagHide">{{ item.ENTRY_GOLD18_CREDIT || 0 }}</td>
+            </tr>
+        </table>
+    </div>
+
+    <div id="fatoraFooter" style="position:absolute;bottom: 0; left:0;right:0;">
+        <table>
+            <tr>
+                <td style="border: 1px solid !important">{{ReportData.ReportBranchName}} - {{ReportData.CompanyARName}} - هاتف {{ReportData.COMPANY_TELEPHONE}} - س.ت: {{ReportData.CommercialRegister}}</td>
+
+            </tr>
+        </table>
+    </div>
+</div>
+<!-- نهاية طباعة القيود-->

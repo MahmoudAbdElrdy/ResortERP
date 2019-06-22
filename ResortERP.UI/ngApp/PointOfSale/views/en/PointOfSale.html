@@ -1,0 +1,647 @@
+﻿<div class="app-content">
+    <div class="main-content">
+        <div class="wrap-content container" id="container">
+            <div class="container-fluid container-fullw ">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="panel " style="height:100%;overflow:auto;">
+                            <div class="panel-heading border-bottom panel-white">
+                                <h4 class="panel-title">Bill Data</h4>
+                                <div class="panel-tools">
+                                    <a data-original-title="Refresh" data-toggle="tooltip" data-placement="top" data-trigger="hover" class="btn btn-transparent btn-sm panel-refresh" href="#"><i class="fa fa-circle-o"></i></a>
+                                    <a data-original-title="Collapse" data-toggle="tooltip" data-placement="top" data-trigger="hover" class="btn btn-transparent btn-sm panel-collapse" href="#"><i class="ti-minus collapse-off"></i><i class="ti-plus collapse-on"></i></a>
+                                    <a data-original-title="Expand" data-toggle="tooltip" data-placement="top" data-trigger="hover" class="btn btn-transparent btn-sm panel-expand" href="#"><i class="fa fa-compress expand-on"></i><i class="fa fa-expand expand-off"></i></a>
+                                </div>
+                            </div>
+                            <!--/.panel-heading-->
+
+                            <div class="panel-body panel-white">
+                                <div class="collapse in">
+                                    <div class="col-md-12">
+                                        <div class="panel-body">
+                                            <form>
+                                                <div hidden>
+                                                    <input type="number" name="BILL_ID" ng-model="billMaster.BILL_ID" class="form-control  " placeholder="Bill Number">
+                                                </div>
+
+                                                <div class="form-group margin-bottom-15  col-md-6  col-lg-4  col-sm-12">
+                                                    <div class="input-group">
+                                                        <div class="input-group-addon form-field-mask-2">Bill Number</div>
+                                                        <input type="number" readonly name="BILL_NUMBER" ng-model="billMaster.BILL_NUMBER" class="form-control  " placeholder="Bill Number">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group margin-bottom-15 col-md-6  col-lg-4  col-sm-12">
+                                                    <div class="input-group">
+                                                        <div class="input-group-addon small ">Date</div>
+                                                        <div>
+                                                            <input type="date" name="BILL_DATE" ng-model="billMaster.BILL_DATE" class="form-control  ">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group margin-bottom-15  col-md-6  col-lg-4  col-sm-12">
+                                                    <div class="input-group">
+                                                        <div class="input-group-addon">Shift</div>
+                                                        <input type="number" ng-model="billMaster.SHIFT_NUMBER" name="SHIFT_NUMBER" class="form-control  " placeholder="Shift">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group margin-bottom-15  col-md-6  col-lg-4  col-sm-12">
+                                                    <div class="input-group">
+                                                        <div class="input-group-addon">
+                                                            Price Type
+                                                        </div>
+                                                        <select ng-model="billMaster.SELL_TYPE_ID" ng-options="x.SELL_TYPE_ID as x.SELL_TYPE_AR_NAME for x in SellsTypes" class="js-example-basic-hide-search js-states form-control  ">
+                                                            <optgroup label="Price Type"></optgroup>
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group margin-bottom-15  col-md-6  col-lg-4  col-sm-12" ng-hide="getBillTypeQueryString()==9||getBillTypeQueryString()==10||getBillTypeQueryString()==11||getBillTypeQueryString()==12||getBillTypeQueryString()==5||getBillTypeQueryString()==6||getBillTypeQueryString()==7||getBillTypeQueryString()==8">
+                                                    <div class="input-group">
+                                                        <div class="input-group-addon">
+                                                            Pay
+                                                        </div>
+                                                        <select ng-model="billMaster.BILL_PAY_WAY" ng-options="x.PAY_TYPE_ID as x.PAY_TYPE_AR_NAME for x in tpayTypes" class="js-example-basic-hide-search js-states form-control  ">
+                                                            <optgroup label="Pay Type"></optgroup>
+
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group margin-bottom-15  col-md-6  col-lg-4  col-sm-12" ng-hide="getBillTypeQueryString()==9||getBillTypeQueryString()==10||getBillTypeQueryString()==11||getBillTypeQueryString()==12">
+                                                    <div class="input-group">
+                                                        <div class="input-group-addon" ng-show="getBillTypeQueryString()==2||getBillTypeQueryString()==4||getBillTypeQueryString()==6||getBillTypeQueryString()==8">
+                                                            Customer Account
+                                                        </div>
+                                                        <div class="input-group-addon" ng-show="getBillTypeQueryString()==1||getBillTypeQueryString()==3||getBillTypeQueryString()==5||getBillTypeQueryString()==7">
+                                                            Supplier Account
+                                                        </div>
+
+                                                        <select ng-model="billMaster.CUST_ACC_ID" ng-options="x.ACC_ID as x.ACC_AR_NAME for x in CustomersAccounts" class="js-example-basic-hide-search js-states form-control  "></select>
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="form-group margin-bottom-15  col-md-6  col-lg-4  col-sm-12">
+                                                    <div class="input-group">
+                                                        <div class="input-group-addon">Store</div>
+
+                                                        <select ng-model="billMaster.COM_STORE_ID" ng-options="x.COM_STORE_ID as x.COM_STORE_AR_NAME for x in CompanyStores" class="js-example-basic-hide-search js-states form-control  ">
+                                                            <optgroup label="المخزن"></optgroup>
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group margin-bottom-15  col-md-6  col-lg-4  col-sm-12" ng-show="getBillTypeQueryString()==11||getBillTypeQueryString()==12">
+                                                    <div class="input-group">
+                                                        <div class="input-group-addon">To Store</div>
+                                                        <select ng-model="billMaster.TO_COM_STORE_ID" ng-options="x.COM_STORE_ID as x.COM_STORE_AR_NAME for x in CompanyStores" class="js-example-basic-hide-search js-states form-control  ">
+                                                            <optgroup label="Store"></optgroup>
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group margin-bottom-15  col-md-6  col-lg-4  col-sm-12">
+                                                    <div class="input-group">
+                                                        <div class="input-group-addon">
+                                                            Bill Remarks
+                                                        </div>
+                                                        <input type="text" ng-model="billMaster.BILL_REMARKS" value="Bill Remarks " id="form-field-mask-1" class="form-control   text-extra-small input-mask-date">
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group margin-bottom-15 col-md-6 col-lg-4 col-sm-12" ng-hide="getBillTypeQueryString()==9||getBillTypeQueryString()==10||getBillTypeQueryString()==11||getBillTypeQueryString()==12">
+                                                    <div class="input-group">
+                                                        <div class="input-group-addon" ng-hide="getBillTypeQueryString()==5||getBillTypeQueryString()==7">
+                                                            Seller
+                                                        </div>
+                                                        <div class="input-group-addon" ng-show="getBillTypeQueryString()==5||getBillTypeQueryString()==7">
+                                                            Store Employee
+                                                        </div>
+                                                        <select ng-model="billMaster.EMP_ID" ng-options="x.EMP_ID as x.EMP_AR_NAME for x in EmployeesSales" class="js-example-basic-hide-search js-states form-control  ">
+                                                            <optgroup label="Seller"></optgroup>
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group margin-bottom-15 col-md-6 col-lg-4 col-sm-12">
+                                                    <div class="input-group">
+                                                        <div class="input-group-addon">
+                                                            Currency
+                                                        </div>
+                                                        <select ng-model="billMaster.CURRENCY_ID" ng-options="x.CURRENCY_ID as x.CURRENCY_AR_NAME for x in currenciesList" ng-change="changeCurrencyRate()" class="js-example-basic-hide-search js-states form-control  ">
+                                                            <optgroup label="Currency"></optgroup>
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group margin-bottom-15  col-md-6  col-lg-4  col-sm-12">
+                                                    <div class="input-group">
+                                                        <div class="input-group-addon">Exchange Rate</div>
+                                                        <input type="text" ng-model="billMaster.CURRENCY_RATE" id="form-field-mask-1" class="form-control   text-extra-small input-mask-date">
+                                                    </div>
+                                                </div>
+
+                                            </form>
+                                        </div>
+
+                                        <!--<div class="panel-body panel-white" ng-hide="getBillTypeQueryString()!=2">
+                                            <fieldset class="panel-white">
+                                                <legend>
+                                                    Bill Details
+                                                </legend>
+                                                <div class="col-md-4 ">
+                                                    <div class="panel panel-white">
+                                                        <div class="space12">
+                                                            <div class="btn-group-vertical">
+                                                                <a class="btn btn-wide btn-blue" ng-repeat="item in mainItemsGroupsList" ng-click="getItemsByGroupID(item)"> {{item.GroupARName}}</a>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-8">
+                                                    <div class="panel panel-white">
+
+                                                        <div class="panel-body">
+                                                            <div class="ps-scrollbar-x-rail height-20" style="overflow:auto;">
+                                                                <button ng-click="getItemDataUsingItemCode(item.ITEM_CODE,billMaster.SELL_TYPE_ID)" type="button" ng-repeat="item in items" class="btn btn-wide btn-o btn-primary  margin-5 ">
+                                                                    {{item.ITEM_AR_NAME}}
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </fieldset>
+                                        </div>-->
+
+                                        <div class="panel-body">
+                                            <div class="col-md-12">
+
+                                                <div class="panel">
+                                                    <div class="panel-group accordion" id="accordion">
+
+                                                        <div class="panel panel-white" ng-hide="getBillTypeQueryString()!=2">
+                                                            <div class="panel-heading">
+                                                                <h5 class="panel-title"><a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" data-target="#BillDetails"> <i class="icon-arrow"></i> Bill Details </a></h5>
+                                                            </div>
+                                                            <div id="BillDetails" class="collapse">
+                                                                <div class="panel-body">
+
+                                                                    <div class="tabbable tabs-left no-bg no-border">
+                                                                        <ul id="myTab4" class="nav nav-tabs no-border bg-body">
+                                                                            <li class="" ng-class="{active:(activeIndex==$index)}" ng-repeat="item in mainItemsGroupsList">
+                                                                                <a class="btn btn-wide" ng-click="getItemsByGroupID(item)" data-target="#tab{{$index}}" data-toggle="tab"> {{item.GroupARName}}</a>
+                                                                            </li>
+
+                                                                        </ul>
+                                                                        <div class="tab-content no-border">
+                                                                            <div class="tab-pane no-border fade in active" id="tab{{$index}}">
+                                                                                <div class="col-md-4" ng-repeat="item in items">
+                                                                                    <button class="btn btn-block btn-o btn-default margin-5 margin-top-0" ng-click="getItemDataUsingItemCode(item.ITEM_CODE,billMaster.SELL_TYPE_ID)" type="button">{{item.ITEM_AR_NAME}}</button>
+                                                                                </div>
+                                                                            </div><!--/.tab-pane-->
+                                                                        </div>
+                                                                        <!--/.tab-content-->
+                                                                    </div><!--/.tabbable-->
+
+
+                                                                </div>
+                                                                <!--/.panel-body-->
+                                                            </div>
+                                                            <!--/.panel-collapse-->
+                                                        </div>
+                                                        <!--/.panel-->
+
+
+                                                        <div class="panel panel-white">
+                                                            <div class="panel-heading">
+                                                                <h5 class="panel-title"><a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" data-target="#collapseTwo"> <i class="icon-arrow"></i> Bill Details </a></h5>
+                                                            </div>
+                                                            <div id="collapseTwo" class="collapse">
+                                                                <div class="panel-body">
+                                                                    <div class="col-md-4 col-md-offset-4">
+                                                                        <div class="input-group">
+                                                                            <input type="text" class="form-control" press-enter="searchForItems()" ng-model="search.itm" />
+                                                                            <span class="input-group-addon">
+                                                                                <i class="fa fa-search" ng-click="searchForItems()"></i>
+                                                                            </span>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="my-Table-responsive col-md-12">
+                                                                        <table class="table table-bordered table-hover" id="sample-table-1">
+                                                                            <tr class="success">
+                                                                                <td>#!</td>
+                                                                                <td>Code</td>
+                                                                                <td>Item</td>
+                                                                                <td>QTY</td>
+                                                                                <td>Unit</td>
+                                                                                <td>Price</td>
+                                                                                <td>Discount Aount</td>
+                                                                                <td>Discound Name</td>
+                                                                                <td>Total</td>
+                                                                                <td>Delete</td>
+                                                                            </tr>
+                                                                            <tr ng-repeat="item in selectedItems track by $index ">
+                                                                                <td> {{ $index+1 }}</td>
+                                                                                <td>
+                                                                                    <span e-name="ITEM_CODE" e-readonly="readonly" ng-show="rowform.$show()" editable-text="item.ITEM_CODE" e-form="rowform">{{ item.ITEM_CODE || 'empty' }}</span>
+                                                                                </td>
+
+                                                                                <td>
+                                                                                    <span editable-text="item.ITEM_AR_NAME" e-readonly="readonly" e-name="ITEM_AR_NAME" ng-show="rowform.$show()" e-form="rowform">{{ item.ITEM_AR_NAME || 'empty' }}</span>
+                                                                                </td>
+
+                                                                                <td>
+                                                                                    <span e-name="Quantity" e-ng-change="updateItemListOnChange('Quantity',$data,$index)" ng-show="rowform.$show()" editable-text="item.Quantity" e-form="rowform">{{ item.Quantity || 1 }}</span>
+                                                                                </td>
+                                                                                <td class="hidden-xs">
+                                                                                    <span editable-text="item.Unit" e-readonly="readonly" e-name="Unit" ng-show="rowform.$show()" e-form="rowform">{{ item.Unit || 'empty' }}</span>
+                                                                                </td>
+
+                                                                                <td>
+                                                                                    <span editable-text="item.Price" e-name="Price" e-ng-change="updateItemListOnChange('Price',$data,$index)" ng-show="rowform.$show()" e-form="rowform">{{ item.Price || 0 }}</span>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <span editable-text="item.Discount" e-name="Discount" e-ng-change="updateItemListOnChange('Discount',$data,$index)" ng-show="rowform.$show()" e-form="rowform">{{ item.Discount || 0 }}</span>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <span editable-text="item.DISC_RATE" e-max-Num="100" e-name="DISC_RATE" e-ng-change="updateItemListOnChange('DISC_RATE',$data,$index)" ng-show="rowform.$show()" e-form="rowform">{{ item.DISC_RATE || 0 }}</span>
+                                                                                </td>
+
+                                                                                <td>
+                                                                                    <span e-name="Total" editable-text="item.Total" e-readonly="readonly" ng-show="rowform.$show()" e-form="rowform">{{ item.Total || 0 }}</span>
+                                                                                </td>
+
+                                                                                <td class="center">
+                                                                                    <!-- form -->
+                                                                                    <form editable-form name="rowform" onbeforesave="calculateTotals()" ng-show="rowform.$show()" class="form-buttons form-inline" shown="inserted == item"></form>
+                                                                                    <div class="visible-md visible-lg hidden-sm hidden-xs">
+                                                                                        <a ng-click="removeGridBillDetailsItem($index)" class="btn btn-transparent btn-xs tooltips" data-toggle="tooltip" data-placement="top" title="Remove"><i class="fa fa-times fa fa-white"></i></a>
+                                                                                    </div>
+                                                                                    <div class="visible-xs visible-sm hidden-md hidden-lg">
+                                                                                        <div class="btn-group dropdown">
+                                                                                            <button type="button" class="btn btn-o btn-sm dropdown-toggle" data-toggle="dropdown">
+                                                                                                <i class="fa fa-cog"></i>&nbsp;<span class="caret"></span>
+                                                                                            </button>
+                                                                                            <ul class="dropdown-menu pull-right dropdown-light" role="menu">
+                                                                                                <li><a ng-click="removeGridBillDetailsItem($index)"> Remove </a></li>
+                                                                                            </ul>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </table>
+                                                                    </div>
+                                                                    <!--/.my-Table-responsive-->
+
+                                                                </div>
+                                                                <!--/.panel-body-->
+                                                            </div>
+                                                            <!--/.panel-collapse-->
+                                                        </div>
+                                                        <!--/.panel-->
+                                                        <div class="panel panel-white">
+                                                            <div class="panel-heading">
+                                                                <h5 class="panel-title"><a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" data-target="#collapseThree"> <i class="icon-arrow"></i> Bill </a></h5>
+                                                            </div>
+                                                            <div id="collapseThree" class="collapse">
+                                                                <div class="panel-body">
+                                                                    <div class="col-md-6 margin-bottom-20">
+                                                                        <div class="my-box col-xs-12 ">
+                                                                            <div class="col-md-12">
+                                                                                <div class="form-group has-success">
+                                                                                    <label class="small"> Piece No. </label>
+                                                                                    <input type="number" name="totalQuantity" ng-model="totalQuantity" class="form-control" placeholder=" QTY Total " disabled="disabled">
+                                                                                </div>
+                                                                            </div>
+
+                                                                            <div class="col-md-12">
+                                                                                <div class="form-group has-success">
+                                                                                    <label class="small">Bill Total </label>
+                                                                                    <input type="number" name="totalPrice" ng-model="totalPrice" class="form-control" placeholder="Bill Total" disabled="disabled">
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <!--/.my-box-->
+                                                                    </div>
+                                                                    <!--/.col-md-6-->
+
+                                                                    <div class="col-md-6 margin-bottom-20">
+                                                                        <div class="my-box col-xs-12 ">
+
+                                                                            <div class="col-md-6">
+                                                                                <div class="form-group has-error">
+                                                                                    <label class="small">  Bill Discound </label>
+                                                                                    <input type="number" name="BILL_TOTAL_DISC" ng-change="calculateTotalMustPaidBasedOnDiscount()" ng-model="billMaster.BILL_TOTAL_DISC" class="form-control" placeholder="Bill Discount ">
+                                                                                </div>
+                                                                            </div>
+
+                                                                            <div class="col-md-6">
+                                                                                <div class="form-group has-error">
+                                                                                    <label class="small"> Added Value </label>
+                                                                                    <input type="number" name="BILL_TOTAL_EXTRA" ng-change="calculateTotalMustPaid()" ng-model="billMaster.BILL_TOTAL_EXTRA" class="form-control" placeholder="Added Value ">
+                                                                                </div>
+                                                                            </div>
+
+                                                                            <div class="col-md-12">
+                                                                                <div class="form-group has-error">
+                                                                                    <label class="small"> Baid Total </label>
+                                                                                    <input type="number" name="totalPaid" ng-change="calculateRemaining()" ng-model="totalPaid" class="form-control" placeholder="Total paid">
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <!--/.my-box-->
+                                                                    </div>
+                                                                    <!--/.col-md-6-->
+
+
+                                                                    <div class="col-md-6 margin-bottom-20">
+                                                                        <div class="my-box col-xs-12 ">
+                                                                            <div class="col-md-12">
+                                                                                <div class="form-group has-error">
+                                                                                    <label class="small"> Bill Discount Rate  </label>
+                                                                                    <input type="number" max-Num="100" name="BILL_PERCENTAGE_DISC" ng-change="calculateTotalMustPaidBasedOnDiscountPercentage()" ng-model="billMaster.BILL_PERCENTAGE_DISC" class="form-control" placeholder="Bill Discount Rate">
+                                                                                </div>
+                                                                            </div>
+
+                                                                            <div class="col-md-12">
+                                                                                <div class="form-group has-error">
+                                                                                    <label class="small"> Due Amount </label>
+                                                                                    <input type="number" name="totalMustPaid" ng-model="totalMustPaid" class="form-control" placeholder="Due Aount " disabled="disabled">
+                                                                                </div>
+                                                                            </div>
+
+                                                                            <div class="col-md-12">
+                                                                                <div class="form-group has-success">
+                                                                                    <label class="small"> Rest</label>
+                                                                                    <input type="number" name="totalRemaining" ng-model="totalRemaining" class="form-control   " placeholder="Rest" disabled="disabled">
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <!--/.my-box-->
+                                                                    </div>
+                                                                    <!--/.col-md-6-->
+                                                                </div>
+                                                                <!--/.panel-body-->
+                                                            </div>
+                                                            <!--/.panel-collapse-->
+                                                        </div>
+                                                        <!--/.panel-->
+                                                    </div>
+                                                    <!--/.panel-group-->
+                                                </div>
+                                                <!--/.panel /.panel-white-->
+
+                                                <div id="divTotals" class="printSection">
+                                                    <table border="1">
+                                                        <tr style="font-weight: bold">
+                                                            <td colspan="3">{{billMaster.BILL_NUMBER}}</td>
+                                                            <td colspan="2">-</td>
+                                                            <td colspan="3">{{getbillTypeName()}}</td>
+                                                        </tr>
+
+                                                        <tr style="font-weight: bold">
+                                                            <td colspan="4">ID:{{billMaster.BILL_NUMBER}}</td>
+                                                            <td colspan="4">Date:{{billMaster.BILL_DATE | date: "yyyy-MM-dd"}}</td>
+                                                        </tr>
+
+                                                        <tr style="font-weight: bold">
+                                                            <td colspan="4">Shift:{{billMaster.SHIFT_NUMBER}}</td>
+                                                            <td colspan="4">Time:{{getCurrentTime()}}</td>
+                                                        </tr>
+
+                                                        <tr style="font-weight: bold">
+                                                            <td colspan="4">Cashier :{{getCurrentEmployeeName()}}</td>
+                                                            <td colspan="4">{{getCurrentBillPayWay()}}</td>
+                                                        </tr>
+
+                                                        <tr class="success">
+                                                            <td>Code</td>
+                                                            <td colspan="2">Item</td>
+                                                            <td>QTY</td>
+                                                            <td>Unit</td>
+                                                            <td>Price</td>
+                                                            <td>Discount</td>
+                                                            <td>Total</td>
+                                                        </tr>
+                                                        <tr ng-repeat="item in selectedItems track by $index">
+                                                            <td>{{ item.ITEM_CODE}}</td>
+                                                            <td colspan="2">{{ item.ITEM_AR_NAME}}</td>
+                                                            <td>{{ item.Quantity}}</td>
+                                                            <td>{{ item.Unit}}</td>
+                                                            <td>{{ item.Price}}</td>
+                                                            <td>{{ item.Discount}}</td>
+                                                            <td>{{ item.Total}}</td>
+                                                        </tr>
+
+                                                        <tr style="font-weight: bold">
+                                                            <td colspan="4">Peices No.</td>
+                                                            <td colspan="4">{{totalQuantity||0}}</td>
+                                                        </tr>
+
+                                                        <tr style="font-weight: bold">
+                                                            <td colspan="4">Total Befor Discount</td>
+                                                            <td colspan="4">{{totalPrice||0.0}} {{getCurrencyName()}}</td>
+                                                        </tr>
+
+                                                        <tr style="font-weight: bold">
+                                                            <td colspan="4"> Items Total Discount</td>
+                                                            <td colspan="4">{{totalDiscount||0.0}} {{getCurrencyName()}}</td>
+                                                        </tr>
+
+                                                        <tr style="font-weight: bold">
+                                                            <td colspan="4">Bill Discount</td>
+                                                            <td colspan="4">{{billMaster.BILL_TOTAL_DISC||0.0}} {{getCurrencyName()}}</td>
+                                                        </tr>
+
+                                                        <tr style="font-weight: bold">
+                                                            <td colspan="4">Added Value</td>
+                                                            <td colspan="4">{{billMaster.BILL_TOTAL_EXTRA||0.0}} {{getCurrencyName()}}</td>
+                                                        </tr>
+
+                                                        <tr style="font-weight: bold">
+                                                            <td colspan="4">Total</td>
+                                                            <td colspan="4">{{totalMustPaid||0.0}} {{getCurrencyName()}}</td>
+                                                        </tr>
+
+                                                        <tr style="font-weight: bold">
+                                                            <td colspan="4">Paid</td>
+                                                            <td colspan="4">{{totalPaid||0.0}} {{getCurrencyName()}}</td>
+                                                        </tr>
+
+                                                        <tr style="font-weight: bold">
+                                                            <td colspan="4">Rest</td>
+                                                            <td colspan="4">{{totalRemaining||0.0}} {{getCurrencyName()}}</td>
+                                                        </tr>
+
+                                                        <tr style="font-weight: bold">
+                                                            <td colspan="8">{{totalMustPaid||0.0}} {{getCurrencyName()}} Only </td>
+                                                        </tr>
+
+                                                    </table>
+                                                </div>
+                                                <!--/.printSection-->
+
+                                            </div>
+                                            <!--/.col-md-12-->
+                                        </div>
+                                        <!--/.panel-body-->
+
+                                        <div class="panel-body center">
+                                            <!-- Buttons Group-->
+                                            <div class="my-btn-group">
+                                                <!-- Standard grey button with gradient -->
+                                                <button type="button" ng-click="clearEnity()" class="btn  btn-default  btn-sm margin-5"><i class="glyphicon glyphicon-file"></i>New</button>
+                                                <!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
+                                                <button type="button" ng-click="savePointOfSale()" class="btn  btn-primary btn-sm margin-5"><i class="glyphicon glyphicon-save"></i>Save</button>
+                                                <button type="button" ng-click="deleteEnity(billMaster)" class="btn btn-info btn-sm margin-5"><i class="glyphicon glyphicon-folder-close"></i>Delete</button>
+                                                <button type="button" class="btn  btn-danger btn-sm margin-5"><i class="glyphicon glyphicon-trash"></i>Entry2</button>
+                                                <button type="button" ng-disabled="hidePrintOnNewBill()" ng-click='printDiv( "divTotals")' class="btn  btn-purple btn-sm margin-5"><i class="glyphicon glyphicon-print"></i>Print</button>
+                                                <button type="button" class="btn  btn-light-blue btn-sm margin-5"><i class="glyphicon glyphicon-trash"></i>Show</button>
+                                                <button type="button" class="btn  btn-light-orange btn-sm margin-5"><i class="glyphicon glyphicon-shopping-cart"></i>Cashier</button>
+                                                <button type="button" class="btn  btn-dark-beige btn-sm margin-5"><i class="glyphicon glyphicon-search"></i>Search</button>
+                                                <button type="button" class="btn  btn-dark-grey btn-sm margin-5"><i class="glyphicon glyphicon-trash"></i>Cancel</button>
+                                            </div>
+                                            <!--/.row-->
+                                        </div>
+                                        <!--/.panel-body-->
+
+                                    </div>
+                                    <!--/.col-md-12-->
+                                </div>
+                                <!--/.collapse-->
+                            </div>
+                            <!--/.panel-body-->
+
+                            <div class="panel" ng-hide="allBillsHideStatus">
+                                <div class="panel-group accordion" id="accordion">
+                                    <div class="panel panel-white">
+                                        <div class="panel-heading">
+                                            <h5 class="panel-title"><a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" data-target="#collapseTable"> <i class="icon-arrow"></i> Prviously Added Currecies </a></h5>
+                                        </div>
+                                        <div id="collapseTable" class="collapse">
+                                            <div class="panel-body">
+                                                <div class="col-md-12">
+                                                    <table class="table table-bordered table-hover">
+                                                        <tr class="success">
+                                                            <th>#</th>
+                                                            <th class="hidden-xs">Bill Number </th>
+                                                            <th>Date </th>
+                                                            <th>Shift</th>
+                                                            <th class="hidden-xs">Bill Details</th>
+                                                            <th>Edit / Delete</th>
+                                                        </tr>
+
+                                                        <tr class="center" ng-repeat="item in billMasters">
+                                                            <td class="hidden-xs center">{{ $index + 1 }}</td>
+                                                            <td>{{ item.BILL_NUMBER }}</td>
+                                                            <td>{{ item.BILL_DATE| date: "yyyy-MM-dd" }}</td>
+                                                            <td class="center">{{ item.SHIFT_NUMBER }}</td>
+                                                            <td class="hidden-xs">{{ item.BILL_REMARKS }}</td>
+                                                            <td class="center">
+                                                                <div class="visible-md visible-lg hidden-sm hidden-xs">
+                                                                    <a href="" ng-click="dirEnity(item)" class="btn btn-transparent btn-xs" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fa fa-pencil"></i></a>
+                                                                    <a href="" ng-click="deleteEnity(item)" class="btn btn-transparent btn-xs tooltips" data-toggle="tooltip" data-placement="top" title="Remove"><i class="fa fa-times fa fa-white"></i></a>
+                                                                </div>
+                                                                <div class="visible-xs visible-sm hidden-md hidden-lg">
+                                                                    <div class="btn-group dropdown ">
+                                                                        <button type="button" class="btn btn-o btn-sm dropdown-toggle" data-toggle="dropdown">
+                                                                            <i class="fa fa-cog"></i>&nbsp;<span class="caret"></span>
+                                                                        </button>
+                                                                        <ul class="dropdown-menu pull-right dropdown-light" role="menu">
+                                                                            <li>
+                                                                                <a href="" ng-click="dirEnity(item)"> Edit </a>
+                                                                            </li>
+                                                                            <li>
+                                                                                <a href="" ng-click="deleteEnity(item)"> Remove </a>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
+                                                                <!--<a class="label partition-blue" href="" ng-click="dirEnity(item)"><i class="glyphicon glyphicon-share"></i>Edit</a>
+                                                                <a class="label partition-red" href="" ng-click="deleteEnity(item)"><i class="glyphicon glyphicon-remove-circle"></i> Delete</a>-->
+                                                            </td>
+
+                                                        </tr>
+                                                    </table>
+                                                    <ul uib-pagination total-items="PointOfSaleTotalCount" ng-model="pageNum" max-size="maxSize" class="pagination-sm" boundary-links="true" num-pages="numPages" ng-change="pageChanged()"></ul>
+                                                    <pre>Page: {{pageNum}} / {{numPages}}</pre>
+                                                </div>
+                                            </div>
+                                            <!--/.panel-body-->
+                                        </div>
+                                        <!--/.panel-collapse-->
+                                    </div>
+                                    <!--/.panel-->
+                                </div>
+                                <!--/.panel-group-->
+                            </div>
+                            <!--/.panel /.panel-white-->
+                        </div>
+                        <!--/.panel-->
+                    </div>
+                    <!--/.col-md-12-->
+                </div>
+                <!--/.row-->
+            </div>
+            <!--/.container-fluid-->
+        </div>
+        <!--/.wrap-content-->
+    </div>
+    <!--/.main-content-->
+</div>
+<!--/.app-content-->
+<!-- Start  Modal Demo -->
+<div class="modal-demo">
+    <script type="text/ng-template" id="myModalContent.html">
+        <div class="modal-body" id="modal-body">
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <div class="col-md-6 col-md-offset-3">
+                        <!--<input type="text" ng-class="form-control" ng-model="searchForAll" press-enter="searchForItems()" placeholder="البحث" />-->
+                        <form role="search" class="navbar-form main-search">
+                            <div class="form-group">
+                                <input type="text" ng-model="search.itm" press-enter="searchForItems()" placeholder="Search for Item Code or Name" class="form-control">
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-md-12">
+                        <table class="table table-bordered table-hover" id="sample-table-Item">
+                            <tr class="success">
+                                <th class="hidden-xs">#</th>
+                                <th class="hidden-xs">Item Code</th>
+                                <th>Arabi Name </th>
+                                <th>Latin Namw</th>
+                                <th class="hidden-xs">Notes</th>
+                                <th>Select</th>
+                            </tr>
+                            <tr ng-repeat="item in searchItems">
+                                <td class="hidden-xs">{{ $index + 1 }}</td>
+                                <td>{{ item.ITEM_CODE }}</td>
+                                <td>{{ item.ITEM_AR_NAME }}</td>
+                                <td>{{ item.ITEM_EN_NAME }}</td>
+                                <td class="hidden-xs">{{ item.ITEM_REMARKS }}</td>
+                                <td>
+                                    <div class="checkbox clip-check check-primary checkbox-inline">
+                                        <input id="{{$index}}" type="checkbox" ng-model="item.Selected">
+                                        <label for="{{$index}}"></label>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <!--/.table-responsive-->
+            </div>
+            <!--/.panel-body-->
+        </div>
+        <!--/.modal-body-->
+
+        <div class="modal-footer center">
+            <button type="button" class="btn btn-wide btn-primary" ng-click="addSelectedItemstoItemDetails()">Add</button>
+            <button type="button" id="closeItemModal" class="btn btn-wide btn-danger" ng-click="cancel()">Close</button>
+        </div>
+        <!--/.modal-footer-->
+    </script>
+</div>
+<!-- End Modal Demo -->

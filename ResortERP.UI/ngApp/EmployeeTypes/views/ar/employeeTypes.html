@@ -1,0 +1,142 @@
+﻿<div class="app-content">
+    <div class="main-content">
+        <div class="wrap-content container" id="container">
+            <div class="container-fluid container-fullw ">
+                <ng-form id="test" name="test">
+                    <div class="col-xs-12 margin-top-10 margin-bottom-10">
+                        <div class="breadcrumb-wrapper no-margin">
+                            <h4 class="mainTitle no-margin">الوظائف</h4>
+                            <ul class="pull-right breadcrumb">
+                                <li><a href="#!"><i class="fa fa-home margin-left-5 text-large text-dark"></i>الرئيسية</a></li>
+                                <li>الوظائف</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 margin-bottom-10">
+                        <div class="panel-white panel-body no-margin">
+                            <button type="button" class="btn btn-o btn-default no-border" ng-disabled="test.$invalid" ng-click="saveEmployeeTypes()"><i class="fa fa-save"></i>حفظ</button>
+                            <button type="button" class="btn btn-o btn-default no-border " ng-click="refreshData()"><i class="fa fa-refresh"></i>تحديث</button>
+                            <button type="button" class="btn btn-o btn-default no-border" ng-click="clearEnity()"><i class="fa fa-paste"></i>جديد</button>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="panel">
+                            <div class="panel-body panel-white">
+                                <div class="col-md-12">
+                                    <div ng-class="{'has-error': test.$invalid}" class="">
+                                        <div class="form-group col-md-6">
+                                            <label>كود الوظيفة:</label>
+                                            <div class="help-block error" style="display:inline" ng-show="test.code.$error.required">*</div>
+                                            <input type="text" class="form-control" name="code" placeholder="كود الوظيفة" ng-model="employeeTypes.EMP_TYPE_CODE" required>
+                                        </div>
+                                    </div>
+
+                                    <div ng-class="{'has-error': test.$invalid}" class="">
+                                        <div class="form-group col-md-6">
+                                            <label>اسم الوظيفة العربى:</label>
+                                            <div class="help-block error" style="display:inline" ng-show="test.arname.$error.required">*</div>
+                                            <input type="text" class="form-control" name="arname" placeholder="اسم الوظيفة العربى" ng-model="employeeTypes.EMP_TYPE_AR_NAME" required>
+                                        </div>
+                                    </div>
+
+                                    <div ng-class="{'has-error': test.$invalid}" class="">
+                                        <div class="form-group col-md-6">
+                                            <label>اسم الوظيفة اللاتينى:</label>
+                                            <div class="help-block error" style="display:inline" ng-show="test.enname.$error.required">*</div>
+                                            <input type="text" class="form-control" name="enname" placeholder="اسم الوظيفة اللاتينى" ng-model="employeeTypes.EMP_TYPE_EN_NAME" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--/.col-md-12-->
+                            </div>
+                            <!--/.panel-body-->
+                            <!--/.panel-->
+                            <div class="panel">
+                                <div class="panel-group accordion" id="accordion">
+                                    <div class="panel panel-white">
+                                        <div class="panel-heading">
+                                            <h5 class="panel-title"><a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" data-target="#collapseTwo"> <i class="icon-arrow"></i> الوظائف المعرفة سابقا </a></h5>
+                                        </div>
+                                        <div id="collapseTwo" class="panel-collapse collapse">
+                                            <div class="panel-body">
+                                                <div class="col-md-12">
+                                                    <div class="table-responsive">
+                                                        <div class="col-md-3 pull-left">
+                                                            <table class="table table-stylish">
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td class="center text-extra-large"><i class="ti-save"></i></td>
+                                                                        <td><span class="text-dark block">إجمالي الوظائف :</span></td>
+                                                                        <td class="center">{{employeeTypesTotalCount}}</td>
+                                                                        <td class="center"><i class="fa fa-caret-down text-red"></i></td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                        <div class="col-md-12">
+                                                            <table class="table table-bordered table-hover table-full-width ps-scrollbar-x small  panel-full-screen  fc-scroller  " style="height:150px;overflow:auto;" id="sample-table-2">
+                                                                <thead>
+                                                                    <tr class="success">
+                                                                        <th class="hidden-xs">#</th>
+                                                                        <th class="">كود الوظيفة</th>
+                                                                        <th>اسم الوظيفة العربى</th>
+                                                                        <th>اسم الوظيفة اللاتينى</th>
+                                                                        <th>تعديل / حذف</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr ng-repeat="empTyp in employeeTypesList">
+                                                                        <td class="hidden-xs center">{{ $index + 1 }}</td>
+                                                                        <td>{{ empTyp.EMP_TYPE_CODE }}</td>
+                                                                        <td>{{ empTyp.EMP_TYPE_AR_NAME }}</td>
+                                                                        <td>{{ empTyp.EMP_TYPE_EN_NAME }}</td>
+                                                                        <td class="center">
+                                                                            <div class="visible-md visible-lg hidden-sm hidden-xs">
+                                                                                <a href="" ng-click="dirEnity(empTyp)" class="btn btn-transparent btn-xs" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fa fa-pencil"></i></a>
+                                                                                <a href="" ng-click="deleteEnity(empTyp)" class="btn btn-transparent btn-xs tooltips" data-toggle="tooltip" data-placement="top" title="Remove"><i class="fa fa-times fa fa-white"></i></a>
+                                                                            </div>
+                                                                            <div class="visible-xs visible-sm hidden-md hidden-lg">
+                                                                                <div class="btn-group dropdown ">
+                                                                                    <button type="button" class="btn btn-o btn-sm dropdown-toggle" data-toggle="dropdown">
+                                                                                        <i class="fa fa-cog"></i>&nbsp;<span class="caret"></span>
+                                                                                    </button>
+                                                                                    <ul class="dropdown-menu pull-right dropdown-light" role="menu">
+                                                                                        <li><a href="" ng-click="dirEnity(empTyp)"> تعديل </a></li>
+                                                                                        <li><a href="" ng-click="deleteEnity(empTyp)"> حذف </a></li>
+                                                                                    </ul>
+                                                                                </div>
+                                                                            </div>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+
+                                                            <ul uib-pagination total-items="employeeTypesTotalCount" ng-model="pageNum" max-size="maxSize" class="pagination-sm" boundary-links="true" num-pages="numPages" ng-change="pageChanged()"></ul>
+                                                            <pre>صفحه: {{pageNum}} / {{numPages}}</pre>
+                                                        </div>
+                                                    </div>
+                                                    <!--/.table-responsive-->
+                                                </div>
+                                                <!--/.col-md-12-->
+                                            </div>
+                                            <!--/.panel-body-->
+                                        </div>
+                                        <!--/.panel-collapse-->
+                                    </div>
+                                    <!--/.panel-->
+                                </div>
+                                <!--/.panel-group-->
+                            </div>
+                        </div>
+                        <!--/.panel-->
+                    </div>
+                    <!--/.col-md-12-->
+                </ng-form>
+            </div>
+            <!--/.container-fluid-->
+        </div>
+        <!--/.wrap-content-->
+    </div>
+    <!--/.main-content-->
+</div>
+<!--/.app-content-->

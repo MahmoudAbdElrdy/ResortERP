@@ -1,0 +1,323 @@
+<style>
+    #myInput {
+        background-image: url('/css/searchicon.png');
+        /* Add a search icon to input */
+        background-position: 10px 12px;
+        /* Position the search icon */
+        background-repeat: no-repeat;
+        /* Do not repeat the icon image */
+        width: 100%;
+        /* Full-width */
+        font-size: 16px;
+        /* Increase font-size */
+        padding: 12px 20px 12px 40px;
+        /* Add some padding */
+        border: 1px solid #ddd;
+        /* Add a grey border */
+        margin-bottom: 12px;
+        /* Add some space below the input */
+    }
+</style>
+
+<nav>
+    <!-- start: MAIN NAVIGATION MENU -->
+    <div class="navbar-title" ng-init="GetCompany()">
+        <!--<span>
+            {{CompanyARName}}
+        </span><br>
+        <span>{{CompanyARAddress}}</span>-->
+        <input type="text" id="myInput" placeholder=" بحث ..">
+    </div>
+
+
+
+    <!-- First Level -->
+    <ul class="main-navigation-menu" id="myUL" ng-init="getMenuItems()">
+        <li ng-repeat="menuItem in menuItems.UserMenu">
+            <a href="javascript:void(0)">
+                <div class="item-content">
+                    <div class="item-media">
+
+                        <img ng-src="{{menuItem.MenuClass}}" />
+                    </div>
+                    <div class="item-inner">
+                        <span class="title">{{menuItem.ARName}} </span>
+                    </div>
+                </div>
+            </a>
+            <!-- Second Level -->
+            <ul class="sub-menu">
+                <li ng-repeat="childMenu in menuItem.ChildMenus">
+                    <a ng-if="childMenu.ChildMenus == undefiend || childMenu.ChildMenus == null || childMenu.ChildMenus.length <= 0"
+                        href={{childMenu.MenuLink}}> <span class="title">{{childMenu.ARName}} </span></a>
+                    <a ng-if="childMenu.ChildMenus != undefiend && childMenu.ChildMenus.length > 0"
+                        href="javascript:void(0)">
+                        <div class="item-content">
+                            <div class="item-media">
+                                <i class="fa fa-th-list"></i>
+                            </div>
+                            <div class="item-inner">
+                                <span class="title">{{childMenu.ARName}} </span>
+                            </div>
+                        </div>
+                    </a>
+                    <!-- Third Level -->
+                    <ul ng-if="childMenu.ChildMenus != undefiend && childMenu.ChildMenus.length > 0" class="sub-menu">
+                        <li ng-repeat="SecondChild in childMenu.ChildMenus">
+                            <a ng-if="SecondChild.ChildMenus == undefiend || SecondChild.ChildMenus == null || SecondChild.ChildMenus.length <= 0"
+                                href={{SecondChild.MenuLink}}> <span class="title">{{SecondChild.ARName}} </span></a>
+                            <a ng-if="SecondChild.ChildMenus != undefiend && SecondChild.ChildMenus.length > 0"
+                                href="javascript:void(0)">
+                                <div class="item-content">
+                                    <div class="item-media">
+                                        <i class="fa fa-th-list"></i>
+                                    </div>
+                                    <div class="item-inner">
+                                        <span class="title">{{SecondChild.ARName}} </span>
+                                    </div>
+                                </div>
+                            </a>
+                            <!-- Fourth Level -->
+                            <ul ng-if="SecondChild.ChildMenus != undefiend && SecondChild.ChildMenus.length > 0"
+                                class="sub-menu">
+                                <li ng-repeat="ThirdChild in SecondChild.ChildMenus">
+                                    <a href={{ThirdChild.MenuLink}}> <span class="title">{{ThirdChild.ARName}}
+                                        </span></a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+            <!--<ul class="sub-menu">
+                <li ng-repeat="childMenu in menuItem.ChildMenus">
+                    <a href={{childMenu.MenuLink}}> <span class="title">{{childMenu.ARName}} </span></a>
+                </li>
+
+            </ul>-->
+
+        </li>
+
+    </ul>
+
+    <!--<ul class="main-navigation-menu" ng-hide="hideMenuWhenCachier">
+        <li class="active open">
+            <a href="#">
+                <div class="item-content">
+                    <div class="item-media">
+                        <i class="fa fa-home"></i>
+                    </div>
+                    <div class="item-inner">
+                        <span class="title"> الرئيسية </span>
+                    </div>
+                </div>
+            </a>
+        </li>
+
+        <li>
+            <a href="javascript:void(0)">
+                <div class="item-content">
+                    <div class="item-media">
+                        <i class="fa fa-th-list"></i>
+                    </div>
+                    <div class="item-inner">
+                        <span class="title"> الاكواد العامة </span>
+                    </div>
+                </div>
+            </a>
+            <ul class="sub-menu">
+                <li>
+                    <a href="#/itemsgroups"> <span class="title"> مجموعة اصناف </span> </a>
+                </li>
+                <li>
+                    <a href="#/items"> <span class="title"> بطاقة صنف </span> </a>
+                </li>
+                <li>
+                    <a href="#/units"> <span class="title"> وحدة </span> </a>
+                </li>
+                <li>
+                    <a href="#/companystores"> <span class="title"> مخازن </span> </a>
+                </li>
+
+                <li>
+                    <a href="#"> <span class="title"> مركز تكلفة </span> </a>
+                </li>
+
+                <li>
+                    <a href="#/currency"> <span class="title"> عملات </span> </a>
+                </li>
+                <li>
+                    <a href="#"> <span class="title"> عنوان </span> </a>
+                </li>
+                <li>
+                    <a href="#"> <span class="title"> فرع شركة </span> </a>
+                </li>
+                <li>
+                    <a href="#/departments"> <span class="title"> اقسام </span> </a>
+                </li>
+                <li>
+                    <a href="#/employeeTypes"> <span class="title"> وظيفة </span> </a>
+                </li>
+                <li>
+                    <a href="#/employees"> <span class="title"> موظف </span> </a>
+                </li>
+                <li>
+                    <a href="#/customers&type=c"> <span class="title"> عملاء </span> </a>
+                </li>
+                <li>
+                    <a href="#/customers&type=s"> <span class="title"> مورد </span> </a>
+                </li>
+                <li>
+                    <a href="#"> <span class="title"> حساب </span> </a>
+                </li>
+                <li>
+                    <a href="#"> <span class="title"> شركة </span> </a>
+                </li>
+                <li>
+                    <a href="#"> <span class="title"> مصروف </span> </a>
+                </li>
+                <li>
+                    <a href="#"> <span class="title"> بنك </span> </a>
+                </li>
+                <li>
+                    <a href="#"> <span class="title">اهلاك  </span> </a>
+                </li>
+
+
+
+            </ul>
+        </li>
+        <li>
+            <a href="javascript:void(0)">
+                <div class="item-content">
+                    <div class="item-media">
+                        <i class="fa fa-clipboard"></i>
+                    </div>
+                    <div class="item-inner">
+                        <span class="title"> الفواتير </span>
+                    </div>
+                </div>
+            </a>
+            <ul class="sub-menu">
+                <li>
+                    <a href="#/PointOfSale&billType=1"> <span class="title"> المشتريات </span> </a>
+                </li>
+                <li>
+                    <a href="#/PointOfSale&billType=2"> <span class="title"> المبيعات </span> </a>
+                </li>
+                <li>
+                    <a href="#/PointOfSale&billType=3"> <span class="title"> مرتجع مشتريات </span> </a>
+                </li>
+                <li>
+                    <a href="#/PointOfSale&billType=4"> <span class="title">مرتجع مبيعات  </span> </a>
+                </li>
+                <li>
+                    <a href="#/PointOfSale&billType=5"> <span class="title"> إذن إستلام بضاعة </span> </a>
+                </li>
+                <li>
+                    <a href="#/PointOfSale&billType=6"> <span class="title"> إذن صرف بضاعة </span> </a>
+                </li>
+                <li>
+                    <a href="#/PointOfSale&billType=7"> <span class="title"> طلبيات </span> </a>
+                </li>
+                <li>
+                    <a href="#/PointOfSale&billType=8"> <span class="title"> عروض أسعار </span> </a>
+                </li>
+                <li>
+                    <a href="#/PointOfSale&billType=9"> <span class="title"> رصيد اول مدة </span> </a>
+                </li>
+                <li>
+                    <a href="#/PointOfSale&billType=10"> <span class="title"> مخزون اخر مدة </span> </a>
+                </li>
+                <li>
+                    <a href="#/PointOfSale&billType=11"> <span class="title"> تحويلات مخازن </span> </a>
+                </li>
+                <li>
+                    <a href="#/PointOfSale&billType=12"> <span class="title"> تحويلات بسندات </span> </a>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <a href="javascript:void(0)">
+                <div class="item-content">
+                    <div class="item-media">
+                        <i class="fa fa-cog"></i>
+                    </div>
+                    <div class="item-inner">
+                        <span class="title"> ادارة النظام </span>
+                    </div>
+                </div>
+            </a>
+            <ul class="sub-menu">
+                <li>
+                    <a href="#/SystemOptions"> <span class="title"> الإعدادات العامة </span> </a>
+                </li>
+                <li>
+                    <a href="#/billSetting"> <span class="title"> إعدادات الفواتير </span> </a>
+                </li>
+                <li>
+                    <a href="#/entrySetting"> <span class="title"> إعدادات السندات </span> </a>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <a href="javascript:void(0)">
+                <div class="item-content">
+                    <div class="item-media">
+                        <i class="fa fa-line-chart"></i>
+                    </div>
+                    <div class="item-inner">
+                        <span class="title"> التقارير </span>
+                    </div>
+                </div>
+            </a>
+            <ul class="sub-menu">
+                <li>
+                    <a href="#/currencyReport"> <span class="title"> العملات </span> </a>
+                </li>
+                <li>
+                    <a href="#/companyStoresReport"> <span class="title"> جرد الشركات </span> </a>
+                </li>
+                <li>
+                    <a href="#/itemsReport"> <span class="title"> حركة صنف </span> </a>
+                </li>
+                <li>
+                    <a href="#/billProfit"> <span class="title"> ارباح فاتورة </span> </a>
+                </li>
+            </ul>
+        </li>
+    </ul>-->
+    <!--
+    <div class="navbar-title">
+        <span>الاعدادات العامه</span>
+    </div>
+    <ul class="folders">
+        <li>
+            <a href="#">
+                <div class="item-content">
+                    <div class="item-media">
+                        <i class="fa fa-gift"></i>
+                    </div>
+                    <div class="item-inner">
+                        <span class="title"> اعدادات المستخدمين </span>
+                    </div>
+                </div>
+            </a>
+        </li>
+        <li>
+            <a href="#">
+                <div class="item-content">
+                    <div class="item-media">
+                        <i class="fa fa-exchange"></i>
+                    </div>
+                    <div class="item-inner">
+                        <span class="title"> اعدادات نقاط البيع</span>
+                    </div>
+                </div>
+            </a>
+        </li>
+    </ul>
+    end: CORE FEATURES -->
+
+
+</nav>

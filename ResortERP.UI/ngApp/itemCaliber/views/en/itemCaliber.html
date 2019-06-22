@@ -1,0 +1,175 @@
+﻿<div class="app-content">
+    <div class="main-content">
+        <div class="wrap-content container" id="container">
+            <div class="container-fluid container-fullw">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="panel">
+
+                            <div class="panel-heading border-bottom">
+                                <h4 class="panel-title">Item Caliber</h4>
+                                <div class="panel-tools">
+                                    <a data-original-title="Refresh" data-toggle="tooltip" data-placement="top" data-trigger="hover" class="btn btn-transparent btn-sm panel-refresh" href="#"><i class="fa fa-circle-o"></i></a>
+                                    <a data-original-title="Expand" data-toggle="tooltip" data-placement="top" data-trigger="hover" class="btn btn-transparent btn-sm panel-expand" href="#"><i class="fa fa-compress expand-on"></i><i class="fa fa-expand expand-off"></i></a>
+                                </div>
+                            </div>
+                            <!--/.panel-heading-->
+                            <!-- Start Panel Body-->
+                            <div class="panel-body panel-white">
+                                <div class="col-md-12">
+                                    <!--<form>-->
+                                    <ng-form id="test" name="test">
+                                        <div ng-class="{'has-error': test.$invalid}" class="form-group">
+                                            <div class="form-group col-md-6">
+                                                <label for="Code">Code:</label>
+                                                <div class="help-block error" style="display:inline" ng-show="test.code.$error.required">*</div>
+                                                <input type="text" class="form-control" id="Code" name="code" placeholder="Code" ng-model="itemCaliber.Code" required>
+                                            </div>
+                                        </div>
+
+                                        <div ng-class="{'has-error': test.$invalid}" class="form-group">
+                                            <div class="form-group col-md-6">
+                                                <label for="ARName">Ar Name:</label>
+                                                <div class="help-block error" style="display:inline" ng-show="test.arname.$error.required">*</div>
+                                                <input type="text" class="form-control" id="ARName" name="arname" placeholder="Ar Name" ng-model="itemCaliber.ARName" required>
+                                            </div>
+                                        </div>
+
+                                        <div ng-class="{'has-error': test.$invalid}" class="form-group">
+                                            <div class="form-group col-md-6">
+                                                <label for="LatName">Lat Name:</label>
+                                                <div class="help-block error" style="display:inline" ng-show="test.enname.$error.required">*</div>
+                                                <input type="text" class="form-control" id="LatName" name="enname" placeholder="Lat Name" ng-model="itemCaliber.LatName" required>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group col-md-6">
+                                            <label for="Notes">Clearness Rate:</label>
+                                            <input type="text" class="form-control" id="Notes" placeholder="Clearness Rate" ng-model="itemCaliber.ClearnessRate">
+                                        </div>
+
+                                        <div class="form-group col-md-6">
+                                            <label for="Notes">Notes:</label>
+                                            <input type="text" class="form-control" id="Notes" placeholder="Notes" ng-model="itemCaliber.Notes">
+                                        </div>
+
+                                        <div class="checkbox col-md-6">
+                                            <div class="checkbox clip-check check-primary margin-top-25">
+                                                <input id="Notes1" type="checkbox" ng-model="itemCaliber.Active">
+                                                <label for="Notes1">ِActive / Not Active</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-12 my-btn-group margin-bottom-25 margin-top-20 center">
+                                            <button type="button" class="btn btn-wide btn-primary  margin-top-10" ng-disabled="test.$invalid" ng-click="saveItemsGroup()"><i class="fa fa-save"></i> Save</button>
+                                            <button type="button" class="btn btn-wide btn-success margin-top-10 " ng-click="refreshData()"><i class="fa fa-refresh"></i> Refresh</button>
+                                            <button type="button" class="btn btn-wide btn-info margin-top-10" ng-click="clearEnity()"><i class="fa fa-paste"></i> New</button>
+                                        </div>
+
+                                    </ng-form>
+                                    <!--</form>-->
+                                </div>
+                            </div>
+                            <!-- End Panel Body-->
+                            <!-- Start Panel Body-->
+                            <div class="panel">
+                                <div class="panel-group accordion" id="accordion">
+                                    <div class="panel panel-white">
+                                        <div class="panel-heading">
+                                            <h5 class="panel-title"><a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" data-target="#collapseTwo"> <i class="icon-arrow"></i> Prviously Added Items Caliber </a></h5>
+                                        </div>
+                                        <div id="collapseTwo" class="collapse">
+                                            <div class="panel-body">
+                                                <div class="col-md-12">
+                                                    <!--   Results:{{itemCaliberTotalCount}}-->
+                                                    <div class="col-md-3 pull-left">
+                                                        <table class="table table-stylish">
+                                                            <tbody>
+                                                                <tr>
+                                                                <tr>
+                                                                    <td class="center text-extra-large"><i class="ti-save"></i></td>
+                                                                    <td><span class="text-dark block">Item Caliber :</span></td>
+                                                                    <td class="center">{{itemCaliberTotalCount}}</td>
+                                                                    <td class="center"><i class="fa fa-caret-down text-red"></i></td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <table class="table table-bordered table-hover">
+                                                            <tr class="success">
+                                                                <!--<th class="hidden-xs">المسلسل</th>-->
+                                                                <th class="hidden-xs">#</th>
+                                                                <th>Code</th>
+                                                                <th>ِAr Name </th>
+                                                                <th>Lat Name</th>
+                                                                <th class="hidden-xs">Clearness Rate</th>
+                                                                <th class="hidden-xs">Notes</th>
+                                                                <th class="hidden-xs">Active</th>
+                                                                <th>Update / Delete</th>
+                                                            </tr>
+                                                            <tr ng-repeat="item in itemCaliberList">
+                                                                <!--<td class="hidden-xs">{{ $index + 1 }}</td>-->
+                                                                <td class="hidden-xs center">{{ item.ID }}</td>
+                                                                <td>{{ item.Code }}</td>
+                                                                <td>{{ item.ARName }}</td>
+                                                                <td>{{ item.LatName }}</td>
+                                                                <td>{{ item.ClearnessRate }}</td>
+                                                                <td>{{ item.Notes }}</td>
+                                                                <td class="hidden-xs">
+                                                                    <div class="checkbox clip-check check-primary">
+                                                                        <input id="itemNo{{ item.ID }}" type="checkbox" ng-checked="item.Active" />
+                                                                        <label for="itemNo{{ item.ID }}"></label>
+                                                                    </div>
+                                                                </td>
+                                                                <td class="center">
+                                                                    <div class="visible-md visible-lg hidden-sm hidden-xs">
+                                                                        <a href="" ng-click="dirEnity(item)" class="btn btn-transparent btn-xs" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fa fa-pencil"></i></a>
+                                                                        <a href="" ng-click="deleteEnity(item)" class="btn btn-transparent btn-xs tooltips" data-toggle="tooltip" data-placement="top" title="Remove"><i class="fa fa-times fa fa-white"></i></a>
+                                                                    </div>
+                                                                    <div class="visible-xs visible-sm hidden-md hidden-lg">
+                                                                        <div class="btn-group dropdown">
+                                                                            <button type="button" class="btn btn-o btn-sm dropdown-toggle" data-toggle="dropdown">
+                                                                                <i class="fa fa-cog"></i>&nbsp;<span class="caret"></span>
+                                                                            </button>
+                                                                            <ul class="dropdown-menu pull-right dropdown-light" role="menu">
+                                                                                <li><a href="" ng-click="dirEnity(item)"> Edit </a></li>
+                                                                                <li><a href="" ng-click="deleteEnity(item)"> Remove </a></li>
+                                                                            </ul>
+                                                                        </div>
+                                                                    </div>
+                                                                    <!--<a class="label partition-blue" href="" ng-click="dirEnity(item)"><i class="glyphicon glyphicon-share"></i>  Update</a>
+                                                                    <a class="label partition-red" href="" ng-click="deleteEnity(item)"><i class="glyphicon glyphicon-remove-circle"></i> Delete</a>-->
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                        <ul uib-pagination total-items="itemCaliberTotalCount" ng-model="pageNum" max-size="maxSize" class="pagination-sm" boundary-links="true" num-pages="numPages" ng-change="pageChanged()"></ul>
+                                                        <pre>Page: {{pageNum}} / {{numPages}}</pre>
+                                                    </div>
+                                                </div>
+                                                <!--/.col-md-12-->
+                                            </div>
+                                            <!--/.panel-body-->
+                                        </div>
+                                        <!--/.panel-collapse-->
+                                    </div>
+                                    <!--/.panel-->
+                                </div>
+                                <!-- End Panel Body -->
+                            </div>
+                            <!--/.panel-->
+
+                        </div>
+                        <!--/.panel-->
+                    </div>
+                    <!--/.col-md-12-->
+                </div>
+                <!--/.row-->
+            </div>
+            <!--/.container-fluid-->
+        </div>
+        <!--/.wrap-content-->
+    </div>
+    <!--/.main-content-->
+</div>
+<!--/.app-content-->

@@ -1,0 +1,238 @@
+﻿<div class="app-content">
+    <div class="main-content">
+        <div class="wrap-content container" id="container">
+            <div class="container-fluid container-fullw">
+                <ng-form id="test" name="test">
+                    <div class="col-xs-12 margin-top-10 margin-bottom-10">
+                        <div class="breadcrumb-wrapper no-margin">
+                            <h4 class="mainTitle no-margin">فروع الشركه</h4>
+                            <ul class="pull-right breadcrumb">
+                                <li><a href="#!"><i class="fa fa-home margin-left-5 text-large text-dark"></i>الرئيسية</a></li>
+                                <li>فروع الشركه</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 margin-bottom-10">
+                        <div class="panel-white panel-body no-margin">
+                            <button type="button" class="btn btn-o btn-default no-border" ng-disabled="test.$invalid" ng-click="saveCompanyBranch()"><i class="fa fa-save"></i>حفظ</button>
+                            <button type="button" class="btn btn-o btn-default no-border " ng-click="refreshData()"><i class="fa fa-refresh"></i>تحديث</button>
+                            <button type="button" class="btn btn-o btn-default no-border" ng-click="clearEnity()"><i class="fa fa-paste"></i>جديد</button>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="panel">
+                            <div class="panel-body panel-white">
+
+                                <div ng-class="{'has-error': test.$invalid}" class="form-group">
+                                    <div class="form-group col-md-4">
+                                        <label for="GroupCode">الكود:</label>
+                                        <div class="help-block error" style="display:inline" ng-show="test.code.$error.required">*</div>
+                                        <input type="text" class="form-control" name="code" id="BranchCode" placeholder="الكود" ng-model="companyBranches.COM_BRN_CODE" required>
+                                    </div>
+                                </div>
+                                <div ng-class="{'has-error': test.$invalid}" class="form-group">
+                                    <div class="form-group col-md-4">
+                                        <label for="GroupARName">الاسم عربى:</label>
+                                        <div class="help-block error" style="display:inline" ng-show="test.arname.$error.required">*</div>
+                                        <input type="text" class="form-control" name="arname" id="BranchArName" placeholder="الاسم عربى" ng-model="companyBranches.COM_BRN_AR_NAME" required>
+                                    </div>
+                                </div>
+                                <div ng-class="{'has-error': test.$invalid}" class="form-group">
+                                    <div class="form-group col-md-4">
+                                        <label for="GroupENName">الاسم انجليزى:</label>
+                                        <div class="help-block error" style="display:inline" ng-show="test.enname.$error.required">*</div>
+                                        <input type="text" class="form-control" name="enname" id="BranchEnName" placeholder="الاسم انجليزى" ng-model="companyBranches.COM_BRN_EN_NAME" required>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="GroupRemarks">اختصار الاسم العربي:</label>
+                                    <input type="text" class="form-control" id="BranchArAbrv" placeholder="اختصار الاسم العربي" ng-model="companyBranches.COM_BRN_AR_ABRV">
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="GroupRemarks">اختصار الاسم الانجليزي:</label>
+                                    <input type="text" class="form-control" id="BranchEnAbrv" placeholder="اختصار الاسم الانجليزي" ng-model="companyBranches.COM_BRN_EN_ABRV">
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label>العملة</label>
+                                    <select ng-model="companyBranches.CURRENCY_ID" ng-options="x.CURRENCY_ID as x.CURRENCY_AR_NAME for x in currenciesList" ng-change="changeCurrencyRate()" class="form-control">
+                                        <option value="">اختر العملة</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="GroupRemarks">ملاحظات:</label>
+                                    <input type="text" class="form-control" id="BranchRemarks" placeholder="ملاحظات" ng-model="companyBranches.COM_BRN_REMARKS">
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="GroupRemarks">&nbsp;</label>
+                                    <select ng-model="companyBranches.COM_MASTER_BRN_ID" ng-options="x.COM_BRN_ID as x.COM_BRN_AR_NAME for x in companyBranchesList" class="form-control">
+                                        <option value="">المجموعة الرئيسية</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label>المدير</label>
+                                    <input type="text" class="form-control" id="ManagerName" placeholder="اسم المدير" ng-model="companyBranches.ManagerName">
+                                </div>
+                                <div class="checkbox col-md-4">
+                                    <label for="GroupRemarks">&nbsp;</label>
+                                    <div class="checkbox clip-check check-primary">
+                                        <input id="IsDefault" type="checkbox" ng-model="companyBranches.IsDefault">
+                                        <label for="IsDefault"> افتراضي</label>
+                                    </div>
+                                </div>
+                                <div class="checkbox col-md-4">
+                                    <label for="GroupRemarks">&nbsp;</label>
+                                    <div class="checkbox clip-check check-primary">
+                                        <input id="deactive" type="checkbox" ng-model="companyBranches.Disable">
+                                        <label for="deactive"> تعطيل</label>
+                                    </div>
+                                </div>
+                                <!--/.checkbox-->
+
+                            </div>
+                            <!--/.panel-body-->
+                            <div class="panel-group accordion margin-top-10" id="accordion">
+                                    <div class="panel panel-white">
+                                        <div class="panel-heading">
+                                            <h5 class="panel-title"><a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" data-target="#CostCenters1"> <i class="icon-arrow"></i>  عنوان الفرع </a></h5>
+                                        </div>
+                                        <div id="CostCenters1" class="panel-white collapse">
+                                            <div class="panel-body">
+                                                <div class="form-group col-md-4">
+                                                    <label>الدولة:</label>
+                                                    <select ng-model="companyBranches.NATION_ID" class="js-example-basic-hide-search js-states form-control" ng-options="x.NATION_ID as x.NATION_AR_NAME for x in nationList" ng-change="getAllGovernoratesList()">
+                                                        <option value="">اختر الدولة</option>
+                                                    </select>
+                                                </div>
+
+                                                <div class="form-group col-md-4">
+                                                    <label>المحافظه:</label>
+                                                    <select ng-model="companyBranches.GOV_ID" class="js-example-basic-hide-search js-states form-control" ng-options="x.GOV_ID as x.GOV_AR_NAME for x in governoratesList" ng-change="getAllTownList()">
+                                                        <option value="">اختر المحافظة</option>
+                                                    </select>
+                                                </div>
+
+                                                <div class="form-group col-md-4">
+                                                    <label>المركز:</label>
+                                                    <select ng-model="companyBranches.TOWN_ID" class="js-example-basic-hide-search js-states form-control" ng-options="x.TOWN_ID as x.TOWN_AR_NAME for x in townsList" ng-change="getAllVillageList()">
+                                                        <option value="">اختر المركز</option>
+                                                    </select>
+                                                </div>
+
+                                                <div class="form-group col-md-4">
+                                                    <label>الحي:</label>
+                                                    <select ng-model="companyBranches.VILLAGE_ID" class="js-example-basic-hide-search js-states form-control" ng-options="x.VILLAGE_ID as x.VILLAGE_AR_NAME for x in villageList">
+                                                        <option value="">اختر الحي</option>
+                                                    </select>
+                                                </div>
+
+                                                <div class="form-group col-md-4">
+                                                    <label for="GroupRemarks">ملاحظات العنوان:</label>
+                                                    <input type="text" class="form-control" id="BranchAddRemark" placeholder="ملاحظات العنوان" ng-model="companyBranches.COM_BRN_ADDR_REMARKS">
+                                                </div>
+                                            </div>
+                                            <!--/.panel-body-->
+                                        </div>
+                                        <!--/.collapse-->
+                                    </div>
+                                    <!--/.panel-->
+                            </div>
+                            <!--/.panel-group-->
+
+                            <div class="panel-group accordion margin-top-10" id="accordion">
+                                <div class="panel panel-white">
+                                    <div class="panel-heading">
+                                        <h5 class="panel-title"><a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" data-target="#collapseTwo"> <i class="icon-arrow"></i> الفروع المعرفة مسبقاً </a></h5>
+                                    </div>
+                                    <div id="collapseTwo" class="collapse">
+                                        <div class="panel-body panel-white">
+                                            <div class="col-md-12">
+
+                                                <div class="col-md-3 pull-left ">
+                                                    <table class="table table-stylish">
+                                                        <tbody>
+                                                            <tr>
+                                                                <td class="center text-extra-large"><i class="ti-save"></i></td>
+                                                                <td><span class="text-dark block">فروع الشركه  :</span></td>
+                                                                <td class="center">{{companyBranchesTotalCount}}</td>
+                                                                <td class="center"><i class="fa fa-caret-down text-red"></i></td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+
+                                                <div class="col-md-12">
+                                                    <table class="table table-bordered table-hover">
+                                                        <tr class="success">
+                                                            <th class="hidden-xs">#</th>
+                                                            <th>كود</th>
+                                                            <th>الاسم عربى </th>
+                                                            <th>الاسم انجليزى</th>
+                                                            <th>اختصار الاسم العربي</th>
+                                                            <th>اختصار الاسم الانجليزي</th>
+                                                            <th class="hidden-xs">ملاحظات</th>
+                                                            <th class="hidden-xs">المجموعه الرئيسيه</th>
+                                                            <th class="hidden-xs">تعطيل</th>
+                                                            <th>تعديل / حذف</th>
+                                                        </tr>
+                                                        <tr ng-repeat="item in companyBranchesList">
+                                                            <td class="hidden-xs center">{{ item.COM_BRN_ID }}</td>
+                                                            <td>{{ item.COM_BRN_CODE }}</td>
+                                                            <td>{{ item.COM_BRN_AR_NAME }}</td>
+                                                            <td>{{ item.COM_BRN_EN_NAME }}</td>
+                                                            <td>{{ item.COM_BRN_AR_ABRV }}</td>
+                                                            <td>{{ item.COM_BRN_EN_ABRV }}</td>
+                                                            <td>{{ item.COM_BRN_REMARKS }}</td>
+                                                            <td>{{ item.MasterCompanyBranch }}</td>
+                                                            <td>
+                                                                <div class="checkbox clip-check check-primary">
+                                                                    <input id="deactiveBox{{$index}}" type="checkbox" ng-checked="item.Disable" />
+                                                                    <label for="deactiveBox{{$index}}"></label>
+                                                                </div>
+                                                            </td>
+                                                            <td class="center">
+                                                                <div class="visible-md visible-lg hidden-sm hidden-xs">
+                                                                    <a href="" ng-click="loadEditData(item)" class="btn btn-transparent btn-xs" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fa fa-pencil"></i></a>
+                                                                    <a href="" ng-click="deleteEntity(item)" class="btn btn-transparent btn-xs tooltips" data-toggle="tooltip" data-placement="top" title="Remove"><i class="fa fa-times fa fa-white"></i></a>
+                                                                </div>
+                                                                <div class="visible-xs visible-sm hidden-md hidden-lg">
+                                                                    <div class="btn-group dropdown ">
+                                                                        <button type="button" class="btn btn-o btn-sm dropdown-toggle" data-toggle="dropdown">
+                                                                            <i class="fa fa-cog"></i>&nbsp;<span class="caret"></span>
+                                                                        </button>
+                                                                        <ul class="dropdown-menu pull-right dropdown-light" role="menu">
+                                                                            <li><a href="" ng-click="loadEditData(item)"> Edit </a></li>
+                                                                            <li><a href="" ng-click="deleteEntity(item)"> Remove </a></li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+
+                                                <ul uib-pagination total-items="companyBranchesTotalCount" ng-model="pageNum" max-size="maxSize" class="pagination-sm" boundary-links="true" num-pages="numPages" ng-change="pageChanged()"></ul>
+                                                <pre>صفحه: {{pageNum}} / {{numPages}}</pre>
+
+                                            </div>
+                                        </div>
+                                        <!--/.panel-body-->
+                                    </div>
+                                    <!--/.panel-collapse-->
+                                </div>
+                                <!--/.panel-->
+                            </div>
+                            <!--/.panel-group-->
+                        </div>
+                        <!--/.panel-->
+                    </div>
+                    <!--/.col-md-12-->
+                </ng-form>
+            </div>
+            <!--/.container-fluid-->
+        </div>
+        <!--/.wrap-content-->
+    </div>
+    <!--/.main-content-->
+</div>
+<!--/.app-content-->

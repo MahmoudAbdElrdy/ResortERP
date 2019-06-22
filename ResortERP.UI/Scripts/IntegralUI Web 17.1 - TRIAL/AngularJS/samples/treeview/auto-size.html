@@ -1,0 +1,179 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head>
+    <title>TreeView - Auto Size</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="../../css/samples.css" />
+    <link rel="stylesheet" href="../../css/integralui.css" />
+    <link rel="stylesheet" href="../../css/integralui.treeview.css" />
+    <link rel="stylesheet" href="../../css/themes/theme-flat-blue.css" id="theme" />
+    <script type="text/javascript" src="../theme.selector.min.js"></script>
+    <script type="text/javascript" src="../../external/angular.min.js"></script>
+    <script type="text/javascript" src="../../js/angular.integralui.min.js"></script>
+    <script type="text/javascript" src="../../js/angular.integralui.lists.min.js"></script>
+    <script type="text/javascript" src="../../js/angular.integralui.treeview.min.js"></script>
+    <script type="text/javascript">
+ 		angular
+			.module("appModule", ["integralui"])
+			.controller("appCtrl", ["$scope", "IntegralUITreeViewService", function($scope, $treeService){
+				$scope.treeName = "treeSample";
+				$scope.localData = [];
+				$scope.numItems = 100;
+				$scope.numLevels = 2;
+				
+                initTheme($scope, $treeService, $scope.treeName);
+				
+				var itemCount = 0;
+            
+				// Make sure each node has a random set of child items
+				var getRandomNumber = function(level){
+					var nCount = 1 + Math.floor(Math.random() * 10);
+					
+					if (level === 0)
+					{
+						if ($scope.numLevels == 0)
+							nCount = $scope.numItems;
+						else
+						{
+							var derivative = 1;
+							for (var k = 1; k <= $scope.numLevels; k++)
+								derivative = (derivative * nCount) + 1;
+
+							nCount = $scope.numItems / derivative + 1;
+							if (nCount < 1000)
+								nCount = 1000;
+						}
+					}
+					
+					return nCount;
+				}
+				
+				// Recursive function for adding root and child items to the TreeView
+				var addLarge = function(parentItem, level){
+					if (level > $scope.numLevels)
+						return;
+						
+					var numChilds = getRandomNumber(level);    
+					for (var i = 0; i < numChilds; i++){
+						if (itemCount < $scope.numItems){
+							var item = {
+								text : 'Item ' + (itemCount+1).toString(),
+								id: itemCount,
+								expanded : false
+							};
+
+							$treeService.addItem($scope.treeName, item, parentItem);
+							itemCount++;
+						
+							addLarge(item, level + 1);
+						}
+					}
+				};
+           
+				// Clear the content of TreeView
+				var clearList = function(){
+					$treeService.clearItems($scope.treeName);
+					itemCount = 0;
+				}
+				
+				$scope.add = function(){
+					$treeService.suspendLayout($scope.treeName);
+					
+					clearList();
+					
+					// Populate the TreeView with data
+					addLarge(null, 0);
+					
+					$treeService.resumeLayout($scope.treeName);
+				}
+				
+				$scope.clear = function(){
+					$treeService.suspendLayout($scope.treeName);
+					
+					clearList();
+					
+					$treeService.resumeLayout($scope.treeName);
+				}
+				
+				$scope.expandAll = function(){
+					$treeService.expand($scope.treeName);
+					$treeService.updateLayout($scope.treeName);
+				}
+				
+				
+				$scope.collapseAll = function(){
+					$treeService.collapse($scope.treeName);
+					$treeService.updateLayout($scope.treeName);
+				}
+				
+				
+				$scope.$watch("numItems", function(newValue, oldValue){
+					if (isNaN(newValue))
+						$scope.numItems = oldValue;
+				});
+				
+				$scope.$watch("numLevels", function(newValue, oldValue){
+					if (isNaN(newValue))
+						$scope.numLevels = oldValue;
+				});
+			}]);
+    </script>
+    <style type="text/css">
+        .directive
+        {
+        	height: auto;
+        }
+		.iui-drop-marker
+		{
+			font-size: 0.75em;
+		}
+    </style>
+</head>
+<body ng-app="appModule" ng-controller="appCtrl">
+	<div class="header">
+        <div class="header-block">
+            <div class="header-content">
+    		    <h1><span style="color:#c60d0d">IntegralUI</span> Web <span style="font-size:0.75em; font-style:italic">for AngularJS</span></h1>
+            </div>
+            <div class="theme-selector"><label>Active Theme: <select class="theme-combo" ng-model="selTheme" ng-options="theme.name for theme in themeList"></select></label></div>
+        </div>
+        <hr class="head-separator" />
+    </div>
+    <div class="content">
+        <div class="feature">
+	        <h2 class="feature-title">TreeView / Auto Size</h2>
+	        <div class="feature-content">
+                <iui-treeview name="{{treeName}}" class="directive" items="localData" auto-size="true" max-items="numItems" allow-drag="true" auto-expand="false"></iui-treeview>
+                <div class="control-panel">
+					<table>
+						<tr>
+							<td>Max items: </td>
+							<td class="align-left"><input type="number" ng-model="numItems" min="1" max="1000" style="width:75px" integer /></td>
+						</tr>
+						<tr>
+							<td>Levels: </td>
+							<td class="align-left"><input type="number" ng-model="numLevels" min="0" max="10" style="width:75px" integer /></td>
+						</tr>
+					</table>
+					<div align="center" style="margin-top:20px">
+						<button ng-click="add()" style="width:65px; margin-right:10px">Add</button>
+						<button ng-click="clear()" style="width:65px">Clear</button>
+					</div>
+					<div align="center" style="margin-top:20px">
+						<button ng-click="expandAll()" style="margin-bottom:5px;width:140px">Expand All</button>
+						<button ng-click="collapseAll()" style="width:140px">Collapse All</button>
+	                </div>
+                </div>
+                <br style="clear:both;"/>
+                <div class="feature-help">
+                    <p><span class="initial-space"></span>In this sample the TreeView height is determined by its content. This allows you to use the browser or parent container scrollbar to scroll the TreeView content. The internal vertical scrollbar is hidden in the process.
+                    <p><span class="initial-space"></span>If there are no items present, the TreeView will have low height. When some items are added to the TreeView, it will automatically extend its height to accommodate its content to be fully visible. Whenever items is expanded/collapsed, the height also changes accordingly.</p>
+                    <p><span class="initial-space"></span>This feature is best used for low tree data, less than 1,000 items. With large data there may be performance drawbacks, if too many items are present in the current view.</p>
+                    <p><span class="initial-space"></span>Although there is no limit on how many items you can add, for demonstration purposes we have limited the maximum number of items to 1,000. Using controls in right panel, you can add maximum of 1,000 items with maximum depth of 10 tree levels.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

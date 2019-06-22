@@ -1,0 +1,152 @@
+﻿<!DOCTYPE html>
+<html ng-app="app">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @*<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+        <link href="~/Content/loading-bar.min.css" rel="stylesheet" />*@
+
+
+
+    <link href="~/Content/fonts/exfonts.css" rel="stylesheet" />
+    <!-- start: MAIN CSS -->
+    <link href="~/Content/fonts/stylesheet.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/Content/bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link href="~/Content/ui-bootstrap-csp.css" rel="stylesheet" />
+    <link href="~/Content/angular-block-ui.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/Content/bower_components/bootstrap-rtl/dist/css/bootstrap-rtl.min.css">
+    <link rel="stylesheet" href="~/Content/bower_components/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="~/Content/bower_components/themify-icons/themify-icons.css">
+    <link rel="stylesheet" href="~/Content/bower_components/flag-icon-css/css/flag-icon.min.css">
+    <link rel="stylesheet" href="~/Content/bower_components/animate.css/animate.min.css">
+    <link rel="stylesheet" href="~/Content/bower_components/perfect-scrollbar/css/perfect-scrollbar.min.css">
+    <link rel="stylesheet" href="~/Content/bower_components/switchery/dist/switchery.min.css">
+    <link rel="stylesheet" href="~/Content/bower_components/seiyria-bootstrap-slider/dist/css/bootstrap-slider.min.css">
+    <link rel="stylesheet" href="~/Content/bower_components/ladda/dist/ladda-themeless.min.css">
+    <link rel="stylesheet" href="~/Content/bower_components/slick.js/slick/slick.css">
+    <link rel="stylesheet" href="~/Content/bower_components/slick.js/slick/slick-theme.css">
+    <!-- end: MAIN CSS -->
+    <!-- start: CSS REQUIRED FOR THIS PAGE ONLY -->
+    <!-- end: CSS REQUIRED FOR THIS PAGE ONLY -->
+    <!-- start: Packet CSS -->
+    <link rel="stylesheet" href="~/Content/assets/css/styles.css">
+    <link rel="stylesheet" href="~/Content/assets/css/plugins.css">
+    <link rel="stylesheet" href="~/Content/assets/css/rtl.css">
+    <link rel="stylesheet" href="~/Content/assets/css/themes/lyt2-theme-7.css" id="skin_color">
+
+
+
+    <!-- end: Packet CSS -->
+    <!-- Favicon -->
+
+
+
+</head>
+<body class="login-body">
+    <!-- start: LOGIN -->
+
+    @RenderBody()
+
+
+    @*<div  ng-class="authentication.isAuth?'container body-content':''">
+            @RenderBody()
+            <hr ng-show="authentication.isAuth"/>
+            <footer ng-show="authentication.isAuth">
+                <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            </footer>
+        </div>*@
+
+    <!--angualr-->
+    <script src="~/Scripts/angular.min.js"></script>
+    <script src="~/Scripts/angular-route.min.js"></script>
+    <script src="~/Scripts/angular-local-storage.min.js"></script>
+    <script src="~/Scripts/loading-bar.min.js"></script>
+
+
+
+    <!--jquery-->
+    @*<script src="~/Scripts/jquery-3.1.1.min.js"></script>
+        <script src="~/Scripts/bootstrap.min.js"></script>*@
+
+
+    <script src="~/Content/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="~/Content/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+
+    <script src="~/Scripts/angular-ui/ui-bootstrap.min.js"></script>
+    <script src="~/Scripts/angular-ui/ui-bootstrap-tpls.min.js"></script>
+    @*<script src="~/Scripts/angular-block-ui.js"></script>*@
+
+    <script src="~/Content/bower_components/components-modernizr/modernizr.js"></script>
+    <script src="~/Content/bower_components/js-cookie/src/js.cookie.js"></script>
+    <script src="~/Content/bower_components/perfect-scrollbar/js/perfect-scrollbar.jquery.min.js"></script>
+    <script src="~/Content/bower_components/jquery-fullscreen/jquery.fullscreen-min.js"></script>
+    <script src="~/Content/bower_components/switchery/dist/switchery.min.js"></script>
+    <script src="~/Content/bower_components/jquery.knobe/dist/jquery.knob.min.js"></script>
+    <script src="~/Content/bower_components/seiyria-bootstrap-slider/dist/bootstrap-slider.min.js"></script>
+    <script src="~/Content/bower_components/slick.js/slick/slick.min.js"></script>
+    <script src="~/Content/bower_components/jquery-numerator/jquery-numerator.js"></script>
+    <script src="~/Content/bower_components/ladda/dist/spin.min.js"></script>
+    <script src="~/Content/bower_components/ladda/dist/ladda.min.js"></script>
+    <script src="~/Content/bower_components/ladda/dist/ladda.jquery.min.js"></script>
+    <script src="~/Scripts/xeditable.min.js"></script>
+    <script src="~/Scripts/angular-block-ui.min.js"></script>
+    <!-- end: MAIN JAVASCRIPTS -->
+    <!-- start: JAVASCRIPTS REQUIRED FOR THIS PAGE ONLY -->
+    <script src="~/Content/bower_components/Chart-js/Chart.min.js"></script>
+    <!-- end: JAVASCRIPTS REQUIRED FOR THIS PAGE ONLY -->
+    <!-- start: Packet JAVASCRIPTS -->
+    <script src="~/Content/assets/js/letter-icons.js"></script>
+    <script src="~/Content/assets/js/main.js"></script>
+    <!-- end: Packet JAVASCRIPTS -->
+    <!-- start: JavaScript Event Handlers for this page -->
+    <script src="~/Content/assets/js/index.js"></script>
+    <script>
+        $(function () {
+            jQuery(document).ready(function () {
+                alert('here main');
+                Main.init();
+                Index.init();
+            });
+        });
+    </script>
+    <!--App-->
+    <script src="~/ngApp/app.js"></script>
+    <!--services-->
+    <script src="~/ngApp/authentication/Services/authInterceptorService.js"></script>
+    <script src="~/ngApp/authentication/Services/authService.js"></script>
+    <script src="~/ngApp/itemsGroups/services/itemsGroupsService.js"></script>
+    <!--directives-->
+    <script src="~/ngApp/itemsGroups/directives/itemsGroupsDirective.js"></script>
+    <script src="~/ngApp/authentication/directives/loginDirective.js"></script>
+    <!--Controllers-->
+    <script src="~/ngApp/index/controllers/indexController.js"></script>
+    <script src="~/ngApp/authentication/controllers/loginController.js"></script>
+
+    <script src="~/ngApp/home/controllers/homeController.js"></script>
+    <script src="~/ngApp/itemsGroups/controllers/itemsGroupsController.js"></script>
+
+    <script src="~/ngApp/companystores/services/companystoresService.js"></script>
+    <script src="~/ngApp/companystores/directives/companystoresDirective.js"></script>
+    <script src="~/ngApp/companystores/controllers/companystoresController.js"></script>
+    <script src="~/ngApp/Shared/commonService.js"></script>
+
+    <script src="~/ngApp/generalViews/Services/MenuService.js"></script>
+    <script src="~/ngApp/generalViews/controllers/MenuController.js"></script>
+
+    <script src="~/ngApp/innerRegister/services/innerRegisterService.js"></script>
+    <script src="~/ngApp/innerRegister/directives/innerRegisterDirective.js"></script>
+    <script src="~/ngApp/innerRegister/controllers/innerRegisterController.js"></script>
+
+
+    @*<script src="~/ngApp/CostCenters/services/CostCentersService.js"></script>
+    <script src="~/ngApp/CostCenters/directives/CostCentersDirective.js"></script>
+    <script src="~/ngApp/CostCenters/controllers/CostCentersController.js"></script>*@
+
+
+
+    <script src="~/ngApp/Shared/directives/sharedDirective.js"></script>
+
+    <script src="~/ngApp/Shared/filters/sharedFilters.js"></script>
+</body>
+</html>

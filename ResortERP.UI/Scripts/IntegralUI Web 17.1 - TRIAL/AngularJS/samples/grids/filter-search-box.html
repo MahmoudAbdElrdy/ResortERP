@@ -1,0 +1,352 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head>
+    <title>Grids - Filtering with Search Box</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="../../css/samples.css" />
+    <link rel="stylesheet" href="../../css/integralui.css" />
+    <link rel="stylesheet" href="../../css/integralui.checkbox.css" />
+    <link rel="stylesheet" href="../../css/integralui.grid.css" />
+    <link rel="stylesheet" href="../../css/themes/theme-flat-blue.css" id="theme" />
+    <script type="text/javascript" src="../theme.selector.min.js"></script>
+    <script type="text/javascript" src="../../external/angular.min.js"></script>
+    <script type="text/javascript" src="../../js/angular.integralui.min.js"></script>
+    <script type="text/javascript" src="../../js/angular.integralui.lists.min.js"></script>
+    <script type="text/javascript" src="../../js/angular.integralui.checkbox.min.js"></script>
+    <script type="text/javascript" src="../../js/angular.integralui.grid.min.js"></script>
+    <script type="text/javascript">
+ 		angular
+			.module("appModule", ["integralui"])
+			.controller("appCtrl", ["$scope", "IntegralUIGridService", "IntegralUIFilter", "$timeout", function($scope, $gridService, $filterService, $timeout){
+				// A uniue identifier for the grid directive
+				$scope.gridName = "gridSample";
+				// Show only vertical lines in the grid
+				$scope.gridLines = 'vertical';
+				
+				// Initilaize the Theme Selector for this sample
+                initTheme($scope, $gridService, $scope.gridName);
+
+				// An array object that holds all grid columns
+				$scope.columns = [
+					{ id: 1, editorType: 'checkbox', contentAlignment: 'center', width: 30, fixedWidth: true },
+					{ id: 2, headerText: "Title", width: 280},
+					{ id: 3, headerText: "Year", headerAlignment: "center", contentAlignment: "center", width: 70 },
+					{ id: 4, headerText: "Genre", headerAlignment: "center", contentAlignment: "center", width: 250 },
+					{ id: 5, headerText: "Ratings", headerAlignment: "center", contentAlignment: "center", width: 80 },
+					{ id: 6, headerText: "Released", headerAlignment: "center", contentAlignment: "center", width: 130 }
+				];
+
+				// An array object that holds all grid rows
+				$scope.rows = [];
+
+				// An array that holds the initial data set
+				var originalRows = [
+					{ 
+						id: 1,
+						text: "Inception",
+						cells: [{ cid: 1, value: true }, { cid: 2, text: "Inception" }, { cid: 3, text: "2010" }, { cid: 4, text: "Action, Mystery, Sci-Fi" }, { cid: 5, text: "8.8" }, { cid: 6, text: "16 Jul 2010" } ]
+					},
+					{ 
+						id: 2,
+						text: "Gravity",
+						cells: [{ cid: 1 }, { cid: 2, text: "Gravity" }, { cid: 3, text: "2013" }, { cid: 4, text: "Sci-Fi, Thriller" }, { cid: 5, text: "7.9" }, { cid: 6, text: "04 Oct 2013" } ]
+					},
+					{ 
+						id: 3,
+						text: "Django Unchained",
+						cells: [{ cid: 1, value: true }, { cid: 2, text: "Django Unchained" }, { cid: 3, text: "2012" }, { cid: 4, text: "Western" }, { cid: 5, text: "8.5" }, { cid: 6, text: "25 Dec 2012" } ]
+					},
+					{ 
+						id: 4,
+						text: "Toy Story 3",
+						cells: [{ cid: 1, value: true }, { cid: 2, text: "Toy Story 3" }, { cid: 3, text: "2010" }, { cid: 4, text: "Animation, Adventure, Comedy" }, { cid: 5, text: "8.4" }, { cid: 6, text: "18 Jun 2010" } ]
+					},
+					{ 
+						id: 5,
+						text: "The Wolf of Wall Street",
+						cells: [{ cid: 1, value: true }, { cid: 2, text: "The Wolf of Wall Street" }, { cid: 3, text: "2013" }, { cid: 4, text: "Biography, Comedy, Crime" }, { cid: 5, text: "8.2" }, { cid: 6, text: "25 Dec 2013" } ]
+					},
+					{ 
+						id: 6,
+						text: "The Town",
+						cells: [{ cid: 1 }, { cid: 2, text: "The Town" }, { cid: 3, text: "2010" }, { cid: 4, text: "Crime, Drama, Thriller" }, { cid: 5, text: "7.6" }, { cid: 6, text: "17 Sep 2010" } ]
+					},
+					{ 
+						id: 7,
+						text: "Nightcrawler",
+						cells: [{ cid: 1, value: true }, { cid: 2, text: "Nightcrawler" }, { cid: 3, text: "2014" }, { cid: 4, text: "Crime, Thriller" }, { cid: 5, text: "7.9" }, { cid: 6, text: "31 Oct 2014" } ]
+					},
+					{ 
+						id: 8,
+						text: "Locke",
+						cells: [{ cid: 1 }, { cid: 2, text: "Locke" }, { cid: 3, text: "2014" }, { cid: 4, text: "Drama" }, { cid: 5, text: "7.1" }, { cid: 6, text: "29 May 2014" } ]
+					},
+					{ 
+						id: 9,
+						text: "Prometheus",
+						cells: [{ cid: 1, value: true }, { cid: 2, text: "Prometheus" }, { cid: 3, text: "2012" }, { cid: 4, text: "Adventure, Mystery, Sci-Fi " }, { cid: 5, text: "7.0" }, { cid: 6, text: "08 Jun 2012" } ]
+					},
+					{ 
+						id: 10,
+						text: "The Social Network",
+						cells: [{ cid: 1, value: true }, { cid: 2, text: "The Social Network" }, { cid: 3, text: "2010" }, { cid: 4, text: "Biography, Drama" }, { cid: 5, text: "7.8" }, { cid: 6, text: "01 Oct 2010" } ]
+					},
+					{ 
+						id: 11,
+						text: "The Conjuring",
+						cells: [{ cid: 1 }, { cid: 2, text: "The Conjuring" }, { cid: 3, text: "2013" }, { cid: 4, text: "Horror" }, { cid: 5, text: "7.5" }, { cid: 6, text: "19 Jul 2013" } ]
+					},
+					{ 
+						id: 12,
+						text: "Blue Jasmine",
+						cells: [{ cid: 1, value: true }, { cid: 2, text: "Blue Jasmine" }, { cid: 3, text: "2013" }, { cid: 4, text: "Drama" }, { cid: 5, text: "7.3" }, { cid: 6, text: "23 Aug 2013" } ]
+					},
+					{ 
+						id: 13,
+						text: "Black Swan",
+						cells: [{ cid: 1 }, { cid: 2, text: "Black Swan" }, { cid: 3, text: "2010" }, { cid: 4, text: "Drama, Mystery, Thriller" }, { cid: 5, text: "8.0" }, { cid: 6, text: "17 Dec 2010" } ]
+					},
+					{ 
+						id: 14,
+						text: "Prisoners",
+						cells: [{ cid: 1 }, { cid: 2, text: "Prisoners" }, { cid: 3, text: "2013" }, { cid: 4, text: "Crime, Drama, Mystery" }, { cid: 5, text: "8.1" }, { cid: 6, text: "20 Sep 2013" } ]
+					},
+					{ 
+						id: 15,
+						text: "The Avengers",
+						cells: [{ cid: 1 }, { cid: 2, text: "The Avengers" }, { cid: 3, text: "2012" }, { cid: 4, text: "Action, Adventure, Sci-Fi" }, { cid: 5, text: "8.2" }, { cid: 6, text: "04 May 2012" } ]
+					},
+					{ 
+						id: 16,
+						text: "Snowpiercer",
+						cells: [{ cid: 1 }, { cid: 2, text: "Snowpiercer" }, { cid: 3, text: "2014" }, { cid: 4, text: "Action, Mystery, Sci-Fi" }, { cid: 5, text: "7.0" }, { cid: 6, text: "11 Jul 2014" } ]
+					},
+					{ 
+						id: 17,
+						text: "The Dark Knight Rises",
+						cells: [{ cid: 1, value: true }, { cid: 2, text: "The Dark Knight Rises" }, { cid: 3, text: "2012" }, { cid: 4, text: "Action, Thriller" }, { cid: 5, text: "8.5" }, { cid: 6, text: "20 Jul 2012" } ]
+					},
+					{ 
+						id: 18,
+						text: "American Hustle",
+						cells: [{ cid: 1 }, { cid: 2, text: "American Hustle" }, { cid: 3, text: "2013" }, { cid: 4, text: "Crime, Drama" }, { cid: 5, text: "7.3" }, { cid: 6, text: "20 Dec 2013" } ]
+					},
+					{ 
+						id: 19,
+						text: "Dawn of the Planet of the Apes",
+						cells: [{ cid: 1, value: true }, { cid: 2, text: "Dawn of the Planet of the Apes" }, { cid: 3, text: "2014" }, { cid: 4, text: "Action, Drama, Sci-Fi" }, { cid: 5, text: "7.7" }, { cid: 6, text: "11 Jul 2014" } ]
+					},
+					{ 
+						id: 20,
+						text: "Frozen",
+						cells: [{ cid: 1 }, { cid: 2, text: "Frozen" }, { cid: 3, text: "2013" }, { cid: 4, text: "Animation, Adventure, Comedy" }, { cid: 5, text: "7.7" }, { cid: 6, text: "27 Nov 2013" } ]
+					},
+					{ 
+						id: 21,
+						text: "Edge of Tomorrow",
+						cells: [{ cid: 1, value: true }, { cid: 2, text: "Edge of Tomorrow" }, { cid: 3, text: "2014" }, { cid: 4, text: "Action, Adventure, Mystery" }, { cid: 5, text: "7.9" }, { cid: 6, text: "06 Jun 2014" } ]
+					},
+					{ 
+						id: 22,
+						text: "Interstellar",
+						cells: [{ cid: 1 }, { cid: 2, text: "Interstellar" }, { cid: 3, text: "2014" }, { cid: 4, text: "Adventure, Drama, Sci-Fi" }, { cid: 5, text: "8.7" }, { cid: 6, text: "07 Nov 2014" } ]
+					},
+					{ 
+						id: 23,
+						text: "Rush",
+						cells: [{ cid: 1 }, { cid: 2, text: "Rush" }, { cid: 3, text: "2013" }, { cid: 4, text: "Action, Biography, Drama" }, { cid: 5, text: "8.2" }, { cid: 6, text: "27 Sep 2013" } ]
+					},
+					{ 
+						id: 24,
+						text: "Shutter Island",
+						cells: [{ cid: 1, value: true }, { cid: 2, text: "Shutter Island" }, { cid: 3, text: "2010" }, { cid: 4, text: "Mystery, Thriller " }, { cid: 5, text: "8.1" }, { cid: 6, text: "19 Feb 2010" } ]
+					},
+					{ 
+						id: 25,
+						text: "This Is the End",
+						cells: [{ cid: 1 }, { cid: 2, text: "This Is the End" }, { cid: 3, text: "2013" }, { cid: 4, text: "Comedy, Fantasy" }, { cid: 5, text: "6.7" }, { cid: 6, text: "12 Jun 2013" } ]
+					}
+				];
+
+				$scope.gridFilterValue = '';
+
+				// Create a list of columns
+				$scope.optionList = [{ name: '' }];
+				for (var j = 1; j < $scope.columns.length; j++){
+					$scope.optionList.push({ name: $scope.columns[j].headerText });
+				}
+				$scope.selOption = $scope.optionList[0];
+
+				// Watch for any changes in selected column from combo box and apply the filter
+				$scope.$watch("selOption", function(newValue, oldValue){
+					if (newValue != oldValue)
+						$scope.applyFilter();
+				});
+
+				// Check whether a grid cell matches the filtering conditions
+				var cellFilter = function(obj, conditions){
+					var result = false;
+
+					if (obj){
+						if ($filterService.match(obj, conditions))
+							result = true;
+					}
+
+					return result;
+				}
+
+				// Resets the filter and display all grid data
+				var resetFilter = function(){
+		            $scope.rows.length = 0;
+		            for (var i = 0; i < originalRows.length; i++)
+						$scope.rows.push(originalRows[i]);
+				}
+
+				// Apply a filter based on selected column
+				$scope.applyFilter = function(){
+					// Suspend the grid layout to increase performance during filtering operations
+		            $gridService.suspendLayout($scope.gridName);
+
+					resetFilter();
+
+					// Set the filtering operation to 'contains', using the [] operator
+		            var conditions = { value: $scope.gridFilterValue, operation: '[]' };
+
+		            // Apply the filter for specified column
+		            // If column is not chosen, the grid data is filtered based on values in Title' column
+		            if ($scope.selOption.name == ''){
+			            // Apply the filter for all columns
+			            var filteredRows = [];
+			            for (var i = 0; i < $scope.rows.length; i++){
+			            	var pass = false;
+
+				            for (var j = 0; j < $scope.rows[i].cells.length; j++){
+								var result = cellFilter($scope.rows[i].cells[j].text, conditions);
+								if (result){
+									pass = true;
+									break;
+								}
+							}
+
+							if (pass)
+								filteredRows.push($scope.rows[i]);
+			            }
+
+			            // Update the grid rows based on filtered rows
+			            $scope.rows.length = 0;
+			            for (var i = 0; i < filteredRows.length; i++)
+							$scope.rows.push(filteredRows[i]);
+		            }
+		            else {
+			            // Set the filtering parameters so that a custom function is used
+			            // Use the IntegralUIFilterService to filter the grid data
+			            var params = {
+			                callback: function (value) {
+			                    if (typeof value == 'string' || value instanceof String)
+			                        return $filterService.match(value, conditions);
+
+			                    return false;
+			                }
+			            }
+
+		            	var colIndex = $scope.optionList.indexOf($scope.selOption);
+			            $gridService.filter($scope.gridName, $scope.columns[colIndex], params);
+		            }
+
+					// Resume and update the grid layout
+		            $gridService.resumeLayout($scope.gridName);
+				}
+
+				// At start display the initial data set
+				resetFilter();
+			}]);
+    </script>
+    <style type="text/css">
+		/* Grid settings */
+		.iui-grid-column-header-cell, .iui-grid-column-footer-cell
+		{
+			padding: 2px 2px;
+		}
+		.iui-grid-row-cell-content
+		{
+			padding: 2px 2px;
+		}
+		.iui-filter-window
+		{
+	    	font-size: 0.75em;
+	    }
+
+		/* Sample settings */
+        .directive
+        {
+        	width: 800px;
+        	height: 430px;
+        }
+        .search-box
+        {
+        	background: white;
+		    border: thin solid #cecece;
+        	display: inline-block;
+        	margin-bottom: 5px;
+        	padding: 0 2px;
+        	width: 250px;
+        }
+        .search-box input
+        {
+        	display: inline-block;
+		    border: thin dotted transparent;
+        	width: 220px;
+        	height: 100%;
+        }
+        .search-box input:focus
+        {
+		    outline: none !important;
+		    border: thin dotted #b4b4b4;
+		}
+        .search-box span
+        {
+		    background-position: 0px -112px;
+		    opacity: 0.5;
+		    margin-left: 2px;
+		    padding: 0;
+		    vertical-align: middle;
+        }
+        .options-title
+        {
+        	margin-left: 50px;
+        }
+	</style>
+</head>
+<body ng-app="appModule" ng-controller="appCtrl">
+	<div class="header">
+        <div class="header-block">
+            <div class="header-content">
+    		    <h1><span style="color:#c60d0d">IntegralUI</span> Web <span style="font-size:0.75em; font-style:italic">for AngularJS</span></h1>
+            </div>
+            <div class="theme-selector"><label>Active Theme: <select class="theme-combo" ng-model="selTheme" ng-options="theme.name for theme in themeList"></select></label></div>
+        </div>
+        <hr class="head-separator" />
+    </div>
+    <div class="content">
+        <div class="feature">
+			</script>
+	        <h2 class="feature-title">Grids / Filtering with Search Box</h2>
+	        <div class="feature-content">
+			    <div class="search-box">
+			   		<input class="search-box" type="text" placeholder="Search..." ng-model="gridFilterValue" ng-change="applyFilter()" />
+			   		<span class="icons"></span>
+			   	</div>
+            	<label class="options-title">by Column: <select ng-model="selOption" ng-options="option.name for option in optionList"></select></label>
+                <iui-grid name="{{gridName}}" class="directive" columns="columns" rows="rows" allow-filter="true" show-footer="false" allow-cell-focus="false"></iui-grid>
+                <br style="clear:both;"/>
+                <div class="feature-help">
+                    <p><span class="initial-space"></span>This sample shows how to use a search box to find grid rows that match the specified string value. You can search for rows using cell values in specified column or all columns.</p>
+                    <p><span class="initial-space"></span>Whenever the search value changes, the grid is filtered showing only those rows that pass the filtering criteria. In this example, we are using the <span style="color:#c60d0d">'contains'</span> criteria, but you can easily change it to some other built-in filtering operation, like <span style="color:#c60d0d">'begins with'</span> or <span style="color:#c60d0d">'ends with'</span>, using <span style="color:#c60d0d">'->'</span> or <span style="color:#c60d0d">'<-'</span> symbols, or some other operation.</p>
+                    <p style="margin:10px 50px;"><strong>NOTE</strong> To simplify this example, we are only using a string matching operation: <span style="color:#c60d0d">'contains'</span> represented by the <span style="color:#c60d0d">'[]'</span> symbol. To learn more about other filtering operations you can check out this article: <a href="http://www.lidorsystems.com/support/articles/angularjs/treegrid/tree-grid-filter.aspx">Custom Filter Templates in AngularJS Tree Grid</a>.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

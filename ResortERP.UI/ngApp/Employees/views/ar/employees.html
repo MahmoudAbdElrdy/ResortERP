@@ -1,0 +1,1277 @@
+﻿<style>
+    .ui-tabs {
+        direction: rtl;
+    }
+
+        .ui-tabs .ui-tabs-nav li.ui-tabs-selected,
+        .ui-tabs .ui-tabs-nav li.ui-state-default {
+            float: right;
+        }
+
+        .ui-tabs .ui-tabs-nav li a {
+            float: right;
+        }
+</style>
+
+<div class="app-content">
+    <div class="main-content">
+        <div class="wrap-content container" id="container">
+            <div class="container-fluid container-fullw ">
+                <ng-form id="test" name="test">
+                    <div class="col-xs-12 margin-top-10 margin-bottom-10">
+                        <div class="breadcrumb-wrapper no-margin">
+                            <h4 class="mainTitle no-margin">{{ moduleResourse["Header"] }}</h4>
+                            <ul class="pull-right breadcrumb">
+                                <li><a href="#!"><i class="fa fa-home margin-left-5 text-large text-dark"></i>الرئيسية</a></li>
+                                <li>{{ moduleResourse["Header"] }}</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 margin-bottom-10">
+                        <div class="panel-white panel-body no-margin">
+                            <div class="pull-right">
+                                <button type="button" class="btn btn-o btn-default no-border" ng-disabled="test.$invalid" ng-click="saveemployees()">  <i class="fa fa-save"></i>حفظ</button>
+                                <button type="button" class="btn btn-o btn-default no-border " ng-click="refreshData()"><i class="fa fa-refresh"></i>تحديث</button>
+                                <button type="button" class="btn btn-o btn-default no-border" ng-click="clearEnity()"><i class="fa fa-paste"></i>جديد</button>
+                            </div>
+                            <!--<div class="pull-left">
+                                <div class="checkbox clip-check check-primary checkbox-inline">
+                                    <input type="checkbox" id="showHidden" show-hidden-elements />
+                                    <label for="showHidden">اظهار جميع الحقول</label>
+                                </div>
+                                <div class="checkbox clip-check check-primary checkbox-inline">
+                                    <input type="checkbox" id="updateResourse" />
+                                    <label for="updateResourse">تغيير اعدادات الحقول</label>
+                                </div>
+                            </div>-->
+                        </div>
+                    </div>
+                    <div class="col-xs-12">
+                        <!--<div class="box box-solid box-primary">
+                            <div class="box-body">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <button class="btn btn-primary" id="NewEmployeeButton"><span class="glyphicon glyphicon-plus"></span> &ensp; @Localizer["AddNewEmployee"]</button>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" placeholder="@Localizer[" EmployeesSearch"]" id="EmployeeAutocomplete" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>-->
+                        <div class="panel">
+                            <!--<div class="box-header">
+                                <h3 class="box-title">بيانات الموظف</h3>
+                            </div>-->
+                            <div role="form">
+                                <div class="panel-body panel-white">
+                                    <!--@using (Html.BeginForm("CreateEmployeeMainData", "HrPslEmployee", new { area = "HrPersonnel" }, FormMethod.Post, true, new { enctype = "multipart/form-data", id = "MainDataFormId" }))
+                                    {
+                                    @Html.HiddenFor(p => p.HrPslEmployeeID)-->
+                                    <div class="row">
+                                        <div class="col-md-8">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group" ng-class="{'has-error': test.EmployeeCode.$error.required}">
+                                                        <label>كود الموظف </label>
+                                                        <div class="help-block error" style="display:inline" ng-show="test.EmployeeCode.$error.required">*</div>
+                                                        <input name="EmployeeCode" ng-model="employees.EmployeeCode" class="form-control" ng-required="true"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group" ng-class="{'has-error': test.EmployeeFirstName.$error.required}">
+                                                        <label>الاسم الاول عربى </label>
+                                                        <div class="help-block error" style="display:inline" ng-show="test.EmployeeFirstName.$error.required">*</div>
+                                                        <input name="EmployeeFirstName" ng-model="employees.EmployeeFirstName" class="form-control"  ng-required="true"/>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group" ng-class="{'has-error': test.EmployeeLastName.$error.required}">
+                                                        <label>اسم العائلة عربى </label>
+                                                        <div class="help-block error" style="display:inline" ng-show="test.EmployeeLastName.$error.required">*</div>
+                                                        <input name="EmployeeLastName" ng-model="employees.EmployeeLastName" class="form-control"  ng-required="true"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group" ng-class="{'has-error': test.EmployeeFirstNameEn.$error.required}">
+                                                        <label>الاسم الاول لاتينى </label>
+                                                        <div class="help-block error" style="display:inline" ng-show="test.EmployeeFirstNameEn.$error.required">*</div>
+                                                        <input name="EmployeeFirstNameEn" ng-model="employees.EmployeeFirstNameEn" class="form-control"  ng-required="true"/>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group" ng-class="{'has-error': test.EmployeeLastNameEn.$error.required}">
+                                                        <label>اسم العائلة لاتينى </label>
+                                                        <div class="help-block error" style="display:inline" ng-show="test.EmployeeLastNameEn.$error.required">*</div>
+                                                        <input name="EmployeeLastNameEn" ng-model="employees.EmployeeLastNameEn" class="form-control"  ng-required="true"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <img class="image" width="150" height="150" id="Preview" src="~/images/emp.jpeg" />
+                                            <input type="file" name="EmployeePhoto" id="BrowseFile" accept="image/*" />
+                                            <!--<div class="row">
+                                                <div class="col-md-4 col-md-offset-8">
+                                                    <button class="btn btn-success" id="MainDataSaveButton" type="submit"><span class="glyphicon glyphicon-ok"></span> &ensp; حفظ</button>
+                                                </div>
+                                            </div>-->
+                                        </div>
+                                    </div>
+                                    <div class="">
+                                        <div id="tabs">
+                                            <ul>
+                                                <li><a href="#PersonnelDataTab">معلومات شخصية</a></li>
+                                                <li><a href="#WorkDataTab">الوظيفة</a></li>
+                                                <li><a href="#ContactDataTab">التواصل</a></li>
+                                                <li><a href="#AcademicDegreeDataTab">الدرجة العلمية</a></li>
+                                                <li><a href="#ExperienceDataTab">الخبرات السابقة</a></li>
+                                                <li><a href="#TrainingCourceDataTab">الدورات التدريبية</a></li>
+                                                <li><a href="#FamilyDataTab">البيانات العائلية</a></li>
+                                                <li><a href="#HealthDataTab">البيانات الصحية</a></li>                                                
+                                                <!--<li><a href="#SalaryEarningsTab">بنود الراتب</a></li>-->
+                                                <li><a href="#ExtraDataTab">بيانات اخرى</a></li>
+                                            </ul>
+                                            <div id="PersonnelDataTab">
+                                                <!--@using (Html.BeginForm("CreatePersonnelData", "HrPslEmployee", new { area = "HrPersonnel" }, FormMethod.Post, true, new { enctype = "multipart/form-data", id = "PersonnelDataFormId" }))
+                                                {
+                                                @Html.HiddenFor(p=>p.HrPslEmployeeId)-->
+                                                <div class="container-fluid">
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label>النوع</label>
+                                                                <select ng-model="employees.GenderID" class="form-control">
+                                                                    <option value="">اختر عنصر</option>
+                                                                    <option value="1">ذكر</option>
+                                                                    <option value="2">انثى</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label>الحالة الاجتماعية</label>
+                                                                <select ng-model="employees.HrPslMaritalstatusID" ng-options="x.OptionValue as x.OptionText for x in MartialStatusList" class="form-control">
+                                                                    <option value="">اختر عنصر</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label>الديانة</label>
+                                                                <select ng-model="employees.HrPslReligionID" ng-options="x.OptionValue as x.OptionText for x in RelegionList" class="form-control">
+                                                                    <option value="">اختر عنصر</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label>الدولة</label>
+                                                                <select ng-model="employees.HrPslCountyID" ng-options="x.OptionValue as x.OptionText for x in CountryList" class="form-control">
+                                                                    <option value="">اختر عنصر</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label>المدينة</label>
+                                                                <select ng-model="employees.HrPslCityID" ng-options="x.OptionValue as x.OptionText for x in CityList" class="form-control">
+                                                                    <option value="">اختر عنصر</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label>العنوان</label>
+                                                                <input ng-model="employees.Address" class="form-control" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label>الجنسية</label>
+                                                                <select ng-model="employees.HrPslNationalityID" ng-options="x.OptionValue as x.OptionText for x in NationalityList" class="form-control">
+                                                                    <option value="">اختر عنصر</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label>رقم جواز السفر</label>
+                                                                <input ng-model="employees.PassportNo" class="form-control" />
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label>تاريخ انتهاء جواز السفر</label>
+                                                                <input ng-model="employees.PassportNoExpDate" type="date" class="form-control" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label>حالة الموظف</label>
+                                                                <select ng-model="employees.ResidenceType" class="form-control">
+                                                                    <option value="">اختر عنصر</option>
+                                                                    <option value="1">مغترب</option>
+                                                                    <option value="2">مواطن</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div ng-show="employees.ResidenceType == 1" class="col-md-4 CitizenDiv">
+                                                            <div class="form-group">
+                                                                <label>رقم الهوية</label>
+                                                                <input ng-model="employees.NationalID" class="form-control" />
+                                                            </div>
+                                                        </div>
+                                                        <div ng-show="employees.ResidenceType == 1" class="col-md-4 CitizenDiv">
+                                                            <div class="form-group">
+                                                                <label>تاريخ انتهاء رقم الهوية</label>
+                                                                <input ng-model="employees.NationalIdExpData" type="date" class="form-control" />
+                                                            </div>
+                                                        </div>
+                                                        <div ng-show="employees.ResidenceType == 2" class="col-md-4 ExpatriateDiv" >
+                                                            <div class="form-group">
+                                                                <label>رقم الاقامة</label>
+                                                                <input ng-model="employees.ResidencyNumber" class="form-control" />
+                                                            </div>
+                                                        </div>
+                                                        <div ng-show="employees.ResidenceType == 2" class="col-md-4 ExpatriateDiv" >
+                                                            <div class="form-group">
+                                                                <label>تاريخ انتهاء رقم الاقامة</label>
+                                                                <input ng-model="employees.ResidenceExpireDate" type="date" class="form-control" />
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label>تاريخ الميلاد</label>
+                                                                <input ng-model="employees.DateOfBirth" type="date" class="form-control" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!--<div class="row">
+                                                        <div class="col-md-1 col-md-offset-11">
+                                                            <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-ok"></span>&ensp; حفظ</button>
+                                                        </div>
+                                                    </div>-->
+                                                </div>
+                                            </div>
+                                            <div id="WorkDataTab">
+                                                <!--@using (Html.BeginForm("CreateWorkData", "HrPslEmployee", new { area = "HrPersonnel" }, FormMethod.Post, true, new { enctype = "multipart/form-data", id = "WorkDataFormId" }))
+                                                {
+                                                @Html.HiddenFor(p => p.HrPslEmployeeId)-->
+                                                <div class="container-fluid">
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label>تاريخ الانضمام </label>
+                                                                <input ng-model="employees.DateOfJoin" class="form-control" type="date" />
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label>اسم الوظيفة </label>
+                                                                <select ng-model="employees.HrPslJobTitleID" ng-options="x.OptionValue as x.OptionText for x in JobTitleList" class="form-control">
+                                                                    <option value="">اختر عنصر</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label>المستوى الوظيفى </label>
+                                                                <select ng-model="employees.HrPslEmployeeJobLevelID" ng-options="x.OptionValue as x.OptionText for x in JobLevelList" class="form-control">
+                                                                    <option value="">اختر عنصر</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label>الفرع </label>
+                                                                <select ng-model="employees.HrPslBranchID" ng-options="x.COM_BRN_ID as x.COM_BRN_AR_NAME for x in CompanyBranchesList" class="form-control">
+                                                                    <option value="">اختر عنصر</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label> الادارة </label>
+                                                                <select ng-model="employees.HrPslManagementId" class="form-control">
+                                                                    <option value="">اختر عنصر</option>
+                                                                    <option value="1">الدعم الفنى</option>
+                                                                    <option value="2">الموارد البشرية</option>
+                                                                    <option value="3">الحسابات</option>
+                                                                    <option value="4">الامن</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label>القسم </label>
+                                                                <select ng-model="employees.HrPslDeptartmentID" ng-options="x.OptionValue as x.OptionText for x in DeptartmentList" class="form-control">
+                                                                    <option value="">اختر عنصر</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label>نوع العقد </label>
+                                                                <select ng-model="employees.HrPslContractTypeID" class="form-control">
+                                                                    <option value="">اختر عنصر</option>
+                                                                    <option value="1">دوام كامل</option>
+                                                                    <option value="2">دوام جزئى</option>
+                                                                    <option value="3">عمل حر</option>
+                                                                    <option value="4">مشروع</option>
+                                                                    <option value="5">بالساعة</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label>حالة الموظف </label>
+                                                                <select ng-model="employees.HrPslEmployeeStatusID" ng-options="x.OptionValue as x.OptionText for x in EmployeeStatusList" class="form-control">
+                                                                    <option value="">اختر عنصر</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label>رقم هاتف العمل </label>
+                                                                <input ng-model="employees.WorkMobileNum" class="form-control" type="text" />
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label>المدير المباشر</label>
+                                                                <select ng-model="employees.DirectManagerID" ng-options="x.OptionValue as x.OptionText for x in DirectManagerList" class="form-control">
+                                                                    <option value="">اختر عنصر</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!--<div class="row">
+                                                        <div class="col-md-1 col-md-offset-11">
+                                                            <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-ok"></span>&ensp; حفظ </button>
+                                                        </div>
+                                                    </div>-->
+                                                </div>
+                                            </div>
+                                            <div id="ContactDataTab">
+                                                <!--@using (Html.BeginForm("AddContactType", "HrPslEmployee", new { area = "HrPersonnel" }, FormMethod.Post, true, new { enctype = "multipart/form-data", id = "ContactTypeFormId" }))
+                                                {
+                                                @Html.HiddenFor(p => p.HrPslEmployeeContactsID)-->
+                                                <!--<input type="hidden" id="ContactTypeEmployeeId" name="HrPslEmployeeID" value="@ViewBag.EmployeeId" />-->
+                                                <div class="container-fluid">
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label>وسيلة الإتصال </label>
+                                                                <select ng-model="EmployeeContact.ContactTypeId" name="ContactTypeId" ng-options="x.OptionValue as x.OptionText for x in ContactTypeList" id="ContactTypeId" class="form-control">
+                                                                    <option value="">اختر عنصر</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label>الإتصال بـ </label>
+                                                                <input ng-model="EmployeeContact.ContactText" name="ContactText" id="ContactText" class="form-control" type="text" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <div class="form-group">
+                                                                <label>ملاحظات</label>
+                                                                <textarea ng-model="EmployeeContact.Notes" name="Notes" id="Notes" class="form-control"></textarea>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-1 col-md-offset-11">
+                                                            <button class="btn btn-success" type="button" ng-click="AddContact()"><span class="glyphicon glyphicon-plus"></span>&ensp; اضافة </button>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <table class="table table-condensed table-hover" style="width:100%;" id="ContactTypeTableId">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>#</th>
+                                                                        <th>وسيلة الإتصال</th>
+                                                                        <th>الإتصال بـ</th>
+                                                                        <th>ملاحظات</th>
+                                                                        <th></th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr ng-repeat="Contact in employees.Contacts track by $index">
+                                                                        <td>{{$index + 1}}</td>
+                                                                        <td>{{ (ContactTypeList | filter : {OptionValue:Contact.ContactTypeId} : true)[0].OptionText }}</td>
+                                                                        <td>{{Contact.ContactText}}</td>
+                                                                        <td>{{Contact.Notes}}</td>
+                                                                        <td>
+                                                                            <button class='btn btn-warning' ng-click="EditContact(Contact)" type='button'><span class='glyphicon glyphicon-edit'></span> تعديل</button>&ensp;
+                                                                            <button class='btn btn-danger' ng-click="DeleteContact($index)" type='button'><span class='glyphicon glyphicon-remove'></span> حذف</button>&ensp;
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div id="AcademicDegreeDataTab">
+                                                <!--@using (Html.BeginForm("AddAcademicDegree", "HrPslEmployee", new { area = "HrPersonnel" }, FormMethod.Post, true, new { enctype = "multipart/form-data", id = "AcademicDegreeFormId" }))
+                                                {
+                                                @Html.HiddenFor(p=>p.HrPslEmployeeAcademicDegreeID)-->
+                                                <!--<input type="hidden" id="WorkDataEmployeeId" name="HrPslEmployeeID" value="@ViewBag.EmployeeId" />-->
+                                                <div class="container-fluid">
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label> الدرجة العلمية</label>
+                                                                <select ng-model="EmployeeAcademicDegree.AcademicDegreeId" name="AcademicDegreeId" ng-options="x.OptionValue as x.OptionText for x in AcademicDegreeList" id="AcademicDegreeId" class="form-control">
+                                                                    <option value="">اختر عنصر</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label> تاريخ الحصول على الدرجة </label>
+                                                                <input ng-model="EmployeeAcademicDegree.DegreeDate" name="DegreeDate" id="DegreeDate" class="form-control" type="date" />
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label> التقدير </label>
+                                                                <input ng-model="EmployeeAcademicDegree.Grade" name="Grade" id="Grade" class="form-control" type="text" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label> جامعة/كلية/معهد </label>
+                                                                <input ng-model="EmployeeAcademicDegree.University" name="University" id="University" class="form-control" type="text" />
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label> التخصص</label>
+                                                                <input ng-model="EmployeeAcademicDegree.Major" name="Major" id="Major" class="form-control" type="text" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <div class="form-group">
+                                                                <label> ملاحظات </label>
+                                                                <textarea ng-model="EmployeeAcademicDegree.Notes" name="Notes" id="Notes" class="form-control"></textarea>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-1 col-md-offset-11">
+                                                            <button type="button" class="btn btn-success" ng-click="AddAcademicDegree()"><span class="glyphicon glyphicon-plus"></span>&ensp; اضافة </button>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <table class="table table-condensed table-hover" style="width:100%;" id="AcademicDegreeTableId">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>#</th>
+                                                                        <th>الدرجة العلمية</th>
+                                                                        <th>تاريخ الحصول على الدرجة</th>
+                                                                        <th>جامعة/كلية/معهد</th>
+                                                                        <th>التخصص</th>
+                                                                        <th>التقدير</th>
+                                                                        <th>ملاحظات</th>
+                                                                        <th></th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr ng-repeat="AcademicDegree in employees.AcademicDegrees track by $index">
+                                                                        <td>{{$index + 1}}</td>
+                                                                        <td>{{(AcademicDegreeList | filter : {OptionValue:AcademicDegree.AcademicDegreeId} : true)[0].OptionText}}</td>
+                                                                        <td>{{AcademicDegree.DegreeDate | date: "yyyy-MM-dd"}}</td>
+                                                                        <td>{{AcademicDegree.Grade}}</td>
+                                                                        <td>{{AcademicDegree.University}}</td>
+                                                                        <td>{{AcademicDegree.Major}}</td>
+                                                                        <td>{{AcademicDegree.Notes}}</td>
+                                                                        <td>
+                                                                            <button class='btn btn-warning' ng-click="EditAcademicDegree(AcademicDegree)" type='button'><span class='glyphicon glyphicon-edit'></span> تعديل</button>&ensp;
+                                                                            <button class='btn btn-danger' ng-click="DeleteAcademicDegree($index)" type='button'><span class='glyphicon glyphicon-remove'></span> حذف</button>&ensp;
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div id="ExperienceDataTab">
+                                                <!--@using (Html.BeginForm("AddExperiences", "HrPslEmployee", new { area = "HrPersonnel" }, FormMethod.Post, true, new { enctype = "multipart/form-data", id = "ExperienceFormId" }))
+                                                {
+                                                @Html.HiddenFor(p=>p.HrPslEmployeeExperienceID)-->
+                                                <!--<input type="hidden" id="ExperiencesEmployeeId" name="HrPslEmployeeID" value="@ViewBag.EmployeeId" />-->
+                                                <div class="container-fluid">
+                                                    <div class="row">
+                                                        <div class="col-md-3">
+                                                            <div class="form-group">
+                                                                <label> المسمى الوظيفى </label>
+                                                                <input ng-model="EmployeeExperience.JobTitle" name="JobTitle" id="JobTitle" class="form-control" type="text" />
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <div class="form-group">
+                                                                <label> المؤسسة / الشركة </label>
+                                                                <input ng-model="EmployeeExperience.CompanyName" name="CompanyName" id="CompanyName" class="form-control" type="text" />
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <div class="form-group">
+                                                                <label> من تاريخ </label>
+                                                                <input ng-model="EmployeeExperience.FromDate" name="FromDate" id="FromDate" class="form-control" type="date" />
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <div class="form-group">
+                                                                <label> إلى تاريخ </label>
+                                                                <input ng-model="EmployeeExperience.ToDate" name="ToDate" id="ToDate" class="form-control" type="date" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <div class="form-group">
+                                                                <label>المهام </label>
+                                                                <textarea ng-model="EmployeeExperience.Notes" name="Notes" id="Notes" class="form-control"></textarea>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-1 col-md-offset-11">
+                                                            <button type="button" class="btn btn-success" ng-click="AddExperience()"><span class="glyphicon glyphicon-plus"></span>&ensp; اضافة </button>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <table class="table table-condensed table-hover" style="width:100%;" id="ExperienceTableId">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>#</th>
+                                                                        <th>المسمى الوظيفى</th>
+                                                                        <th>المؤسسة / الشركة</th>
+                                                                        <th>من تاريخ</th>
+                                                                        <th>إلى تاريخ</th>
+                                                                        <th>المهام</th>
+                                                                        <th></th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr ng-repeat="Experience in employees.Experiences track by $index">
+                                                                        <td>{{$index + 1}}</td>
+                                                                        <td>{{Experience.JobTitle}}</td>
+                                                                        <td>{{Experience.CompanyName}}</td>
+                                                                        <td>{{Experience.FromDate | date: "yyyy-MM-dd"}}</td>
+                                                                        <td>{{Experience.ToDate | date: "yyyy-MM-dd"}}</td>
+                                                                        <td>{{Experience.Notes}}</td>
+                                                                        <td>
+                                                                            <button class='btn btn-warning' ng-click="EditExperience(Experience)" type='button'><span class='glyphicon glyphicon-edit'></span> تعديل</button>&ensp;
+                                                                            <button class='btn btn-danger' ng-click="DeleteExperience($index)" type='button'><span class='glyphicon glyphicon-remove'></span> حذف</button>&ensp;
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div id="TrainingCourceDataTab">
+                                                <!--@using (Html.BeginForm("AddTrainingCource", "HrPslEmployee", new { area = "HrPersonnel" }, FormMethod.Post, true, new { enctype = "multipart/form-data", id = "TrainingCourceFormId" }))
+                                                {
+                                                @Html.HiddenFor(p=>p.HrPslEmployeeTrainingCourcesID)-->
+                                                <!--<input type="hidden" id="TrainingCourceEmployeeId" name="HrPslEmployeeID" value="@ViewBag.EmployeeId" />-->
+                                                <div class="container-fluid">
+                                                    <div class="row">
+                                                        <div class="col-md-3">
+                                                            <div class="form-group">
+                                                                <label>اسم الدورة التدريبية </label>
+                                                                <input ng-model="EmployeeTrainingCourses.CourseName" name="CourseName" id="CourseName" class="form-control" type="text" />
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <div class="form-group">
+                                                                <label> المركز / الشركة </label>
+                                                                <input ng-model="EmployeeTrainingCourses.CenterName" name="CenterName" id="CenterName" class="form-control" type="text" />
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <div class="form-group">
+                                                                <label>التقدير </label>
+                                                                <input ng-model="EmployeeTrainingCourses.Grade" name="Grade" id="TrainingCourceGrade" class="form-control" type="text" />
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <div class="form-group">
+                                                                <label>التاريخ </label>
+                                                                <input ng-model="EmployeeTrainingCourses.Date" name="Date" id="TrainingCourceDate" class="form-control" type="date" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <div class="form-group">
+                                                                <label> ملاحظات </label>
+                                                                <textarea ng-model="EmployeeTrainingCourses.Notes" name="Notes" id="TrainingCourceNotes" class="form-control"></textarea>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-1 col-md-offset-11">
+                                                            <button type="button" class="btn btn-success" ng-click="AddCourse()"><span class="glyphicon glyphicon-plus"></span>&ensp; اضافة </button>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <table class="table table-condensed table-hover" style="width:100%;" id="TrainingCourceTableId">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>#</th>
+                                                                        <th>اسم الدورة التدريبية</th>
+                                                                        <th>المركز / الشركة</th>
+                                                                        <th>التقدير</th>
+                                                                        <th>التاريخ</th>
+                                                                        <th>ملاحظات</th>
+                                                                        <th></th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr ng-repeat="Course in employees.TrainingCourses track by $index">
+                                                                        <td>{{$index + 1}}</td>
+                                                                        <td>{{Course.CourseName}}</td>
+                                                                        <td>{{Course.CenterName}}</td>
+                                                                        <td>{{Course.Grade}}</td>
+                                                                        <td>{{Course.Date | date: "yyyy-MM-dd"}}</td>
+                                                                        <td>{{Course.Notes}}</td>
+                                                                        <td>
+                                                                            <button class='btn btn-warning' ng-click="EditCourse(Course)" type='button'><span class='glyphicon glyphicon-edit'></span> تعديل</button>&ensp;
+                                                                            <button class='btn btn-danger' ng-click="DeleteCourse($index)" type='button'><span class='glyphicon glyphicon-remove'></span> حذف</button>&ensp;
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div id="FamilyDataTab">
+                                                <!--@using (Html.BeginForm("AddFamilyData", "HrPslEmployee", new { area = "HrPersonnel" }, FormMethod.Post, true, new { enctype = "multipart/form-data", id = "FamilyDataFormId" }))
+                                                {
+                                                @Html.HiddenFor(p=>p.HrPslEmployeeFamilyDetailsID)-->
+                                                <!--<input type="hidden" id="FamilyDataEmployeeId" name="HrPslEmployeeID" value="@ViewBag.EmployeeId" />-->
+                                                <div class="container-fluid">
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label> الاسم العربى </label>
+                                                                <input ng-model="EmployeeFamilyDetail.ArName" name="ArName" id="FamilyDataArName" class="form-control" type="text" />
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label> الاسم اللاتينى </label>
+                                                                <input ng-model="EmployeeFamilyDetail.EnName" name="EnName" id="FamilyDataEnName" class="form-control" type="text" />
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label> صلة القرابة </label>
+                                                                <select ng-model="EmployeeFamilyDetail.RelationshipType" ng-options="x.OptionValue as x.OptionText for x in RelationshipTypeList" name="RelationshipType" id="FamilyDataRelationshipType" class="form-control">
+                                                                    <option value="">اختر عنصر</option>
+                                                                    <!--<option value="1">زوج / زوجة</option>
+                                                                    <option value="2">ابن</option>
+                                                                    <option value="3">ابنة</option>
+                                                                    <option value="4">اب</option>
+                                                                    <option value="5">ام</option>
+                                                                    <option value="6">اخ</option>
+                                                                    <option value="7">اخت</option>
+                                                                    <option value="8">عم / خال</option>-->
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label>تاريخ الميلاد </label>
+                                                                <input ng-model="EmployeeFamilyDetail.BirthDate" name="BirthDate" id="FamilyDataBirthDate" class="form-control" type="date" />
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label> الهاتف </label>
+                                                                <input ng-model="EmployeeFamilyDetail.Phone" name="Phone" id="FamilyDataPhone" class="form-control" type="text" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-1 col-md-offset-11">
+                                                            <button type="button" class="btn btn-success" ng-click="AddFamily()"><span class="glyphicon glyphicon-plus"></span>&ensp; اضافة </button>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <table class="table table-condensed table-hover" style="width:100%;" id="FamilyDataTableId">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>#</th>
+                                                                        <th>الاسم العربى</th>
+                                                                        <th>الاسم اللاتينى</th>
+                                                                        <th>صلة القرابة</th>
+                                                                        <th>تاريخ الميلاد</th>
+                                                                        <th>الهاتف</th>
+                                                                        <th></th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr ng-repeat="Family in employees.FamilyDetails track by $index">
+                                                                        <td>{{$index + 1}}</td>
+                                                                        <td>{{Family.ArName}}</td>
+                                                                        <td>{{Family.EnName}}</td>
+                                                                        <td>{{(RelationshipTypeList | filter : {OptionValue:Family.RelationshipType} : true)[0].OptionText}}</td>
+                                                                        <td>{{Family.BirthDate | date: "yyyy-MM-dd"}}</td>
+                                                                        <td>{{Family.Phone}}</td>
+                                                                        <td>
+                                                                            <button class='btn btn-warning' ng-click="EditFamily(Family)" type='button'><span class='glyphicon glyphicon-edit'></span> تعديل</button>&ensp;
+                                                                            <button class='btn btn-danger' ng-click="DeleteFamily($index)" type='button'><span class='glyphicon glyphicon-remove'></span> حذف</button>&ensp;
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div id="HealthDataTab">
+                                                <!--@using (Html.BeginForm("AddHealthData", "HrPslEmployee", new { area = "HrPersonnel" }, FormMethod.Post, true, new { enctype = "multipart/form-data", id = "HealthFormId" }))
+                                                {
+                                                @Html.HiddenFor(p => p.HrPslEmployeeId)-->
+                                                <div class="container-fluid">
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label>فصيلة الدم</label>
+                                                                <input ng-model="employees.BloodGroup" class="form-control" type="text" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <div class="checkBox">
+                                                                    <label><input type="checkbox" ng-model="employees.HasChronicDisease" name="HasChronicDisease" id="HasChronicDisease" /> يعانى من مرض مزمن </label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row" id="ChronicDiseaseRow" ng-show="employees.HasChronicDisease">
+                                                        <div class="col-md-12">
+                                                            <div class="form-group">
+                                                                <label>تفاصيل المرض </label>
+                                                                <textarea ng-model="employees.ChronicDiseaseDescreption" class="form-control"></textarea>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <div class="checkBox">
+                                                                    <label><input type="checkbox" ng-model="employees.HasInjuries" name="HasInjuries" id="HasInjuries" />  لديه اصابة </label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row" id="InjuriesRow" ng-show="employees.HasInjuries">
+                                                        <div class="col-md-12">
+                                                            <div class="form-group">
+                                                                <label>تفاصيل الاصابة </label>
+                                                                <textarea ng-model="employees.InjuriesDescreption" class="form-control"></textarea>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!--<div class="row">
+                                                        <div class="col-md-1 col-md-offset-11">
+                                                            <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-ok"></span>&ensp; حفظ </button>
+                                                        </div>
+                                                    </div>-->
+                                                </div>
+                                            </div>
+                                            <div id="ExtraDataTab">
+                                                <!--@using (Html.BeginForm("AddExtraData", "HrPslEmployee", new { area = "HrPersonnel" }, FormMethod.Post, true, new { enctype = "multipart/form-data", id = "ExtraDataFormId" }))
+                                                {
+                                                @Html.HiddenFor(p => p.HrPslEmployeeId)-->
+                                                <div class="container-fluid">
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <div class="checkBox">
+                                                                    <label><input type="checkbox" ng-model="employees.HasCar" name="HasCar" id="HasCar" />هل تمتلك سيارة </label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div id="CarData" ng-show="employees.HasCar">
+                                                        <div class="row">
+                                                            <div class="col-md-4">
+                                                                <div class="form-group">
+                                                                    <label> رقم رخصة السيارة</label>
+                                                                    <input ng-model="employees.DrivingLicenseNumber" class="form-control" type="text" />
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <div class="form-group">
+                                                                    <label> تاريخ اصدار الرخصة </label>
+                                                                    <input ng-model="employees.DrivingLicenseIssueDate" class="form-control" type="date" />
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <div class="form-group">
+                                                                    <label> تاريخ انتهاء صلاحية الرخصة</label>
+                                                                    <input ng-model="employees.DrivingLicenseExpireDate" class="form-control" type="date" />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-4">
+                                                                <div class="form-group">
+                                                                    <label> جهة الاصدار </label>
+                                                                    <input ng-model="employees.DrivingLicenseIssuer" class="form-control" type="text" />
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <div class="form-group">
+                                                                    <label> نوع الرخصة </label>
+                                                                    <select ng-model="employees.DrivingLicenseType" class="form-control">
+                                                                        <option value="">اختر عنصر</option>
+                                                                        <option value="1">اولى</option>
+                                                                        <option value="2">ثانية</option>
+                                                                        <option value="3">ثالثة</option>
+                                                                        <option value="4">خاصة</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label>البنك</label>
+                                                                <select ng-model="employees.GlBankID" ng-options="x.OptionValue as x.OptionText for x in BankList" class="form-control">
+                                                                    <option value="">اختر عنصر</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label>رقم حساب البنك</label>
+                                                                <input ng-model="employees.BankAccountNumber" class="form-control" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!--<div class="row">
+                                                        <div class="col-md-1 col-md-offset-11">
+                                                            <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-ok"></span>&ensp; حفظ </button>
+                                                        </div>
+                                                    </div>-->
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="panel">
+                            <!--<div class="panel-body panel-white">
+
+                                <div class="col-md-10">
+                                    <div ng-class="{'has-error': test.code.$error.required}" class="">
+                                        <div class="form-group col-md-4">
+                                            <label data-rt="EMP_CODE">كود الموظف:</label>
+                                            <div class="help-block error" style="display:inline" ng-show="test.code.$error.required">*</div>
+                                            <input type="text" class="form-control" name="code" placeholder="كود الموظف" ng-model="employees.EMP_CODE" data-rte="EMP_CODE" ng-required="inputReuired.EMP_CODE">
+                                        </div>
+                                    </div>
+
+                                    <div ng-class="{'has-error': test.ddljob.$error.required}" class="form-group">
+                                        <div class="form-group col-md-4">
+                                            <label data-rt="EMP_TYPE_ID">نوع الوظيفة:</label>
+                                            <div class="help-block error" style="display:inline" ng-show="test.ddljob.$error.required">*</div>
+                                            <select ng-model="employees.EMP_TYPE_ID" name="ddljob" class="js-example-basic-hide-search js-states form-control" ng-options="x.EMP_TYPE_ID as x.EMP_TYPE_AR_NAME for x in EmployeeTypesList" data-rte="EMP_TYPE_ID" ng-required="inputReuired.EMP_TYPE_ID">
+                                                <option value="">اختر نوع الوظيفة</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div ng-class="{'has-error': test.arname.$error.required}" class="form-group">
+                                        <div class="form-group col-md-4">
+                                            <label data-rt="EMP_AR_NAME">اسم الموظف العربى:</label>
+                                            <div class="help-block error" style="display:inline" ng-show="test.arname.$error.required">*</div>
+                                            <input type="text" name="arname" class="form-control" placeholder="اسم الموظف العربى" ng-model="employees.EMP_AR_NAME" data-rte="EMP_AR_NAME" ng-required="inputReuired.EMP_AR_NAME">
+                                        </div>
+                                    </div>
+
+                                    <div ng-class="{'has-error': test.enname.$error.required}" class="form-group">
+                                        <div class="form-group col-md-4">
+                                            <label data-rt="EMP_EN_NAME">اسم الموظف اللاتينى:</label>
+                                            <div class="help-block error" style="display:inline" ng-show="test.enname.$error.required">*</div>
+                                            <input type="text" name="enname" class="form-control" placeholder="اسم الموظف اللاتينى" ng-model="employees.EMP_EN_NAME" data-rte="EMP_EN_NAME" ng-required="inputReuired.EMP_EN_NAME">
+                                        </div>
+                                    </div>
+
+                                    <div ng-class="{'has-error': test.national.$error.required}" class="form-group col-md-4">
+                                        <label data-rt="EMP_NATIONAL_ID">الرقم القومي:</label>
+                                        <div class="help-block error" style="display:inline" ng-show="test.national.$error.required">*</div>
+                                        <input type="text" name="national" class="form-control" placeholder="الرقم القومي" ng-model="employees.EMP_NATIONAL_ID" data-rte="EMP_NATIONAL_ID" only-Number ng-required="inputReuired.EMP_NATIONAL_ID">
+                                    </div>
+
+
+                                    <div ng-class="{'has-error': test.nationality.$error.required}" class="form-group">
+                                        <div class="form-group col-md-4">
+                                            <label data-rt="NATIONALITY_ID">الجنسية:</label>
+                                            <div class="help-block error" style="display:inline" ng-show="test.nationality.$error.required">*</div>
+                                            <select ng-model="employees.NATIONALITY_ID" name="nationality" class="js-example-basic-hide-search js-states form-control" ng-options="x.NATION_ID as x.NATIONALITY_AR_NAME for x in NationList" data-rte="NATIONALITY_ID" ng-required="inputReuired.NATIONALITY_ID">
+                                                <option value="">اختر الجنسية</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+
+                                        <div ng-class="{'has-error': test.account.$error.required }" class="form-group col-md-6">
+                                            <label data-rt="ACC_ID">الحساب الخاص بالموظف:</label><div class="help-block error" style="display:inline" ng-show="test.account.$error.required">*</div>
+                                            <select ng-model="employees.ACC_ID" name="account" class="js-example-basic-hide-search js-states form-control" ng-options="x.ACC_ID as x.ACC_AR_NAME for x in CustomersAccountsList" data-rte="ACC_ID" ng-required="inputReuired.ACC_ID">
+                                                <option value="">اختر الحساب</option>
+                                            </select>
+                                        </div>
+                                        <div ng-class="{'has-error': test.barcode.$error.required}" class="form-group col-md-6">
+                                            <label data-rt="EMP_BARCODE">الباركود الخاص بالموظف:</label><div class="help-block error" style="display:inline" ng-show="test.barcode.$error.required">*</div>
+                                            <input type="text" name="barcode" class="form-control" placeholder="الباركود الخاص بالموظف" ng-model="employees.EMP_BARCODE" data-rte="EMP_BARCODE" ng-required="inputReuired.EMP_BARCODE">
+                                        </div>
+                                        <div ng-class="{'has-error': test.notes.$error.required }" class="form-group col-md-12">
+                                            <label data-rt="EMP_REMARKS">ملاحظات:</label><div class="help-block error" style="display:inline" ng-show="test.notes.$error.required">*</div>
+                                            <textarea name="notes" rows="5" style="resize:none;" class="form-control" placeholder="ملاحظات" ng-model="employees.EMP_REMARKS" data-rte="EMP_REMARKS" ng-required="inputReuired.EMP_REMARKS"></textarea>
+                                        </div>
+                                    </div>
+
+                                <div class="col-md-2">
+                                    <div class="space12 center margin-top-30 margin-bottom-30-30">
+                                        <div class="help-block error" style="display:inline" ng-show="test.itemImg.$error.required">*</div>
+                                        <img id="imgPersonal" class="img-responsive img-rounded img-thumbnail margin-bottom-15" style="width:100%;height:150px !important;" ng-src="{{imageSrc}}" alt="اختر صورة" data-rte="EMP_PHOTO" />
+
+                                        <span class="btn btn btn-primary btn-block fileinput-button">
+                                            <i class="glyphicon glyphicon-plus"></i> <span>{{ moduleResourse["BrowseButton"] }}</span>
+                                            <input type="file" class="btn btn-primary" title="استعراض" name="itemImg" style="width:100% !important;" ng-model-instant onchange="angular.element(this).scope().imageUpload(event)" />
+                                        </span>
+
+                                    </div>
+                                </div>
+
+                                <!--  
+                                <div class="col-sm-12 col-lg-12">
+                                    <div class="panel panel-white">
+                                        <div class="panel-heading border-bottom">
+                                            <div class="panel-title">
+                                                حالة الموظف
+                                            </div>
+                                        </div>
+                                        <div class="panel-body">
+                                            <div class="form-group">
+                                                <div class="form-group col-md-4">
+                                                    <label>الحالة:</label>
+                                                    <select ng-model="EmpNationStatus" ng-change="getUserStatusOfNat();" class="js-example-basic-hide-search js-states form-control" ng-options="x.typeID as x.typeName for x in employeeNatList"></select>
+                                                </div>
+                                            </div>
+                                            <div class="row"></div>
+                                            <div ng-show="empNatStaShow" ng-class="{'has-error': test.national.$error.required}" class="form-group col-md-4">
+                                                <label data-rt="EMP_NATIONAL_ID">الرقم القومي:</label><div class="help-block error" style="display:inline" ng-show="test.national.$error.required">*</div>
+                                                <input type="text" name="national" class="form-control" placeholder="الرقم القومي" ng-model="employees.EMP_NATIONAL_ID" data-rte="EMP_NATIONAL_ID" only-Number ng-required="empNatStaShow">
+                                            </div>
+                                            <div ng-show="empNatStaShow2" class="form-group col-md-12">
+                                                <div class="form-group col-md-3" ng-class="{'has-error': test.Visa_Number.$error.required}">
+                                                    <label data-rt="Visa_Number">رقم الاقامة :</label><div class="help-block error" style="display:inline" ng-show="test.Visa_Number.$error.required">*</div>
+                                                    <input type="text" name="Visa_Number" class="form-control" placeholder="رقم الاقامة" ng-model="employees.Visa_Number" data-rte="Visa_Number" only-Number ng-required="empNatStaShow2">
+                                                </div>
+                                                <div class="form-group col-md-3" ng-class="{'has-error': test.Visa_ExpDateM.$error.required}">
+                                                    <label data-rt="Visa_ExpDateM">تاريخ الانتهاء الميلادى :</label><div class="help-block error" style="display:inline" ng-show="test.Visa_ExpDateM.$error.required">*</div>
+                                                    <input type="date" name="Visa_ExpDateM" class="form-control" placeholder="تاريخ الانتهاء الميلادى" ng-model="employees.Visa_ExpDateM" data-rte="Visa_ExpDateM" ng-required="empNatStaShow2">
+                                                </div>
+                                                <div class="form-group col-md-3" ng-class="{'has-error': test.Visa_ExpDateH.$error.required}">
+                                                    <label data-rt="Visa_ExpDateH">تاريخ الانتهاء الهجري :</label><div class="help-block error" style="display:inline" ng-show="test.Visa_ExpDateH.$error.required">*</div>
+                                                    <input type="date" name="Visa_ExpDateH" class="form-control" placeholder="تاريخ الانتهاء الهجري" ng-model="employees.Visa_ExpDateH" data-rte="Visa_Number" ng-required="empNatStaShow2">
+                                                </div>
+                                                <div class="form-group col-md-3" ng-class="{'has-error': test.Pass_Number.$error.required}">
+                                                    <label data-rt="Pass_Number">رقم جواز السفر :</label><div class="help-block error" style="display:inline" ng-show="test.Pass_Number.$error.required">*</div>
+                                                    <input type="text" name="Pass_Number" class="form-control" placeholder="رقم جواز السفر " ng-model="employees.Pass_Number" data-rte="Pass_Number" only-Number ng-required="empNatStaShow2">
+                                                </div>
+
+                                                <div class="form-group col-md-3" ng-class="{'has-error': test.Pass_ExpDate.$error.required}">
+                                                    <label data-rt="Pass_ExpDate"> تاريخ الانتهاء : </label><div class="help-block error" style="display:inline" ng-show="test.Pass_ExpDate.$error.required">*</div>
+                                                    <input type="date" name="Pass_ExpDate" class="form-control" placeholder="تاريخ الانتهاء" ng-model="employees.Pass_ExpDate" data-rte="Pass_ExpDate" ng-required="empNatStaShow2">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </div>-->
+                            <!--/.panel-body-->
+                            <!--<div class="row">
+                                <div class="col-md-4">
+                                    <div class="panel panel-white min-height-270">
+                                        <div class="panel-heading border-bottom">
+                                            <div class="panel-title">{{ moduleResourse["GroupThree"] }}</div>
+                                        </div>
+
+                                        <div class="panel-body min-height-280">
+                                            <div ng-class="{'has-error': test.nation.$error.required}" class="form-group">
+                                                <div class="form-group col-md-6">
+                                                    <label data-rt="NATION_ID">الدولة:</label>
+                                                    <div class="help-block error" style="display:inline" ng-show="test.nation.$error.required">*</div>
+                                                    <select ng-model="employees.NATION_ID" name="nation" class="js-example-basic-hide-search js-states form-control" ng-options="x.NATION_ID as x.NATION_AR_NAME for x in NationList" ng-change="getAllNastionGovernate()" data-rte="NATION_ID" ng-required="inputReuired.NATION_ID">
+                                                        <option value="">اختر الدولة</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div ng-class="{'has-error': test.gov.$error.required}" class="form-group">
+                                                <div class="form-group col-md-6">
+                                                    <label data-rt="GOV_ID">المحافظه:</label>
+                                                    <div class="help-block error" style="display:inline" ng-show="test.gov.$error.required">*</div>
+                                                    <select ng-model="employees.GOV_ID" name="gov" class="js-example-basic-hide-search js-states form-control" ng-options="x.GOV_ID as x.GOV_AR_NAME for x in GovernateListByNationID" ng-change="getAllGovernateTown()" data-rte="GOV_ID" ng-required="inputReuired.GOV_ID">
+                                                        <option value="">اختر المحافظة</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+
+                                            <div ng-class="{'has-error': test.town.$error.required}" class="form-group col-md-6">
+                                                <label data-rt="TOWN_ID">المركز:</label>
+                                                <div class="help-block error" style="display:inline" ng-show="test.town.$error.required">*</div>
+                                                <select ng-model="employees.TOWN_ID" name="town" class="js-example-basic-hide-search js-states form-control" ng-options="x.TOWN_ID as x.TOWN_AR_NAME for x in TownsListByGovernateID" ng-change="getAllTownVillage()" data-rte="TOWN_ID" ng-required="inputReuired.TOWN_ID">
+                                                    <option value="">اختر المركز</option>
+                                                </select>
+                                            </div>
+
+                                            <div ng-class="{'has-error': test.village.$error.required}" class="form-group col-md-6">
+                                                <label data-rt="VILLAGE_ID">الحي:</label>
+                                                <div class="help-block error" style="display:inline" ng-show="test.village.$error.required">*</div>
+                                                <select ng-model="employees.VILLAGE_ID" name="village" class="js-example-basic-hide-search js-states form-control" ng-options="x.VILLAGE_ID as x.VILLAGE_AR_NAME for x in VillagesListByTownID" data-rte="VILLAGE_ID" ng-required="inputReuired.VILLAGE_ID">
+                                                    <option value="">اختر الحي</option>
+                                                </select>
+                                            </div>
+                                            <div ng-class="{'has-error': test.address.$error.required}" class="form-group col-md-12">
+                                                <label data-rt="EMP_ADDR_REMARKS">تفاصيل العنوان:</label>
+                                                <div class="help-block error" style="display:inline" ng-show="test.address.$error.required">*</div>
+                                                <input type="text" name="address" class="form-control" placeholder="تفاصيل العنوان" ng-model="employees.COM_STORE_ADDR_REMARKS" data-rte="EMP_ADDR_REMARKS" ng-required="inputReuired.EMP_ADDR_REMARKS">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 no-padding">
+                                    <div class="panel panel-white">
+                                        <div class="panel-heading border-bottom">
+                                            <div class="panel-title">{{ moduleResourse["GroupTwo"] }}</div>
+                                        </div>
+                                        <div class="panel-body min-height-280">
+                                            <div ng-class="{'has-error': test.branch.$error.required}" class="form-group col-md-12">
+                                                <label data-rt="COM_BRN_ID">فرع الشركة:</label>
+                                                <div class="help-block error" style="display:inline" ng-show="test.branch.$error.required">*</div>
+                                                <select ng-model="employees.COM_BRN_ID" name="branch" class="js-example-basic-hide-search js-states form-control" ng-options="x.COM_BRN_ID as x.COM_BRN_AR_NAME for x in CompanyBranchesList" ng-change="GetDepartmentByCompanyBranchID()" data-rte="COM_BRN_ID" ng-required="inputReuired.COM_BRN_ID">
+                                                    <option value="">اختر فرع الشركة</option>
+                                                </select>
+                                            </div>
+                                            <div ng-class="{'has-error': test.department.$error.required}" class="form-group col-md-12 no-padding">
+                                                <label data-rt="DEPT_ID">القسم:</label>
+                                                <div class="help-block error" style="display:inline" ng-show="test.department.$error.required">*</div>
+                                                <select ng-model="employees.DEPT_ID" name="department" class="js-example-basic-hide-search js-states form-control" ng-options="x.DEPT_ID as x.DEPT_AR_NAME for x in GetDepartmentByCompanyBranchIDList" data-rte="DEPT_ID" ng-required="inputReuired.DEPT_ID">
+                                                    <option value="">اختر القسم</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="panel panel-white">
+                                        <div class="panel-heading border-bottom">
+                                            <div class="panel-title">
+                                                {{ moduleResourse["GroupFour"] }}
+                                            </div>
+                                        </div>
+                                        <div class="panel-body min-height-280">
+                                            <div class="no-border">
+
+                                                <div ng-class="{'has-error': test.telephone.$error.required}" class="form-group col-md-4">
+                                                    <label data-rt="Tel_ID">رقم التليفون </label>
+                                                    <div class="help-block error" style="display:inline" ng-show="test.telephone.$error.required">*</div>
+                                                    <input data-rte="Tel_ID" name="telephone" type="text" class="form-control" ng-model="teleNumber" placeholder="رقم التليفون" ng-required="inputReuired.Tel_ID">
+                                                </div>
+
+                                                <div ng-class="{'has-error': test.telecat.$error.required}" class="form-group col-md-4">
+                                                    <label data-rt="Tel_Type"> نوع التليفون </label>
+                                                    <div class="help-block error" style="display:inline" ng-show="test.telecat.$error.required">*</div>
+                                                    <select ng-model="teleCatId" name="telecat" class="js-example-basic-hide-search js-states form-control" ng-options="x.TELE_CAT_ID as x.TELE_CAT_AR_NAME for x in catList" data-rte="Tel_Type" ng-required="inputReuired.Tel_Type">
+                                                        <option value="">اختر نوع التليفون</option>
+                                                    </select>
+                                                </div>
+                                                <div class="form-group col-md-4">
+                                                    <label>  </label>
+                                                    <button type="submit" class="btn btn-block btn-info btn-wide" ng-click="addTeleToList()">{{ moduleResourse["AddOtherButton"] }}<i class="fa fa-plus-circle"></i></button>
+                                                </div>
+
+
+                                                <div class="form-group col-md-12">
+                                                    <table class="table table-responsive">
+                                                        <tr>
+                                                            <th data-rt="Tel_ID">رقم التليفون</th>
+                                                            <th data-rt="Tel_Type">نوع التليفون</th>
+                                                            <th></th>
+                                                        </tr>
+                                                        <tr ng-repeat="tele in TelephoneList">
+                                                            <td>{{tele.TELE_NUMBER}}</td>
+                                                            <td>{{tele.TeleCatName}}</td>
+                                                            <td><button type="button" class="btn btn-warning" ng-click="removeTeleItem($index)">{{ moduleResourse["DeleteButton"] }}  <i class="fa fa-remove"></i></button></td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>-->
+                            <div class="panel">
+                                <div class="panel-group accordion" id="accordion">
+                                    <div class="panel panel-white">
+                                        <div class="panel-heading">
+                                            <h5 class="panel-title"><a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" data-target="#collapseTwo"> <i class="icon-arrow"></i> {{ moduleResourse["GridHeaderText"] }} </a></h5>
+                                        </div>
+                                        <div id="collapseTwo" class="collapse">
+                                            <div class="panel-body panel-white">
+                                                <div class="col-md-12">
+                                                    <div class="table-responsive">
+                                                        <div class="col-md-3 pull-left margin-top-10 no-padding">
+                                                            <table class="table table-stylish">
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td class="center text-extra-large"><i class="ti-save"></i></td>
+                                                                        <td><span class="text-dark block">{{ moduleResourse["TotalRecordsText"] }} :</span></td>
+                                                                        <td class="center">{{employeesTotalCount}}</td>
+                                                                        <td class="center"><i class="fa fa-caret-down text-red"></i></td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+
+                                                        <div class="col-md-12 no-padding">
+                                                            <table class="table table-bordered table-hover table-full-width ps-scrollbar-x small  panel-full-screen  fc-scroller  " style="height:150px;overflow:auto;" id="sample-table-2">
+                                                                <thead>
+                                                                    <tr class="border-right success">
+                                                                        <th class="hidden-xs">#</th>
+                                                                        <th data-rt="EmployeeCode">كود الموظف</th>
+                                                                        <th data-rt="EmployeeFirstName">اسم الموظف العربى</th>
+                                                                        <th data-rt="EmployeeFirstNameEn">اسم الموظف اللاتينى</th>
+                                                                        <th data-rt="NationalID">الرقم القومي</th>
+                                                                        <!--<th data-rt="HrPslNationalityID">الجنسية</th>-->
+                                                                        <!--<th data-rt="ACC_ID">القسم</th>-->
+                                                                        <!--<th data-rt="EMP_BARCODE">الباركود الخاص بالموظف</th>-->
+                                                                        <th>تعديل / حذف</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr ng-repeat="emp in employeesList">
+                                                                        <td class="hidden-xs center">{{ $index + 1 }}</td>
+                                                                        <td>{{ emp.EmployeeCode }}</td>
+                                                                        <td>{{ emp.EmployeeFirstName + ' ' + emp.EmployeeLastName }}</td>
+                                                                        <td>{{ emp.EmployeeFirstNameEn + ' ' + emp.EmployeeLastNameEn }}</td>
+                                                                        <td class="hidden-xs">{{ emp.NationalID }}</td>
+                                                                        <!--<td class="hidden-xs">{{ emp.HrPslNationalityID }}</td>
+                                                                        <td class="hidden-xs">{{ emp.ACC_ID }}</td>
+                                                                        <td class="hidden-xs">{{ emp.EMP_BARCODE }}</td>-->
+                                                                        <td class="center">
+
+                                                                            <div class="visible-md visible-lg hidden-sm hidden-xs">
+                                                                                <a href="" ng-click="dirEnity(emp)" class="btn btn-transparent btn-xs" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fa fa-pencil"></i></a>
+                                                                                <a href="" ng-click="deleteEnity(emp)" class="btn btn-transparent btn-xs tooltips" data-toggle="tooltip" data-placement="top" title="Remove"><i class="fa fa-times fa fa-white"></i></a>
+                                                                            </div>
+
+                                                                            <div class="visible-xs visible-sm hidden-md hidden-lg">
+                                                                                <div class="btn-group dropdown ">
+                                                                                    <button type="button" class="btn btn-o btn-sm dropdown-toggle" data-toggle="dropdown">
+                                                                                        <i class="fa fa-cog"></i>&nbsp;<span class="caret"></span>
+                                                                                    </button>
+                                                                                    <ul class="dropdown-menu pull-right dropdown-light" role="menu">
+                                                                                        <li>
+                                                                                            <a href="" ng-click="dirEnity(emp)"> تعديل </a>
+                                                                                        </li>
+
+                                                                                        <li>
+                                                                                            <a href="" ng-click="deleteEnity(emp)"> حذف </a>
+                                                                                        </li>
+                                                                                        
+
+                                                                                    </ul>
+                                                                                </div>
+                                                                            </div>
+                                                                            <!--<a class="label partition-blue" href="" ng-click="dirEnity(emp)"><i class="glyphicon glyphicon-share"></i>  {{ moduleResourse["UpdateButton"] }}</a>
+                                                                <a class="label partition-red" href="" ng-click="deleteEnity(emp)"><i class="glyphicon glyphicon-remove-circle"></i> {{ moduleResourse["DeleteButton"] }}</a>-->
+
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+
+                                                        </div>
+                                                        <ul uib-pagination total-items="employeesTotalCount" ng-model="pageNum" max-size="maxSize" class="pagination-sm" boundary-links="true" num-pages="numPages" ng-change="pageChanged()"></ul>
+                                                        <pre>صفحه: {{pageNum}} / {{numPages}}</pre>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--/.panel-collapse-->
+                                    </div>
+                                    <!--/.panel-->
+                                </div>
+                                <!--/.panel-group-->
+                            </div>
+                            <!--/.panel /.panel-white-->
+                        </div>
+                        <!--/.panel-->
+                    </div>
+                    <!--/.col-md-12-->
+                </ng-form>
+            </div>
+            <!--/.container-fluid-->
+        </div>
+        <!--/.wrap-content-->
+    </div>
+    <!--/.main-content-->
+</div>
+<!--/.app-content-->

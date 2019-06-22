@@ -1,0 +1,182 @@
+﻿﻿@{
+    ViewBag.Title = "Index";
+}
+
+
+<div class="main-content">
+    <div class="wrap-content container" id="container">
+        <!-- start: PAGE TITLE -->
+
+
+
+        <section id="page-title" class="padding-top-15 padding-bottom-15">
+            <div class="row">
+                <div class="col-sm-6">
+                    <h1 class="mainTitle">Company Store Search Page</h1>
+                </div>
+            </div>
+        </section>
+
+        <!-- end: PAGE TITLE -->
+        <!-- start: SEARCH RESULT -->
+        <div class="container-fluid container-fullw bg-white">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="panel panel-white min-height-270">
+
+                        <div class="panel-body">
+                            <div class="col-lg-12 col-md-12 col-sm-3 col-xs-12">
+                                <div class="form-group">
+                                    <label>
+                                        Company Name
+                                    </label>
+                                    <input type="text" name="firstName" ng-model="" class="form-control" placeholder="Company Name">
+                                </div>
+                            </div>
+                            <div class="col-lg-12 col-md-12 col-sm-3 col-xs-12">
+                                <div class="form-group">
+                                    <label>
+                                        Store Name
+                                    </label>
+                                    <input type="number" name="firstName" ng-model="" class="form-control" placeholder="Store Name">
+                                </div>
+                            </div>
+                            <div class="col-lg-12 col-md-12 col-sm-3 col-xs-12">
+                                <div class="form-group">
+                                    <label class="control-label">
+                                        Cost Center
+                                    </label>
+                                    <input type="text" class="form-control" ng-model="" placeholder="Cost Center">
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-3 col-xs-6">
+                                <div class="form-group">
+                                    <label class="control-label">
+                                        From
+                                    </label>
+                                    <input type="text" class="form-control" ng-model="" placeholder="From ">
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-3 col-xs-6">
+                                <div class="form-group">
+                                    <label class="control-label">
+                                        To
+                                    </label>
+                                    <input type="text" class="form-control" ng-model="" placeholder="To ">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-3 col-xs-6" style="min-height:270px;">
+                        <div class="panel panel-white min-height-270">
+                            <div class="panel-heading border-bottom">
+                                <div class="panel-title">
+                                    Prices
+                                </div>
+                            </div>
+                            <div class="panel-body">
+                                <div class="input-group">
+                                    <div ng-repeat="sal in salesTypesList">
+                                        <input type="checkbox" name="rad_customer" value="sal.SELL_TYPE_ID" />&nbsp;{{sal.SELL_TYPE_AR_NAME}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-3 col-xs-6" style="min-height:270px;">
+                        <div class="panel panel-white min-height-270">
+                            <div class="panel-heading border-bottom">
+                                <div class="panel-title">
+                                    Report Options
+                                </div>
+                            </div>
+                            <div class="panel-body">
+                                <form>
+                                    <input type="checkbox" name="rad_customer" value="sal.SELL_TYPE_ID" />&nbsp;Show Companies<br />
+                                    <input type="checkbox" name="rad_customer" value="sal.SELL_TYPE_ID" />&nbsp;Stores Details<br />
+                                    <input type="checkbox" name="rad_customer" value="sal.SELL_TYPE_ID" />&nbsp; Show Expiring Date<br />
+                                    <input type="checkbox" name="rad_customer" value="sal.SELL_TYPE_ID" />&nbsp;Show Balance With 0    <br />
+                                </form>
+                                <label class="control-label">
+                                    Order
+                                </label>
+                                <input type="text" class="form-control" ng-model="" placeholder="To ">
+                                <label class="control-label">
+                                    Inventory price
+                                </label>
+                                <input type="text" class="form-control" ng-model="" placeholder="To">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12  ">
+        <button class="btn btn-wide btn-primary pull-left margin-right-10 margin-top-10"> Print <i class="ti-printer"></i></button>
+
+        <button class="btn btn-wide btn-default pull-left margin-right-10 margin-top-10" ng-click="clearEnity()">New <i class="fa fa-refresh"></i></button>
+
+
+        <button class="btn btn-wide btn-primary pull-left margin-right-10 margin-top-10" ng-click="GetSearchResult()">Search <i class="fa fa-search"></i> </button>
+
+    </div>
+</div>
+<hr />
+<div class="container-fluid container-fullw bg-white">
+    <div class="row">
+        <div class="col-md-12">
+
+            <div class="table-responsive">
+                <div class="col-md-3 pull-left ">
+                    <table class="table table-stylish">
+                        <tbody>
+                            <tr>
+                                <td class="center text-extra-large"><i class="ti-save"></i></td>
+                                <td><span class="text-dark block">Companys' Stores Total :</span></td>
+                                <td class="center">{{currencyCount}}</td>
+                                <td class="center"><i class="fa fa-caret-down text-red"></i></td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+                <table class="table table-bordered table-hover" id="sample-table-1">
+                    <thead>
+                        <tr class="warning">
+                            <th class="center">ID</th>
+                            <th class="center">Currency Code</th>
+                            <th class="center">Arabic Currency Name</th>
+                            <th class="center">English Currency Name</th>
+                            <th class="center">Arabic Sub Currency Name</th>
+                            <th class="center">English Sub Currency Name</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="cur in currencyList">
+                            <td class="center">
+                                {{$index+1}}
+                            </td>
+                            <td class="center"> {{cur.CURRENCY_CODE}} </td>
+                            <td class="center"><a href="#">{{cur.CURRENCY_AR_NAME}}</a></td>
+                            <td class="center">{{cur.CURRENCY_EN_NAME}}</td>
+                            <td class="center">{{cur.CURRENCY_SUB_AR_NAME}}</td>
+                            <td class="center">{{cur.CURRENCY_SUB_EN_NAME}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ul uib-pagination total-items="currencyCount" ng-model="pageNum" max-size="maxSize" class="pagination" boundary-links="true" num-pages="numPages" ng-change="pageChanged()"></ul>
+<pre>Page: {{pageNum}} / {{numPages}}</pre>
+
+    </div>
+</div>
+    </div>
+</div>
+<!-- end: SEARCH RESULT -->
+    </div>
+</div>

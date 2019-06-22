@@ -1,0 +1,266 @@
+﻿<div class="app-content">
+    <div class="main-content">
+        <div class="wrap-content container" id="container">
+            <div class="container-fluid container-fullw">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="panel">
+                            <div class="panel-heading border-bottom">
+                                <h4 class="panel-title">صلاحيات المستخدمين</h4>
+                                <div class="panel-tools">
+                                    <a class="btn btn-transparent btn-sm panel-refresh" data-original-title="Refresh" data-placement="top" data-toggle="tooltip" data-trigger="hover" href="#"><i class="fa fa-circle-o"></i></a> <a class="btn btn-transparent btn-sm panel-expand" data-original-title="Expand" data-placement="top" data-toggle="tooltip" data-trigger="hover" href="#"><i class="fa fa-compress expand-on"></i><i class="fa fa-expand expand-off"></i></a>
+                                </div>
+                            </div>
+                            <!--/.panel-heading-->
+
+                            <div class="panel-body panel-white">
+                                <div class="tabbable tabs-right margin-20">
+                                    <ul class="nav nav-tabs">
+                                        <li ng-repeat="step in steps" ng-class="{active: $index==getCurrentStepIndex()}">
+                                            <a class="center" href="javascript:void(0)" ng-click="goToStep($index)">{{step}}</a>
+                                        </li>
+                                    </ul>
+                                    <div class="tab-content no-border" ng-switch on="selection">
+                                        <div ng-switch-when="صلاحيات المستخدمين">
+
+                                            <div class="panel-heading border-bottom hidden">
+                                                <h4 class="panel-title">صلاحيات المستخدمين</h4>
+                                                <div class="panel-tools">
+                                                    <a data-original-title="Refresh" data-toggle="tooltip" data-placement="top" data-trigger="hover" class="btn btn-transparent btn-sm panel-refresh" href="#"><i class="fa fa-circle-o"></i></a>
+                                                    <a data-original-title="Expand" data-toggle="tooltip" data-placement="top" data-trigger="hover" class="btn btn-transparent btn-sm panel-expand" href="#"><i class="fa fa-compress expand-on"></i><i class="fa fa-expand expand-off"></i></a>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-xs-12">
+                                                <h5 class="tap-heading">الصلاحيات</h5>
+                                                <div class="panel-body">
+                                                    <div class="row">
+
+                                                        <div class="form-group col-md-4 col-md-offset-4">
+                                                            <select required ng-model="selectedUser" class="form-control cs-select cs-skin-elastic" ng-options="x.ID as x.UID for x in usersList" ng-change="getUserPrivilagesForCurrentUser(selectedUser)">
+                                                                <option value="" disabled selected>اختر المستخدم</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-xs-12 border-around border-light no-padding">
+                                                            <div class="panel-white no-border">
+                                                                <div class="tabbable tabs-right panel-white no-bg no-border">
+
+                                                                    <ul class="nav nav-tabs tabbable tabs-right">
+                                                                        <li ng-repeat="master in masterMenus" ng-class="{active: $index==getCurrentStepIndex()}">
+                                                                            <a href="javascript:void(0)" class="center" ng-click="getChildUserMenus(master.ID)"> {{master.ARName}}</a>
+                                                                        </li>
+                                                                    </ul>
+
+                                                                    <div class="tab-content no-border no-bg">
+                                                                        <div class="ps-scrollbar-x-rail padding-20" style="overflow:auto;">
+                                                                            <div class="col-md-4 col-xs-12" ng-repeat="child in childMenus">
+                                                                                <button type="button" class="btn btn-block btn-wide btn-primary margin-5" ng-click="addChildTouserPrivilagesList(child)">{{child.ARName}}</button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+
+                                                    <div class="row margin-top-35">
+                                                        <h5 class="col-xs-12 tap-heading">الصلاحيات المختارة</h5>
+                                                        <table class="table table-bordered table-hover" id="sample-table-1">
+                                                            <tr class="center success" style="font-weight: bold">
+                                                                <td>م</td>
+                                                                <td>الاسم </td>
+                                                                <td>فتح</td>
+                                                                <td>إضافة</td>
+                                                                <td>تعديل</td>
+                                                                <td>حذف</td>
+                                                                <td>معاينة</td>
+                                                                <td>حذف</td>
+                                                            </tr>
+                                                            <tr ng-repeat="item in userPrivilagesList track by $index ">
+                                                                <td>{{ $index+1 }}</td>
+                                                                <td>
+                                                                    <span editable-text="item.ARName" e-readonly="readonly" e-name="ARName" ng-show="rowform.$show()" e-form="rowform">
+                                                                        {{ item.ARName || 'empty' }}
+                                                                    </span>
+                                                                </td>
+                                                                <td>
+                                                                    <a href="#" ng-show="rowform.$show()" e-form="rowform" editable-checkbox="item.MenuOpen" e-title="فتح" e-ng-change="updateuserPrivilagesListOnChange('MenuOpen',$data,$index)">{{ item.MenuOpen}}</a>
+                                                                </td>
+                                                                <td>
+                                                                    <a href="#" ng-show="rowform.$show()" e-form="rowform" editable-checkbox="item.OpAdd" e-title="إضافة" e-ng-change="updateuserPrivilagesListOnChange('OpAdd',$data,$index)">{{ item.OpAdd}}</a>
+                                                                </td>
+                                                                <td>
+                                                                    <a href="#" ng-show="rowform.$show()" e-form="rowform" editable-checkbox="item.OpUpdate" e-title="تعديل" e-ng-change="updateuserPrivilagesListOnChange('OpUpdate',$data,$index)">{{ item.OpUpdate}}</a>
+                                                                </td>
+                                                                <td>
+                                                                    <a href="#" ng-show="rowform.$show()" e-form="rowform" editable-checkbox="item.OpDelete" e-title="حذف" e-ng-change="updateuserPrivilagesListOnChange('OpDelete',$data,$index)">{{ item.OpDelete}}</a>
+                                                                </td>
+                                                                <td>
+                                                                    <a href="#" ng-show="rowform.$show()" e-form="rowform" editable-checkbox="item.OpPreview" e-title="معاينة" e-ng-change="updateuserPrivilagesListOnChange('OpPreview',$data,$index)">{{ item.OpPreview}}</a>
+                                                                </td>
+
+                                                                <td class="" style="white-space: nowrap">
+                                                                    <form editable-form name="rowform" ng-show="rowform.$show()" class="form-buttons form-inline" shown="inserted == item"></form>
+                                                                    <div class="buttons" ng-show="!rowform.$show()">
+                                                                        <button type="button" class="btn btn-danger" ng-click="removeUserPrivilageItem($index)">حذف</button>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                        <div class="col-xs-12 my-btn-group margin-bottom-25 center">
+                                                            <button type="button" class="btn btn-primary  margin-top-10" ng-click="saveUserPrivliages()"><i class="fa fa-save"></i>حفظ</button>
+                                                            <button type="button" class="btn btn-success margin-top-10 " ng-click="refreshData()"><i class="fa fa-refresh"></i>تحديث</button>
+                                                            <button type="button" class="btn btn-info margin-top-10" ng-click="clearEnity()"><i class="fa fa-paste"></i>جديد</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                        <div ng-switch-when="قوائم">
+
+                                            <div class="col-xs-12">
+                                                <h5 class="tap-heading ">قوائم</h5>
+                                                <div class="panel-body panel-white">
+                                                    <div class="row">
+                                                        <div class="col-xs-12">
+                                                            <div class="form-group col-md-4">
+                                                                <label>الكود</label>
+                                                                <input type="number" name="ENTRY_NUMBER" ng-model="userMenu.Code" class="form-control input-sm" placeholder="كود">
+                                                            </div>
+
+                                                            <div class="form-group col-md-4">
+                                                                <label>الاسم العربي</label>
+                                                                <input name="ENTRY_NUMBER" ng-model="userMenu.ARName" class="form-control input-sm" placeholder="الاسم العربي">
+                                                            </div>
+
+                                                            <div class="form-group col-md-4">
+                                                                <label>الاسم اللاتيني</label>
+                                                                <input name="ENTRY_NUMBER" ng-model="userMenu.LatName" class="form-control input-sm" placeholder="الاسم اللاتيني">
+                                                            </div>
+
+                                                            <div class="form-group col-md-4">
+                                                                <label>الملاحظات</label>
+                                                                <input name="ENTRY_NUMBER" ng-model="userMenu.Notes" class="form-control input-sm" placeholder="الملاحظات">
+                                                            </div>
+
+                                                            <div class="form-group col-md-4">
+                                                                <label>البلد</label>
+                                                                <select ng-model="userMenu.CountryID" class="js-example-basic-hide-search js-states form-control" ng-options="x.NATION_ID as x.NATION_AR_NAME for x in nationList">
+                                                                    <option value="">اختر البلد</option>
+                                                                </select>
+                                                            </div>
+
+                                                            <div class="form-group col-md-4">
+                                                                <label>الترتيب</label>
+                                                                <input type="number" name="ENTRY_NUMBER" ng-model="userMenu.Position" class="form-control input-sm">
+                                                            </div>
+                                                            <div class="clearfix"></div>
+                                                            <div class="form-group col-md-4 no-margin">
+                                                                <div class="checkbox clip-check check-primary">
+                                                                    <input type="checkbox" id="ENTRY_NUMBER" name="ENTRY_NUMBER" ng-model="userMenu.Active" class="input-sm">
+                                                                    <label for="ENTRY_NUMBER">تفعيل</label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-8 my-btn-group margin-bottom-10 text-center">
+                                                                <button type="button" class="btn pull-left btn-info margin-top-10" ng-disabled="test.$invalid" ng-click="saveUserMenu()"><i class="fa fa-save"></i>حفظ</button>
+                                                            </div>
+                                                        </div>
+                                                        <!--/.col-xs-12-->
+                                                    </div>
+                                                    <!--/.row-->
+                                                </div>
+                                                <!--/.panel-body-->
+                                            </div>
+                                            <div class="col-xs-12">
+                                                <div class="panel">
+                                                    <div class="panel-group accordion" id="accordion">
+                                                        <div class="panel panel-white">
+                                                            <div class="panel-heading">
+                                                                <h5 class="panel-title"><a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" data-target="#collapseTwo"> <i class="icon-arrow"></i> القوائم المعرفة مسبقاً </a></h5>
+                                                            </div>
+                                                            <div id="collapseTwo" class="collapse">
+                                                                <div class="panel-body">
+
+                                                                    <div class="col-xs-12">
+                                                                        <table class="table table-bordered table-hover">
+                                                                            <thead>
+                                                                                <tr class="success center">
+                                                                                    <th class=" text-extra-large"><i class="ti-arrow-down"></i></th>
+                                                                                    <th> الكود </th>
+                                                                                    <th>الاسم العربي</th>
+                                                                                    <th>الاسم اللاتيني</th>
+                                                                                    <th>ملاحظات</th>
+                                                                                    <th>تعديل / حذف</th>
+                                                                                </tr>
+                                                                            </thead>
+
+                                                                            <tbody>
+                                                                                <tr ng-repeat="menu in userMenuList">
+                                                                                    <td class="hidden-xs">{{ $index + 1 }}</td>
+                                                                                    <td>{{ menu.Code }}</td>
+                                                                                    <td>{{ menu.ARName }}</td>
+                                                                                    <td>{{ menu.LatName }}</td>
+                                                                                    <td>{{ menu.Notes }}</td>
+                                                                                    <td class="center">
+                                                                                        <div class="visible-md visible-lg hidden-sm hidden-xs">
+                                                                                            <a href="" ng-click="dirUserMenuEnity(menu)" class="btn btn-transparent btn-xs" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fa fa-pencil"></i></a>
+                                                                                            <a href="" ng-click="deleteUserMenuEnity(menu)" class="btn btn-transparent btn-xs tooltips" data-toggle="tooltip" data-placement="top" title="Remove"><i class="fa fa-times fa fa-white"></i></a>
+                                                                                        </div>
+                                                                                        <div class="visible-xs visible-sm hidden-md hidden-lg">
+                                                                                            <div class="btn-group dropdown ">
+                                                                                                <button type="button" class="btn btn-o btn-sm dropdown-toggle" data-toggle="dropdown">
+                                                                                                    <i class="fa fa-cog"></i>&nbsp;<span class="caret"></span>
+                                                                                                </button>
+                                                                                                <ul class="dropdown-menu pull-right dropdown-light" role="menu">
+                                                                                                    <li>
+                                                                                                        <a href="" ng-click="dirUserMenuEnity(menu)"> Edit </a>
+                                                                                                    </li>
+                                                                                                    <li>
+                                                                                                        <a href="" ng-click="deleteUserMenuEnity(menu)"> Remove </a>
+                                                                                                    </li>
+                                                                                                </ul>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </tbody>
+
+                                                                        </table>
+                                                                        <ul uib-pagination total-items="userMenuTotalCount" ng-model="pageNumUserMenu" max-size="maxSize" class="pagination-sm" boundary-links="true" num-pages="numPages" ng-change="pageChangedUserMenu()"></ul>
+                                                                        <pre>صفحه: {{pageNumUserMenu}} / {{numPages}}</pre>
+                                                                    </div>
+
+                                                                </div>
+                                                                <!--/.panel-body-->
+                                                            </div>
+                                                            <!--/.panel-collapse-->
+                                                        </div>
+                                                        <!--/.panel-->
+                                                    </div>
+                                                    <!--/.panel-group-->
+                                                </div>
+                                                <!--/.panel /.panel-white-->
+                                            </div><!--/.col-xs-12-->
+                                        </div>
+                                    </div><!--/.tab-content-->
+                                </div>
+                                <!--/.tabbable-->
+                            </div>
+                            <!--/.panel-body-->
+                        </div>
+                        <!--/.panel-->
+                    </div>
+                    <!--/.col-xs-12-->
+                </div>
+                <!--/.row-->
+            </div>
+            <!--/.container-fluid-->
+        </div>
+        <!--/.wrap-content-->
+    </div>
+    <!--/.main-content-->
+</div>
+<!--/.app-content-->

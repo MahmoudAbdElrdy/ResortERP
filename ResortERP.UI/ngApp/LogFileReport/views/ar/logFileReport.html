@@ -1,0 +1,168 @@
+﻿<div class="app-content">
+    <div class="main-content">
+        <div class="wrap-content container" id="container">
+            <div class="container-fluid container-fullw">
+
+                <div class="col-xs-12 margin-top-10 margin-bottom-10">
+                    <div class="breadcrumb-wrapper no-margin">
+                        <h4 class="mainTitle no-margin"> ملف التسجيل </h4>
+                        <ul class="pull-right breadcrumb">
+                            <li><a href="#!"><i class="fa fa-home margin-left-5 text-large text-dark"></i>الرئيسية</a></li>
+                            <li> ملف التسجيل </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-xs-12 margin-bottom-10">
+                    <div class="panel-white panel-body no-margin">
+                        <!--<button class="btn btn-o btn-default no-border" ng-click="fnExcelReport()" ng-show="show_print"> طباعة <i class="ti-printer"></i></button>
+                        <button class="btn btn-o btn-default no-border" ng-click="clearEnity()">جديد <i class="fa fa-refresh"></i></button>-->
+                        <button class="btn btn-o btn-default no-border" ng-click="GetSearchResult()"> بحث <i class="fa fa-search"></i> </button>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="panel-body panel-white">
+
+                        <div class="col-md-4">
+                            <label>القائمة</label>
+                            <select multiple id="try" ng-model="var" class="select2Custom form-control" ng-options="opt.value as opt.value group by opt.type for opt in formList track by (opt.value || opt.value.value)"></select>
+                        </div>
+
+                        <div class="col-md-4">
+                            <label>المستخدم </label>
+                            <ui-select ng-model="userSel.UID" theme="bootstrap">
+                                <ui-select-match allow-clear="true" placeholder="اختر المستخدم">
+                                    {{$select.selected.UID}}
+                                </ui-select-match>
+                                <ui-select-choices repeat="value.UID as value in userList | filter: $select.search">
+                                    <div ng-bind-html="value.UID | highlight: $select.search"></div>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>فرع الشركة </label>
+                                <ui-select ng-model="branchSel.COM_BRN_ID" theme="bootstrap">
+                                    <ui-select-match allow-clear="true" placeholder="اختر فرع الشركة">
+                                        {{$select.selected.COM_BRN_AR_NAME}}
+                                    </ui-select-match>
+                                    <ui-select-choices repeat="value.COM_BRN_ID as value in branchList | filter: $select.search">
+                                        <div ng-bind-html="value.COM_BRN_AR_NAME | highlight: $select.search"></div>
+                                    </ui-select-choices>
+                                </ui-select>
+                            </div>
+                        </div>
+                        <!--<div class="col-md-4">
+                            <div class="form-group">
+                                <label>فرع الشركة </label>
+                                <!--<select ng-model="branchSel.COM_BRN_ID"  ng-options="x.COM_BRN_ID as x.COM_BRN_AR_NAME for x in branchList" class="chosen js-example-basic-hide-search js-states form-control input-sm"></select>-->
+                               
+
+
+                                <md-autocomplete md-autofocus ng-model="branchSel.COM_BRN_ID" md-no-cache="true" md-selected-item="selectedItem" md-items="item in branchList" md-search-text="searchText" md-item-text="item.COM_BRN_AR_NAME" md-item-value="item.COM_BRN_ID">
+                                    <span>{{ item.COM_BRN_AR_NAME }}</span>
+                                </md-autocomplete>
+
+                                <!--<md-autocomplete md-selected-item="selectedItem" md-search-text="searchText" md-items="item in query(searchText)">
+                                    <md-item-template>
+                                        <span md-highlight-text="searchText">{{item}}</span>
+                                    </md-item-template>
+                                </md-autocomplete>-->
+                                        <!--<select chosen
+                multiple
+                allow-single-deselect="true"
+                placeholder-text-multiple="'Choose Your Own Adventure'"
+                no-results-text="'Tough luck'"
+                ng-model="foo"
+                ng-options="value.COM_BRN_AR_NAME for value in branchList"
+                style="width:200px;">
+            <option value=""></option>
+        </select>
+                </div>
+                        </div>-->
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>من تاريخ </label>
+                                <input type="date" name="firstName" ng-model="startDate" class="form-control" placeholder="من تاريخ">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="control-label">إلى تاريخ</label>
+                                <input type="date" class="form-control" ng-model="endDate" placeholder="إلى تاريخ">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="panel">
+                        <div class="panel-group accordion" id="accordion">
+                            <div class="panel panel-white">
+                                <div class="panel-heading">
+                                    <h5 class="panel-title"><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" data-target="#collapseTwo"> <i class="icon-arrow"></i> ملف التسجيل المعرفة سابقاً </a></h5>
+                                </div>
+                                <div id="collapseTwo" class="panel-collapse collapse in">
+                                    <div class="panel-body">
+                                        <div class="col-md-12">
+                                            <div class="table-responsive">
+                                                <table class="table table-bordered table-hover" id="sample-table-1">
+                                                    <thead>
+                                                        <tr class="success">
+                                                            <th class="center">مسلسل</th>
+                                                            <th class="center"> اسم القائمة</th>
+                                                            <th class="center"> اسم المستخدم</th>
+                                                            <th class="center"> العملية </th>
+                                                            <th class="center"> نوع العملية </th>
+                                                            <th class="center"> تاريخ العملية </th>
+                                                            <th class="center"> الكود</th>
+                                                            <th class="center"> الملاحظات</th>
+                                                            <th class="center"> </th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr ng-repeat="item in selFormData">
+                                                            <td class="center">{{ $index + 1 }}</td>
+                                                            <td class="center">{{item.FormName }}</td>
+                                                            <td class="center">{{item.UID }}</td>
+                                                            <td class="center">{{item.OpName }}</td>
+                                                            <td class="center">{{item.TypeName}}</td>
+                                                            <td class="center">{{item.OpDate}}</td>
+                                                            <td class="center">{{item.Code}}</td>
+                                                            <td class="center">
+                                                                {{item.Notes.split('-')[0]}}<br /> {{item.Notes.split('-')[1]}}
+                                                            </td>
+                                                            <td class="center"><a ng-hide="item.IDCRUD==1" ng-click="redToView(item.IDCRUD,item.URL)">GO</a></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <ul uib-pagination total-items="logTotalCount" ng-model="pageNum" max-size="maxSize" class="pagination" boundary-links="true" num-pages="numPages" ng-change="pageChanged()"></ul>-->
+                                            <pre>صفحه: {{pageNum}} / {{numPages}}</pre>
+                                        </div>
+                                        <!--/.col-md-12-->
+                                    </div>
+                                    <!--/.panel-body-->
+                                </div>
+                                <!--/.panel-collapse-->
+                            </div>
+                            <!--/.panel-->
+                        </div>
+                        <!--/.panel-group-->
+                    </div>
+                    <!--/.panel -->
+                </div>
+                <!--/.col-md-12-->
+            </div>
+            <!--/.container-fluid-->
+        </div>
+        <!--/.wrap-content-->
+    </div>
+    <!--/.main-content-->
+</div>
+<!--/.app-content-->
+
+<style>
+    .ui-select-toggle .ng-binding.ng-scope {
+        text-align: right;
+    }
+</style>

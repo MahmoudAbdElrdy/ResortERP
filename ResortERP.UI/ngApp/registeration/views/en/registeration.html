@@ -1,0 +1,163 @@
+﻿﻿
+<style>
+    input.ng-invalid-required {
+        background-color: #f7f7f7 !important;
+        border: 1px red solid;
+    }
+
+    .my-drop-zone {
+        border: dotted 3px lightgray;
+    }
+
+    .nv-file-over {
+        border: dotted 3px red;
+    }
+    /* Default class applied to drop zones on over */
+    .another-file-over-class {
+        border: dotted 3px green;
+    }
+</style>
+
+
+<div class="login-body">
+
+    <div class="row">
+
+        <div class="col-xs-12 col-sm-7 col-sm-offset-2 col-md-6 col-md-offset-3">
+
+            <!-- start: LOGIN BOX -->
+            <div class="box-login">
+                <!--<p class="text-center">
+                    Sign in
+                </p>-->
+                <form name="registrationForm" novalidate>
+                    <fieldset>
+
+                        <div class="form-group">
+
+                            <div class="logo text-center">
+                                <img src="/Content/assets//images/logo4.png" />
+                            </div>
+                        </div>
+
+                        <div class="form-group form-actions  col-sm-12  col-md-6">
+                            <span class="input-icon">
+                                <input type="text" name="companyARName" class="form-control" placeholder="Company Arabic Name" data-ng-model="user.COMPANY_AR_NAME" required autofocus>
+                                <i class="fa fa-building"></i>
+                            </span>
+                        </div>
+                        <div class="form-group form-actions col-sm-12  col-md-6">
+                            <span class="input-icon">
+                                <input type="text" name="companyENName" class="form-control" placeholder="Company Latin Name" data-ng-model="user.COMPANY_EN_NAME" required>
+                                <i class="fa fa-building"></i>
+                            </span>
+                        </div>
+                        <div class="form-group form-actions col-sm-12  col-md-6">
+                            <span class="input-icon">
+                                <input type="text" name="userName" class="form-control" placeholder="User Name" data-ng-model="user.UID" required>
+                                <i class="fa fa-user"></i>
+                            </span>
+                        </div>
+
+                        <div class="form-group form-actions col-sm-12  col-md-6">
+                            <span class="input-icon">
+                                <input type="text" name="email" class="form-control" placeholder="Company E-Mail" data-ng-model="user.COMPANY_EMAIL" ng-pattern="emailPattern" required>
+                                <i class="fa fa-envelope"></i>
+                            </span>
+                            <span ng-show="registrationForm.email.$error.pattern && registrationForm.email.$invalid " class="help-block" style="color:red"> E-mail Not Valid</span>
+                            <span ng-show="IsMailExist && registrationForm.email.$invalid " class="help-block" style="color:red"> Same E-Mail Exists </span>
+                        </div>
+                        <div class="form-group form-actions col-sm-12  col-md-6">
+                            <span class="input-icon">
+                                <input type="password" name="password" class="form-control" placeholder="Password" data-ng-model="user.UPWD" required>
+                                <i class="fa fa-lock"></i>
+                                <!--<span ng-messages="registrationForm.password.$error" role="alert">
+                                    <span ng-message="required">required</span>
+                                </span>-->
+                            </span>
+
+                        </div>
+                        <div class="form-group form-actions col-sm-12  col-md-6">
+                            <span class="input-icon">
+                                <input type="password" id="confirmPassword" name="confirmPassword" class="form-control" placeholder="Password Confirmation" ng-model="user.ConfirmPassword" required
+                                       compare-to="user.UPWD">
+                                <i class="fa fa-lock"></i>
+                            </span>
+                            <div ng-messages="registrationForm.confirmPassword.$error"
+                                 ng-messages-include="messages.html"></div>
+                        </div>
+                        <div class="form-group form-actions col-sm-12  col-md-6">
+                            <span class="input-icon">
+                                <input type="text" name="companyARName" class="form-control" placeholder="Company Arabic Address" data-ng-model="user.COMPANY_AR_ADRESS">
+                                <i class="fa fa-home"></i>
+                            </span>
+                        </div>
+                        <div class="form-group form-actions col-sm-12  col-md-6">
+                            <span class="input-icon">
+                                <input type="text" name="companyARName" class="form-control" placeholder="Company Latin Address" data-ng-model="user.COMPANY_EN_ADRESS">
+                                <i class="fa fa-home"></i>
+                            </span>
+                        </div>
+                        <div class="form-group form-actions col-sm-12  col-md-6">
+                            <span class="input-icon">
+                                <input type="text" name="companyARName" class="form-control" placeholder="Phone" data-ng-model="user.COMPANY_TELEPHONE" only-number>
+                                <i class="fa fa-phone"></i>
+                            </span>
+                        </div>
+                        <div class="form-group form-actions col-sm-12  col-md-6">
+                            <span class="input-icon">
+                                <input type="text" name="companyARName" class="form-control" placeholder="Fax" data-ng-model="user.COMPANY_FAX" only-number>
+                                <i class="fa fa-fax"></i>
+                            </span>
+                        </div>
+                        <div class="form-group form-actions col-sm-12  col-md-6">
+                            <input type="file" file-model="myFile" />
+                        </div>
+                        <div class="form-group form-actions col-sm-12  col-md-6">
+                            <span class="input-icon">
+                                <select name="userNumbers" class="form-control" data-ng-model="user.MaxUsersNumber">
+                                    <option value="">Choose User Number </option>
+                                    <option value="1" ng-selected="true">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="10">10</option>
+                                    <option value="15">15</option>
+                                    <option value="20">20</option>
+                                </select>
+                                <i class="fa fa-user"></i>
+                            </span>
+                        </div>
+                        <div class="form-group form-actions col-sm-12  col-md-6">
+                            <span class="input-icon">
+                            </span>
+                        </div>
+                        <div class="form-actions">
+                            <button class="btn btn-lg btn-info btn-block" ng-disabled="!registrationForm.$valid" type="submit" data-ng-click="saveUser()">New User</button>
+
+                            <!--<div data-ng-hide="message == ''" class="alert alert-danger">
+                                {{message}}
+                            </div>-->
+                        </div>
+
+                        <div class="new-account text-white margin-top-15">
+                            <div class="col-md-6"><a href="#" class="text-white text-right">Sign In </a></div>
+
+                            <div class="col-md-6 text-left"><a href="" class="text-white text-left">Technical Support </a></div>
+                        </div>
+                    </fieldset>
+                    <!-- sta
+                    rt: COPYRIGHT -->
+                    <div class="copyright text-dark text-center">
+                        © <b>Unicom Group</b> 2017. All Rights Reserved.
+                    </div>
+                    <br />
+                </form>
+                <!-- end: COPYRIGHT -->
+            </div>
+            <!-- end: LOGIN BOX -->
+        </div>
+    </div>
+
+</div> 

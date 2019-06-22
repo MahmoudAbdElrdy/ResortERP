@@ -1,0 +1,363 @@
+﻿<style>
+    .nav-tabs > li.active > a {
+        background-color: gainsboro !important;
+    }
+
+    input.ng-invalid-required {
+        background-color: #f7f7f7 !important;
+        border: 1px red solid;
+    }
+
+    .my-drop-zone {
+        border: dotted 3px lightgray;
+    }
+
+    .nv-file-over {
+        border: dotted 3px red;
+    }
+
+    /* Default class applied to drop zones on over */
+
+    .another-file-over-class {
+        border: dotted 3px green;
+    }
+
+    .gridStyle {
+        border: 1px solid rgb(212, 212, 212);
+        width: 500px;
+        height: 300px;
+    }
+</style>
+<script type="text/ng-template" id="customTemplate.html">
+    <a>
+        <span ng-bind-html="match.label | uibTypeaheadHighlight:query"></span>
+    </a>
+</script>
+<div class="modal-demo">
+    <script type="text/ng-template" id="accountModal.html">
+        <div class="modal-header">
+            Choose Account
+        </div>
+        <div class="modal-body" id="modal-body">
+            <div class="panel-body panel-body panel-white">
+                <div class="table-responsive">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <form role="search" class="navbar-form main-search">
+                                <div class="form-group">
+                                    <input type="text" ng-model="Custom.ACC_Name" press-enter="searchForItm()" placeholder="Search with Account Name or Code" class="form-control">
+                                    <button class="btn search-button" ng-click="searchForItm()"></button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <br />
+                    <table class="table table-bordered table-hover" id="tableItems">
+                        <tr>
+                            <th class="hidden-xs">Account Code</th>
+                            <th>Arabic Account Name </th>
+                            <th>Latin Account Name </th>
+                            <th></th>
+                        </tr>
+                        <tr ng-repeat="itm in searchItems">
+                            <td>{{ itm.ACC_CODE }}</td>
+                            <td>{{ itm.ACC_AR_NAME }}</td>
+                            <td>{{ itm.ACC_EN_NAME }}</td>
+                            <td><button type="button" class="btn btn-primary" ng-click="addSelectedItm(itm)">Add</button></td>
+                        </tr>
+                    </table>
+                    <ul uib-pagination total-items="accountTotalCount" ng-model="acc.pageNumA" max-size="maxSizeA" class="pagination-sm" boundary-links="true" num-pages="numPagesA" ng-change="pageChangedA()"></ul>
+                    <pre>Page: {{acc.pageNumA}} / {{numPagesA}}</pre>
+                </div>
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" id="closeItemModal" class="btn btn-danger" ng-click="cancel()">Close</button>
+        </div>
+    </script>
+</div>
+
+<div class="app-content">
+    <div class="main-content">
+        <div class="wrap-content container" id="container">
+            <div class="container-fluid container-fullw ">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="panel " style="height:100%;overflow:auto;">
+                            <form name="entrySettingForm" novalidate>
+                                <div class="panel-heading border-bottom  panel-white ">
+                                    <h4 class="panel-title"> Entry Setting</h4>
+                                    <div class="panel-tools">
+                                        <a data-original-title="Refresh" data-toggle="tooltip" data-placement="top" data-trigger="hover" class="btn btn-transparent btn-sm panel-refresh" href="#"><i class="fa fa-circle-o"></i></a>
+                                        <a data-original-title="Expand" data-toggle="tooltip" data-placement="top" data-trigger="hover" class="btn btn-transparent btn-sm panel-expand" href="#"><i class="fa fa-compress expand-on"></i><i class="fa fa-expand expand-off"></i></a>
+                                    </div>
+                                </div>                                
+                                <div class="panel-body panel-body panel-white">
+                                    <div class="col-md-12">
+                                        <div class="tabbable tabs-right panel-white panel-body no-bg no-border">
+                                            <ul class="nav nav-tabs bg-body width-150">
+                                                <li ng-repeat="step in steps" ng-class="{active: $index==getCurrentStepIndex()}">
+                                                    <a class="center" href="javascript:void(0)" ng-click="goToStep($index)">{{step}}</a>
+                                                </li>
+                                            </ul>
+                                            <div ng-switch on="selection" class="tab-content panel-body no-bg no-border">
+
+
+
+                                                <!-- First Step -->
+                                                <div ng-switch-when="Entry Data">
+                                                    <h5 class="tap-heading"><b>Entry Data</b></h5>
+
+                                                    <div class="form-group col-md-4">
+                                                        <label>Arabic Name :</label>
+                                                        <input type="text" class="form-control" placeholder="Arabic Name" ng-model="entrySetting.ENTRY_SETTING_AR_NAME" required autofocus>
+                                                    </div>
+                                                    <div class="form-group col-md-4">
+                                                        <label>Latin Name:</label>
+                                                        <input type="text" class="form-control" placeholder="Latin Name" ng-model="entrySetting.ENTRY_SETTING_EN_NAME" required>
+                                                    </div>
+                                                    <div class="form-group col-md-4">
+                                                        <label>Arabic Abbreviation:</label>
+                                                        <input type="text" class="form-control" placeholder="Arabic Abbreviation" ng-model="entrySetting.ENTRY_SETTING_AR_ABRV" required>
+                                                    </div>
+                                                    <div class="form-group col-md-4">
+                                                        <label>Latin Abbreviation:</label>
+                                                        <input type="text" class="form-control" placeholder="Latin Abbreviation" ng-model="entrySetting.ENTRY_SETTING_EN_ABRV" required>
+                                                    </div>
+                                                    <div class="form-group col-md-4">
+                                                        <label>Account Name:</label>
+                                                        <input type="text" ng-model="Custom.ACC_Name" placeholder="Account Name" class="form-control" press-enter="searchForItm()">
+                                                    </div>
+
+                                                    <div class="clearfix"></div>
+
+                                                    <div class="col-md-12">
+                                                        <hr />
+                                                    </div>
+
+
+                                                    <div class="col-md-6 margin-top-20">
+                                                        <div class="panel panel-white panel-default">
+                                                            <div class="panel-heading border-bottom">
+                                                                Account Properties
+                                                                <div class="panel-tools">
+                                                                    <a data-original-title="Collapse" data-toggle="tooltip" data-placement="top" class="btn btn-transparent btn-sm panel-collapse" href="#"><i class="ti-minus collapse-off"></i><i class="ti-plus collapse-on"></i></a>
+                                                                </div>
+                                                            </div>
+                                                            <div class="panel-body min-height-180">
+
+                                                                <div class="checkbox clip-check check-primary">
+                                                                    <input id="AUTO_POSTING" type="checkbox" ng-model="entrySetting.AUTO_POSTING" class="check-primary" />
+                                                                    <label for="AUTO_POSTING">Automatic Movement to Account</label>
+                                                                </div>
+
+                                                                <div class="checkbox clip-check check-primary">
+                                                                    <input id="ACCEPT_DIST_ACC" type="checkbox" ng-model="entrySetting.ACCEPT_DIST_ACC" class="check-primary" />
+                                                                    <label for="ACCEPT_DIST_ACC">Accept Distributed Accounts</label>
+                                                                </div>
+
+                                                                <div class="checkbox clip-check check-primary">
+                                                                    <input id="COSTCENTER_BELONG" type="checkbox" ng-model="entrySetting.COSTCENTER_BELONG" class="check-primary" />
+                                                                    <label for="COSTCENTER_BELONG">Cost Center for Both Accounts</label>
+                                                                </div>
+                                                            </div>
+                                                            <!--/.panel-body-->
+                                                        </div>
+                                                        <!--/.panel-->
+                                                    </div>
+                                                    <!--/.col-md-6-->
+
+
+                                                    <div class="col-md-6 margin-top-20">
+                                                        <div class="panel panel-white panel-default">
+
+                                                            <div class="panel-heading border-bottom">
+                                                                Currency Data
+                                                                <div class="panel-tools">
+                                                                    <a data-original-title="Collapse" data-toggle="tooltip" data-placement="top" class="btn btn-transparent btn-sm panel-collapse" href="#"><i class="ti-minus collapse-off"></i><i class="ti-plus collapse-on"></i></a>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="panel-body min-height-180">
+                                                                <div class="form-group col-md-12">
+                                                                    <label>Currency</label>
+                                                                    <input type="text" ng-model="Custom.Currency" placeholder="Currency" uib-typeahead="x as x.CURRENCY_AR_NAME for x in CurrencyList| filter:{CURRENCY_AR_NAME:$viewValue}|limitTo:8" class="form-control" typeahead-show-hint="true" typeahead-min-length="0" typeahead-template-url="customTemplate.html" ng-change="getCurrencyRate()" typeahead-show-on-focus>
+
+                                                                </div>
+                                                                <div class="form-group col-md-12">
+                                                                    <label>exchange rate</label>
+                                                                    <input type="text" class="form-control" placeholder="exchange rate" ng-model="Custom.CURRENCY_RATE" disabled>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
+
+                                                    <div class="col-md-12">
+
+
+                                                        <fieldset class="panel panel-white panel-default col-md-6" style="width:45%;">
+                                                            <legend>Currency Data </legend>
+                                                            <div class="panel-body">
+                                                                <div class="form-group col-md-12">
+                                                                    <label>Currency</label>
+                                                                    <input type="text" ng-model="Custom.Currency" placeholder="Currency" uib-typeahead="x as x.CURRENCY_AR_NAME for x in CurrencyList| filter:{CURRENCY_AR_NAME:$viewValue}|limitTo:8" class="form-control" typeahead-show-hint="true" typeahead-min-length="0" typeahead-template-url="customTemplate.html" ng-change="getCurrencyRate()" typeahead-show-on-focus>
+
+                                                                </div>
+                                                                <div class="form-group col-md-12">
+                                                                    <label>exchange rate</label>
+                                                                    <input type="text" class="form-control" placeholder="exchange rate" ng-model="Custom.CURRENCY_RATE" disabled>
+                                                                </div>
+                                                            </div>
+                                                        </fieldset>
+
+                                                    </div>
+                                                </div>
+
+                                                <!-- Second Step -->
+                                                <div ng-switch-when="Entry Type">
+                                                    <h5 class="tap-heading"><b>Entry Type</b></h5>
+                                                    <div class="col-md-4" ng-repeat="typ in entryTypeList">
+                                                        <div class="radio clip-radio radio-primary radio-inline">
+                                                            <input id="radio{{$index}}" type="radio" name="typ" data-ng-model="Custom.role" data-ng-value="typ" class="check-primary" />
+                                                            <label for="radio{{$index}}">سند {{typ.ENTRY_AR_NAME}}</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Third Step -->
+                                                <div ng-switch-when="Entry field">
+
+                                                    <h5><b>Entry fields</b></h5>
+                                                    <div class="gridStyle" ui-grid="uiGridOptions" ui-grid-selection ui-grid-draggable-rows>
+                                                    </div>
+                                                </div>
+
+                                                <div class="clearfix"></div>
+                                            </div>
+                                        </div>
+
+                                        <div class="clearfix"></div>
+
+                                        <div class="col-md-12">
+                                            <ul class="pager pull-left">
+                                                <li class="" ng-class="{disabled: !hasNextStep()}">
+                                                    <a href="javascript:void(0);" ng-click="incrementStep()">Next Step &rarr;</a>
+                                                </li>
+                                                <li class="" ng-class="{disabled: !hasPreviousStep()}">
+                                                    <a href="javascript:void(0);" ng-click="decrementStep()">&larr; Previous Step</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+
+                                        <div class="col-md-12 my-btn-group margin-bottom-25 text-center">
+                                            <button type="button" class="btn btn-primary btn-wide  margin-top-10" ng-disabled="!entrySettingForm.$valid" ng-click="saveentrySetting()">Save&nbsp;&nbsp;<i class="fa fa-save"></i></button>
+                                            <button type="button" class="btn btn-wide btn-success margin-top-10 " ng-click="refreshData()">Refresh&nbsp;&nbsp;<i class="fa fa-refresh"></i></button>
+                                            <button type="button" class="btn btn-wide btn-info   margin-top-10" ng-click="clearEnity()" New>New&nbsp;&nbsp;<i class="fa fa-paste"></i></button>
+                                        </div>
+
+                                    </div>
+
+
+
+
+                                    <!--#############################################################################################-->
+                                    <!--#############################################################################################-->
+                                    <!--#############################################################################################-->
+
+
+
+
+
+                                </div>
+                            </form>
+                        </div>
+
+                        <div class="panel">
+                            <div class="panel-group accordion" id="accordion">
+                                <div class="panel panel-white">
+                                    <div class="panel-heading"><h5 class="panel-title"><a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" data-target="#collapseTwo"> <i class="icon-arrow"></i> Previous Entry Setting </a></h5></div>
+                                    <div id="collapseTwo" class="collapse">
+                                        <div class="panel-body">
+                                            <div class="table-responsive">
+                                                <div class="col-md-3 pull-left ">
+                                                    <table class="table table-stylish">
+                                                        <tbody>
+                                                            <tr>
+                                                                <td class="center text-extra-large"><i class="ti-save"></i></td>
+                                                                <td><span class="text-dark block"> Entry Setting Total :</span></td>
+                                                                <td class="center">{{entrySettingTotalCount}}</td>
+                                                                <td class="center"><i class="fa fa-caret-down text-red"></i></td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <div class="col-xs-12">
+                                                    <table class="table table-bordered table-hover table-full-width ps-scrollbar-x small  panel-full-screen  fc-scroller  " style="height:150px;overflow:auto;" id="sample-table-2">
+                                                        <thead>
+                                                            <tr class="success">
+                                                                <th class="hidden-xs">#</th>
+                                                                <th>Arabic Name</th>
+                                                                <th>Latin Name</th>
+                                                                <th class="hidden-xs">Arabic Abbreviation</th>
+                                                                <th class="hidden-xs">Latin Abbreviation</th>
+                                                                <th>Edit / Delete</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr ng-repeat="entSett in entrySettingList">
+                                                                <td class="hidden-xs center">{{ $index + 1 }}</td>
+                                                                <td>{{ entSett.ENTRY_SETTING_AR_NAME }}</td>
+                                                                <td>{{ entSett.ENTRY_SETTING_EN_NAME }}</td>
+                                                                <td class="hidden-xs">{{ entSett.ENTRY_SETTING_AR_ABRV }}</td>
+                                                                <td class="hidden-xs">{{ entSett.ENTRY_SETTING_EN_ABRV }}</td>
+                                                                <td class="center">
+
+                                                                    <div class="visible-md visible-lg hidden-sm hidden-xs">
+                                                                        <a href="" ng-click="dirEnity(entSett)" class="btn btn-transparent btn-xs" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fa fa-pencil"></i></a>
+                                                                        <a href="" ng-click="deleteEnity(entSett)" class="btn btn-transparent btn-xs tooltips" data-toggle="tooltip" data-placement="top" title="Remove"><i class="fa fa-times fa fa-white"></i></a>
+                                                                    </div>
+                                                                    <div class="visible-xs visible-sm hidden-md hidden-lg">
+                                                                        <div class="btn-group dropdown">
+                                                                            <button type="button" class="btn btn-o btn-sm dropdown-toggle" data-toggle="dropdown"><i class="fa fa-cog"></i>&nbsp;<span class="caret"></span></button>
+
+                                                                            <ul class="dropdown-menu pull-right dropdown-light" role="menu">
+                                                                                <li><a href="" ng-click="dirEnity(entSett)"> Edit </a></li>
+                                                                                <li><a href="" ng-click="deleteEnity(entSett)"> Remove </a></li>
+                                                                            </ul>
+                                                                        </div>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                    <ul uib-pagination total-items="entrySettingTotalCount" ng-model="pageNum" max-size="maxSize" class="pagination-sm" boundary-links="true" num-pages="numPages" ng-change="pageChanged()"></ul>
+                                                    <pre>Page: {{pageNum}} / {{numPages}}</pre>
+
+                                                </div>
+                                            </div>
+                                            <!--/.table-responsive-->
+                                        </div>
+                                        <!--/.panel-body-->
+                                    </div>
+                                    <!--/.panel-collapse-->
+                                </div>
+                                <!--/.panel-->
+                            </div>
+                            <!--/.panel-group-->
+                        </div>
+                        <!--/.panel /.panel-white-->
+                    </div>
+                    <!--/.col-md-12-->
+                </div>
+                <!--/.row-->
+            </div>
+            <!--/.container-fluid-->
+        </div>
+        <!--/.wrap-content-->
+    </div>
+    <!--/.main-content-->
+</div>
+<!--/.app-content-->

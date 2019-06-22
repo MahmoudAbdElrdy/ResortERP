@@ -1,0 +1,114 @@
+﻿<style>
+    .app-navbar-fixed {
+        padding: 0
+    }
+</style>
+<div class="login-body">
+    <div class="row two-half no-margin no-padding">
+        <!-- Start First Half -->
+        <div class="col-md-6 flex-content no-padding panel-white">
+            <div class="col-xs-12">
+                <!-- start: LOGIN BOX -->
+                <div class="box-login">
+
+                    <form id="login" name="login">
+                        <!--<ng-form id="test" name="test">-->
+                        <div class="form-content form-content col-sm-8 col-sm-offset-2">
+
+                            <div class="form-group">
+                                <div class="logo text-center">
+                                    <img src="/Content/assets//images/logo5.png" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-icon">
+                                    <input type="text" class="form-control" name="usern" placeholder="اسم المستخدم" data-ng-model="loginData.userName" required autofocus>
+                                    <i class="fa fa-user"></i>
+                                </div>
+                            </div>
+
+                            <div class="form-group form-actions">
+                                <div class="input-icon">
+                                    <input type="password" class="form-control" name="pass" placeholder="كلمة المرور" data-ng-model="loginData.password" required>
+                                    <i class="fa fa-lock"></i>
+                                </div>
+                                <!--</span>-->
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="col-xs-6 text-right">
+                                    <!--remember me-->
+                                    <label for="remember">حفظ بيانات تسجيل الدخول</label>
+                                </div> 
+                                <div class="col-xs-6 text-left">
+                                   <a class="text-grey" href="" ng-click="forgetPassword()" > نسيت كلمة المرور</a>
+                                </div>                                
+                            </div>
+
+
+                            <div class="form-group form-actions text-center">
+                                <button class="btn  btn-primary btn-wide" type="submit" data-ng-click="login11()" press-Enter="login11()"> الدخول</button>
+                                <a href="#/Registeration" class="text-grey btn  btn-default btn-o btn-wide">تسجيل جديد</a>
+                                <!--<input type="submit" value="تسجيل الدخول" class="btn btn-wide btn-red  pull-left " />-->
+                                <div data-ng-hide="message == ''" class="alert alert-danger">
+                                    {{message}}
+                                </div>
+                            </div>
+                            <!--</span>-->
+
+
+                            <div class="form-group form-actions hideD">
+                                <!--<span class="input-icon">-->
+                                <!--</span>-->
+                            </div>
+                            <div class="form-group form-actions" style="display:none" id="flagA">
+                                <!--<span class="input-icon">-->
+                                <div class="input-icon">
+                                    <label>أختر الفرع</label>
+                                    <select ng-model="branchSelected.ID" ng-options="x.COM_BRN_ID as x.COM_BRN_AR_NAME for x in userBranchesList" ng-change="change(role.COM_BRN_ID)" class="form-control">
+                                        <option value="">أختر الفرع</option>
+                                    </select>
+                                </div>
+                                <!--</span>-->
+                            </div>
+
+
+                            <div class="form-group margin-top-25 margin-bottom-0 hideD text-center ">
+                                <label>
+                                    <!--remember me-->
+                                    <label for="remember">حفظ بيانات تسجيل الدخول</label>
+                                </label> |
+                                <a href="" ng-click="forgetPassword()" class="text-grey"> نسيت كلمة المرور</a>
+                            </div>
+
+                            <div class="new-account  margin-top-35">
+                                <p class="center">لا تملك حسابا حتى الآن ؟<a href="#/technicalSupport" class="text-center text-primary text-bold">  التواصل مع دعم الفنى</a></p>
+                            </div>
+
+                            
+                        </div>
+                        
+                        <!--</ng-form>-->
+                    </form>
+                    <!-- end: COPYRIGHT -->
+                </div>
+                <!-- end: LOGIN BOX -->
+                <div class="copyright text-dark text-center hidden-md hidden-lg">
+                    © <b>مجموعة المتكامل</b> 2018. جميع الحقوق محفوظه.
+                </div>
+            </div>
+            <!-- End Second Half -->
+
+        </div>
+
+        <!-- Start Second Half-->
+        <div class="col-md-6 register-section center no-padding hidden-xs hidden-sm">
+            <a href="#/Registeration" class="btn panel-white btn-lg">تسجيل جديد</a>
+            <!-- start: COPYRIGHT -->
+            <div class="copyright text-center text-white">
+                © <b>مجموعة المتكامل</b> 2018. جميع الحقوق محفوظه.
+            </div>
+        </div>
+        <!-- End Second Half-->
+    </div>
+</div>

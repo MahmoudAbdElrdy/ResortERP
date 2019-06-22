@@ -1,0 +1,1321 @@
+﻿<style>
+    .nav-tabs > li.active > a {
+        background-color: gainsboro !important;
+    }
+
+    input.ng-invalid-required {
+        background-color: #f7f7f7 !important;
+        border: 1px red solid;
+    }
+
+    .my-drop-zone {
+        border: dotted 3px lightgray;
+    }
+
+    .nv-file-over {
+        border: dotted 3px red;
+    }
+
+    /* Default class applied to drop zones on over */
+
+    .another-file-over-class {
+        border: dotted 3px green;
+    }
+
+    .gridStyle {
+        border: 1px solid rgb(212, 212, 212);
+        width: 500px;
+        height: 300px;
+    }
+</style>
+<script type="text/ng-template" id="customTemplate.html">
+    <a><span ng-bind-html="match.label | uibTypeaheadHighlight:query"></span></a>
+</script>
+
+<div class="modal-demo">
+    <script type="text/ng-template" id="CustAccountModal.html">
+        <div class="modal-header">
+            Choose your customer's payment account
+        </div>
+        <div class="modal-body" id="modal-body">
+            <div class="panel-body panel-body panel-white">
+                <div class="table-responsive">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <form role="search" class="navbar-form main-search">
+                                <div class="form-group">
+                                    <input type="text" ng-model="Custom.Cust_ACC_Name" press-enter="searchForCustAcc()" placeholder="Search by code or account name" class="form-control">
+                                    <button class="btn search-button" ng-click="searchForCustAcc()"></button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <table class="table table-bordered table-hover" id="tableItems">
+                        <tr>
+                            <th class="hidden-xs">Account code</th>
+                            <th>Account arabic name </th>
+                            <th>Account english name</th>
+                            <th></th>
+                        </tr>
+                        <tr ng-repeat="itm in searchCustAccounts">
+                            <td>{{ itm.ACC_CODE }}</td>
+                            <td>{{ itm.ACC_AR_NAME }}</td>
+                            <td>{{ itm.ACC_EN_NAME }}</td>
+                            <td><button type="button" class="btn btn-primary" ng-click="addSelectedCustAccount(itm)">Add</button></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" id="closeItemModal" class="btn btn-danger" ng-click="cancel()">Close</button>
+        </div>
+    </script>
+</div>
+
+<div class="modal-demo">
+    <script type="text/ng-template" id="PBillAccountModal.html">
+        <div class="modal-header">
+            Choose a paid account in your invoices
+        </div>
+        <div class="modal-body" id="modal-body">
+            <div class="panel-body panel-body panel-white">
+                <div class="table-responsive">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <form role="search" class="navbar-form main-search">
+                                <div class="form-group">
+                                    <input type="text" ng-model="Custom.PBill_Acc_Name" press-enter="searchForPBillAcc()" placeholder="Search by code or account name" class="form-control">
+                                    <button class="btn search-button" ng-click="searchForPBillAcc()"></button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <table class="table table-bordered table-hover" id="tableItems">
+                        <tr>
+                            <th class="hidden-xs">Account code</th>
+                            <th>Account arabic name </th>
+                            <th>Account english name</th>
+                            <th></th>
+                        </tr>
+                        <tr ng-repeat="itm in searchPBillAccounts">
+                            <td>{{ itm.ACC_CODE }}</td>
+                            <td>{{ itm.ACC_AR_NAME }}</td>
+                            <td>{{ itm.ACC_EN_NAME }}</td>
+                            <td><button type="button" class="btn btn-primary" ng-click="addSelectedPBillAccount(itm)">Add</button></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" id="closeItemModal" class="btn btn-danger" ng-click="cancel()">Close</button>
+        </div>
+    </script>
+</div>
+
+<div class="modal-demo">
+    <script type="text/ng-template" id="SuppAccountModal.html">
+        <div class="modal-header">
+            Choose Supplier Refunds
+        </div>
+        <div class="modal-body" id="modal-body">
+            <div class="panel-body panel-body panel-white">
+                <div class="table-responsive">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <form role="search" class="navbar-form main-search">
+                                <div class="form-group">
+                                    <input type="text" ng-model="Custom.Supp_Acc_NAme" press-enter="searchForSuppAcc()" placeholder="Search by code or account name" class="form-control">
+                                    <button class="btn search-button" ng-click="searchForSuppAcc()"></button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <table class="table table-bordered table-hover" id="tableItems">
+                        <tr>
+                            <th class="hidden-xs">Account code</th>
+                            <th>Account arabic name </th>
+                            <th>Account english name</th>
+                            <th></th>
+                        </tr>
+                        <tr ng-repeat="itm in searchSuppAccounts">
+                            <td>{{ itm.ACC_CODE }}</td>
+                            <td>{{ itm.ACC_AR_NAME }}</td>
+                            <td>{{ itm.ACC_EN_NAME }}</td>
+                            <td><button type="button" class="btn btn-primary" ng-click="addSelectedSuppAccount(itm)">Add</button></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" id="closeItemModal" class="btn btn-danger" ng-click="cancel()">Close</button>
+        </div>
+    </script>
+</div>
+
+<div class="modal-demo">
+    <script type="text/ng-template" id="BillProfitAccountModal.html">
+        <div class="modal-header">
+            Choose a profit account in your invoices
+        </div>
+        <div class="modal-body" id="modal-body">
+            <div class="panel-body panel-body panel-white">
+                <div class="table-responsive">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <form role="search" class="navbar-form main-search">
+                                <div class="form-group">
+                                    <input type="text" ng-model="Custom.BillProfit_Acc_Name" press-enter="searchForBillProfitAcc()" placeholder="Search by code or account name" class="form-control">
+                                    <button class="btn search-button" ng-click="searchForBillProfitAcc()"></button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <table class="table table-bordered table-hover" id="tableItems">
+                        <tr>
+                            <th class="hidden-xs">Account code</th>
+                            <th>Account arabic name </th>
+                            <th>Account english name</th>
+                            <th></th>
+                        </tr>
+                        <tr ng-repeat="itm in searchBillProfitAccounts">
+                            <td>{{ itm.ACC_CODE }}</td>
+                            <td>{{ itm.ACC_AR_NAME }}</td>
+                            <td>{{ itm.ACC_EN_NAME }}</td>
+                            <td><button type="button" class="btn btn-primary" ng-click="addSelectedBillProfitAccount(itm)">Add</button></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" id="closeItemModal" class="btn btn-danger" ng-click="cancel()">Close</button>
+        </div>
+    </script>
+</div>
+
+<div class="modal-demo">
+    <script type="text/ng-template" id="IncomeAccountModal.html">
+        <div class="modal-header">
+            Select the income statement account
+        </div>
+        <div class="modal-body" id="modal-body">
+            <div class="panel-body panel-body panel-white">
+                <div class="table-responsive">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <form role="search" class="navbar-form main-search">
+                                <div class="form-group">
+                                    <input type="text" ng-model="Custom.Income_Acc_Name" press-enter="searchForIncomeAcc()" placeholder="Search by code or account name" class="form-control">
+                                    <button class="btn search-button" ng-click="searchForIncomeAcc()"></button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <table class="table table-bordered table-hover" id="tableItems">
+                        <tr>
+                            <th class="hidden-xs">Account code</th>
+                            <th>Account arabic name </th>
+                            <th>Account english name</th>
+                            <th></th>
+                        </tr>
+                        <tr ng-repeat="Acc in searchIncomeAccounts">
+                            <td>{{ Acc.ACC_CODE }}</td>
+                            <td>{{ Acc.ACC_AR_NAME }}</td>
+                            <td>{{ Acc.ACC_EN_NAME }}</td>
+                            <td><button type="button" class="btn btn-primary" ng-click="addSelectedIncomeAccount(Acc)">Add</button></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" id="closeItemModal" class="btn btn-danger" ng-click="cancel()">Close</button>
+        </div>
+    </script>
+</div>
+
+<div class="modal-demo">
+    <script type="text/ng-template" id="TBoxAccountModal.html">
+        <div class="modal-header">
+            Choose an account that can not be seen
+        </div>
+        <div class="modal-body" id="modal-body">
+            <div class="panel-body panel-body panel-white">
+                <div class="table-responsive">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <form role="search" class="navbar-form main-search">
+                                <div class="form-group">
+                                    <input type="text" ng-model="Custom.TBoxAccount" press-enter="searchForTBoxAcc()" placeholder="Search by code or account name" class="form-control">
+                                    <button class="btn search-button" ng-click="searchForTBoxAcc()"></button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <table class="table table-bordered table-hover" id="tableItems">
+                        <tr>
+                            <th class="hidden-xs">Account code</th>
+                            <th>Account arabic name </th>
+                            <th>Account english name</th>
+                            <th></th>
+                        </tr>
+                        <tr ng-repeat="Acc in searchTBoxAccounts">
+                            <td>{{ Acc.ACC_CODE }}</td>
+                            <td>{{ Acc.ACC_AR_NAME }}</td>
+                            <td>{{ Acc.ACC_EN_NAME }}</td>
+                            <td><button type="button" class="btn btn-primary" ng-click="addSelectedTBoxAccount(Acc)">Add</button></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" id="closeItemModal" class="btn btn-danger" ng-click="cancel()">Close</button>
+        </div>
+    </script>
+</div>
+
+<div class="modal-demo">
+    <script type="text/ng-template" id="DiffAccountModal.html">
+        <div class="modal-header">
+            Select the currency difference account
+        </div>
+        <div class="modal-body" id="modal-body">
+            <div class="panel-body panel-body panel-white">
+                <div class="table-responsive">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <form role="search" class="navbar-form main-search">
+                                <div class="form-group">
+                                    <input type="text" ng-model="Custom.Curr_Diff_Acc" press-enter="searchForAccDiff()" placeholder="Search by code or account name" class="form-control">
+                                    <button class="btn search-button" ng-click="searchForAccDiff()"></button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <table class="table table-bordered table-hover" id="tableItems">
+                        <tr>
+                            <th class="hidden-xs">Account code</th>
+                            <th>Account arabic name </th>
+                            <th>Account english name</th>
+                            <th></th>
+                        </tr>
+                        <tr ng-repeat="Acc in searchAccountsDiff">
+                            <td>{{ Acc.ACC_CODE }}</td>
+                            <td>{{ Acc.ACC_AR_NAME }}</td>
+                            <td>{{ Acc.ACC_EN_NAME }}</td>
+                            <td><button type="button" class="btn btn-primary" ng-click="addSelectedAccountDiff(Acc)">Add</button></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" id="closeItemModal" class="btn btn-danger" ng-click="cancel()">Close</button>
+        </div>
+    </script>
+</div>
+
+<div class="modal-demo">
+    <script type="text/ng-template" id="lostAccountModal.html">
+        <div class="modal-header">
+            Select Disability and Tuning Account
+        </div>
+        <div class="modal-body" id="modal-body">
+            <div class="panel-body panel-body panel-white">
+                <div class="table-responsive">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <form role="search" class="navbar-form main-search">
+                                <div class="form-group">
+                                    <input type="text" ng-model="Custom.Lost_ACC" press-enter="searchForAcc()" placeholder="Search by code or account name" class="form-control">
+                                    <button class="btn search-button" ng-click="searchForAcc()"></button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <table class="table table-bordered table-hover" id="tableItems">
+                        <tr>
+                            <th class="hidden-xs">Account code</th>
+                            <th>Account arabic name </th>
+                            <th>Account english name</th>
+                            <th></th>
+                        </tr>
+                        <tr ng-repeat="Acc in searchAccounts">
+                            <td>{{ Acc.ACC_CODE }}</td>
+                            <td>{{ Acc.ACC_AR_NAME }}</td>
+                            <td>{{ Acc.ACC_EN_NAME }}</td>
+                            <td><button type="button" class="btn btn-primary" ng-click="addSelectedAccount(Acc)">Add</button></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" id="closeItemModal" class="btn btn-danger" ng-click="cancel()">Close</button>
+        </div>
+    </script>
+</div>
+
+<div class="modal-demo">
+    <script type="text/ng-template" id="TStoreModal.html">
+        <div class="modal-header">
+            Choose a store that can not be seen
+        </div>
+        <div class="modal-body" id="modal-body">
+            <div class="panel-body panel-body panel-white">
+                <div class="table-responsive">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <form role="search" class="navbar-form main-search">
+                                <div class="form-group">
+                                    <input type="text" ng-model="Custom.TStore" press-enter="searchForTStore()" placeholder="Search by code or store name" class="form-control">
+                                    <button class="btn search-button" ng-click="searchForTStore()"></button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <table class="table table-bordered table-hover" id="tableItems">
+                        <tr>
+                            <th class="hidden-xs">Store code</th>
+                            <th>Store arabic name </th>
+                            <th>Store english name</th>
+                            <th></th>
+                        </tr>
+                        <tr ng-repeat="store in searchTStore">
+                            <td>{{ store.COM_STORE_CODE }}</td>
+                            <td>{{ store.COM_STORE_AR_NAME }}</td>
+                            <td>{{ store.COM_STORE_EN_NAME }}</td>
+                            <td><button type="button" class="btn btn-primary" ng-click="addSelectedTStore(store)">Add</button></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" id="closeItemModal" class="btn btn-danger" ng-click="cancel()">Close</button>
+        </div>
+    </script>
+</div>
+
+<div class="app-content">
+    <div class="main-content">
+        <div class="wrap-content container" id="container">
+            <div class="container-fluid container-fullw ">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="panel " style="height:100%;overflow:auto;">
+
+                            <div class="panel-heading border-bottom  panel-white">
+                                <h4 class="panel-title">General Settings</h4>
+                                <div class="panel-tools">
+                                    <a data-original-title="Refresh" data-toggle="tooltip" data-placement="top" data-trigger="hover" class="btn btn-transparent btn-sm panel-refresh" href="#"><i class="fa fa-circle-o"></i></a>
+                                    <a data-original-title="Expand" data-toggle="tooltip" data-placement="top" data-trigger="hover" class="btn btn-transparent btn-sm panel-expand" href="#"><i class="fa fa-compress expand-on"></i><i class="fa fa-expand expand-off"></i></a>
+                                </div>
+                            </div>
+                            <!--/.panel-heading-->
+
+                            <div class="panel-body panel-white padding-30">
+
+                                <div class="tabbable tabs-left panel-white no-bg col-xs-12">
+                                    <ul class="nav nav-tabs bg-body center no-border">
+                                        <li ng-repeat="step in steps" ng-class="{active: $index==getCurrentStepIndex()}">
+                                            <a class="center no-border" href="javascript:void(0)" ng-click="goToStep($index)">{{step}}</a>
+                                        </li>
+                                    </ul>
+
+                                    <div class="tab-content no-border">
+                                        <div class="col-xs-12 panel-body" ng-switch on="selection">
+
+                                            <!-- First Step -->
+                                            <div ng-switch-when="Warning Messages">
+
+                                                <h4 class="tap-heading"><b>Warning Messages</b></h4>
+
+                                                <div class="form-group col-md-4">
+                                                    <div class="checkbox clip-check check-primary checkbox-inline">
+                                                        <input id="first1" type="checkbox" ng-model="systemOptions.END_SYSTEM" />
+                                                        <label for="first1">When ending the program</label>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group col-md-4">
+                                                    <div class="checkbox clip-check check-primary checkbox-inline">
+                                                        <input id="first2" type="checkbox" ng-model="systemOptions.ON_DELETE" />
+                                                        <label for="first2"> When deleting</label>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group col-md-4">
+                                                    <div class="checkbox clip-check check-primary checkbox-inline">
+                                                        <input id="first3" type="checkbox" ng-model="systemOptions.ON_UPDATE" />
+                                                        <label for="first3"> When Updating</label>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group col-md-4">
+                                                    <div class="checkbox clip-check check-primary checkbox-inline">
+                                                        <input id="first4" type="checkbox" ng-model="systemOptions.ON_SAVE" />
+                                                        <label for="first4">When Saveing</label>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group col-md-4">
+                                                    <div class="checkbox clip-check check-primary checkbox-inline">
+                                                        <input id="first5" type="checkbox" ng-model="systemOptions.DATE_AFTER" />
+                                                        <label for="first5"> Date is not today's date</label>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group col-md-4">
+                                                    <div class="checkbox clip-check check-primary checkbox-inline">
+                                                        <input id="first6" type="checkbox" ng-model="systemOptions.SAME_ITEM_ON_BILL" />
+                                                        <label for="first6"> Duplicate the item in the invoice</label>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group col-md-4">
+                                                    <div class="checkbox clip-check check-primary checkbox-inline">
+                                                        <input id="first7" type="checkbox" ng-model="systemOptions.SAME_ACC_ON_ENTRY" />
+                                                        <label for="first7">Duplicate the account in the bond</label>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group col-md-4">
+                                                    <div class="checkbox clip-check check-primary checkbox-inline">
+                                                        <input id="first8" type="checkbox" ng-model="systemOptions.ON_POST_ENTRY" />
+                                                        <label for="first8"> When making a bond from an invoice</label>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group col-md-4">
+                                                    <div class="checkbox clip-check check-primary checkbox-inline">
+                                                        <input id="first9" type="checkbox" ng-model="systemOptions.ON_POST_STORE" />
+                                                        <label for="first9"> When migrating the invoice to the stores</label>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group col-md-4">
+                                                    <div class="checkbox clip-check check-primary checkbox-inline">
+                                                        <input id="first10" type="checkbox" ng-model="systemOptions.ON_POST_ACC" />
+                                                        <label for="first10">When migrating the bond to the accounts</label>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group col-md-4">
+                                                    <div class="checkbox clip-check check-primary checkbox-inline">
+                                                        <input id="first11" type="checkbox" ng-model="systemOptions.ON_ASK_ABOUT_CHANGE" />
+                                                        <label for="first11">Ask about change</label>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group col-md-4">
+                                                    <div class="checkbox clip-check check-primary checkbox-inline">
+                                                        <input id="first12" type="checkbox" ng-model="systemOptions.CAN_SEE_THE_CHEQUES_NOTIFICATIONS" />
+                                                        <label for="first12"> Warning of due checks</label>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group col-md-4">
+                                                    <label>
+                                                        Warning within
+                                                        <input type="text" ng-model="systemOptions.NUMBEROFDAYSBEFOREDUEDATE" /> Days
+                                                    </label>
+                                                </div>
+                                            </div>
+
+                                            <!-- Second Step -->
+                                            <div ng-switch-when="Default Values">
+
+                                                <h4 class="tap-heading"><b>Default Values</b></h4>
+                                                <div class="form-group col-md-6">
+                                                    <label>Starting period date</label>
+                                                    <input type="date" ng-model="systemOptions.FIRST_DATE" class="form-control" />
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label>Ending period date</label>
+                                                    <input type="date" ng-model="systemOptions.END_DATE" class="form-control" />
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label>Operation date</label>
+                                                    <input type="date" ng-model="systemOptions.OPERATION_DATE" class="form-control" />
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label>Default currency</label>
+                                                    <select ng-model="systemOptions.DEFAULT_CURRENCY" class="js-example-basic-hide-search js-states form-control" ng-options="x.CURRENCY_ID as x.CURRENCY_EN_NAME for x in currencyList" required>
+                                                        <option value="">Choose default currency</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <!-- Third Step -->
+                                            <div ng-switch-when="Invoices">
+
+                                                <h4 class="tap-heading"><b>Invoices</b></h4>
+
+                                                <div class="form-group col-xs-12">
+                                                    <label>Invoices number </label>
+                                                    <input type="text" ng-model="systemOptions.HOW_MANY_BILL_CAN_NAVIGATE" />
+                                                    <span style="color:red">* for all invoices</span>
+                                                </div>
+
+                                                <div class="form-group col-md-4">
+                                                    <div class="checkbox clip-check check-primary checkbox-inline">
+                                                        <input id="second1" type="checkbox" ng-model="systemOptions.CAN_SEE_THE_PRICE" />
+                                                        <label for="second1" class="text-capitalize"> can see the price in the invoice</label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group col-md-4">
+                                                    <div class="checkbox clip-check check-primary checkbox-inline">
+                                                        <input id="second2" type="checkbox" ng-model="systemOptions.UNPOSTED_BILL" />
+                                                        <label for="second2" class="text-capitalize"> Unposted invoces </label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group col-md-4">
+                                                    <div class="checkbox clip-check check-primary checkbox-inline">
+                                                        <input id="second3" type="checkbox" ng-model="systemOptions.CAN_CHANGE_THE_PRICE_ON_THE_BILL" />
+                                                        <label for="second3" class="text-capitalize">Can change the price on the invoice</label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group col-md-4">
+                                                    <div class="checkbox clip-check check-primary checkbox-inline">
+                                                        <input id="second4" type="checkbox" ng-model="systemOptions.CAN_CHANGE_BILL_DATE" />
+                                                        <label for="second4" class="text-capitalize">can change invoice date</label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group col-md-4">
+                                                    <div class="checkbox clip-check check-primary checkbox-inline">
+                                                        <input id="second5" type="checkbox" ng-model="systemOptions.CAN_SEE_THE_CURRENT_QTY_ON_BILL" />
+                                                        <label for="second5" class="text-capitalize">Can see the item's quantity on the invoice</label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group col-md-4">
+                                                    <div class="checkbox clip-check check-primary checkbox-inline">
+                                                        <input id="second6" type="checkbox" name="disablebillpaytype" ng-model="systemOptions.DISABLE_BILL_PAY_TYPE" />
+                                                        <label for="second6" class="text-capitalize">Enable change invoice's pay type</label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group col-md-4">
+                                                    <div class="checkbox clip-check check-primary checkbox-inline">
+                                                        <input id="second7" type="checkbox" ng-model="systemOptions.LOAD_THE_LAST_BILLS_AFTER_SAVE" />
+                                                        <label for="second7" class="text-capitalize">Loading invoices after saving directly</label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group col-md-4">
+                                                    <div class="checkbox clip-check check-primary checkbox-inline">
+                                                        <input id="second8" type="checkbox" name="showisitreserv" ng-model="systemOptions.SHOW_IS_IT_RESERVATION" />
+                                                        <label for="second8" class="text-capitalize">Show the booking provider</label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group col-md-4">
+                                                    <div class="checkbox clip-check check-primary checkbox-inline">
+                                                        <input id="second9" type="checkbox" name="showbillpaytype" ng-model="systemOptions.SHOW_BILL_PAY_TYPE" />
+                                                        <label for="second9" class="text-capitalize">Show invoice pay type</label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group col-md-4">
+                                                    <div class="checkbox clip-check check-primary checkbox-inline">
+                                                        <input id="second10" type="checkbox" ng-model="systemOptions.ISITORDEREDBYITEMCODEORNOT" />
+                                                        <label for="second10" class="text-capitalize">The items are arranged in digital code</label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group col-md-4">
+                                                    <div class="checkbox clip-check check-primary checkbox-inline">
+                                                        <input id="second11" type="checkbox" name="showautodiscount" ng-model="systemOptions.SHOW_AUTO_DISCOUNT" />
+                                                        <label for="second11" class="text-capitalize">Show Automatic Discount</label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group col-md-4">
+                                                    <div class="checkbox clip-check check-primary checkbox-inline">
+                                                        <input id="second12" type="checkbox" ng-model="systemOptions.CAN_SEE_THE_BILL_PROFIT" />
+                                                        <label for="second12" class="text-capitalize">can see the invoice profit</label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-xs-12">
+                                                    <hr />
+                                                </div>
+
+                                                <div class="form-group col-xs-12">
+                                                    <div class="form-group col-md-6 col-md-offset-3">
+                                                        <label>Account Disability and Tuning</label>
+                                                        <div class="input-group">
+                                                            <input type="text" ng-model="Custom.Lost_ACC" placeholder="Account name" class="form-control" press-enter="searchForAcc()">
+                                                            <span class="input-group-addon" ng-click="searchForAcc()"><a><i class="fa fa-search"></i></a></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <div class="panel panel-default panel-white">
+                                                        <div class="panel-heading border-bottom ">Numbers after interval</div>
+                                                        <div class="panel-body min-height-230">
+                                                            <div class="form-group col-xs-12">
+                                                                <label>Quantity</label>
+                                                                <input type="number" ng-model="systemOptions.QTY" class="form-control" />
+                                                            </div>
+                                                            <div class="form-group col-xs-6">
+                                                                <label>Price</label>
+                                                                <input type="number" ng-model="systemOptions.PRICE" class="form-control" />
+                                                            </div>
+                                                            <div class="form-group col-xs-6">
+                                                                <label>Exchange rate</label>
+                                                                <input type="number" ng-model="systemOptions.RATE" class="form-control" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!--/.panel-->
+                                                </div>
+                                                <!--/.form-group-->
+
+                                                <div class="form-group col-md-6">
+                                                    <div class="panel panel-default panel-white">
+                                                        <div class="panel-heading border-bottom">Currency</div>
+                                                        <div class="panel-body min-height-230">
+                                                            <div class="form-group col-xs-12">
+                                                                <div class="checkbox clip-check check-primary checkbox-inline">
+                                                                    <input id="second13" type="checkbox" ng-model="systemOptions.GENERATE_THE_CURRENCY_DIFFERENCE_ENTRY_FOR_ENTRIES" />
+                                                                    <label for="second13" class="text-capitalize">Create currency bond for bonds</label>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-group col-xs-12">
+                                                                <div class="checkbox clip-check check-primary checkbox-inline">
+                                                                    <input id="second14" type="checkbox" ng-model="systemOptions.GENERATE_THE_CURRENCY_DIFFERENCE_ENTRY_FOR_BILLS" />
+                                                                    <label for="second14" class="text-capitalize">currency bonds at the fixed exchange rate of the system</label>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-group col-xs-12">
+                                                                <label>Currency difference Account</label>
+                                                                <div class="input-group">
+                                                                    <input type="text" ng-model="Custom.Curr_Diff_Acc" placeholder="Account name" class="form-control" press-enter="searchForAccDiff()">
+                                                                    <span class="input-group-addon" ng-click="searchForAccDiff()"><a><i class="fa fa-search"></i></a></span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- Fourth Step -->
+                                            <div ng-switch-when="Shortcuts">
+
+                                                <h4 class="tap-heading"><b>Shortcuts</b></h4>
+                                                <div class="table-responsive">
+                                                    <table class="table table-bordered table-hover table-full-width ps-scrollbar-x small  panel-full-screen fc-scroller" style="overflow:auto;" id="sample-table-2">
+                                                        <thead>
+                                                            <tr class="success">
+                                                                <td class="center text-extra-large"><i class="ti-arrow-down"></i></td>
+                                                                <td class="center"> Key </td>
+                                                                <td class="center">Job</td>
+                                                                <td>Delete</td>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr ng-repeat="scut in shortcutList track by $index" style="max-height:50px !important;">
+                                                                <!--track by $index-->
+                                                                <td>
+                                                                    {{ $index+1 }}
+                                                                </td>
+                                                                <td>
+                                                                    <span e-name="KEY_TYPE" ng-show="rowform.$show()" editable-text="scut.KEY_TYPE" e-form="rowform" e-get-Keyboard>
+                                                                        {{ scut.KEY_TYPE || 'empty' }}
+                                                                    </span>
+
+                                                                </td>
+                                                                <td>
+                                                                    <span e-name="ORDER_ID" editable-select="scut.ORDER_ID" ng-show="rowform.$show()" e-form="rowform" e-ng-options="x.ORDER_ID as x.ORDER_AR_NAME for x in ordersList">
+                                                                        {{ showSelectedOrder(scut.ORDER_ID) }}
+                                                                    </span>
+                                                                </td>
+                                                                <td style="white-space: nowrap">
+                                                                    <!-- form -->
+                                                                    <form editable-form name="rowform" ng-show="!rowform.$show()" class="form-buttons form-inline" shown="shortcutItem == scut" onbeforesave="insertItem($data,$index)">
+                                                                        <button type="submit" class="btn btn-info" ng-click="rowform.$show()" ng-show="hideButton($index);">Add <i class="fa fa-plus-circle"></i></button>
+                                                                        <button type="button" class="btn btn-warning" ng-click="removeGridItem($index)" ng-show="showButton($index);">Delete <i class="fa fa-remove"></i></button>
+                                                                    </form>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+
+                                            <!-- Fifth Step -->
+                                            <div ng-switch-when="Attachments">
+
+                                                <h4 class="tap-heading"><b>Attachments</b></h4>
+                                                <div class="form-group col-xs-12">
+                                                    <fieldset class="panel-white">
+                                                        <legend>Cashier Printer</legend>
+                                                        <div class="form-group col-xs-12">
+                                                            <label>
+                                                                Cashier Printer
+                                                            </label>
+                                                            <select ng-model="systemOptions.RESETPRINTER_ID" class="js-example-basic-hide-search js-states form-control" ng-options="x for x in printersList" required>
+                                                                <option value="">Choose cashier printer</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="form-group col-md-6">
+                                                            <label>
+                                                                Top margin
+                                                            </label>
+                                                            <input type="number" ng-model="systemOptions.RESETTOPMARGIN" class="form-control" />
+                                                        </div>
+                                                        <div class="form-group col-md-6">
+                                                            <label>
+                                                                Right margin
+                                                            </label>
+                                                            <input type="number" ng-model="systemOptions.RESETRIGHTMARGIN" class="form-control" />
+                                                        </div>
+                                                        <div class="form-group col-md-6">
+                                                            <label>
+                                                                Bottom margin
+                                                            </label>
+                                                            <input type="number" ng-model="systemOptions.RESETBOTTOMMARGIN" class="form-control" />
+                                                        </div>
+                                                        <div class="form-group col-md-6">
+                                                            <label>
+                                                                Left margin
+                                                            </label>
+                                                            <input type="number" ng-model="systemOptions.RESETLEFTMARGIN" class="form-control" />
+                                                        </div>
+                                                    </fieldset>
+                                                </div>
+                                                <div class="form-group col-xs-12">
+                                                    <fieldset class="panel-white">
+                                                        <legend>Reports printer</legend>
+                                                        <div class="form-group col-xs-12">
+                                                            <label>
+                                                                Reports printer
+                                                            </label>
+                                                            <select ng-model="systemOptions.A4PRINTER_ID" class="js-example-basic-hide-search js-states form-control" ng-options="x for x in printersList" required>
+                                                                <option value="">Choose Reports printer</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="form-group col-md-6">
+                                                            <label>
+                                                                Top margin
+                                                            </label>
+                                                            <input type="number" ng-model="systemOptions.A4TOPMARGIN" class="form-control" />
+                                                        </div>
+                                                        <div class="form-group col-md-6">
+                                                            <label>
+                                                                Right margin
+                                                            </label>
+                                                            <input type="number" ng-model="systemOptions.A4RIGHTMARGIN" class="form-control" />
+                                                        </div>
+                                                        <div class="form-group col-md-6">
+                                                            <label>
+                                                                Bottom margin
+                                                            </label>
+                                                            <input type="number" ng-model="systemOptions.A4BOTTOMMARGIN" class="form-control" />
+                                                        </div>
+                                                        <div class="form-group col-md-6">
+                                                            <label>
+                                                                Left margin
+                                                            </label>
+                                                            <input type="number" ng-model="systemOptions.A4LEFTMARGIN" class="form-control" />
+                                                        </div>
+                                                    </fieldset>
+                                                </div>
+                                            </div>
+
+                                            <!-- Sexth Step -->
+                                            <div ng-switch-when="Email">
+
+                                                <h4 class="tap-heading"><b>Email</b></h4>
+                                                <form name="emailForm" novalidate>
+                                                    <div class="form-group col-md-6">
+                                                        <label>
+                                                            Reports are sent by e-mail
+                                                        </label>
+                                                        <div class="row">
+                                                            <span class="col-md-8"><input type="text" name="email" ng-model="systemOptions.email" class="form-control" ng-pattern="emailPattern" required /></span>
+                                                            <span class="col-md-4">
+                                                                <button type="button" class="btn btn-primary" ng-click="AddToEmailList()" ng-disabled="!emailForm.$valid">Add <i class="fa fa-plus"></i></button>
+                                                            </span>
+                                                            <span ng-show="emailForm.email.$error.pattern && emailForm.email.$invalid " class="help-block col-xs-12" style="color:red"> Email is incorrect</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group col-xs-12" style="max-height:205px;overflow-y:auto">
+                                                        <table class="table table-bordered table-responsive">
+                                                            <tr ng-repeat="em in emailsList track by $index">
+                                                                <td width="80%"><label>{{em.Email}}</label></td>
+                                                                <td width="20%"><button type="button" class="btn btn-warning" ng-click="DeleteEmailItem($index)">Delete <i class="fa fa-remove"></i></button></td>
+                                                            </tr>
+                                                        </table>
+                                                    </div>
+                                                </form>
+                                            </div>
+
+                                            <!-- Seventh Step -->
+                                            <div ng-switch-when="Creating Codes">
+
+                                                <h4 class="tap-heading"><b>Creating Codes</b></h4>
+                                                <div class="form-group col-md-4">
+                                                    <div class="checkbox clip-check check-primary checkbox-inline">
+                                                        <input id="itemcode1" type="checkbox" ng-model="systemOptions.ITEM_CODE" />
+                                                        <label for="itemcode1">Create items' code  automatically</label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group col-md-4">
+                                                    <div class="checkbox clip-check check-primary checkbox-inline">
+                                                        <input id="billcode1" type="checkbox" name="billcode" ng-model="systemOptions.BILL_CODE" required />
+                                                        <label for="billcode1">Create invoices' code automatically</label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group col-md-4">
+                                                    <div class="checkbox clip-check check-primary checkbox-inline">
+                                                        <input id="servicecode1" type="checkbox" name="servicecode" ng-model="systemOptions.SERVICE_CODE" />
+                                                        <label for="servicecode1">Create product's code automatically</label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group col-md-4">
+                                                    <div class="checkbox clip-check check-primary checkbox-inline">
+                                                        <input id="servicegroupcode1" type="checkbox" name="servicegroupcode" ng-model="systemOptions.SERVICE_GROUP_CODE" required />
+                                                        <label for="servicegroupcode1">Create products group's code automatically</label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group col-md-4">
+                                                    <div class="checkbox clip-check check-primary checkbox-inline">
+                                                        <input id="itemgroupcode1" type="checkbox" name="itemgroupcode" ng-model="systemOptions.ITEM_GROUP_CODE" required />
+                                                        <label for="itemgroupcode1">Create items group's code  automatically</label>
+                                                        <div class="help-block error" style="display:inline" ng-show="test.itemgroupcode.$error.required">*</div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group col-md-4">
+                                                    <div class="checkbox clip-check check-primary checkbox-inline">
+                                                        <input id="entrycode1" type="checkbox" name="entrycode" ng-model="systemOptions.ENTRY_CODE" required />
+                                                        <label for="entrycode1">Create the bond's code automatically</label>
+                                                        <div class="help-block error" style="display:inline" ng-show="test.entrycode.$error.required">*</div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group col-md-6">
+                                                    <div class="checkbox clip-check check-primary checkbox-inline">
+                                                        <input id="createCode" type="checkbox" ng-model="systemOptions.SUPPLIER_ITEM_CODE" />
+                                                        <label for="createCode">Create the suppliers' item code automatically</label>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                            <!-- eighth Step -->
+                                            <div ng-switch-when="User Data">
+                                                <h4 class="tap-heading"><b>User Data</b></h4>
+                                                <div class="form-group col-md-6">
+                                                    <label>Arabic name</label>
+                                                    <input type="text" ng-model="userData.COMPANY_AR_NAME" class="form-control" />
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label>English name</label>
+                                                    <input type="text" ng-model="userData.COMPANY_EN_NAME" class="form-control" />
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label>Arabic user's address</label>
+                                                    <input type="text" ng-model="userData.COMPANY_AR_ADRESS" class="form-control" />
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label>English user's address</label>
+                                                    <input type="text" ng-model="userData.COMPANY_EN_ADRESS" class="form-control" />
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label>User's telephone</label>
+                                                    <input type="text" ng-model="userData.COMPANY_TELEPHONE" class="form-control" only-number />
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label>Fax</label>
+                                                    <input type="text" ng-model="userData.COMPANY_FAX" class="form-control" only-number />
+                                                </div>
+                                            </div>
+
+                                            <!-- Ninth Step -->
+                                            <div ng-switch-when="Price Types">
+
+                                                <h4 class="tap-heading"><b>Price Types</b></h4>
+                                                <table class="table table-responsive" style="width:100%">
+                                                    <tr class="success">
+                                                        <th></th>
+                                                        <th></th>
+                                                        <th><label>Show price</label></th>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><label>First price</label></td>
+                                                        <td>
+                                                            <input class="form-control" ng-model="priceType.Price1" placeholder="First price Description" />
+                                                        </td>
+                                                        <td>
+                                                            <div class="checkbox clip-check check-primary checkbox-inline">
+                                                                <input id="Price1" type="checkbox" ng-model="priceType.IsShowPrice1" />
+                                                                <label for="Price1"></label>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><label>Second price</label></td>
+                                                        <td>
+                                                            <input class="form-control" ng-model="priceType.Price2" placeholder="Second price Description" />
+                                                        </td>
+                                                        <td>
+                                                            <div class="checkbox clip-check check-primary checkbox-inline">
+                                                                <input id="Price2" type="checkbox" ng-model="priceType.IsShowPrice2" />
+                                                                <label for="Price2"></label>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><label>Third price</label></td>
+                                                        <td>
+                                                            <input class="form-control" ng-model="priceType.Price3" placeholder="Third price Description" />
+                                                        </td>
+                                                        <td>
+                                                            <div class="checkbox clip-check check-primary checkbox-inline">
+                                                                <input id="Price3" type="checkbox" ng-model="priceType.IsShowPrice3" />
+                                                                <label for="Price3"></label>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><label>Fourth price</label></td>
+                                                        <td>
+                                                            <input class="form-control" ng-model="priceType.Price4" placeholder="Fourth price Description" />
+                                                        </td>
+                                                        <td>
+                                                            <div class="checkbox clip-check check-primary checkbox-inline">
+                                                                <input id="Price4" type="checkbox" ng-model="priceType.IsShowPrice4" />
+                                                                <label for="Price4"></label>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><label>Fifth price</label></td>
+                                                        <td>
+                                                            <input class="form-control" ng-model="priceType.Price5" placeholder="Fifth price Description" />
+                                                        </td>
+                                                        <td>
+                                                            <div class="checkbox clip-check check-primary checkbox-inline">
+                                                                <input id="price5" type="checkbox" ng-model="priceType.IsShowPrice5" />
+                                                                <label for="price5"></label>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><label>Sixth price</label></td>
+                                                        <td>
+                                                            <input class="form-control" ng-model="priceType.Price6" placeholder="Sixth price Description" />
+                                                        </td>
+                                                        <td>
+                                                            <div class="checkbox clip-check check-primary checkbox-inline">
+                                                                <input id="price6" type="checkbox" ng-model="priceType.IsShowPrice6" />
+                                                                <label for="price6"></label>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><label>Seventh price</label></td>
+                                                        <td>
+                                                            <input class="form-control" ng-model="priceType.Price7" placeholder="Seventh price Description" />
+                                                        </td>
+                                                        <td>
+                                                            <div class="checkbox clip-check check-primary checkbox-inline">
+                                                                <input id="price7" type="checkbox" ng-model="priceType.IsShowPrice7" />
+                                                                <label for="price7"></label>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+
+                                            <!-- Tenth Step -->
+                                            <div ng-switch-when="Default Accounts">
+
+                                                <h4 class="tap-heading"><b>Default Accounts</b></h4>
+                                                <div class="form-group col-xs-6">
+                                                    <label>
+                                                        Customer repayments account
+                                                    </label>
+                                                    <div class="input-group">
+                                                        <input type="text" ng-model="Custom.Cust_ACC_Name" placeholder="Account Name" class="form-control" press-enter="searchForCustAcc()">
+                                                        <span class="input-group-addon" ng-click="searchForCustAcc()"><a><i class="fa fa-search"></i></a></span>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group col-xs-6">
+                                                    <label>
+                                                        Paid account in invoices
+                                                    </label>
+                                                    <div class="input-group">
+                                                        <input type="text" ng-model="Custom.PBill_ACC_Name" placeholder="Account Name" class="form-control" press-enter="searchForPBillAcc()">
+                                                        <span class="input-group-addon" ng-click="searchForPBillAcc()"><a><i class="fa fa-search"></i></a></span>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group col-xs-6">
+                                                    <label>
+                                                        Supplier payments account
+                                                    </label>
+                                                    <div class="input-group">
+                                                        <input type="text" ng-model="Custom.Supp_Acc_NAme" placeholder="Account Name" class="form-control" press-enter="searchForSuppAcc()">
+                                                        <span class="input-group-addon" ng-click="searchForSuppAcc()"><a><i class="fa fa-search"></i></a></span>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group col-xs-6">
+                                                    <label>
+                                                        Invoices' profit account
+                                                    </label>
+                                                    <div class="input-group">
+                                                        <input type="text" ng-model="Custom.BillProfit_Acc_Name" placeholder="Account Name" class="form-control" press-enter="searchForBillProfitAcc()">
+                                                        <span class="input-group-addon" ng-click="searchForBillProfitAcc()"><a><i class="fa fa-search"></i></a></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- Eleventh Step -->
+                                            <div ng-switch-when="Income Menu Accounts">
+
+                                                <h4 class="tap-heading"><b>Income Menu Accounts</b></h4>
+
+                                                <form name="IncomeForm" novalidate>
+                                                    <div class="form-group col-md-6">
+                                                        <label>Account</label>
+                                                        <div class="input-group">
+                                                            <input type="text" ng-model="Custom.Income_Acc_Name" placeholder="Account name" class="form-control" press-enter="searchForIncomeAcc()" required>
+                                                            <span class="input-group-addon" ng-click="searchForIncomeAcc()"><a><i class="fa fa-search"></i></a></span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group col-md-6">
+                                                        <label>Account type</label>
+                                                        <div class="row">
+                                                            <span class="col-md-8">
+                                                                <select ng-model="Custom.AccountTypeID" class="js-example-basic-hide-search js-states form-control" ng-options="x.ID as x.NameAr for x in AccountTypesList" required>
+                                                                    <option value="">Choose account type</option>
+                                                                </select>
+                                                            </span>
+                                                            <span class="col-md-4">
+                                                                <button type="button" class="btn btn-primary" ng-click="AddToIncomeAccountsList()" ng-disabled="!IncomeForm.$valid">Add <i class="fa fa-plus"></i></button>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                                <div class="form-group col-xs-12">
+
+                                                    <table class="table table-responsive">
+                                                        <tr class="success">
+                                                            <th>Account</th>
+                                                            <th>Account type</th>
+                                                            <th>Delete</th>
+                                                        </tr>
+                                                        <tr ng-repeat="itm in IncomeAccountsList">
+                                                            <td>{{itm.Income_Acc_Name}}</td>
+                                                            <td>{{itm.Income_Account_Type_Name}}</td>
+                                                            <td><button type="button" class="btn btn-warning" ng-click="DeletefromIncomeAccountsList($index)">Delete <i class="fa fa-remove"></i></button></td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+
+                                            </div>
+
+                                            <!-- Twelfth Step -->
+                                            <div ng-switch-when="Special Accounts and Stores">
+
+                                                <h4 class="tap-heading"><b>Special Accounts and Stores</b></h4>
+
+                                                <div class="col-md-6">
+                                                    <fieldset class="panel-white">
+                                                        <legend>Accounts can not be seen</legend>
+                                                        <div class="form-group col-xs-12">
+                                                            <form name="TBoxForm" novalidate>
+                                                                <label>Account</label>
+                                                                <div class="row">
+                                                                    <div class="col-md-8">
+                                                                        <div class="input-group">
+                                                                            <input type="text" ng-model="Custom.TBoxAccount" placeholder="Account name" class="form-control" press-enter="searchForTBoxAcc()" required>
+                                                                            <span class="input-group-addon" ng-click="searchForTBoxAcc()"><a><i class="fa fa-search"></i></a></span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-4">
+                                                                        <button type="button" class="btn btn-primary" ng-click="AddToTBoxAccountsList()" ng-disabled="!TBoxForm.$valid">Add <i class="fa fa-plus"></i></button>
+                                                                    </div>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                        <div class="form-group col-xs-12">
+                                                            <table class="table table-responsive">
+                                                                <tr>
+                                                                    <th>Account</th>
+                                                                    <th>Delete</th>
+                                                                </tr>
+                                                                <tr ng-repeat="itm in TBoxAccountsList">
+                                                                    <td>{{itm.Acc_Name}}</td>
+                                                                    <td><button type="button" class="btn btn-warning" ng-click="DeletefromTBoxAccountsList($index)">Delete <i class="fa fa-remove"></i></button></td>
+                                                                </tr>
+                                                            </table>
+                                                        </div>
+                                                    </fieldset>
+                                                </div>
+
+                                                <div class="col-md-6">
+                                                    <fieldset class="panel-white">
+                                                        <legend>Stores can not be seen</legend>
+                                                        <div class="form-group col-xs-12">
+                                                            <form name="TStoreForm" novalidate>
+                                                                <label>Store</label>
+                                                                <div class="row">
+                                                                    <span class="col-md-8">
+                                                                        <span class="input-group">
+                                                                            <input type="text" ng-model="Custom.TStore" placeholder="Store name" class="form-control" press-enter="searchForTStore()" required>
+                                                                            <span class="input-group-addon" ng-click="searchForTStore()"><a><i class="fa fa-search"></i></a></span>
+                                                                        </span>
+                                                                    </span>
+                                                                    <span class="col-md-4">
+                                                                        <button type="button" class="btn btn-primary" ng-click="AddToTStoresList()" ng-disabled="!TStoreForm.$valid">Add <i class="fa fa-plus"></i></button>
+                                                                    </span>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                        <div class="form-group col-xs-12">
+
+                                                            <table class="table table-responsive">
+                                                                <tr>
+                                                                    <th>Store</th>
+                                                                    <th></th>
+                                                                </tr>
+                                                                <tr ng-repeat="itm in TStoresList">
+                                                                    <td>{{itm.StoreName}}</td>
+                                                                    <td><button type="button" class="btn btn-warning" ng-click="DeletefromTStoresList($index)">Delete <i class="fa fa-remove"></i></button></td>
+                                                                </tr>
+                                                            </table>
+                                                        </div>
+                                                    </fieldset>
+                                                </div>
+
+                                            </div>
+
+                                            <!-- 13th Step -->
+                                            <div ng-switch-when="Address Parts">
+
+                                                <h4 class="tap-heading"><b>Address Parts</b></h4>
+                                                <div class="form-group col-md-6">
+                                                    <label>Part 1</label>
+                                                    <input type="text" ng-model="addressParts.AddressPart1" class="form-control" />
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label>
+                                                        Part 2
+                                                    </label>
+                                                    <input type="text" ng-model="addressParts.AddressPart2" class="form-control" />
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label>
+                                                        Part 3
+                                                    </label>
+                                                    <input type="text" ng-model="addressParts.AddressPart3" class="form-control" />
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label>
+                                                        Part 4
+                                                    </label>
+                                                    <input type="text" ng-model="addressParts.AddressPart4" class="form-control" />
+                                                </div>
+                                            </div>
+
+                                            <!-- 14th Step -->
+                                            <div ng-switch-when="Company Branches Privilige">
+                                                <h4 class="tap-heading"><b>Company Branches Privilige </b></h4>
+                                                <div class="form-group col-xs-12">
+                                                    <div class="form-group col-md-6 col-md-offset-3">
+                                                        <label for="form-field-select-2">User Name</label>
+                                                        <ui-select ng-model="userPrivBran.ID" ng-change="getUserBranch()" theme="bootstrap">
+                                                            <ui-select-match>
+                                                                {{$select.selected.UID}}
+                                                            </ui-select-match>
+                                                            <ui-select-choices repeat="value.ID as value in usersList | filter: $select.search">
+                                                                {{value.UID}}
+                                                                <!--<div ng-bind-html="value.name | highlight: $select.search"></div>-->
+                                                            </ui-select-choices>
+                                                        </ui-select>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group col-md-6 col-md-offset-3">
+                                                    <fieldset class="panel panel-white panel-default">
+                                                        <legend>Branch Name</legend>
+                                                        <div class="panel-body">
+                                                            <div ng-repeat="role in companyBranchesList">
+                                                                <div class="checkbox clip-check check-primary checkbox-inline">
+                                                                    <input id="branch{{$index}}" type="checkbox" ng-model="role.SELECTED" value="role.COM_BRN_ID" ng-change="change(role.COM_BRN_ID)">
+                                                                    <label for="branch{{$index}}">{{role.COM_BRN_AR_NAME}}</label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </fieldset>
+                                                </div>
+                                                <div class="col-sm-12 my-btn-group text-left">
+                                                    <button type="button" class="btn btn-primary margin-top-10" ng-disabled="test.$invalid" ng-click="savePrivilge()">حفظ <i class="fa fa-save"></i></button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--/.col-xs-12-->
+                                    </div>
+                                    <!--/.tab-content-->
+                                </div>
+                                <!--/.tabbable-->
+
+                                <div class="clearfix"></div>
+                                <ul class="pager text-left col-md-12">
+                                    <li class="" ng-class="{disabled: !hasNextStep()}">
+                                        <a href="javascript:void(0);" ng-click="incrementStep()">Next Step &rarr;</a>
+                                    </li>
+                                    <li class="" ng-class="{disabled: !hasPreviousStep()}">
+                                        <a href="javascript:void(0);" ng-click="decrementStep()">&larr; Previous Step</a>
+                                    </li>
+                                </ul>
+                                <!--<div class="pull-right"><button style="margin:20px 0;" class="btn btn-success">Confirm and Register</button></div>-->
+                                <div class="clearfix"></div>
+
+                                <div class="col-xs-12 margin-bottom-25 my-btn-group text-center">
+                                    <button type="button" class="btn btn-primary btn-wide  margin-top-10" ng-click="savesystemOptions()"> <i class="fa fa-save"></i>Save</button>
+                                    <button type="button" class="btn btn-wide btn-success margin-top-10 " ng-click="refreshData()"> <i class="fa fa-refresh"></i>Refresh</button>
+                                </div>
+                                <!--/.my-btn-group-->
+
+                            </div>
+                            <!--/.panel-body-->
+                        </div>
+                        <!--/.panel-->
+                    </div>
+                    <!--/.col-xs-12-->
+                </div>
+                <!--/.row-->
+            </div>
+            <!--/.container-fluid-->
+        </div>
+        <!--/.wrap-content-->
+    </div>
+    <!--/.main-content-->
+</div>
+<!--/.app-content-->

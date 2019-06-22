@@ -1,0 +1,90 @@
+﻿
+<div class="app-content">
+    <div class="main-content">
+        <div class="wrap-content container" id="container">
+            <div class="container-fluid container-fullw">
+                <div class="row text-large">
+                    <div class="col-md-12">
+                        <div ng-switch on="selection">
+                            <div class="panel panel-white">
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group col-md-12" style="float:right !important">
+                                                    <fieldset class="panel panel-white panel-default col-md-6" style="width:60%; margin-left:5%">
+                                                        <legend>
+                                                                دليل الاصناف
+                                                        </legend>
+                                                        <!--<div ui-tree>
+                                                            <ol ui-tree-nodes="" ng-model="itemsGroupList">
+                                                                <li ng-repeat="item in itemsGroupList" ui-tree-node data-collapsed ng-hide="filter(item, itemsGroupList)">
+                                                                    <div ui-tree-handle>
+                                                                        {{item.Code}} - {{item.Name}}
+                                                                    </div>
+                                                                    <ol ui-tree-nodes="" ng-model="item.children">
+                                                                        <li ng-repeat="subItem in item.children" ui-tree-node data-collapsed ng-hide="filter(subItem, itemsGroupList)">
+                                                                            <div ui-tree-handle>
+                                                                                {{subItem.Code}} - {{subItem.Name}}
+                                                                            </div>
+                                                                        </li>
+                                                                    </ol>
+                                                                </li>
+                                                            </ol>
+                                                        </div>-->
+
+                                                        <!--<treecontrol class="tree-classic" tree-model="itemsGroupList" filter-expression="predicate" filter-comparator="comparator">
+                                                            label: {{node.Code}} - {{node.Name}}
+                                                        </treecontrol>-->
+
+                                                        <!--<input ng-model="pattern">
+                                                        <script type="text/ng-template" id="items_renderer.html">
+                                                            <div ui-tree-handle>{{item.Name}}</div>
+                                                            <ol ui-tree-nodes ng-model="item.children">
+                                                                <li ng-repeat="item in item.children" ui-tree-node ng-include="'items_renderer.html'"
+                                                                    ng-hide="filter(item, itemsGroupList)">
+                                                                </li>
+                                                            </ol>
+                                                        </script>
+                                                        <div ui-tree>
+                                                            <ol ui-tree-nodes ng-model="itemsGroupList">
+                                                                <li ng-repeat="item in itemsGroupList" ui-tree-node ng-include="'items_renderer.html'"
+                                                                    ng-hide="filter(item, itemsGroupList)"></li>
+                                                            </ol>
+                                                        </div>-->
+
+                                                        <!--<div class="panel-body text-extra-large">
+                                                            <treecontrol class="tree-classic" tree-model="itemsGroupList" on-selection="redToView(node.Id,$parentNode)" filter-expression="predicate">
+                                                                {{node.Code}} - {{node.Name}}
+                                                                <span ng-show="$parentNode">
+                                                                    <span class="col-sm-1" aria-hidden="false"></span>
+                                                                </span> 
+                                                            </treecontrol>
+                                                        </div>-->
+
+                                                        <div class="form-group">
+                                                            <div class="input-group">
+                                                                <input id="itemsTree_q" type="text" placeholder="أدخل نص البحث هنا ..." class="form-control">
+                                                                <span id='addBtnNewAcc' class='btn btn-primary input-group-addon'><span class='glyphicon glyphicon-plus'></span></span>
+                                                            </div>
+                                                           
+                                                        </div>
+                                                        <span id="col" style="display:none"><i class="glyphicon glyphicon-minus"></i></span>
+                                                        <span id="exp" style="display:none" ><i class="glyphicon glyphicon-plus"></i></span>                                                       
+                                                        <div id="itemsTree" class="demo"></div>       
+                                                    </fieldset>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+

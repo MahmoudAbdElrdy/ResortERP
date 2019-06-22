@@ -1,0 +1,120 @@
+﻿﻿<div class="app-content">
+
+    <div class="main-content">
+        <div class="wrap-content container" id="container">
+            <div class="container-fluid container-fullw">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="panel panel-white">
+                            <div class="panel-heading border-bottom">
+                                <h4 class="panel-title">ManufacturingWage Definition</h4>
+                                <div class="panel-tools">
+                                    <a data-original-title="Refresh" data-toggle="tooltip" data-placement="top" data-trigger="hover" class="btn btn-transparent btn-sm panel-refresh" href="#"><i class="fa fa-circle-o"></i></a>
+                                    <a data-original-title="Expand" data-toggle="tooltip" data-placement="top" data-trigger="hover" class="btn btn-transparent btn-sm panel-expand" href="#"><i class="fa fa-compress expand-on"></i><i class="fa fa-expand expand-off"></i></a>
+                                </div>
+                            </div>
+
+                            <div class="panel-body">
+
+                                <ng-form id="test" name="test">
+                                    <div class="col-md-6">
+                                        <div ng-class="{'has-error': test.$invalid}" class="form-group">
+                                            <div class="form-group col-md-12">
+                                                <label>ManufacturingWage Code :</label><div class="help-block error" style="display:inline" ng-show="test.code.$error.required">*</div>
+                                                <input type="text" class="form-control" name="code" placeholder="Code" ng-model="manufacturingWages.ManufacturingWage_CODE" required>
+                                            </div>
+                                        </div>
+
+                                        <div ng-class="{'has-error': test.$invalid}" class="form-group">
+                                            <div class="form-group col-md-12">
+                                                <label>Arabic ManufacturingWage Name : </label><div class="help-block error" style="display:inline" ng-show="test.arname.$error.required">*</div>
+                                                <input type="text" class="form-control" name="arname" placeholder="Arabic ManufacturingWage Name " ng-model="manufacturingWages.ManufacturingWage_AR_NAME" required>
+                                            </div>
+                                        </div>
+
+                                        <div ng-class="{'has-error': test.$invalid}" class="form-group">
+                                            <div class="form-group col-md-12">
+                                                <label>Latin ManufacturingWage Name : </label><div class="help-block error" style="display:inline" ng-show="test.enname.$error.required">*</div>
+                                                <input type="text" class="form-control" name="enname" placeholder="Latin ManufacturingWage Name " ng-model="manufacturingWages.ManufacturingWage_EN_NAME" required>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group col-md-12">
+                                            <label>Notes : </label>
+                                            <input type="text" class="form-control" placeholder="Notes " ng-model="manufacturingWages.ManufacturingWage_REMARKS">
+                                        </div>
+
+                                    </div>
+                                    <div class="col-md-6">
+
+                                        <div class="space12 center">
+                                            <div class="btn-group">
+                                                <button class="btn btn-primary">
+                                                    <i class="fa fa-step-forward"></i>
+                                                </button>
+
+
+                                                <button class="btn btn-primary">
+                                                    <i class="fa fa-chevron-right"></i>
+                                                </button>
+
+                                                <button class="btn btn-primary">
+                                                    <i class="fa fa-chevron-left"></i>
+                                                </button>
+                                                <button class="btn btn-primary">
+                                                    <i class="fa fa-step-backward"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 margin-bottom-25 text-center">
+                                        <button type="button" class="btn btn-primary btn-wide  margin-top-10" ng-disabled="test.$invalid" ng-click="savemanufacturingWagesGroup()">Save&nbsp;&nbsp;<i class="fa fa-save"></i></button>
+                                        <button type="button" class="btn btn-wide btn-success margin-top-10 " ng-click="refreshData()">Refresh&nbsp;&nbsp;<i class="fa fa-refresh"></i></button>
+                                        <button type="button" class="btn btn-wide btn-info   margin-top-10" ng-click="clearEnity()">New&nbsp;&nbsp;<i class="fa fa-paste"></i></button>
+                                    </div>
+
+                                </ng-form>
+
+                                <hr />
+                                <div class="col-md-12">
+                                    
+                                        <table class="table table-bordered table-hover">
+                                            <thead>
+                                                <tr class="success">
+                                                    <th class="center text-extra-large"><i class="ti-arrow-down"></i></th>
+                                                    <th class="center"> ManufacturingWage Code  </th>
+                                                    <th class="center">ManufacturingWage Arabic Name </th>
+                                                    <th class="center">ManufacturingWage Latin Name</th>
+                                                    <th class="center">Notes</th>
+                                                    <th class="center">Edit</th>
+                                                    <th class="center">Delete</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="ManufacturingWage in manufacturingWagesList">
+                                                    <td class="hidden-xs">{{ $index + 1 }}</td>
+                                                    <td>{{ ManufacturingWage.ManufacturingWage_CODE }}</td>
+                                                    <td>{{ ManufacturingWage.ManufacturingWage_AR_NAME }}</td>
+                                                    <td>{{ ManufacturingWage.ManufacturingWage_EN_NAME }}</td>
+                                                    <td class="hidden-xs">{{ ManufacturingWage.ManufacturingWage_REMARKS }}</td>
+                                                    <td>
+                                                        <a class="label partition-blue" href="" ng-click="dirEnity(ManufacturingWage)"><i class="glyphicon glyphicon-share"></i> Edit </a>
+                                                    </td>
+                                                    <td>
+                                                        <a class="label partition-red" href="" ng-click="deleteEnity(ManufacturingWage)"><i class="glyphicon glyphicon-remove-circle"></i> Delete </a>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <ul uib-pagination total-items="manufacturingWagesTotalCount" ng-model="pageNum" max-size="maxSize" class="pagination-sm" boundary-links="true" num-pages="numPages" ng-change="pageChanged()"></ul>
+                                        <pre>Page: {{pageNum}} / {{numPages}}</pre>
+                               
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

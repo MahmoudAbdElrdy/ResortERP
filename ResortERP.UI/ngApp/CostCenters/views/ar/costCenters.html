@@ -1,0 +1,202 @@
+﻿<div class="app-content">
+    <div class="main-content">
+        <div class="wrap-content container" id="container">
+            <div class="container-fluid container-fullw">
+
+                <div class="col-xs-12 margin-top-10 margin-bottom-10">
+                    <div class="breadcrumb-wrapper no-margin">
+                        <h4 class="mainTitle no-margin">مراكز التكلفه</h4>
+                        <ul class="pull-right breadcrumb">
+                            <li><a href="#!"><i class="fa fa-home margin-left-5 text-large text-dark"></i>الرئيسية</a></li>
+                            <li>مراكز التكلفه</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-xs-12 margin-bottom-10">
+                    <div class="panel-white panel-body no-margin">
+                        <button type="button" class="btn btn-o btn-default no-border"" ng-disabled="test.$invalid" ng-click="saveCostCenter()"><i class="glyphicon glyphicon-save"></i><span>حفظ</span></button>
+                        <button type="button" class="btn btn-o btn-default no-border"" ng-click="refreshData()"><i class="glyphicon glyphicon-refresh"></i><span>تحديث</span></button>
+                        <button type="button" class="btn btn-o btn-default no-border"  ng-click="clearEnity()"><i class="glyphicon glyphicon-file"></i><span>جديد</span></button>
+                    </div>
+                </div>
+                
+                    <div class="col-md-12">
+                        <div class="panel">
+                            <!--Start Panel Body -->
+                            <div class="panel-body panel-white">                               
+                                  <ng-form id="test" name="test">
+
+                                        <div ng-class="{'has-error': test.$invalid}" class="form-group">
+                                            <div class="form-group col-md-6">
+                                                <label for="CenterCode">كود مركز التكلفه:</label>
+                                                <div class="help-block error" style="display:inline" ng-show="test.code.$error.required">*</div>
+                                                <input type="text" class="form-control" id="CenterCode" name="code" placeholder="كود مركز التكلفه" ng-model="costCenters.COST_CENTER_CODE" required readonly>
+                                            </div>
+                                        </div>
+
+                                        <div ng-class="{'has-error': test.$invalid}" class="form-group">
+                                            <div class="form-group col-md-6">
+                                                <label for="CenterARName">اسم مركز التكلفه العربي:</label>
+                                                <div class="help-block error" style="display:inline" ng-show="test.arname.$error.required">*</div>
+                                                <input type="text" class="form-control" id="CenterARName" name="arname" placeholder="اسم مركز التكلفه العربي" ng-model="costCenters.COST_CENTER_AR_NAME" required>
+                                            </div>
+                                        </div>
+
+                                        <div ng-class="{'has-error': test.$invalid}" class="form-group">
+                                            <div class="form-group col-md-6">
+                                                <label for="CenterENName">اسم مركز التكلفه اللاتيني:</label>
+                                                <div class="help-block error" style="display:inline" ng-show="test.enname.$error.required">*</div>
+                                                <input type="text" class="form-control" id="CenterENName" name="enname" placeholder="اسم مركز التكلفه اللاتيني" ng-model="costCenters.COST_CENTER_EN_NAME" required>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group col-md-6">
+                                            <label for="CenterRemarks">ملاحظات:</label>
+                                            <input type="text" class="form-control" id="CenterRemarks" placeholder="ملاحظات" ng-model="costCenters.COST_CENTER_REMARKS">
+                                        </div>
+
+                                        <div class="form-group col-md-6">
+                                            <select ng-model="costCenters.COST_CENTER_MASTER_ID" ng-options="x.COST_CENTER_ID as x.COST_CENTER_AR_NAME for x in mainCostCenterList" class="form-control">
+                                                <option value="">مركز التكلفه الرئيسي</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <div class="checkbox clip-check check-primary">
+                                                <input type="checkbox" id="dontActive" ng-model="costCenters.Disable">
+                                                <label for="dontActive">  عدم التفعيل</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-12">
+                                            <div class="panel-group accordion margin-top-20" id="accordion">
+                                                <div class="form-group">
+                                                    <div class="panel panel-white">
+                                                        <div class="panel-heading">
+                                                            <h5 class="panel-title"><a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" data-target="#CostCenters1"> <i class="icon-arrow"></i>المصروفات والايرادات </a></h5>
+                                                        </div>
+                                                        <div id="CostCenters1" class="panel-collapse panel-white collapse">
+                                                            <div class="panel-body">
+                                                                <div class="form-group col-md-6">
+                                                                    <label for="CenterOE">المصروفات الافتتاحيه:</label>
+                                                                    <input type="text" class="form-control" id="CenterOE" placeholder="المصروفات الافتتاحيه" ng-model="costCenters.OpeningExpenses">
+                                                                </div>
+
+                                                                <div class="form-group col-md-6">
+                                                                    <label for="CenterOI">الايرادات الافتتاحيه:</label>
+                                                                    <input type="text" class="form-control" id="CenterOI" placeholder="الايرادات الافتتاحيه" ng-model="costCenters.OpeningIncome">
+                                                                </div>
+
+                                                                <div class="form-group col-md-6">
+                                                                    <label for="CenterEE">المصروفات المتوقعه:</label>
+                                                                    <input type="text" class="form-control" id="CenterEE" placeholder="المصروفات المتوقعه" ng-model="costCenters.ExpectedExpenses">
+                                                                </div>
+
+                                                                <div class="form-group col-md-6">
+                                                                    <label for="CenterEI">الايرادات المتوقعه:</label>
+                                                                    <input type="text" class="form-control" id="CenterENName" placeholder="الايرادات المتوقع" ng-model="costCenters.ExpectedIncome">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!--/.accordion-->
+                                        </div>
+                                        <!--/.col-md-12-->
+                                    </ng-form> 
+                            </div>
+                            <!-- End Panel Body -->
+                            <div class="clearfix"></div>
+                            <div class="panel-group accordion" id="accordion">
+                                    <div class="panel panel-white">
+                                        <div class="panel-heading">
+                                            <h5 class="panel-title"><a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" data-target="#collapseTable"> <i class="icon-arrow"></i> التكاليف المعرفة مسبقاً </a></h5>
+                                        </div>
+                                        <!--/.panel-heading-->
+                                        <div id="collapseTable" class="collapse">
+                                            <div class="panel-body">
+                                                <!--   Results:{{itemsGroupsTotalCount}}-->
+                                                <div class="table-responsive">
+                                                    <div class="col-md-3 pull-left">
+                                                        <table class="table table-stylish">
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td class="center text-extra-large"><i class="ti-save"></i></td>
+                                                                    <td><span class="text-dark block">مراكز التكلفه  :</span></td>
+                                                                    <td class="center">{{costCentersTotalCount}}</td>
+                                                                    <td class="center"><i class="fa fa-caret-down text-red"></i></td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <table class="table table-bordered table-hover">
+                                                            <tr class="success">
+                                                                <th class="hidden-xs">#</th>
+                                                                <th>كود مركز التكلفه</th>
+                                                                <th>اسم مركز التكلفه العربي </th>
+                                                                <th>اسم مركز التكلفه اللاتيني</th>
+                                                                <th class="hidden-xs">مركز التكلفه الرئيسي </th>
+                                                                <th class="hidden-xs">ملاحظات</th>
+                                                                <th class="hidden-xs">عدم التفعيل</th>
+                                                                <th>تعديل / حذف</th>
+                                                            </tr>
+                                                            <tr ng-repeat="item in costCentersList">
+                                                                <td class="hidden-xs">{{ item.COST_CENTER_ID }}</td>
+                                                                <!--<td>{{ item.COST_C}} -->
+                                                                <td>{{ item.COST_CENTER_CODE }}</td>
+                                                                <td>{{ item.COST_CENTER_AR_NAME }}</td>
+                                                                <td>{{ item.COST_CENTER_EN_NAME }}</td>
+                                                                <td class="hidden-xs">{{ item.MasterCostCenter }}</td>
+                                                                <td class="hidden-xs">{{ item.COST_CENTER_REMARKS }}</td>
+                                                                <td class="hidden-xs">
+                                                                    <div class="checkbox clip-check check-primary ">
+                                                                        <input type="checkbox" id="dontActive{{$index}}" ng-checked="item.Disable" />
+                                                                        <label for="dontActive{{$index}}"></label>
+                                                                    </div>
+                                                                </td>
+                                                                <td class="center">
+                                                                    <div class="visible-md visible-lg hidden-sm hidden-xs">
+                                                                        <a href="" ng-click="loadData(item)" class="btn btn-transparent btn-xs" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fa fa-pencil"></i></a>
+                                                                        <a href="" ng-click="deleteEntity(item)" class="btn btn-transparent btn-xs tooltips" data-toggle="tooltip" data-placement="top" title="Remove"><i class="fa fa-times fa fa-white"></i></a>
+                                                                    </div>
+                                                                    <div class="visible-xs visible-sm hidden-md hidden-lg">
+                                                                        <div class="btn-group dropdown">
+                                                                            <button type="button" class="btn btn-o btn-sm dropdown-toggle" data-toggle="dropdown">
+                                                                                <i class="fa fa-cog"></i>&nbsp;<span class="caret"></span>
+                                                                            </button>
+                                                                            <ul class="dropdown-menu pull-right dropdown-light" role="menu">
+                                                                                <li><a href="" ng-click="loadData(item)"> تعديل </a></li>
+                                                                                <li><a href="" ng-click="deleteEntity(item)"> حذف </a></li>
+                                                                            </ul>
+                                                                        </div>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                        <ul uib-pagination total-items="costCentersTotalCount" ng-model="pageNum" max-size="maxSize" class="pagination-sm" boundary-links="true" num-pages="numPages" ng-change="pageChanged()"></ul>
+                                                        <pre>صفحه: {{pageNum}} / {{numPages}}</pre>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!--/.panel-body-->
+                                        </div>
+                                        <!--/.panel-collapse-->
+                                    </div>
+                                    <!--/.panel-->
+                                </div>
+                                <!--/.panel-group-->
+                        </div>
+                        <!--/.panel-->
+                    </div>
+                    <!--/.col-md-12-->
+            </div>
+            <!--/.container-fluid-->
+        </div>
+        <!--/.wrap-content-->
+    </div>
+    <!--/.main-content-->
+</div>
+<!--/.app-content-->

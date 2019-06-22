@@ -1,0 +1,298 @@
+﻿<div class="app-content">
+    <div class="main-content">
+        <div class="wrap-content container" id="container">
+            <div class="container-fluid container-fullw ">
+                <ng-form id="test" name="test">
+                    <div class="col-xs-12 margin-top-10 margin-bottom-10">
+                        <div class="breadcrumb-wrapper no-margin">
+                            <h4 class="mainTitle no-margin">العملات</h4>
+                            <ul class="pull-right breadcrumb">
+                                <li><a href="#!"><i class="fa fa-home margin-left-5 text-large text-dark"></i>الرئيسية</a></li>
+                                <li>العملات</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 margin-bottom-10">
+                        <div class="panel-white panel-body no-margin">
+                            <button type="button" class="btn btn-o btn-default no-border" " ng-disabled="test.$invalid" ng-click="savecurrency()"><i class="fa fa-save"></i><span>حفظ</span></button>
+                            <button type="button" class="btn btn-o btn-default no-border" " ng-click="refreshData()"><i class="fa fa-refresh"></i><span>تحديث</span></button>
+                            <button type="button" class="btn btn-o btn-default no-border" ng-click="clearEnity()"><i class="fa fa-paste"></i><span>جديد</span></button>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="panel">
+                            <div class="panel-body panel-white">
+
+                                <div class="col-md-12">
+                                    <div ng-class="{'has-error': test.$invalid}" class="">
+                                        <div class="form-group col-md-6">
+                                            <label>كود العملة:</label>
+                                            <div class="help-block error" style="display:inline" ng-show="test.code.$error.required">*</div>
+                                            <input type="text" name="code" class="form-control" placeholder="كود العملة" ng-model="currency.CURRENCY_CODE" required readonly>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group col-md-6">
+                                        <label>سعر الصرف:</label>
+                                        <input type="number" class="form-control" placeholder="سعر الصرف" ng-model="currency.CURRENCY_RATE">
+                                    </div>
+
+                                    <div ng-class="{'has-error': test.$invalid}" class="form-group">
+                                        <div class="form-group col-md-6">
+                                            <label>اسم العملة العربى:</label>
+                                            <div class="help-block error" style="display:inline" ng-show="test.arname.$error.required">*</div>
+                                            <input type="text" name="arname" class="form-control" placeholder="اسم العملة العربى" ng-model="currency.CURRENCY_AR_NAME" required>
+                                        </div>
+                                    </div>
+
+                                    <div ng-class="{'has-error': test.$invalid}" class="form-group">
+                                        <div class="form-group col-md-6">
+                                            <label>اسم العملة اللاتينى:</label>
+                                            <div class="help-block error" style="display:inline" ng-show="test.enname.$error.required">*</div>
+                                            <input type="text" name="enname" class="form-control" placeholder="اسم العملة اللاتينى" ng-model="currency.CURRENCY_EN_NAME" required>
+                                        </div>
+                                    </div>
+
+                                    <div ng-class="{'has-error': test.$invalid}" class="form-group">
+                                        <div class="form-group col-md-6">
+                                            <label>اسم جزء العملة العربى:</label>
+                                            <div class="help-block error" style="display:inline" ng-show="test.arsub.$error.required">*</div>
+                                            <input type="text" class="form-control" name="arsub" placeholder="اسم جزء العملة العربى" ng-model="currency.CURRENCY_SUB_AR_NAME" required>
+                                        </div>
+                                    </div>
+
+                                    <div ng-class="{'has-error': test.$invalid}" class="form-group">
+                                        <div class="form-group col-md-6">
+                                            <label>اسم جزء العملة اللاتينى:</label>
+                                            <div class="help-block error" style="display:inline" ng-show="test.ensub.$error.required">*</div>
+                                            <input type="text" class="form-control" name="ensub" placeholder="اسم جزء العملة اللاتينى" ng-model="currency.CURRENCY_SUB_EN_NAME" required>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group col-md-6">
+                                        <label>اسم الإختصار العربى:</label>
+                                        <input type="text" class="form-control" placeholder="اسم الإختصار العربى" ng-model="currency.CURRENCY_SYMBOL_AR_NAME">
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label>اسم الإختصار اللاتينى:</label>
+                                        <input type="text" class="form-control" placeholder="اسم الإختصار اللاتينى" ng-model="currency.CURRENCY_SYMBOL_EN_NAME">
+                                    </div>
+
+                                    <div ng-class="{'has-error': test.$invalid}" class="form-group">
+                                        <div class="form-group col-md-6">
+                                            <label>كل 1 {{currency.CURRENCY_AR_NAME}}  = {{currency.SUB_TO_CURRENCY_TRANS}} {{currency.CURRENCY_SUB_AR_NAME}}</label>
+                                            <div class="help-block error" style="display:inline" ng-show="test.subtrans.$error.required">*</div>
+                                            <select ng-model="currency.SUB_TO_CURRENCY_TRANS" name="subtrans" class="js-example-basic-hide-search js-states form-control" ng-options="cur.ID as cur.name for cur in currencyTransList" required>
+                                                <!--ng-change="getSelected(cur)">-->
+                                                <option value="">اختر عدد</option>
+                                            </select>
+                                            <!--</select>-->
+                                            <!--{{currency.CURRENCY_SUB_AR_NAME}}-->
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group col-md-6">
+                                        <label>سعر الصرف الثابت:</label>
+                                        <input type="number" class="form-control" placeholder="سعر الصرف الثابت" ng-model="currency.CURRENCY_FIXED_RATE">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div class="form-group col-md-6">
+                                        <div class="checkbox clip-check check-primary">
+                                            <input id="defaultCurrency" type="checkbox" ng-model="currency.DefaultCurrency" />
+                                            <label for="defaultCurrency">عمله افتراضيه </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--/.col-md-12-->
+                                <!--/.panel /.panel-white-->
+                            </div>
+                            <!--/.panel-body , panel-white-->
+                            <div class="clearfix"></div>
+                            <div class="panel-group accordion margin-bottom-10" id="accordion">
+                                <div class="panel panel-white">
+                                    <div class="panel-heading">
+                                        <h5 class="panel-title"><a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" data-target="#collapseTable"> <i class="icon-arrow"></i> الفئات </a></h5>
+                                    </div>
+                                    <div id="collapseTable" class="col-md-12 panel-white collapse">
+                                        <div class="panel-body col-md-12">
+                                            <div class="col-md-6">
+                                                <div class="form-group col-md-6">
+                                                    <label>كود الفئه:</label>
+                                                    <input type="text" name="codecat" class="form-control" placeholder="كود الفئه" ng-model="category.CategoryCode" readonly>
+                                                </div>
+
+                                                <div class="form-group col-md-6">
+                                                    <label>اسم الفئه العربى:</label>
+                                                    <input type="text" name="arnamecat" class="form-control" placeholder="اسم الفئه العربى" ng-model="category.CategoryArName">
+                                                </div>
+
+                                                <div class="form-group col-md-6">
+                                                    <label>اسم الفئه اللاتينى:</label>
+                                                    <input type="text" name="ennamecat" class="form-control" placeholder="اسم الفئه اللاتينى" ng-model="category.CategoryEnName">
+                                                </div>
+
+                                                <div class="form-group col-md-6">
+                                                    <label>{{category.CategoryArName}}   =  {{category.CategoryTrans}}  {{currency.CURRENCY_AR_NAME}}</label>
+
+                                                    <input type="text" class="form-control" placeholder="ما تعادله من العمله" ng-model="category.CategoryTrans" />
+                                                </div>
+
+                                                <div class="form-group col-md-6">
+                                                    <div class="checkbox clip-check check-primary">
+                                                        <input id="deactive" type="checkbox" ng-model="category.Disable" />
+                                                        <label for="deactive">تعطيل </label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group col-md-6">
+                                                    <button type="button" class="btn btn-primary" ng-disabled="test2.$invalid" ng-click="saveCat()">اضافه&nbsp;&nbsp;<i class="fa fa-plus"></i></button>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <fieldset class="panel-white">
+                                                    <legend>الفئات المعرفة سابقا</legend>
+                                                    <div class="table-responsive">
+                                                        <table class="table table-striped table-bordered table-hover table-full-width ps-scrollbar-x small  panel-full-screen  fc-scroller  " style="height:150px;overflow:auto;" id="sample-table-2">
+                                                            <thead>
+                                                                <tr class="border-right success">
+                                                                    <th class="center no-border border-right border-left">#</th>
+                                                                    <th class="center no-border border-right border-left">كود الفئه</th>
+                                                                    <th class="center no-border border-right border-left">اسم الفئه العربى</th>
+                                                                    <th class="center no-border border-right border-left">اسم الفئه اللاتينى</th>
+                                                                    <th class="center no-border border-right border-left">التحويل</th>
+                                                                    <!--<th></th>-->
+                                                                    <th>حذف</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr ng-repeat="cat in catList">
+                                                                    <td class="hidden-xs">{{ $index + 1 }}</td>
+                                                                    <!--<td>{{ cat.Category}}</td>-->
+                                                                    <td>{{ cat.CategoryCode }}</td>
+                                                                    <td>{{ cat.CategoryArName }}</td>
+                                                                    <td>{{ cat.CategoryEnName }}</td>
+                                                                    <td>{{ cat.CategoryTrans }}</td>
+                                                                    <td>
+                                                                        <div class="checkbox clip-check check-primary">
+                                                                            <input id="checkbox{{$index}}" type="checkbox" ng-checked="cat.Disable" />
+                                                                            <label for="checkbox{{$index}}"></label>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>
+                                                                        <a class="label partition-red" href="" ng-click="deleteCat($index)"><i class="glyphicon glyphicon-remove-circle"></i> حذف</a>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </fieldset>
+                                            </div>
+                                        </div><!--/.panel-body-->
+                                    </div>
+                                    <!--/.panel-collapse-->
+                                </div>
+                                <!--/.panel-->
+                            </div>
+                            <!--/.panel-group-->
+                            <div class="clearfix"></div>
+                            <div class="panel-group accordion" id="accordion">
+                                <div class="panel panel-white">
+                                    <div class="panel-heading">
+                                        <h5 class="panel-title"><a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" data-target="#collapseTwo"> <i class="icon-arrow"></i> العملات المعرفة سابقا </a></h5>
+                                    </div>
+                                    <div id="collapseTwo" class="collapse">
+                                        <div class="panel-body">
+                                            <div class="table-responsive">
+                                                <div class="col-md-3 pull-left">
+                                                    <table class="table table-stylish">
+                                                        <tbody>
+                                                            <tr>
+                                                                <td class="center text-extra-large"><i class="ti-save"></i></td>
+                                                                <td><span class="text-dark block">إجمالي العملات :</span></td>
+                                                                <td class="center">{{currencyTotalCount}}</td>
+                                                                <td class="center"><i class="fa fa-caret-down text-red"></i></td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <table class="table table-bordered table-hover center" id="sample-table-2">
+                                                        <thead>
+                                                            <tr class="border-right success">
+                                                                <th class="hidden-xs">#</th>
+                                                                <th>كود العملة</th>
+                                                                <th>اسم العملة العربى</th>
+                                                                <th>اسم العملة اللاتينى</th>
+                                                                <th class="hidden-xs">اسم جزء العملة العربى</th>
+                                                                <th class="hidden-xs">اسم جزء العملة اللاتينى</th>
+                                                                <th class="hidden-xs">اسم الإختصار العربى</th>
+                                                                <th class="hidden-xs">اسم الإختصار اللاتينى</th>
+                                                                <th>العمله الافتراضيه</th>
+                                                                <th>تعديل / حذف</th>
+                                                            </tr>
+                                                        </thead>
+
+                                                        <tbody>
+                                                            <tr ng-repeat="Cur in currencyList">
+                                                                <td class="hidden-xs">{{ $index + 1 }}</td>
+                                                                <td>{{ Cur.CURRENCY_CODE }}</td>
+                                                                <td>{{ Cur.CURRENCY_AR_NAME }}</td>
+                                                                <td>{{ Cur.CURRENCY_EN_NAME }}</td>
+                                                                <td class="hidden-xs">{{ Cur.CURRENCY_SUB_AR_NAME }}</td>
+                                                                <td class="hidden-xs">{{ Cur.CURRENCY_SUB_EN_NAME }}</td>
+                                                                <td class="hidden-xs">{{ Cur.CURRENCY_SYMBOL_AR_NAME }}</td>
+                                                                <td class="hidden-xs">{{ Cur.CURRENCY_SYMBOL_EN_NAME }}</td>
+                                                                <td>
+                                                                    <div class="checkbox clip-check check-primary">
+                                                                        <input id="currencyBox{{$index}}" type="checkbox" ng-checked="Cur.DefaultCurrency" />
+                                                                        <label for="currencyBox{{$index}}"></label>
+                                                                    </div>
+                                                                </td>
+                                                                <td class="center">
+                                                                    <div class="visible-md visible-lg hidden-sm hidden-xs">
+                                                                        <a href="" ng-click="dirEnity(Cur)" class="btn btn-transparent btn-xs" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fa fa-pencil"></i></a>
+                                                                        <a href="" ng-click="deleteEnity(Cur)" class="btn btn-transparent btn-xs tooltips" data-toggle="tooltip" data-placement="top" title="Remove"><i class="fa fa-times fa fa-white"></i></a>
+                                                                    </div>
+                                                                    <div class="visible-xs visible-sm hidden-md hidden-lg">
+                                                                        <div class="btn-group dropdown ">
+                                                                            <button type="button" class="btn btn-o btn-sm dropdown-toggle" data-toggle="dropdown">
+                                                                                <i class="fa fa-cog"></i>&nbsp;<span class="caret"></span>
+                                                                            </button>
+                                                                            <ul class="dropdown-menu pull-right dropdown-light" role="menu">
+                                                                                <li><a href="" ng-click="dirEnity(Cur)"> تعديل </a></li>
+                                                                                <li><a href="" ng-click="deleteEnity(Cur)"> حذف </a></li>
+                                                                            </ul>
+                                                                        </div>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                            <!--/.col-md-12-->
+                                            <ul uib-pagination total-items="currencyTotalCount" ng-model="pageNum" max-size="maxSize" class="pagination-sm" boundary-links="true" num-pages="numPages" ng-change="pageChanged()"></ul>
+                                            <pre>صفحه: {{pageNum}} / {{numPages}}</pre>
+                                        </div>
+                                        <!--/.panel-body-->
+                                    </div>
+                                    <!--/.panel-collapse-->
+                                </div>
+                                <!--/.panel , panel-white-->
+                            </div>
+                            <!--/.accordion-->
+                        </div>
+                        <!--/.panel-->
+                    </div>
+                    <!--/.col-md-12-->
+                </ng-form>
+            </div>
+            <!--/.container-fluid-->
+        </div>
+        <!--/.wrap-content-->
+    </div>
+    <!--/.main-content-->
+</div>
+<!--/.app-content-->

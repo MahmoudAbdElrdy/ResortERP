@@ -1,0 +1,163 @@
+﻿<div class="app-content">
+    <div class="main-content">
+        <div class="wrap-content container" id="container">
+            <div class="container-fluid container-fullw">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="panel panel-white">
+
+                            <div class="panel-heading border-bottom">
+                                <h4 class="panel-title">User Privilages</h4>
+                                <div class="panel-tools">
+                                    <a data-original-title="Refresh" data-toggle="tooltip" data-placement="top" data-trigger="hover" class="btn btn-transparent btn-sm panel-refresh" href="#"><i class="fa fa-circle-o"></i></a>
+                                    <a data-original-title="Expand" data-toggle="tooltip" data-placement="top" data-trigger="hover" class="btn btn-transparent btn-sm panel-expand" href="#"><i class="fa fa-compress expand-on"></i><i class="fa fa-expand expand-off"></i></a>
+                                </div>
+                            </div>
+                            <!--/.panel-heading-->
+
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <div class="form-group col-md-4 col-md-offset-4">
+                                            <select required ng-model="selectedUser" class="form-control cs-select cs-skin-elastic" ng-options="x.ID as x.UID for x in usersList" ng-change="getUserPrivilagesForCurrentUser(selectedUser)">
+                                                <option value="" disabled selected>Select User</option>
+                                            </select>
+                                        </div>
+                                        <!--/.form-group-->
+
+                                        <div class="col-xs-12">
+
+                                            <h5 class="tap-heading">Privilages</h5>
+
+                                            <div class="tabbable tabs-left panel-white no-bg no-border col-xs-12">
+                                                <ul class="nav nav-tabs tabbable no-border bg-body">
+                                                    <li ng-repeat="master in masterMenus" ng-class="{active: $index==getCurrentStepIndex()}">
+                                                        <a href="javascript:void(0)" class="center" ng-click="getChildUserMenus(master.ID)"> {{master.ARName}}</a>
+                                                    </li>
+                                                </ul>
+
+                                                <div class="tab-content no-border no-bg">
+                                                    <div class="ps-scrollbar-x-rail padding-20" style="overflow:auto;">
+                                                        <div class="col-md-4 col-xs-12" ng-repeat="child in childMenus">
+                                                            <button type="button" class="btn btn-block btn-wide btn-primary margin-5" ng-click="addChildTouserPrivilagesList(child)">{{child.ARName}}</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!--/.tabbable-->
+
+                                        </div>
+                                        <!--/.col-xs-12-->
+                                    </div>
+                                    <!--/.panel-body-->
+
+                                    <div class="col-xs-12 margin-20">
+                                        <hr />
+                                    </div>
+
+
+
+
+                                    <div class="col-xs-12">
+
+                                        <div class="panel col-xs-12">
+                                            <div class="panel-group accordion" id="accordion">
+                                                <div class="panel panel-white">
+                                                    <div class="panel-heading">
+                                                        <h5 class="panel-title"><a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" data-target="#collapseTwo"> <i class="icon-arrow"></i> Choosen Privilages </a></h5>
+                                                    </div>
+                                                    <div id="collapseTwo" class="collapse">
+                                                        <div class="panel-body">
+                                                            <table class="table table-bordered table-hover" id="sample-table-1">
+                                                                <tr class="success">
+                                                                    <td>#</td>
+                                                                    <td>Name </td>
+                                                                    <td>Open</td>
+                                                                    <td>Add</td>
+                                                                    <td>Edit</td>
+                                                                    <td>Delete</td>
+                                                                    <td>Preview</td>
+                                                                    <td>Delete</td>
+                                                                </tr>
+                                                                <tr ng-repeat="item in userPrivilagesList track by $index ">
+                                                                    <td>{{ $index+1 }}</td>
+                                                                    <td>
+                                                                        <span editable-text="item.ARName" e-readonly="readonly" e-name="ARName" ng-show="rowform.$show()" e-form="rowform">{{ item.ARName || 'empty' }}</span>
+                                                                    </td>
+                                                                    <td>
+                                                                        <a href="#" ng-show="rowform.$show()" e-form="rowform" editable-checkbox="item.MenuOpen" e-title="فتح" e-ng-change="updateuserPrivilagesListOnChange('MenuOpen',$data,$index)">{{ item.MenuOpen}}</a>
+                                                                    </td>
+                                                                    <td>
+                                                                        <a href="#" ng-show="rowform.$show()" e-form="rowform" editable-checkbox="item.OpAdd" e-title="إضافة" e-ng-change="updateuserPrivilagesListOnChange('OpAdd',$data,$index)">{{ item.OpAdd}}</a>
+                                                                    </td>
+                                                                    <td>
+                                                                        <a href="#" ng-show="rowform.$show()" e-form="rowform" editable-checkbox="item.OpUpdate" e-title="تعديل" e-ng-change="updateuserPrivilagesListOnChange('OpUpdate',$data,$index)">{{ item.OpUpdate}}</a>
+                                                                    </td>
+                                                                    <td>
+                                                                        <a href="#" ng-show="rowform.$show()" e-form="rowform" editable-checkbox="item.OpDelete" e-title="حذف" e-ng-change="updateuserPrivilagesListOnChange('OpDelete',$data,$index)">{{ item.OpDelete}}</a>
+                                                                    </td>
+                                                                    <td>
+                                                                        <a href="#" ng-show="rowform.$show()" e-form="rowform" editable-checkbox="item.OpPreview" e-title="معاينة" e-ng-change="updateuserPrivilagesListOnChange('OpPreview',$data,$index)">{{ item.OpPreview}}</a>
+                                                                    </td>
+                                                                    <td class="center">
+                                                                        <form editable-form name="rowform" ng-show="rowform.$show()" class="form-buttons form-inline" shown="inserted == item"></form>
+                                                                        <div class="buttons" ng-show="!rowform.$show()">
+
+
+                                                                            <div class="visible-md visible-lg hidden-sm hidden-xs">
+                                                                                <a href="" ng-click="removeUserPrivilageItem($index)" class="btn btn-transparent btn-xs tooltips" data-toggle="tooltip" data-placement="top" title="Remove"><i class="fa fa-times fa fa-white"></i></a>
+                                                                            </div>
+                                                                            <div class="visible-xs visible-sm hidden-md hidden-lg">
+                                                                                <a href="" class="btn btn-danger" ng-click="removeUserPrivilageItem($index)"> Remove </a>
+                                                                            </div>
+
+                                                                            <!--
+                                                                                                                                                    <button type="button" class="btn btn-danger" ng-click="removeUserPrivilageItem($index)">Delete</button>
+                                                                            -->
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </div>
+                                                        <!--/.panel-body-->
+                                                    </div>
+                                                    <!--/.panel-collapse-->
+                                                </div>
+                                                <!--/.panel-->
+                                            </div>
+                                            <!--/.panel-group-->
+                                        </div>
+                                        <!--/.panel /.panel-white-->
+                                    </div>
+
+
+
+                                    <div class="panel-body">
+                                        <div class="col-xs-12 my-btn-group center margin-bottom-25">
+                                            <button type="button" class="btn btn-primary  margin-top-10" ng-click="saveUserPrivliages()"><i class="fa fa-save"></i>Save</button>
+                                            <button type="button" class="btn btn-success margin-top-10 " ng-click="refreshData()"><i class="fa fa-refresh"></i>Refresh</button>
+                                            <button type="button" class="btn btn-info margin-top-10" ng-click="clearEnity()"><i class="fa fa-paste"></i>New</button>
+                                        </div>
+                                        <!--/.col-xs-12-->
+
+                                    </div>
+                                    <!--/.col-xs-12-->
+                                </div>
+                                <!--/.row-->
+                            </div>
+                            <!--/.panel-body-->
+                        </div>
+                        <!--/.panel-->
+                    </div>
+                    <!--/.col-xs-12-->
+
+                </div>
+                <!--/.row-->
+            </div>
+            <!--/.container-fluid-->
+        </div>
+        <!--/.wrap-content-->
+    </div>
+    <!--/.main-content-->
+</div>
+<!--/.app-content-->

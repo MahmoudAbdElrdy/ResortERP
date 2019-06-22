@@ -1,0 +1,960 @@
+﻿<style>
+    .ui-tabs {
+        direction: rtl;
+    }
+
+        .ui-tabs .ui-tabs-nav li.ui-tabs-selected,
+        .ui-tabs .ui-tabs-nav li.ui-state-default {
+            float: right;
+        }
+
+        .ui-tabs .ui-tabs-nav li a {
+            float: right;
+        }
+
+    span.btn.btn-default.form-control.ui-select-toggle {
+        padding: 5px;
+    }
+</style>
+
+<div class="app-content">
+    <div class="main-content">
+        <div class="wrap-content container" id="container">
+            <div class="container-fluid container-fullw ">
+                <ng-form id="AssetMasterForm" name="AssetMasterForm">
+                    <div class="col-xs-12 margin-top-10 margin-bottom-10">
+                        <div class="breadcrumb-wrapper no-margin">
+                            <h4 class="mainTitle no-margin">{{ moduleResourse["Header"] }}</h4>
+                            <ul class="pull-right breadcrumb">
+                                <li><a href="#!"><i class="fa fa-home margin-left-5 text-large text-dark"></i>الرئيسية</a></li>
+                                <li>{{ moduleResourse["Header"] }}</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 margin-bottom-10">
+                        <div class="panel-white panel-body no-margin">
+                            <div class="pull-right">
+                                <button type="button" class="btn btn-o btn-default no-border" ng-disabled="AssetMasterForm.$invalid" ng-click="saveAssetMaster()">  <i class="fa fa-save"></i>حفظ</button>
+                                <button type="button" class="btn btn-o btn-default no-border " ng-click="refreshData()"><i class="fa fa-refresh"></i>تحديث</button>
+                                <button type="button" class="btn btn-o btn-default no-border" ng-click="clearEnity()"><i class="fa fa-paste"></i>جديد</button>
+                            </div>
+                            <!--<div class="pull-left">
+                                <div class="checkbox clip-check check-primary checkbox-inline">
+                                    <input type="checkbox" id="showHidden" show-hidden-elements />
+                                    <label for="showHidden">اظهار جميع الحقول</label>
+                                </div>
+                                <div class="checkbox clip-check check-primary checkbox-inline">
+                                    <input type="checkbox" id="updateResourse" />
+                                    <label for="updateResourse">تغيير اعدادات الحقول</label>
+                                </div>
+                            </div>-->
+                        </div>
+                    </div>
+                    <div class="col-xs-12">
+                        <div class="panel">
+                            <div role="form">
+                                <div class="panel-body panel-white">
+                                    <div class="row">
+                                        <div class="col-md-8">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group" ng-class="{'has-error': AssetMasterForm.Code.$error.required}">
+                                                        <label>الكود </label>
+                                                        <div class="help-block error" style="display:inline" ng-show="AssetMasterForm.Code.$error.required">*</div>
+                                                        <input name="Code" ng-model="AssetMaster.Code" class="form-control" ng-required="true" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label>الباركود </label>
+                                                        <!--<div class="help-block error" style="display:inline" ng-show="AssetMaster.Barcode.$error.required">*</div>-->
+                                                        <input name="Barcode" ng-model="AssetMaster.Barcode" class="form-control" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group" ng-class="{'has-error': AssetMasterForm.ARName.$error.required}">
+                                                        <label>الاسم العربى </label>
+                                                        <div class="help-block error" style="display:inline" ng-show="AssetMasterForm.ARName.$error.required">*</div>
+                                                        <input name="ARName" ng-model="AssetMaster.ARName" class="form-control" ng-required="true" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group" ng-class="{'has-error': AssetMasterForm.LatName.$error.required}">
+                                                        <label>الاسم اللاتينى </label>
+                                                        <div class="help-block error" style="display:inline" ng-show="AssetMasterForm.LatName.$error.required">*</div>
+                                                        <input name="LatName" ng-model="AssetMaster.LatName" class="form-control" ng-required="true" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label>مجموعه الاصل </label>
+                                                        <!--<div class="help-block error" style="display:inline" ng-show="AssetMaster.AssetGroupID.$error.required">*</div>-->
+                                                        <select ng-model="AssetMaster.AssetGroupID" ng-options="x.OptionValue as x.OptionText for x in AssetGroupList" class="form-control" ng-required="true">
+                                                            <option value="">اختر عنصر</option>
+                                                        </select>
+                                                        <!--<input name="AssetGroupID" ng-model="AssetMaster.AssetGroupID" class="form-control" ng-required="true" />-->
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label>القسم </label>
+                                                        <!--<div class="help-block error" style="display:inline" ng-show="AssetMaster.DepartmentID.$error.required">*</div>-->
+                                                        <select ng-model="AssetMaster.DepartmentID" ng-options="x.OptionValue as x.OptionText for x in DepartmentList" class="form-control">
+                                                            <option value="">اختر عنصر</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <img class="image" width="150" height="150" id="Preview" src="{{imageSrc}}" />
+                                            <input type="file" name="AssetPhoto" id="BrowseFile" accept="image/*" onchange="angular.element(this).scope().imageUpload(event)" />
+                                            <!--<div class="row">
+                                                <div class="col-md-4 col-md-offset-8">
+                                                    <button class="btn btn-success" id="MainDataSaveButton" type="submit"><span class="glyphicon glyphicon-ok"></span> &ensp; حفظ</button>
+                                                </div>
+                                            </div>-->
+                                        </div>
+                                    </div>
+                                    <div class="">
+                                        <div id="tabs">
+                                            <ul>
+                                                <li><a href="#Informations">معلومات</a></li>
+                                                <li><a href="#Company">الشركة</a></li>
+                                                <li><a href="#Depreciation">الاهلاكات</a></li>
+                                                <li><a href="#Accounts">الحسابات</a></li>
+                                                <li><a href="#AssetDetails">مستندات الاصول</a></li>
+                                            </ul>
+                                            <div id="Informations">
+                                                <div class="container-fluid">
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label>نوع الاصل</label>
+                                                                <select ng-model="AssetMaster.AssetTypeID" ng-options="x.OptionValue as x.OptionText for x in AssetTypeList" class="form-control">
+                                                                    <option value="">اختر عنصر</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label>حاله الاصل</label>
+                                                                <select ng-model="AssetMaster.AssetStatusID" ng-options="x.OptionValue as x.OptionText for x in AssetStatusList" class="form-control">
+                                                                    <option value="">اختر عنصر</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label>بلد المنشا</label>
+                                                                <select ng-model="AssetMaster.OriginNationID" ng-options="x.OptionValue as x.OptionText for x in OriginNationList" class="form-control">
+                                                                    <option value="">اختر عنصر</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label>عرض الاصل</label>
+                                                                <input name="AssetWidth" ng-model="AssetMaster.AssetWidth" class="form-control" />
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label>طول الاصل</label>
+                                                                <input name="AssetHeight" ng-model="AssetMaster.AssetHeight" class="form-control" />
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label>وزن الاصل</label>
+                                                                <input name="AssetWeight" ng-model="AssetMaster.AssetWeight" class="form-control" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label>لون الاصل</label>
+                                                                <input name="AssetColor" ng-model="AssetMaster.AssetColor" class="form-control" />
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label>ماركة الاصل</label>
+                                                                <input name="AssetBrand" ng-model="AssetMaster.AssetBrand" class="form-control" />
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label>موديل الاصل</label>
+                                                                <input name="AssetModel" ng-model="AssetMaster.AssetModel" class="form-control" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label>موقع الاصل</label>
+                                                                <input name="AssetLocation" ng-model="AssetMaster.AssetLocation" class="form-control" />
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label>رقم الشاشة للاصل</label>
+                                                                <input name="AssetScreenNumber" ng-model="AssetMaster.AssetScreenNumber" class="form-control" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <div class="form-group">
+                                                                <label>ملاحظات </label>
+                                                                <input name="Notes" ng-model="AssetMaster.Notes" class="form-control" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div id="Company">
+                                                <div class="container-fluid">
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label>الشركة المصنعه </label>
+                                                                <select ng-model="AssetMaster.ManufactureCompanyID" ng-options="x.OptionValue as x.OptionText for x in CompanyList" class="form-control">
+                                                                    <option value="">اختر عنصر</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label>الشركة الموردة </label>
+                                                                <select ng-model="AssetMaster.SupplierCompanyID" ng-options="x.OptionValue as x.OptionText for x in CompanyList" class="form-control">
+                                                                    <option value="">اختر عنصر</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div id="Depreciation">
+                                                <div class="container-fluid">
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label>نوع الاهتلاك </label>
+                                                                <select ng-model="AssetMaster.Depreciation.AssetDepreciationTypeID" name="AssetDepreciationTypeID" ng-options="x.OptionValue as x.OptionText for x in AssetDepreciationTypeList" id="AssetDepreciationTypeID" class="form-control">
+                                                                    <option value="">اختر عنصر</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group col-md-4">
+                                                            <div class="checkbox clip-check check-primary">
+                                                                <input type="checkbox" id="NotSubjectToRevaluation" ng-model="AssetMaster.Depreciation.NotSubjectToRevaluation" name="NotSubjectToRevaluation" />
+                                                                <label for="NotSubjectToRevaluation">ليست معرضة للتقييم </label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group col-md-4">
+                                                            <div class="checkbox clip-check check-primary">
+                                                                <input type="checkbox" id="NotSubjectToDepreciation" ng-model="AssetMaster.Depreciation.NotSubjectToDepreciation" name="NotSubjectToDepreciation" />
+                                                                <label for="NotSubjectToDepreciation">ليست معرضة للاهتلاك </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label>العمر الافتراضى للاصل </label>
+                                                                <input type="number" step="any" min="0" class="form-control" ng-model="AssetMaster.Depreciation.AssetLifeSpan" name="AssetLifeSpan" />
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label>وحدة العمر الافتراضى </label>
+                                                                <select ng-model="AssetMaster.Depreciation.AssetLifeSpanUnitID" name="AssetLifeSpanUnitID" ng-options="x.OptionValue as x.OptionText for x in AssetLifeSpanUnitList" id="AssetDepreciationTypeID" class="form-control">
+                                                                    <option value="">اختر عنصر</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label>تاريخ بداية الاهتلاك </label>
+                                                                <input type="date" class="form-control" ng-model="AssetMaster.Depreciation.DepreciationStartDate" name="DepreciationStartDate" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label>قيمة الخردة </label>
+                                                                <input type="number" class="form-control" step="any" min="0" ng-model="AssetMaster.Depreciation.AssetScrapValue" name="AssetScrapValue" />
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label>القيمة الابتدائية </label>
+                                                                <input type="number" class="form-control" step="any" min="0" ng-model="AssetMaster.Depreciation.InitialAssetScrapValue" name="InitialAssetScrapValue" />
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label>قيمة اضافات </label>
+                                                                <input type="number" class="form-control" step="any" min="0" ng-model="AssetMaster.Depreciation.ExtraValue" name="ExtraValue" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label>قيمة استبعادات </label>
+                                                                <input type="number" class="form-control" step="any" min="0" ng-model="AssetMaster.Depreciation.ExclusionsValue" name="ExclusionsValue" />
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label>مجمع الاهلاك </label>
+                                                                <input type="number" class="form-control" step="any" min="0" ng-model="AssetMaster.Depreciation.DepreciationTotals" name="DepreciationTotals" />
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label>قيمة الاصل الحاليه </label>
+                                                                <input type="number" class="form-control" step="any" min="0" ng-model="AssetMaster.Depreciation.CurrentAssetValue" name="CurrentAssetValue" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label>العملة  </label>
+                                                                <select ng-model="AssetMaster.Depreciation.CurrencyID" name="CurrencyID" ng-options="x.OptionValue as x.OptionText for x in CurrencyList" id="CurrencyID" class="form-control">
+                                                                    <option value="">اختر عنصر</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label>معدل التغيير </label>
+                                                                <input type="number" class="form-control" step="any" min="0" ng-model="AssetMaster.Depreciation.CurrencyRate" name="CurrencyRate" />
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label>ملاحظات  </label>
+                                                                <textarea class="form-control" ng-model="AssetMaster.Depreciation.Notes"></textarea>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div id="Accounts">
+                                                <div class="container-fluid">
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label> حساب الاصل </label>
+                                                                <ui-select style="margin-top:0;padding:0;" ng-model="AssetMaster.AssetAccountID" theme="bootstrap" focus-on="UiSelectDemo1"
+                                                                           id="custDdl" name="custDdl" on-select="select2EventEnter()">
+                                                                    <ui-select-match allow-clear="false" placeholder="اختر حساب">
+                                                                        {{$select.selected.OptionText}}
+                                                                    </ui-select-match>
+                                                                    <ui-select-choices repeat="x.OptionValue as x in AccountList | filter: $select.search" onfocus="true"
+                                                                                       ui-select-opened on-select="select2EventEnter()">
+                                                                        <div ng-bind-html="x.OptionText | highlight: $select.search"></div>
+                                                                    </ui-select-choices>
+                                                                </ui-select>
+                                                                <!--<select ng-model="AssetMaster.AssetAccountID" name="AssetAccountID" ng-options="x.OptionValue as x.OptionText for x in AccountList" id="AssetAccountID" class="form-control">
+                                                                    <option value="">اختر عنصر</option>
+                                                                </select>-->
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label> حساب الاهتلاك  </label>
+                                                                <ui-select style="margin-top:0;padding:0;" ng-model="AssetMaster.DepreciationAccountID" theme="bootstrap" focus-on="UiSelectDemo1"
+                                                                           id="custDdl" name="custDdl" on-select="select2EventEnter()">
+                                                                    <ui-select-match allow-clear="false" placeholder="اختر حساب">
+                                                                        {{$select.selected.OptionText}}
+                                                                    </ui-select-match>
+                                                                    <ui-select-choices repeat="x.OptionValue as x in AccountList | filter: $select.search" onfocus="true"
+                                                                                       ui-select-opened on-select="select2EventEnter()">
+                                                                        <div ng-bind-html="x.OptionText | highlight: $select.search"></div>
+                                                                    </ui-select-choices>
+                                                                </ui-select>
+                                                                <!--<select ng-model="AssetMaster.DepreciationAccountID" name="DepreciationAccountID" ng-options="x.OptionValue as x.OptionText for x in AccountList" id="DepreciationAccountID" class="form-control">
+                                                                    <option value="">اختر عنصر</option>
+                                                                </select>-->
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label> حساب مجموع الاهتلاك  </label>
+                                                                <ui-select style="margin-top:0;padding:0;" ng-model="AssetMaster.TotalDepreciationAccountID" theme="bootstrap" focus-on="UiSelectDemo1"
+                                                                           id="custDdl" name="custDdl" on-select="select2EventEnter()">
+                                                                    <ui-select-match allow-clear="false" placeholder="اختر حساب">
+                                                                        {{$select.selected.OptionText}}
+                                                                    </ui-select-match>
+                                                                    <ui-select-choices repeat="x.OptionValue as x in AccountList | filter: $select.search" onfocus="true"
+                                                                                       ui-select-opened on-select="select2EventEnter()">
+                                                                        <div ng-bind-html="x.OptionText | highlight: $select.search"></div>
+                                                                    </ui-select-choices>
+                                                                </ui-select>
+                                                                <!--<select ng-model="AssetMaster.TotalDepreciationAccountID" name="TotalDepreciationAccountID" ng-options="x.OptionValue as x.OptionText for x in AccountList" id="TotalDepreciationAccountID" class="form-control">
+                                                                    <option value="">اختر عنصر</option>
+                                                                </select>-->
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label> حساب المصاريف </label>
+                                                                <ui-select style="margin-top:0;padding:0;" ng-model="AssetMaster.ExpensesAccountID" theme="bootstrap" focus-on="UiSelectDemo1"
+                                                                           id="custDdl" name="custDdl" on-select="select2EventEnter()">
+                                                                    <ui-select-match allow-clear="false" placeholder="اختر حساب">
+                                                                        {{$select.selected.OptionText}}
+                                                                    </ui-select-match>
+                                                                    <ui-select-choices repeat="x.OptionValue as x in AccountList | filter: $select.search" onfocus="true"
+                                                                                       ui-select-opened on-select="select2EventEnter()">
+                                                                        <div ng-bind-html="x.OptionText | highlight: $select.search"></div>
+                                                                    </ui-select-choices>
+                                                                </ui-select>
+                                                                <!--<select ng-model="AssetMaster.ExpensesAccountID" name="ExpensesAccountID" ng-options="x.OptionValue as x.OptionText for x in AccountList" id="ExpensesAccountID" class="form-control">
+                                                                    <option value="">اختر عنصر</option>
+                                                                </select>-->
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label> حساب الارباخ الراسماليه  </label>
+                                                                <ui-select style="margin-top:0;padding:0;" ng-model="AssetMaster.CapitalProfitAccountID" theme="bootstrap" focus-on="UiSelectDemo1"
+                                                                           id="custDdl" name="custDdl" on-select="select2EventEnter()">
+                                                                    <ui-select-match allow-clear="false" placeholder="اختر حساب">
+                                                                        {{$select.selected.OptionText}}
+                                                                    </ui-select-match>
+                                                                    <ui-select-choices repeat="x.OptionValue as x in AccountList | filter: $select.search" onfocus="true"
+                                                                                       ui-select-opened on-select="select2EventEnter()">
+                                                                        <div ng-bind-html="x.OptionText | highlight: $select.search"></div>
+                                                                    </ui-select-choices>
+                                                                </ui-select>
+                                                                <!--<select ng-model="AssetMaster.CapitalProfitAccountID" name="CapitalProfitAccountID" ng-options="x.OptionValue as x.OptionText for x in AccountList" id="CapitalProfitAccountID" class="form-control">
+                                                                    <option value="">اختر عنصر</option>
+                                                                </select>-->
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label> حساب الخسائر الراسمالية  </label>
+                                                                <ui-select style="margin-top:0;padding:0;" ng-model="AssetMaster.CapitalLossAccountID" theme="bootstrap" focus-on="UiSelectDemo1"
+                                                                           id="custDdl" name="custDdl" on-select="select2EventEnter()">
+                                                                    <ui-select-match allow-clear="false" placeholder="اختر حساب">
+                                                                        {{$select.selected.OptionText}}
+                                                                    </ui-select-match>
+                                                                    <ui-select-choices repeat="x.OptionValue as x in AccountList | filter: $select.search" onfocus="true"
+                                                                                       ui-select-opened on-select="select2EventEnter()">
+                                                                        <div ng-bind-html="x.OptionText | highlight: $select.search"></div>
+                                                                    </ui-select-choices>
+                                                                </ui-select>
+                                                                <!--<select ng-model="AssetMaster.CapitalLossAccountID" name="CapitalLossAccountID" ng-options="x.OptionValue as x.OptionText for x in AccountList" id="CapitalLossAccountID" class="form-control">
+                                                                    <option value="">اختر عنصر</option>
+                                                                </select>-->
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label> حساب فائض اعادة التقييم </label>
+                                                                <ui-select style="margin-top:0;padding:0;" ng-model="AssetMaster.AppraisalExcessAccountID" theme="bootstrap" focus-on="UiSelectDemo1"
+                                                                           id="custDdl" name="custDdl" on-select="select2EventEnter()">
+                                                                    <ui-select-match allow-clear="false" placeholder="اختر حساب">
+                                                                        {{$select.selected.OptionText}}
+                                                                    </ui-select-match>
+                                                                    <ui-select-choices repeat="x.OptionValue as x in AccountList | filter: $select.search" onfocus="true"
+                                                                                       ui-select-opened on-select="select2EventEnter()">
+                                                                        <div ng-bind-html="x.OptionText | highlight: $select.search"></div>
+                                                                    </ui-select-choices>
+                                                                </ui-select>
+                                                                <!--<select ng-model="AssetMaster.AppraisalExcessAccountID" name="AppraisalExcessAccountID" ng-options="x.OptionValue as x.OptionText for x in AccountList" id="AppraisalExcessAccountID" class="form-control">
+                                                                    <option value="">اختر عنصر</option>
+                                                                </select>-->
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label> حساب عجز اعادة التقييم  </label>
+                                                                <ui-select style="margin-top:0;padding:0;" ng-model="AssetMaster.ApprasialDeficitAccountID" theme="bootstrap" focus-on="UiSelectDemo1"
+                                                                           id="custDdl" name="custDdl" on-select="select2EventEnter()">
+                                                                    <ui-select-match allow-clear="false" placeholder="اختر حساب">
+                                                                        {{$select.selected.OptionText}}
+                                                                    </ui-select-match>
+                                                                    <ui-select-choices repeat="x.OptionValue as x in AccountList | filter: $select.search" onfocus="true"
+                                                                                       ui-select-opened on-select="select2EventEnter()">
+                                                                        <div ng-bind-html="x.OptionText | highlight: $select.search"></div>
+                                                                    </ui-select-choices>
+                                                                </ui-select>
+                                                                <!--<select ng-model="AssetMaster.ApprasialDeficitAccountID" name="ApprasialDeficitAccountID" ng-options="x.OptionValue as x.OptionText for x in AccountList" id="ApprasialDeficitAccountID" class="form-control">
+                                                                    <option value="">اختر عنصر</option>
+                                                                </select>-->
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div id="AssetDetails">
+                                                <div class="row">
+                                                    <div class="form-group col-md-4">
+                                                        <label>تاريخ التصنيع:</label>
+                                                        <input type="date" class="form-control" placeholder="تاريخ التصنيع" name="ManufactureDate" 
+                                                               ng-model="AssetMaster.ManufactureDate">
+                                                    </div>
+                                                    <div class="form-group col-md-4">
+                                                        <label>رقم الضمان:</label>
+                                                        <input type="text" class="form-control" placeholder="رقم الضمان" ng-model="AssetMaster.WarrantyNumber">
+                                                    </div>
+                                                    <div class="form-group col-md-4">
+                                                        <label>تاريخ بداية الضمان:</label>
+                                                        <input type="date" name="WarrantyStartDate" class="form-control" placeholder="تاريخ بداية الضمان"
+                                                               ng-model="AssetMaster.WarrantyStartDate">
+                                                    </div>
+                                                    <div class="form-group col-md-4">
+                                                        <label>تاريخ نهاية الضمان:</label>
+                                                        <input type="date" class="form-control" placeholder="تاريخ نهاية الضمان"
+                                                               ng-model="AssetMaster.WarrantyEndDate">
+                                                    </div>
+                                                    <div class="form-group col-md-4">
+                                                        <label>تاريخ الاستلام:</label>
+                                                        <input type="date" class="form-control" placeholder="تاريخ الاستلام" ng-model="AssetMaster.ReceivingDate">
+                                                    </div>
+                                                    <div class="form-group col-md-12">
+                                                        <label> ملاحظات الاستلام:</label>
+                                                        <textarea class="form-control" placeholder="ملاحظات الاستلام" ng-model="AssetMaster.ReceivingNotes"></textarea>
+                                                    </div>
+                                                    <div class="form-group col-md-4">
+                                                        <label> رقم العقد:</label>
+                                                        <input type="text" class="form-control" placeholder="رقم العقد" ng-model="AssetMaster.ContractNumber">
+                                                    </div>
+                                                    <div class="form-group col-md-4">
+                                                        <label>تاريخ العقد:</label>
+                                                        <input type="date" class="form-control" placeholder="تاريخ العقد"
+                                                               ng-model="AssetMaster.ContractDate">
+                                                    </div>
+                                                    <div class="form-group col-md-4">
+                                                        <label>تاريخ الشراء:</label>
+                                                        <input type="date" class="form-control" placeholder="تاريخ الشراء" ng-model="AssetMaster.PurchasingDate">
+                                                    </div>
+                                                    <div class="form-group col-md-12">
+                                                        <label> بيان الجمارك:</label>
+                                                        <textarea class="form-control" placeholder="بيان الجمارك" ng-model="AssetMaster.CustomsStatment"></textarea>
+                                                    </div>
+
+                                                    <div class="form-group col-md-4">
+                                                        <label>تاريخ بيان الجمارك:</label>
+                                                        <input type="date" class="form-control" placeholder="تاريخ بيان الجمارك"
+                                                               ng-model="AssetMaster.CustomsStatmentDate">
+                                                    </div>
+                                                    <div class="form-group col-md-4">
+                                                        <label>رقم بوليصة الشحن:</label>
+                                                        <input type="text" class="form-control" placeholder="رقم بوليصة الشحن"
+                                                               ng-model="AssetMaster.ShippingNumber">
+                                                    </div>
+                                                    <div class="form-group col-md-4">
+                                                        <label>طريقة الشحن:</label>
+                                                        <input type="number" class="form-control" placeholder="طريقة الشحن"
+                                                               ng-model="AssetMaster.AssetShippingMethodID">
+                                                    </div>
+                                                    <div class="form-group col-md-4">
+                                                        <label>تاريخ الشحن:</label>
+                                                        <input type="date" class="form-control" placeholder="تاريخ الشحن" ng-model="AssetMaster.ShippingDate">
+                                                    </div>
+                                                    <div class="form-group col-md-4">
+                                                        <label>رقم رخصة الاستيراد:</label>
+                                                        <input type="text" class="form-control" placeholder="رقم رخصة الاستيراد" ng-model="AssetMaster.ImportLicenseNumber">
+                                                    </div>
+                                                    <div class="form-group col-md-4">
+                                                        <label>تاريخ وصول الشحنه :</label>
+                                                        <input type="date" class="form-control" placeholder="تاريخ وصول الشحنه " ng-model="AssetMaster.ShippingArrivalDate">
+                                                    </div>
+                                                    <div class="form-group col-md-12">
+                                                        <label> مكان الشحن:</label>
+                                                        <textarea class="form-control" placeholder="مكان الشحن" ng-model="AssetMaster.ShippingDestination"></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="panel">
+                <!--<div class="panel-body panel-white">
+
+                    <div class="col-md-10">
+                        <div ng-class="{'has-error': AssetMaster.code.$error.required}" class="">
+                            <div class="form-group col-md-4">
+                                <label data-rt="EMP_CODE">كود الموظف:</label>
+                                <div class="help-block error" style="display:inline" ng-show="AssetMaster.code.$error.required">*</div>
+                                <input type="text" class="form-control" name="code" placeholder="كود الموظف" ng-model="AssetMaster.EMP_CODE" data-rte="EMP_CODE" ng-required="inputReuired.EMP_CODE">
+                            </div>
+                        </div>
+
+                        <div ng-class="{'has-error': AssetMaster.ddljob.$error.required}" class="form-group">
+                            <div class="form-group col-md-4">
+                                <label data-rt="EMP_TYPE_ID">نوع الوظيفة:</label>
+                                <div class="help-block error" style="display:inline" ng-show="AssetMaster.ddljob.$error.required">*</div>
+                                <select ng-model="AssetMaster.EMP_TYPE_ID" name="ddljob" class="js-example-basic-hide-search js-states form-control" ng-options="x.EMP_TYPE_ID as x.EMP_TYPE_AR_NAME for x in EmployeeTypesList" data-rte="EMP_TYPE_ID" ng-required="inputReuired.EMP_TYPE_ID">
+                                    <option value="">اختر نوع الوظيفة</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div ng-class="{'has-error': AssetMaster.arname.$error.required}" class="form-group">
+                            <div class="form-group col-md-4">
+                                <label data-rt="EMP_AR_NAME">اسم الموظف العربى:</label>
+                                <div class="help-block error" style="display:inline" ng-show="AssetMaster.arname.$error.required">*</div>
+                                <input type="text" name="arname" class="form-control" placeholder="اسم الموظف العربى" ng-model="AssetMaster.EMP_AR_NAME" data-rte="EMP_AR_NAME" ng-required="inputReuired.EMP_AR_NAME">
+                            </div>
+                        </div>
+
+                        <div ng-class="{'has-error': AssetMaster.enname.$error.required}" class="form-group">
+                            <div class="form-group col-md-4">
+                                <label data-rt="EMP_EN_NAME">اسم الموظف اللاتينى:</label>
+                                <div class="help-block error" style="display:inline" ng-show="AssetMaster.enname.$error.required">*</div>
+                                <input type="text" name="enname" class="form-control" placeholder="اسم الموظف اللاتينى" ng-model="AssetMaster.EMP_EN_NAME" data-rte="EMP_EN_NAME" ng-required="inputReuired.EMP_EN_NAME">
+                            </div>
+                        </div>
+
+                        <div ng-class="{'has-error': AssetMaster.national.$error.required}" class="form-group col-md-4">
+                            <label data-rt="EMP_NATIONAL_ID">الرقم القومي:</label>
+                            <div class="help-block error" style="display:inline" ng-show="AssetMaster.national.$error.required">*</div>
+                            <input type="text" name="national" class="form-control" placeholder="الرقم القومي" ng-model="AssetMaster.EMP_NATIONAL_ID" data-rte="EMP_NATIONAL_ID" only-Number ng-required="inputReuired.EMP_NATIONAL_ID">
+                        </div>
+
+
+                        <div ng-class="{'has-error': AssetMaster.nationality.$error.required}" class="form-group">
+                            <div class="form-group col-md-4">
+                                <label data-rt="NATIONALITY_ID">الجنسية:</label>
+                                <div class="help-block error" style="display:inline" ng-show="AssetMaster.nationality.$error.required">*</div>
+                                <select ng-model="AssetMaster.NATIONALITY_ID" name="nationality" class="js-example-basic-hide-search js-states form-control" ng-options="x.NATION_ID as x.NATIONALITY_AR_NAME for x in NationList" data-rte="NATIONALITY_ID" ng-required="inputReuired.NATIONALITY_ID">
+                                    <option value="">اختر الجنسية</option>
+                                </select>
+                            </div>
+                        </div>
+
+
+                            <div ng-class="{'has-error': AssetMaster.account.$error.required }" class="form-group col-md-6">
+                                <label data-rt="ACC_ID">الحساب الخاص بالموظف:</label><div class="help-block error" style="display:inline" ng-show="AssetMaster.account.$error.required">*</div>
+                                <select ng-model="AssetMaster.ACC_ID" name="account" class="js-example-basic-hide-search js-states form-control" ng-options="x.ACC_ID as x.ACC_AR_NAME for x in CustomersAccountsList" data-rte="ACC_ID" ng-required="inputReuired.ACC_ID">
+                                    <option value="">اختر الحساب</option>
+                                </select>
+                            </div>
+                            <div ng-class="{'has-error': AssetMaster.barcode.$error.required}" class="form-group col-md-6">
+                                <label data-rt="EMP_BARCODE">الباركود الخاص بالموظف:</label><div class="help-block error" style="display:inline" ng-show="AssetMaster.barcode.$error.required">*</div>
+                                <input type="text" name="barcode" class="form-control" placeholder="الباركود الخاص بالموظف" ng-model="AssetMaster.EMP_BARCODE" data-rte="EMP_BARCODE" ng-required="inputReuired.EMP_BARCODE">
+                            </div>
+                            <div ng-class="{'has-error': AssetMaster.notes.$error.required }" class="form-group col-md-12">
+                                <label data-rt="EMP_REMARKS">ملاحظات:</label><div class="help-block error" style="display:inline" ng-show="AssetMaster.notes.$error.required">*</div>
+                                <textarea name="notes" rows="5" style="resize:none;" class="form-control" placeholder="ملاحظات" ng-model="AssetMaster.EMP_REMARKS" data-rte="EMP_REMARKS" ng-required="inputReuired.EMP_REMARKS"></textarea>
+                            </div>
+                        </div>
+
+                    <div class="col-md-2">
+                        <div class="space12 center margin-top-30 margin-bottom-30-30">
+                            <div class="help-block error" style="display:inline" ng-show="AssetMaster.itemImg.$error.required">*</div>
+                            <img id="imgPersonal" class="img-responsive img-rounded img-thumbnail margin-bottom-15" style="width:100%;height:150px !important;" ng-src="{{imageSrc}}" alt="اختر صورة" data-rte="EMP_PHOTO" />
+
+                            <span class="btn btn btn-primary btn-block fileinput-button">
+                                <i class="glyphicon glyphicon-plus"></i> <span>{{ moduleResourse["BrowseButton"] }}</span>
+                                <input type="file" class="btn btn-primary" title="استعراض" name="itemImg" style="width:100% !important;" ng-model-instant onchange="angular.element(this).scope().imageUpload(event)" />
+                            </span>
+
+                        </div>
+                    </div>
+
+                    <!--
+                    <div class="col-sm-12 col-lg-12">
+                        <div class="panel panel-white">
+                            <div class="panel-heading border-bottom">
+                                <div class="panel-title">
+                                    حالة الموظف
+                                </div>
+                            </div>
+                            <div class="panel-body">
+                                <div class="form-group">
+                                    <div class="form-group col-md-4">
+                                        <label>الحالة:</label>
+                                        <select ng-model="EmpNationStatus" ng-change="getUserStatusOfNat();" class="js-example-basic-hide-search js-states form-control" ng-options="x.typeID as x.typeName for x in employeeNatList"></select>
+                                    </div>
+                                </div>
+                                <div class="row"></div>
+                                <div ng-show="empNatStaShow" ng-class="{'has-error': AssetMaster.national.$error.required}" class="form-group col-md-4">
+                                    <label data-rt="EMP_NATIONAL_ID">الرقم القومي:</label><div class="help-block error" style="display:inline" ng-show="AssetMaster.national.$error.required">*</div>
+                                    <input type="text" name="national" class="form-control" placeholder="الرقم القومي" ng-model="AssetMaster.EMP_NATIONAL_ID" data-rte="EMP_NATIONAL_ID" only-Number ng-required="empNatStaShow">
+                                </div>
+                                <div ng-show="empNatStaShow2" class="form-group col-md-12">
+                                    <div class="form-group col-md-3" ng-class="{'has-error': AssetMaster.Visa_Number.$error.required}">
+                                        <label data-rt="Visa_Number">رقم الاقامة :</label><div class="help-block error" style="display:inline" ng-show="AssetMaster.Visa_Number.$error.required">*</div>
+                                        <input type="text" name="Visa_Number" class="form-control" placeholder="رقم الاقامة" ng-model="AssetMaster.Visa_Number" data-rte="Visa_Number" only-Number ng-required="empNatStaShow2">
+                                    </div>
+                                    <div class="form-group col-md-3" ng-class="{'has-error': AssetMaster.Visa_ExpDateM.$error.required}">
+                                        <label data-rt="Visa_ExpDateM">تاريخ الانتهاء الميلادى :</label><div class="help-block error" style="display:inline" ng-show="AssetMaster.Visa_ExpDateM.$error.required">*</div>
+                                        <input type="date" name="Visa_ExpDateM" class="form-control" placeholder="تاريخ الانتهاء الميلادى" ng-model="AssetMaster.Visa_ExpDateM" data-rte="Visa_ExpDateM" ng-required="empNatStaShow2">
+                                    </div>
+                                    <div class="form-group col-md-3" ng-class="{'has-error': AssetMaster.Visa_ExpDateH.$error.required}">
+                                        <label data-rt="Visa_ExpDateH">تاريخ الانتهاء الهجري :</label><div class="help-block error" style="display:inline" ng-show="AssetMaster.Visa_ExpDateH.$error.required">*</div>
+                                        <input type="date" name="Visa_ExpDateH" class="form-control" placeholder="تاريخ الانتهاء الهجري" ng-model="AssetMaster.Visa_ExpDateH" data-rte="Visa_Number" ng-required="empNatStaShow2">
+                                    </div>
+                                    <div class="form-group col-md-3" ng-class="{'has-error': AssetMaster.Pass_Number.$error.required}">
+                                        <label data-rt="Pass_Number">رقم جواز السفر :</label><div class="help-block error" style="display:inline" ng-show="AssetMaster.Pass_Number.$error.required">*</div>
+                                        <input type="text" name="Pass_Number" class="form-control" placeholder="رقم جواز السفر " ng-model="AssetMaster.Pass_Number" data-rte="Pass_Number" only-Number ng-required="empNatStaShow2">
+                                    </div>
+
+                                    <div class="form-group col-md-3" ng-class="{'has-error': AssetMaster.Pass_ExpDate.$error.required}">
+                                        <label data-rt="Pass_ExpDate"> تاريخ الانتهاء : </label><div class="help-block error" style="display:inline" ng-show="AssetMaster.Pass_ExpDate.$error.required">*</div>
+                                        <input type="date" name="Pass_ExpDate" class="form-control" placeholder="تاريخ الانتهاء" ng-model="AssetMaster.Pass_ExpDate" data-rte="Pass_ExpDate" ng-required="empNatStaShow2">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>-->
+                <!--/.panel-body-->
+                <!--<div class="row">
+                    <div class="col-md-4">
+                        <div class="panel panel-white min-height-270">
+                            <div class="panel-heading border-bottom">
+                                <div class="panel-title">{{ moduleResourse["GroupThree"] }}</div>
+                            </div>
+
+                            <div class="panel-body min-height-280">
+                                <div ng-class="{'has-error': AssetMaster.nation.$error.required}" class="form-group">
+                                    <div class="form-group col-md-6">
+                                        <label data-rt="NATION_ID">الدولة:</label>
+                                        <div class="help-block error" style="display:inline" ng-show="AssetMaster.nation.$error.required">*</div>
+                                        <select ng-model="AssetMaster.NATION_ID" name="nation" class="js-example-basic-hide-search js-states form-control" ng-options="x.NATION_ID as x.NATION_AR_NAME for x in NationList" ng-change="getAllNastionGovernate()" data-rte="NATION_ID" ng-required="inputReuired.NATION_ID">
+                                            <option value="">اختر الدولة</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div ng-class="{'has-error': AssetMaster.gov.$error.required}" class="form-group">
+                                    <div class="form-group col-md-6">
+                                        <label data-rt="GOV_ID">المحافظه:</label>
+                                        <div class="help-block error" style="display:inline" ng-show="AssetMaster.gov.$error.required">*</div>
+                                        <select ng-model="AssetMaster.GOV_ID" name="gov" class="js-example-basic-hide-search js-states form-control" ng-options="x.GOV_ID as x.GOV_AR_NAME for x in GovernateListByNationID" ng-change="getAllGovernateTown()" data-rte="GOV_ID" ng-required="inputReuired.GOV_ID">
+                                            <option value="">اختر المحافظة</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+
+                                <div ng-class="{'has-error': AssetMaster.town.$error.required}" class="form-group col-md-6">
+                                    <label data-rt="TOWN_ID">المركز:</label>
+                                    <div class="help-block error" style="display:inline" ng-show="AssetMaster.town.$error.required">*</div>
+                                    <select ng-model="AssetMaster.TOWN_ID" name="town" class="js-example-basic-hide-search js-states form-control" ng-options="x.TOWN_ID as x.TOWN_AR_NAME for x in TownsListByGovernateID" ng-change="getAllTownVillage()" data-rte="TOWN_ID" ng-required="inputReuired.TOWN_ID">
+                                        <option value="">اختر المركز</option>
+                                    </select>
+                                </div>
+
+                                <div ng-class="{'has-error': AssetMaster.village.$error.required}" class="form-group col-md-6">
+                                    <label data-rt="VILLAGE_ID">الحي:</label>
+                                    <div class="help-block error" style="display:inline" ng-show="AssetMaster.village.$error.required">*</div>
+                                    <select ng-model="AssetMaster.VILLAGE_ID" name="village" class="js-example-basic-hide-search js-states form-control" ng-options="x.VILLAGE_ID as x.VILLAGE_AR_NAME for x in VillagesListByTownID" data-rte="VILLAGE_ID" ng-required="inputReuired.VILLAGE_ID">
+                                        <option value="">اختر الحي</option>
+                                    </select>
+                                </div>
+                                <div ng-class="{'has-error': AssetMaster.address.$error.required}" class="form-group col-md-12">
+                                    <label data-rt="EMP_ADDR_REMARKS">تفاصيل العنوان:</label>
+                                    <div class="help-block error" style="display:inline" ng-show="AssetMaster.address.$error.required">*</div>
+                                    <input type="text" name="address" class="form-control" placeholder="تفاصيل العنوان" ng-model="AssetMaster.COM_STORE_ADDR_REMARKS" data-rte="EMP_ADDR_REMARKS" ng-required="inputReuired.EMP_ADDR_REMARKS">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 no-padding">
+                        <div class="panel panel-white">
+                            <div class="panel-heading border-bottom">
+                                <div class="panel-title">{{ moduleResourse["GroupTwo"] }}</div>
+                            </div>
+                            <div class="panel-body min-height-280">
+                                <div ng-class="{'has-error': AssetMaster.branch.$error.required}" class="form-group col-md-12">
+                                    <label data-rt="COM_BRN_ID">فرع الشركة:</label>
+                                    <div class="help-block error" style="display:inline" ng-show="AssetMaster.branch.$error.required">*</div>
+                                    <select ng-model="AssetMaster.COM_BRN_ID" name="branch" class="js-example-basic-hide-search js-states form-control" ng-options="x.COM_BRN_ID as x.COM_BRN_AR_NAME for x in CompanyBranchesList" ng-change="GetDepartmentByCompanyBranchID()" data-rte="COM_BRN_ID" ng-required="inputReuired.COM_BRN_ID">
+                                        <option value="">اختر فرع الشركة</option>
+                                    </select>
+                                </div>
+                                <div ng-class="{'has-error': AssetMaster.department.$error.required}" class="form-group col-md-12 no-padding">
+                                    <label data-rt="DEPT_ID">القسم:</label>
+                                    <div class="help-block error" style="display:inline" ng-show="AssetMaster.department.$error.required">*</div>
+                                    <select ng-model="AssetMaster.DEPT_ID" name="department" class="js-example-basic-hide-search js-states form-control" ng-options="x.DEPT_ID as x.DEPT_AR_NAME for x in GetDepartmentByCompanyBranchIDList" data-rte="DEPT_ID" ng-required="inputReuired.DEPT_ID">
+                                        <option value="">اختر القسم</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="panel panel-white">
+                            <div class="panel-heading border-bottom">
+                                <div class="panel-title">
+                                    {{ moduleResourse["GroupFour"] }}
+                                </div>
+                            </div>
+                            <div class="panel-body min-height-280">
+                                <div class="no-border">
+
+                                    <div ng-class="{'has-error': AssetMaster.telephone.$error.required}" class="form-group col-md-4">
+                                        <label data-rt="Tel_ID">رقم التليفون </label>
+                                        <div class="help-block error" style="display:inline" ng-show="AssetMaster.telephone.$error.required">*</div>
+                                        <input data-rte="Tel_ID" name="telephone" type="text" class="form-control" ng-model="teleNumber" placeholder="رقم التليفون" ng-required="inputReuired.Tel_ID">
+                                    </div>
+
+                                    <div ng-class="{'has-error': AssetMaster.telecat.$error.required}" class="form-group col-md-4">
+                                        <label data-rt="Tel_Type"> نوع التليفون </label>
+                                        <div class="help-block error" style="display:inline" ng-show="AssetMaster.telecat.$error.required">*</div>
+                                        <select ng-model="teleCatId" name="telecat" class="js-example-basic-hide-search js-states form-control" ng-options="x.TELE_CAT_ID as x.TELE_CAT_AR_NAME for x in catList" data-rte="Tel_Type" ng-required="inputReuired.Tel_Type">
+                                            <option value="">اختر نوع التليفون</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label>  </label>
+                                        <button type="submit" class="btn btn-block btn-info btn-wide" ng-click="addTeleToList()">{{ moduleResourse["AddOtherButton"] }}<i class="fa fa-plus-circle"></i></button>
+                                    </div>
+
+
+                                    <div class="form-group col-md-12">
+                                        <table class="table table-responsive">
+                                            <tr>
+                                                <th data-rt="Tel_ID">رقم التليفون</th>
+                                                <th data-rt="Tel_Type">نوع التليفون</th>
+                                                <th></th>
+                                            </tr>
+                                            <tr ng-repeat="tele in TelephoneList">
+                                                <td>{{tele.TELE_NUMBER}}</td>
+                                                <td>{{tele.TeleCatName}}</td>
+                                                <td><button type="button" class="btn btn-warning" ng-click="removeTeleItem($index)">{{ moduleResourse["DeleteButton"] }}  <i class="fa fa-remove"></i></button></td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>-->
+                <div class="panel">
+                    <div class="panel-group accordion" id="accordion">
+                        <div class="panel panel-white">
+                            <div class="panel-heading">
+                                <h5 class="panel-title"><a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" data-target="#collapseTwo"> <i class="icon-arrow"></i> {{ moduleResourse["GridHeaderText"] }} </a></h5>
+                            </div>
+                            <div id="collapseTwo" class="collapse">
+                                <div class="panel-body panel-white">
+                                    <div class="col-md-12">
+                                        <div class="table-responsive">
+                                            <div class="col-md-3 pull-left margin-top-10 no-padding">
+                                                <table class="table table-stylish">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td class="center text-extra-large"><i class="ti-save"></i></td>
+                                                            <td><span class="text-dark block">{{ moduleResourse["TotalRecordsText"] }} :</span></td>
+                                                            <td class="center">{{employeesTotalCount}}</td>
+                                                            <td class="center"><i class="fa fa-caret-down text-red"></i></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+
+                                            <div class="col-md-12 no-padding">
+                                                <table class="table table-bordered table-hover table-full-width ps-scrollbar-x small  panel-full-screen  fc-scroller  " style="height:150px;overflow:auto;" id="sample-table-2">
+                                                    <thead>
+                                                        <tr class="border-right success">
+                                                            <th class="hidden-xs">#</th>
+                                                            <th data-rt="EmployeeCode">كود الاصل</th>
+                                                            <th data-rt="EmployeeFirstName">اسم الاصل العربى</th>
+                                                            <th data-rt="EmployeeFirstNameEn">اسم الاصل اللاتينى</th>
+                                                            <th data-rt="EmployeeFirstNameEn">مجموعة الاصل</th>
+                                                            <th data-rt="NationalID">الباركود</th>
+                                                            <th>تعديل / حذف</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <
+                                                    <tbody>
+                                                        <tr ng-repeat="emp in AssetsList">
+                                                            <td class="hidden-xs center">{{ $index + 1 }}</td>
+                                                            <td>{{ emp.Code }}</td>
+                                                            <td>{{ emp.ARName }}</td>
+                                                            <td>{{ emp.LatName }}</td>
+                                                            <td>{{ emp.Barcode }}</td>
+                                                            <td>{{ emp.AssetGroup }}</td>
+                                                            <td class="center">
+                                                                <div class="visible-md visible-lg hidden-sm hidden-xs">
+                                                                    <a href="" ng-click="dirEnity(emp)" class="btn btn-transparent btn-xs" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fa fa-pencil"></i></a>
+                                                                    <a href="" ng-click="deleteEnity(emp)" class="btn btn-transparent btn-xs tooltips" data-toggle="tooltip" data-placement="top" title="Remove"><i class="fa fa-times fa fa-white"></i></a>
+                                                                </div>
+
+                                                                <div class="visible-xs visible-sm hidden-md hidden-lg">
+                                                                    <div class="btn-group dropdown ">
+                                                                        <button type="button" class="btn btn-o btn-sm dropdown-toggle" data-toggle="dropdown">
+                                                                            <i class="fa fa-cog"></i>&nbsp;<span class="caret"></span>
+                                                                        </button>
+                                                                        <ul class="dropdown-menu pull-right dropdown-light" role="menu">
+                                                                            <li>
+                                                                                <a href="" ng-click="dirEnity(emp)"> تعديل </a>
+                                                                            </li>
+
+                                                                            <li>
+                                                                                <a href="" ng-click="deleteEnity(emp)"> حذف </a>
+                                                                            </li>
+
+
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
+                                                                <!--<a class="label partition-blue" href="" ng-click="dirEnity(emp)"><i class="glyphicon glyphicon-share"></i>  {{ moduleResourse["UpdateButton"] }}</a>
+                                                                <a class="label partition-red" href="" ng-click="deleteEnity(emp)"><i class="glyphicon glyphicon-remove-circle"></i> {{ moduleResourse["DeleteButton"] }}</a>-->
+
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+
+                                            </div>
+                                            <ul uib-pagination total-items="employeesTotalCount" ng-model="pageNum" max-size="maxSize" class="pagination-sm" boundary-links="true" num-pages="numPages" ng-change="pageChanged()"></ul>
+                                            <pre>صفحه: {{pageNum}} / {{numPages}}</pre>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--/.panel-collapse-->
+                        </div>
+                        <!--/.panel-->
+                    </div>
+                    <!--/.panel-group-->
+                </div>
+                <!--/.panel /.panel-white-->
+            </div>
+            <!--/.panel-->
+        </div>
+        <!--/.col-md-12-->
+        </ng-form>
+    </div>
+    <!--/.container-fluid-->
+</div>
+<!--/.wrap-content-->
+    </div>
+<!--/.main-content-->
+</div>
+<!--/.app-content-->

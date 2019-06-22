@@ -1,0 +1,961 @@
+﻿<style>
+    .nav-tabs > li.active > a {
+        background-color: gainsboro !important;
+    }
+
+    input.ng-invalid-required {
+        background-color: #f7f7f7 !important;
+        border: 1px red solid;
+    }
+
+    .my-drop-zone {
+        border: dotted 3px lightgray;
+    }
+
+    .nv-file-over {
+        border: dotted 3px red;
+    }
+
+    /* Default class applied to drop zones on over */
+
+    .another-file-over-class {
+        border: dotted 3px green;
+    }
+
+</style>
+<script type="text/ng-template" id="customTemplate.html">
+    <a>
+        <span ng-bind-html="match.label | uibTypeaheadHighlight:query"></span>
+    </a>
+</script>
+<div class="app-content">
+    <div class="main-content">
+        <div class="wrap-content container" id="container">
+            <div class="container-fluid container-fullw ">
+                <div class="row">
+                    <div class="col-md-12">
+                        <!--<form name="billSettingForm" novalidate>-->
+                        <ng-form id="test" name="test">
+                            <div class="panel" style="height:100%;overflow:auto;">
+
+                                <div class="panel-heading border-bottom  panel-white ">
+                                    <h4 class="panel-title">Bill Setting</h4>
+                                    <div class="panel-tools">
+                                        <a data-original-title="Refresh" data-toggle="tooltip" data-placement="top" data-trigger="hover" class="btn btn-transparent btn-sm panel-refresh" href="#"><i class="fa fa-circle-o"></i></a>
+                                        <a data-original-title="Expand" data-toggle="tooltip" data-placement="top" data-trigger="hover" class="btn btn-transparent btn-sm panel-expand" href="#"><i class="fa fa-compress expand-on"></i><i class="fa fa-expand expand-off"></i></a>
+                                    </div>
+                                </div>
+
+                                <div class="panel-body panel-body panel-white">
+                                    <div class="col-md-12">
+                                        <div class="tabbable tabs-left panel-white no-border margin-top-15">
+
+                                            <ul class="nav nav-tabs">
+                                                <li ng-repeat="step in steps" ng-class="{active: $index==getCurrentStepIndex()}">
+                                                    <a class="center" href="javascript:void(0)" ng-click="goToStep($index)">{{step}}</a>
+                                                </li>
+                                            </ul>
+
+                                            <div class="tab-content panel-body" ng-switch on="selection">
+
+                                                <!-- First Step -->
+                                                <div ng-switch-when="بيانات الفاتوره">
+
+                                                    <h5 class="tap-heading"><b>معلومات الفاتورة</b></h5>
+
+                                                    <div ng-class="{'has-error': test.$invalid}" class="form-group">
+                                                        <div class="form-group col-md-6">
+                                                            <label>الاسم العربي:</label>
+                                                            <div class="help-block error" style="display:inline" ng-show="test.arname.$error.required">*</div>
+                                                            <input type="text" name="arname" class="form-control" placeholder="الاسم العربي" ng-model="billSetting.BILL_AR_NAME" required autofocus>
+                                                        </div>
+                                                    </div>
+
+                                                    <div ng-class="{'has-error': test.$invalid}" class="form-group">
+                                                        <div class="form-group col-md-6">
+                                                            <label>الاسم اللاتيني:</label>
+                                                            <div class="help-block error" style="display:inline" ng-show="test.enname.$error.required">*</div>
+                                                            <input type="text" name="enname" class="form-control" placeholder="الاسم اللاتيني" ng-model="billSetting.BILL_EN_NAME" required>
+                                                        </div>
+                                                    </div>
+
+                                                    <div ng-class="{'has-error': test.$invalid}" class="form-group">
+                                                        <div class="form-group col-md-6">
+                                                            <label>الاختصار العربي:</label>
+                                                            <div class="help-block error" style="display:inline" ng-show="test.arabrv.$error.required">*</div>
+                                                            <input type="text" name="arabrv" class="form-control" placeholder="الاختصار العربي" ng-model="billSetting.BILL_ABRV_AR" required>
+                                                        </div>
+                                                    </div>
+
+                                                    <div ng-class="{'has-error': test.$invalid}" class="form-group">
+                                                        <div class="form-group col-md-6">
+                                                            <label>الاختصار اللاتيني:</label>
+                                                            <div class="help-block error" style="display:inline" ng-show="test.enabrv.$error.required">*</div>
+                                                            <input type="text" name="enabrv" class="form-control" placeholder="الاختصار اللاتيني" ng-model="billSetting.BILL_ABRV_EN" required>
+                                                        </div>
+                                                    </div>
+
+                                                    <div ng-class="{'has-error': test.$invalid}" class="form-group">
+                                                        <div class="form-group col-md-6">
+                                                            <label>اسم العرض:</label>
+                                                            <div class="help-block error" style="display:inline" ng-show="test.showname.$error.required">*</div>
+                                                            <input type="text" name="showname" class="form-control" placeholder="اسم العرض" ng-model="billSetting.BILL_SHOW_NAME" required>
+                                                        </div>
+                                                    </div>
+
+                                                    <div ng-class="{'has-error': test.$invalid}" class="form-group">
+                                                        <div class="form-group col-md-6">
+                                                            <label>نوع الفاتورة:</label>
+                                                            <div class="help-block error" style="display:inline" ng-show="test.billtype.$error.required">*</div>
+                                                            <select name="billtype" ng-model="Custom.BillType" class="form-control" ng-options="x as x.BILL_TYPE_AR_NAME for x in billTypeList| filter:{BILL_TYPE_AR_NAME:$viewValue}|limitTo:8" required>
+                                                                <option value="">نوع الفاتورة</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+
+                                                    <div ng-class="{'has-error': test.$invalid}" class="form-group">
+                                                        <div class="form-group col-md-6">
+                                                            <label>نوع المبيع:</label>
+                                                            <div class="help-block error" style="display:inline" ng-show="test.selltype.$error.required">*</div>
+                                                            <select name="selltype" ng-model="Custom.SellType" class="form-control" ng-options="x as x.SELL_TYPE_AR_NAME for x in SellTypeList| filter:{SELL_TYPE_AR_NAME:$viewValue}|limitTo:8" required>
+                                                                <option value="">نوع المبيع</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+
+                                                    <div ng-class="{'has-error': test.$invalid}" class="form-group">
+                                                        <div class="form-group col-md-6">
+                                                            <label>طريقة الدفع:</label>
+                                                            <div class="help-block error" style="display:inline" ng-show="test.paytype.$error.required">*</div>
+                                                            <select name="paytype" ng-model="Custom.PayType" class="form-control" ng-options="x as x.PAY_TYPE_AR_NAME for x in payTypeList| filter:{PAY_TYPE_AR_NAME:$viewValue}" required>
+                                                                <option value="">طريقة الدفع</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+
+                                                    <div ng-class="{'has-error': test.$invalid}" class="form-group">
+                                                        <div class="form-group col-md-6">
+                                                            <label>طريقة البحث:</label>
+                                                            <div class="help-block error" style="display:inline" ng-show="test.searchtype.$error.required">*</div>
+                                                            <select name="searchtype" ng-model="Custom.SearchType" class="form-control" ng-options="x as x.NAME for x in searchTypeList| filter:{NAME:$viewValue}|limitTo:8" required>
+                                                                <option value="">طريقة الدفع</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+
+                                                    <div ng-class="{'has-error': test.$invalid}" class="form-group">
+                                                        <div class="form-group col-md-6">
+                                                            <label>عدد نسخ الطباعة:</label>
+                                                            <div class="help-block error" style="display:inline" ng-show="test.numofcopies.$error.required">*</div>
+                                                            <input type="number" name="numofcopies" class="form-control" placeholder="عدد نسخ الطباعة" ng-model="billSetting.NUMBEROFCOPIES" required>
+                                                        </div>
+                                                    </div>
+
+                                                    <!--<div ng-class="{'has-error': test.$invalid}" class="form-group">-->
+                                                    <div class="form-group col-md-6">
+                                                        <label>القائمه الرئيسيه:</label>
+                                                        <select name="menu" ng-model="Custom.MenuID" class="form-control" ng-options="x.ID as x.ARName for x in mainMenuList| filter:{ARName:$viewValue}">
+                                                            <option value="">القائمه الرئيسيه</option>
+                                                        </select>
+                                                    </div>
+                                                    <!--</div>-->
+
+                                                    <div class="form-group col-md-6">
+                                                        <label> الضريبة:</label>
+                                                        <input class="form-control" placeholder=" الضريبة" ng-model="billSetting.Tax">
+                                                    </div>
+
+                                                    <div class="form-group col-md-6">
+                                                        <label> الضريبة علي العمولة:</label>
+                                                        <input class="form-control" placeholder=" الضريبة علي العمولة" ng-model="billSetting.CommissionTax">
+                                                    </div>
+
+                                                    <div class="checkbox col-md-6">
+                                                        <div class="checkbox clip-check check-primary margin-top-30">
+                                                            <input type="checkbox" id="checkbox1" ng-model="billSetting.IS_AUTO_POSTING">
+                                                            <label for="checkbox1">تحويل تلقائى</label>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+                                                <!-- Second Step -->
+                                                <div ng-switch-when="اعدادات طباعة الفاتورة">
+
+                                                    <h5 class="tap-heading"><b>إعدادات طباعة الفاتورة</b></h5>
+                                                    <div class="form-group col-md-4">
+                                                        <div class="checkbox clip-check check-primary checkbox-inline">
+                                                            <input id="BILL_SHORTCUT" type="checkbox" name="chk" class="check-primary" ng-model="billSetting.BILL_SHORTCUT" value="value">
+                                                            <label for="BILL_SHORTCUT">فاتورة بسيطة</label>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group col-md-4">
+                                                        <div class="checkbox clip-check check-primary checkbox-inline">
+                                                            <input id="IS_IT_THREADING" type="checkbox" class="check-primary" ng-model="billSetting.IS_IT_THREADING">
+                                                            <label for="IS_IT_THREADING">الفاتورة تعمل بالتوازي</label>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group col-md-4">
+                                                        <div class="checkbox clip-check check-primary checkbox-inline">
+                                                            <input id="PRINTHALFPAGE" type="checkbox" class="check-primary" ng-model="billSetting.PRINTHALFPAGE">
+                                                            <label for="PRINTHALFPAGE">طباعة الفاتورة كاملة مبسطة</label>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group col-md-4">
+                                                        <div class="checkbox clip-check check-primary checkbox-inline">
+                                                            <input id="PRINTLANDSCIP" type="checkbox" class="check-primary" ng-model="billSetting.PRINTLANDSCIP">
+                                                            <label for="PRINTLANDSCIP">طباعة الفاتورة عرضي</label>
+                                                        </div>
+                                                    </div>
+
+
+                                                    <div class="form-group col-md-4">
+                                                        <div class="checkbox clip-check check-primary checkbox-inline">
+                                                            <input id="AUTOMATIC_DISCOUNT" type="checkbox" class="check-primary" ng-model="billSetting.AUTOMATIC_DISCOUNT">
+                                                            <label for="AUTOMATIC_DISCOUNT">تخصم آليا</label>
+                                                        </div>
+                                                    </div>
+
+
+                                                    <div class="form-group col-md-4">
+                                                        <div class="checkbox clip-check check-primary checkbox-inline">
+                                                            <input id="IS_IT_SERVICE_BILL" type="checkbox" class="check-primary" ng-model="billSetting.IS_IT_SERVICE_BILL">
+                                                            <label for="IS_IT_SERVICE_BILL">فاتورة منتجات</label>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group col-md-4">
+                                                        <div class="checkbox clip-check check-primary checkbox-inline">
+                                                            <input id="PRINTHALFPAGEBYLONG" type="checkbox" class="check-primary" ng-model="billSetting.PRINTHALFPAGEBYLONG">
+                                                            <label for="PRINTHALFPAGEBYLONG">طباعة الفاتورة نصف A4 طولي</label>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group col-md-4">
+                                                        <div class="checkbox clip-check check-primary checkbox-inline">
+                                                            <input id="IS_IT_CASHER_BILL" type="checkbox" class="check-primary" ng-model="billSetting.IS_IT_CASHER_BILL">
+                                                            <label for="IS_IT_CASHER_BILL"> طباعة الفاتورة علي شكل فاتورة كاشير</label>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group col-md-4">
+                                                        <div class="checkbox clip-check check-primary checkbox-inline">
+                                                            <input id="PRINT_BILL_AUTOMATIC" type="checkbox" class="check-primary" ng-model="billSetting.PRINT_BILL_AUTOMATIC">
+                                                            <label for="PRINT_BILL_AUTOMATIC">طباعة الفاتورة بشكل آلي</label>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group col-md-4">
+                                                        <div class="checkbox clip-check check-primary checkbox-inline">
+                                                            <input id="SHOW_THE_COMPANY_DATA_ON_BILL" type="checkbox" class="check-primary" ng-model="billSetting.SHOW_THE_COMPANY_DATA_ON_BILL">
+                                                            <label for="SHOW_THE_COMPANY_DATA_ON_BILL">إظهار بيانات الشركة علي الفاتورة</label>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group col-md-4">
+                                                        <div class="checkbox clip-check check-primary checkbox-inline">
+                                                            <input id="IS_IT_SALES_POINT" type="checkbox" class="check-primary" ng-model="billSetting.IS_IT_SALES_POINT">
+                                                            <label for="IS_IT_SALES_POINT">نقطة مبيع</label>
+                                                        </div>
+                                                    </div>
+
+
+
+                                                    <div class="form-group col-md-4">
+                                                        <div class="checkbox clip-check check-primary checkbox-inline">
+                                                            <input id="SHOW_THE_LAST_DATE_FOR_RETURN" type="checkbox" class="check-primary" ng-model="billSetting.SHOW_THE_LAST_DATE_FOR_RETURN">
+                                                            <label for="SHOW_THE_LAST_DATE_FOR_RETURN">إظهار اخر تاريخ للمرتجع</label>
+                                                        </div>
+                                                    </div>
+
+
+                                                    <div class="form-group col-md-4">
+                                                        <div class="checkbox clip-check check-primary checkbox-inline">
+                                                            <input id="SHOW_THE_RETURN_PERCENTAGE" type="checkbox" class="check-primary" ng-model="billSetting.SHOW_THE_RETURN_PERCENTAGE">
+                                                            <label for="SHOW_THE_RETURN_PERCENTAGE">إظهار نسبة المرتجع</label>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group col-md-4">
+                                                        <div class="checkbox clip-check check-primary checkbox-inline">
+                                                            <input id="SHOW_THE_LAST_BALANCE_ON_THE_BILL" type="checkbox" class="check-primary" ng-model="billSetting.SHOW_THE_LAST_BALANCE_ON_THE_BILL">
+                                                            <label for="SHOW_THE_LAST_BALANCE_ON_THE_BILL">إظهار رصيد العميل</label>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group col-md-4">
+                                                        <div class="checkbox clip-check check-primary checkbox-inline">
+                                                            <input id="SHOW_THE_CURRENT_QTY_ON_BILL" type="checkbox" class="check-primary" ng-model="billSetting.SHOW_THE_CURRENT_QTY_ON_BILL">
+                                                            <label for="SHOW_THE_CURRENT_QTY_ON_BILL">إظهار الكمية الحالية للصنف في الفاتورة</label>
+                                                        </div>
+                                                    </div>
+
+
+                                                    <div class="form-group col-md-4">
+                                                        <div class="checkbox clip-check check-primary checkbox-inline">
+                                                            <input id="REPEATETHE_ITEM_AT_THE_BILL" type="checkbox" class="check-primary" ng-model="billSetting.REPEATETHE_ITEM_AT_THE_BILL">
+                                                            <label for="REPEATETHE_ITEM_AT_THE_BILL">عدم تكرار الصنف في الفاتورة</label>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group col-md-4">
+                                                        <div class="checkbox clip-check check-primary checkbox-inline">
+                                                            <input id="GENERATE_COST_ENTRY" type="checkbox" class="check-primary" ng-model="billSetting.GENERATE_COST_ENTRY">
+                                                            <label for="GENERATE_COST_ENTRY">إنشاء قيد تكلفة</label>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group col-md-4">
+                                                        <div class="checkbox clip-check check-primary checkbox-inline">
+                                                            <input id="SHOW_BILL_PAY_TYPE" type="checkbox" class="check-primary" ng-model="billSetting.SHOW_BILL_PAY_TYPE">
+                                                            <label for="SHOW_BILL_PAY_TYPE">إظهار طريقة البيع</label>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group col-md-4">
+                                                        <div class="checkbox clip-check check-primary checkbox-inline">
+                                                            <input id="DISABLE_BILL_PAY_TYPE" type="checkbox" class="check-primary" ng-model="billSetting.DISABLE_BILL_PAY_TYPE">
+                                                            <label for="DISABLE_BILL_PAY_TYPE">إتاحة تغيير طريقة البيع</label>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group col-md-4">
+                                                        <div class="checkbox clip-check check-primary checkbox-inline">
+                                                            <input id="SHOW_THE_CURRENCY" type="checkbox" class="check-primary" ng-model="billSetting.SHOW_THE_CURRENCY">
+                                                            <label for="SHOW_THE_CURRENCY">إظهار العملة</label>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group col-md-4">
+                                                        <div class="checkbox clip-check check-primary checkbox-inline">
+                                                            <input id="SATTLEMENT_INCOME_LIST" type="checkbox" class="check-primary" ng-model="billSetting.SATTLEMENT_INCOME_LIST">
+                                                            <label for="SATTLEMENT_INCOME_LIST">تسوية حسابات قوائم الدخل</label>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group col-md-4">
+                                                        <div class="checkbox clip-check check-primary checkbox-inline">
+                                                            <input id="THESECONDCELLISTHEITEMCELLNOTTHEQUANTITY" type="checkbox" class="check-primary" ng-model="billSetting.THESECONDCELLISTHEITEMCELLNOTTHEQUANTITY">
+                                                            <label for="THESECONDCELLISTHEITEMCELLNOTTHEQUANTITY">في ادخال الاصناف الصنف التالي هو الصنف</label>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group col-md-4">
+                                                        <div class="checkbox clip-check check-primary checkbox-inline">
+                                                            <input id="SHOW_THE_ITEM_CODE_ON_BILL" type="checkbox" class="check-primary" ng-model="billSetting.SHOW_THE_ITEM_CODE_ON_BILL">
+                                                            <label for="SHOW_THE_ITEM_CODE_ON_BILL">إظهار كود الصنف في فاتورة الكاشير</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group col-md-4">
+                                                        <div class="checkbox clip-check check-primary checkbox-inline">
+                                                            <input id="ADD_BILL_ENTRY_WITH_THE_MAIN_CURRENCY_RATE" type="checkbox" class="check-primary" ng-model="billSetting.ADD_BILL_ENTRY_WITH_THE_MAIN_CURRENCY_RATE">
+                                                            <label for="ADD_BILL_ENTRY_WITH_THE_MAIN_CURRENCY_RATE">يتم ادخال الاضافات علي الفاتورة بالعملة المحلية</label>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group col-md-12">
+
+                                                        <hr />
+
+                                                        <h4>الضرائب</h4>
+                                                        <div class="form-group col-md-3">
+                                                            <div class="checkbox clip-check check-primary checkbox-inline">
+                                                                <span class="block"> </span>
+                                                                <input id="IS_IT_TAX_SALE_BILL" type="checkbox" class="check-primary" ng-model="billSetting.IS_IT_TAX_SALE_BILL" required>
+                                                                <label for="IS_IT_TAX_SALE_BILL">فاتورة ضريبية</label>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group col-md-3">
+                                                            <label>{{billSetting.PSTNAME || "PST"}}</label>
+                                                            <input type="number" class="form-control" placeholder="PST" ng-model="billSetting.PST">
+                                                        </div>
+
+                                                        <div class="form-group col-md-3">
+                                                            <label>{{billsetting.GSTNAME || "GST"}}</label>
+                                                            <input type="number" class="form-control" placeholder="GST" ng-model="billSetting.GST">
+                                                        </div>
+
+                                                    </div>
+
+                                                    <div class="form-group col-md-12">
+                                                        <hr />
+                                                        <label>مقدمة الفاتورة:</label>
+                                                        <textarea rows="2" class="form-control" placeholder="مقدمة الفاتورة" ng-model="billSetting.HEADERBILLMESSAGE" maxlength="{{maxLenght}}" style="resize:none"></textarea>
+                                                        <lable style="color:red">باقي : {{maxLenght - billSetting.HEADERBILLMESSAGE.length}} من {{maxLenght}}</lable>
+                                                    </div>
+                                                    <div class="form-group col-md-12">
+                                                        <label>رسائل الفاتورة1:</label>
+                                                        <textarea rows="2" class="form-control" placeholder="رسائل الفاتورة1" ng-model="billSetting.FIRSTBILLMESSAGE" maxlength="{{maxLenght}}" style="resize:none"></textarea>
+                                                        <lable style="color:red">باقي : {{maxLenght - billSetting.FIRSTBILLMESSAGE.length}} من {{maxLenght}}</lable>
+                                                    </div>
+                                                    <div class="form-group col-md-12">
+                                                        <label>رسائل الفاتورة2:</label>
+                                                        <textarea rows="2" class="form-control" placeholder="رسائل الفاتورة2" ng-model="billSetting.SECONDBILLMESSAGE" maxlength="{{maxLenght}}" style="resize:none"></textarea>
+                                                        <lable style="color:red">باقي : {{maxLenght - billSetting.SECONDBILLMESSAGE.length}} من {{maxLenght}}</lable>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Third Step -->
+                                                <div ng-switch-when="القيم الافتراضيه">
+                                                    <h5 class="tap-heading"><b>قيم افتراضية</b></h5>
+                                                    <div class="form-group col-md-12">
+                                                        <label>مركز التكلفة</label>
+                                                        <input type="text" ng-model="Custom.CostCenter" placeholder="مركز التكلفة" uib-typeahead="x as x.COST_CENTER_AR_NAME for x in CostCenterList| filter:{COST_CENTER_AR_NAME:$viewValue}|limitTo:8" class="form-control" typeahead-show-hint="true" typeahead-min-length="0" typeahead-template-url="customTemplate.html" typeahead-show-on-focus>
+                                                    </div>
+                                                    <div class="form-group col-md-6">
+                                                        <label>المخزن</label>
+                                                        <input type="text" ng-model="Custom.CompanyStore" placeholder="المخزن" uib-typeahead="x as x.COM_STORE_AR_NAME for x in CompanyStoresList| filter:{COM_STORE_AR_NAME:$viewValue}|limitTo:8" class="form-control" typeahead-show-hint="true" typeahead-min-length="0" typeahead-template-url="customTemplate.html" typeahead-show-on-focus>
+
+                                                    </div>
+                                                    <div class="form-group col-md-6">
+                                                        <label>الي مخزن</label>
+                                                        <input type="text" ng-model="Custom.ToCompanyStore" placeholder="الي مخزن" uib-typeahead="x as x.COM_STORE_AR_NAME for x in CompanyStoresList| filter:{COM_STORE_AR_NAME:$viewValue}|limitTo:8" class="form-control" typeahead-show-hint="true" typeahead-min-length="0" typeahead-template-url="customTemplate.html" typeahead-show-on-focus>
+                                                    </div>
+                                                    <div class="form-group col-md-6">
+                                                        <label>العملة</label>
+                                                        <input type="text" ng-model="Custom.Currency" placeholder="العملة" uib-typeahead="x as x.CURRENCY_AR_NAME for x in CurrencyList| filter:{CURRENCY_AR_NAME:$viewValue}|limitTo:8" class="form-control" typeahead-show-hint="true" typeahead-min-length="0" typeahead-template-url="customTemplate.html" ng-change="getCurrencyRate()" typeahead-show-on-focus>
+
+                                                    </div>
+                                                    <div class="form-group col-md-6">
+                                                        <label>سعر الصرف</label>
+                                                        <input type="text" class="form-control" placeholder="سعر الصرف" ng-model="billSetting.CURRENCY_RATE" disabled>
+                                                    </div>
+
+
+
+                                                    <div class="form-group col-md-6">
+                                                        <label>حساب النقدي الافتراضي:</label>
+                                                        <select ng-model="Custom.CashAccountID" class="js-example-basic-hide-search js-states form-control" ng-options="x.ACC_ID as x.ACC_AR_NAME for x in accountList">
+                                                            <option value="">اختر حساب النقدي </option>
+                                                        </select>
+                                                    </div>
+
+                                                    <div class="form-group col-md-6">
+                                                        <label>حساب الفيزا الافتراضي:</label>
+                                                        <select ng-model="Custom.VisaAccountID" class="js-example-basic-hide-search js-states form-control" ng-options="x.ACC_ID as x.ACC_AR_NAME for x in accountList">
+                                                            <option value="">اختر حساب الفيزا</option>
+                                                        </select>
+                                                    </div>
+
+                                                    <div class="form-group col-md-6">
+                                                        <label>حساب الاجل الافتراضي:</label>
+                                                        <select ng-model="Custom.NoPaidAccountID" class="js-example-basic-hide-search js-states form-control" ng-options="x.ACC_ID as x.ACC_AR_NAME for x in accountList">
+                                                            <option value="">اختر حساب الاجل</option>
+                                                        </select>
+                                                    </div>
+
+                                                    <div class="form-group col-md-6">
+                                                        <label>حساب التقسيط الافتراضي:</label>
+                                                        <select ng-model="Custom.PaymentAccountID" class="js-example-basic-hide-search js-states form-control" ng-options="x.ACC_ID as x.ACC_AR_NAME for x in accountList">
+                                                            <option value="">اختر حساب التقسيط</option>
+                                                        </select>
+                                                    </div>
+
+
+
+                                                    <div class="form-group col-md-6">
+                                                        <label>لون الصف الافتراضي</label>
+
+                                                        <input type="color" class="form-control" placeholder="لون الصف الافتراضي" ng-model='billSetting.DEFAULT_COLOR_HEXA' value="{{billSetting.DEFAULT_COLOR_HEXA}}">
+                                                    </div>
+                                                    <div class="form-group col-md-6">
+                                                        <label>لون الصف البديل</label>
+                                                        <input type="color" class="form-control" placeholder="لون الصف البديل" ng-model="billSetting.ALTERNATE_COLOR_HEXA" value="{{billSetting.DEFAULT_COLOR_HEXA}}">
+                                                    </div>
+                                                </div>
+
+                                                <!-- Fourth Step -->
+                                                <div ng-switch-when="الحسابات الافتراضية">
+
+                                                    <h5 class="tap-heading"><b>الحسابات الافتراضية</b></h5>
+
+
+                                                    <div class="form-group col-md-6">
+                                                        <label>حساب الاصناف:</label>
+
+                                                        <select ng-model="Custom.AccItem" class="js-example-basic-hide-search js-states form-control" ng-options="x.ACC_ID as x.ACC_AR_NAME for x in accountList| filter:{ACC_AR_NAME:$viewValue}|limitTo:8">
+                                                            <option value="">اختر حساب الاصناف</option>
+                                                        </select>
+
+                                                    </div>
+
+                                                    <div class="form-group col-md-6">
+                                                        <label>حساب الخصومات:</label>
+                                                        <select ng-model="Custom.AccDisc" class="js-example-basic-hide-search js-states form-control" ng-options="x.ACC_ID as x.ACC_AR_NAME for x in accountList| filter:{ACC_AR_NAME:$viewValue}|limitTo:8">
+                                                            <option value="">اختر حساب الخصومات</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group col-md-6">
+                                                        <label>حساب الاضافات:</label>
+
+                                                        <select ng-model="Custom.AccExtra" class="js-example-basic-hide-search js-states form-control" ng-options="x.ACC_ID as x.ACC_AR_NAME for x in accountList| filter:{ACC_AR_NAME:$viewValue}|limitTo:8">
+                                                            <option value="">اختر حساب الاضافات</option>
+                                                        </select>
+
+                                                    </div>
+
+                                                    <div class="form-group col-md-6">
+                                                        <label>حساب النقديات:</label>
+                                                        <select ng-model="Custom.AccPay" class="js-example-basic-hide-search js-states form-control" ng-options="x.ACC_ID as x.ACC_AR_NAME for x in accountList| filter:{ACC_AR_NAME:$viewValue}|limitTo:8">
+                                                            <option value="">اختر حساب النقديات</option>
+                                                        </select>
+                                                    </div>
+
+                                                    <div class="form-group col-md-6">
+                                                        <label>حساب التكلفة:</label>
+                                                        <select ng-model="Custom.AccCost" class="js-example-basic-hide-search js-states form-control" ng-options="x.ACC_ID as x.ACC_AR_NAME for x in accountList| filter:{ACC_AR_NAME:$viewValue}|limitTo:8">
+                                                            <option value="">اختر حساب التكلفه</option>
+                                                        </select>
+                                                    </div>
+
+                                                    <div class="form-group col-md-6">
+                                                        <label>حساب المخزون:</label>
+                                                        <select ng-model="Custom.AccStore" class="js-example-basic-hide-search js-states form-control" ng-options="x.ACC_ID as x.ACC_AR_NAME for x in accountList| filter:{ACC_AR_NAME:$viewValue}|limitTo:8">
+                                                            <option value="">اختر حساب المخزون</option>
+                                                        </select>
+                                                    </div>
+
+                                                    <div class="form-group col-md-6">
+                                                        <label>حساب الهدايا:</label>
+                                                        <select ng-model="Custom.AccGift" class="js-example-basic-hide-search js-states form-control" ng-options="x.ACC_ID as x.ACC_AR_NAME for x in accountList| filter:{ACC_AR_NAME:$viewValue}|limitTo:8">
+                                                            <option value="">اختر حساب الهدايا</option>
+                                                        </select>
+                                                    </div>
+
+                                                    <div class="form-group col-md-6">
+                                                        <label>حساب عميل مورد:</label>
+                                                        <select ng-model="Custom.AccID" class="js-example-basic-hide-search js-states form-control" ng-options="x.ACC_ID as x.ACC_AR_NAME for x in accountList| filter:{ACC_AR_NAME:$viewValue}|limitTo:8">
+                                                            <option value="">اختر حساب عميل مورد</option>
+                                                        </select>
+                                                    </div>
+
+                                                    <div class="form-group col-md-6">
+                                                        <label>حساب الاجور :</label>
+                                                        <select ng-model="Custom.AccWagesID" class="js-example-basic-hide-search js-states form-control" ng-options="x.ACC_ID as x.ACC_AR_NAME for x in accountList| filter:{ACC_AR_NAME:$viewValue}|limitTo:8">
+                                                            <option value="">اختر حساب الاجور </option>
+                                                        </select>
+                                                    </div>
+
+                                                    <div class="form-group col-md-6">
+                                                        <label>حساب المبيعات :</label>
+                                                        <select ng-model="Custom.AccSalesID" class="js-example-basic-hide-search js-states form-control" ng-options="x.ACC_ID as x.ACC_AR_NAME for x in accountList| filter:{ACC_AR_NAME:$viewValue}|limitTo:8">
+                                                            <option value="">اختر حساب المبيعات </option>
+                                                        </select>
+                                                    </div>
+
+                                                    <div class="form-group col-md-6">
+                                                        <label>حساب القيمه المضافه :</label>
+                                                        <select ng-model="Custom.AccVatRateID" class="js-example-basic-hide-search js-states form-control" ng-options="x.ACC_ID as x.ACC_AR_NAME for x in accountList| filter:{ACC_AR_NAME:$viewValue}|limitTo:8">
+                                                            <option value="">اختر حساب القيمه المضافه </option>
+                                                        </select>
+                                                    </div>
+
+                                                </div>
+
+                                                <!-- Fifth Step -->
+                                                <div ng-switch-when="خيارات الفاتوره">
+
+                                                    <h5 class="tap-heading"><b>خيارات الفاتورة</b></h5>
+
+                                                    <div ng-repeat="bilOpt in billOptionList" ng-if="$index % 3 == 0" class="row">
+                                                        <div class="col-xs-4">
+                                                            <div class="checkbox clip-check check-primary checkbox-inline">
+                                                                <input id="box{{$index}}" type="checkbox" ng-model="billOptionList[$index].Selected" value="{{billOptionList[$index].BILL_OPTION_ID}}" ng-if="billOptionList[$index] != null" />
+                                                                <label for="box{{$index}}">{{billOptionList[$index].BILL_OPTION_AR_NAME}}</label>
+                                                            </div>
+                                                        </div>
+
+
+                                                        <div class="col-xs-4">
+                                                            <div class="checkbox clip-check check-primary checkbox-inline">
+                                                                <input id="mybox{{$index}}" type="checkbox" ng-model="billOptionList[$index+1].Selected" value="{{billOptionList[$index+1].BILL_OPTION_ID}}" ng-if="billOptionList[$index+1] != null" />
+                                                                <label for="mybox{{$index}}">{{billOptionList[$index+1].BILL_OPTION_AR_NAME}}</label>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-xs-4">
+                                                            <div class="checkbox clip-check check-primary checkbox-inline">
+                                                                <input id="checkbox{{$index}}" type="checkbox" ng-model="billOptionList[$index+2].Selected" value="{{billOptionList[$index+2].BILL_OPTION_ID}}" ng-if="billOptionList[$index+2] != null" />
+                                                                <label for="checkbox{{$index}}">{{billOptionList[$index+2].BILL_OPTION_AR_NAME}}</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-12">
+                                                        <hr />
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="form-group col-md-6">
+                                                            <label>اسم الحساب:</label>
+                                                            <input type="text" name="BillAccountName" ng-model="billSetting.BillAccountName" class="form-control input-sm">
+                                                        </div>
+
+                                                        <div class="form-group col-md-6">
+                                                            <label>اسم الموظف:</label>
+                                                            <input type="text" name="BillEmpName" ng-model="billSetting.BillEmpName" class="form-control input-sm">
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+
+                                                <!-- Six Step -->
+                                                <div ng-switch-when="خيارات الاظهار">
+                                                    <h5 class="tap-heading"><b>خيارات الاظهار</b></h5>
+                                                    <div class="gridStyle" ui-grid="gridOptions" ui-grid-selection ui-grid-draggable-rows>
+                                                    </div>
+                                                </div>
+
+                                                <!--Seven Step-->
+                                                <div ng-switch-when="بيانات الاظهار">
+
+                                                    <h5 class="tap-heading"><b>بيانات الاظهار</b></h5>
+
+                                                    <div class="form-group col-md-4">
+                                                        <label>اسم الكود العربي:</label>
+                                                        <input type="text" class="form-control" placeholder="اسم الكود العربي" ng-model="gridData.ARCode" autofocus>
+                                                    </div>
+
+                                                    <div class="form-group col-md-4">
+                                                        <label>اسم الكود اللاتيني:</label>
+                                                        <input type="text" class="form-control" placeholder="اسم الكود اللاتيني" ng-model="gridData.ENCode">
+                                                    </div>
+
+                                                    <div class="form-group col-md-4">
+                                                        <label>اسم الصنف العربي:</label>
+                                                        <input type="text" class="form-control" placeholder="اسم الصنف العربي" ng-model="gridData.ARItem">
+                                                    </div>
+
+                                                    <div class="form-group col-md-4">
+                                                        <label>اسم الصنف اللاتيني:</label>
+                                                        <input type="text" class="form-control" placeholder="اسم الصنف اللاتيني" ng-model="gridData.ENItem">
+                                                    </div>
+
+                                                    <div class="form-group col-md-4">
+                                                        <label>اسم الكميه العربي:</label>
+                                                        <input type="text" class="form-control" placeholder="اسم الكميه العربي" ng-model="gridData.ARQuantity">
+                                                    </div>
+
+                                                    <div class="form-group col-md-4">
+                                                        <label> اسم الكميه اللاتيني:</label>
+                                                        <input type="text" class="form-control" placeholder=" اسم الكميه اللاتيني" ng-model="gridData.ENQuantity">
+                                                    </div>
+
+                                                    <div class="form-group col-md-4">
+                                                        <label>اسم الوزن بالجرام العربي:</label>
+                                                        <input type="text" class="form-control" placeholder="اسم الوزن بالجرام العربي" ng-model="gridData.ARItemWeight">
+                                                    </div>
+
+                                                    <div class="form-group col-md-4">
+                                                        <label>اسم الوزن بالجرام اللاتيني:</label>
+                                                        <input type="text" class="form-control" placeholder="اسم الوزن بالجرام اللاتيني" ng-model="gridData.ENItemWeight">
+                                                    </div>
+
+                                                    <div class="form-group col-md-4">
+                                                        <label>اسم اجره الجرام العربي:</label>
+                                                        <input type="text" class="form-control" placeholder="اسم اجره الجرام العربي" ng-model="gridData.ARItemGmWages">
+                                                    </div>
+
+                                                    <div class="form-group col-md-4">
+                                                        <label>اسم اجره الجرام اللاتيني:</label>
+                                                        <input type="text" class="form-control" placeholder="اسم اجره الجرام اللاتيني" ng-model="gridData.ENItemGmWages">
+                                                    </div>
+
+                                                    <div class="form-group col-md-4">
+                                                        <label>اسم اجره الصنف العربي:</label>
+                                                        <input type="text" class="form-control" placeholder="اسم اجره الصنف العربي" ng-model="gridData.ARManufacturingWages">
+                                                    </div>
+
+                                                    <div class="form-group col-md-4">
+                                                        <label>اسم اجره الصنف اللاتيني:</label>
+                                                        <input type="text" class="form-control" placeholder="اسم اجره الصنف اللاتيني" ng-model="gridData.ENManufacturingWages">
+                                                    </div>
+
+                                                    <div class="col-md-12">
+                                                        <hr />
+                                                    </div>
+
+                                                    <div class="form-group col-md-4">
+                                                        <label>اسم الوحده العربي:</label>
+                                                        <input type="text" class="form-control" placeholder="اسم الوحده العربي" ng-model="gridData.ARUnit">
+                                                    </div>
+
+                                                    <div class="form-group col-md-4">
+                                                        <label>اسم الوحده اللاتيني:</label>
+                                                        <input type="text" class="form-control" placeholder="اسم الوحده اللاتيني" ng-model="gridData.ENUnit">
+                                                    </div>
+
+                                                    <div class="form-group col-md-4">
+                                                        <label>اسم العيار العربي:</label>
+                                                        <input type="text" class="form-control" placeholder="اسم العيار العربي" ng-model="gridData.ARCaliberName">
+                                                    </div>
+
+                                                    <div class="form-group col-md-4">
+                                                        <label>اسم العيار اللاتيني:</label>
+                                                        <input type="text" class="form-control" placeholder="اسم العيار اللاتيني" ng-model="gridData.ENCaliberName">
+                                                    </div>
+
+                                                    <div class="form-group col-md-4">
+                                                        <label>اسم السعر العربي:</label>
+                                                        <input type="text" class="form-control" placeholder="اسم السعر العربي" ng-model="gridData.ARPrice">
+                                                    </div>
+
+                                                    <div class="form-group col-md-4">
+                                                        <label>اسم السعر اللاتيني:</label>
+                                                        <input type="text" class="form-control" placeholder="اسم السعر اللاتيني" ng-model="gridData.ENPrice">
+                                                    </div>
+
+                                                    <div class="form-group col-md-4">
+                                                        <label>اسم قيمة الخصم العربي:</label>
+                                                        <input type="text" class="form-control" placeholder="اسم قيمة الخصم العربي" ng-model="gridData.ARDiscount">
+                                                    </div>
+
+                                                    <div class="form-group col-md-4">
+                                                        <label>اسم قيمة الخصم اللاتيني:</label>
+                                                        <input type="text" class="form-control" placeholder="اسم قيمة الخصم اللاتيني" ng-model="gridData.ENDiscount">
+                                                    </div>
+
+                                                    <div class="form-group col-md-4">
+                                                        <label>اسم نسبة الخصم العربي:</label>
+                                                        <input type="text" class="form-control" placeholder="اسم نسبة الخصم العربي" ng-model="gridData.ARDiscRate">
+                                                    </div>
+
+                                                    <div class="form-group col-md-4">
+                                                        <label>اسم نسبة الخصم اللاتيني:</label>
+                                                        <input type="text" class="form-control" placeholder="اسم نسبة الخصم اللاتيني" ng-model="gridData.ENDiscRate">
+                                                    </div>
+
+                                                    <div class="form-group col-md-4">
+                                                        <label>اسم الاجمالي العربي:</label>
+                                                        <input type="text" class="form-control" placeholder="اسم الاجمالي العربي" ng-model="gridData.ARTotal">
+                                                    </div>
+
+                                                    <div class="form-group col-md-4">
+                                                        <label>اسم الاجمالي اللاتيني:</label>
+                                                        <input type="text" class="form-control" placeholder="اسم الاجمالي اللاتيني" ng-model="gridData.ENTotal">
+                                                    </div>
+
+                                                    <div class="col-md-12">
+                                                        <hr />
+                                                    </div>
+
+                                                    <div class="form-group col-md-4">
+                                                        <label>اسم النقاوه العربي:</label>
+                                                        <input type="text" class="form-control" placeholder="اسم النقاوه العربي" ng-model="gridData.ARClearnessRate">
+                                                    </div>
+
+                                                    <div class="form-group col-md-4">
+                                                        <label>اسم النقاوه اللاتيني:</label>
+                                                        <input type="text" class="form-control" placeholder="اسم النقاوه اللاتيني" ng-model="gridData.ENClearnessRate">
+                                                    </div>
+
+                                                    <div class="form-group col-md-4">
+                                                        <label>اسم عيار 24 العربي:</label>
+                                                        <input type="text" class="form-control" placeholder="اسم عيار 24 العربي" ng-model="gridData.ARCaliber24">
+                                                    </div>
+
+                                                    <div class="form-group col-md-4">
+                                                        <label>اسم عيار 24 اللاتيني:</label>
+                                                        <input type="text" class="form-control" placeholder="اسم عيار 24 اللاتيني" ng-model="gridData.ENCaliber24">
+                                                    </div>
+
+                                                    <div class="form-group col-md-4">
+                                                        <label>اسم عيار 22 العربي:</label>
+                                                        <input type="text" class="form-control" placeholder="اسم عيار 22 العربي" ng-model="gridData.ARCaliber22">
+                                                    </div>
+
+                                                    <div class="form-group col-md-4">
+                                                        <label>اسم عيار 22 اللاتيني:</label>
+                                                        <input type="text" class="form-control" placeholder="اسم عيار 22 اللاتيني" ng-model="gridData.ENCaliber22">
+                                                    </div>
+
+                                                    <div class="form-group col-md-4">
+                                                        <label>اسم عيار 21 العربي:</label>
+                                                        <input type="text" class="form-control" placeholder="اسم عيار 21 العربي" ng-model="gridData.ARCaliber21">
+                                                    </div>
+
+                                                    <div class="form-group col-md-4">
+                                                        <label>اسم عيار 21 اللاتيني:</label>
+                                                        <input type="text" class="form-control" placeholder="اسم عيار 21 اللاتيني" ng-model="gridData.ENCaliber21">
+                                                    </div>
+
+                                                    <div class="form-group col-md-4">
+                                                        <label>اسم عيار 18 العربي:</label>
+                                                        <input type="text" class="form-control" placeholder="اسم عيار 18 العربي" ng-model="gridData.ARCaliber18">
+                                                    </div>
+
+                                                    <div class="form-group col-md-4">
+                                                        <label>اسم عيار 18 اللاتيني:</label>
+                                                        <input type="text" class="form-control" placeholder="اسم عيار 18 اللاتيني" ng-model="gridData.ENCaliber18">
+                                                    </div>
+
+                                                    <div class="form-group col-md-4">
+                                                        <label>اسم مركز التكلفه العربي:</label>
+                                                        <input type="text" class="form-control" placeholder="اسم مركز التكلفه العربي" ng-model="gridData.ARCostCenter">
+                                                    </div>
+
+                                                    <div class="form-group col-md-4">
+                                                        <label>اسم مركز التكلفه اللاتيني:</label>
+                                                        <input type="text" class="form-control" placeholder="اسم مركز التكلفه اللاتيني" ng-model="gridData.ENCostCenter">
+                                                    </div>
+
+                                                    <div class="col-md-12">
+                                                        <hr />
+                                                    </div>
+
+                                                    <div class="form-group col-md-4">
+                                                        <label>اسم خاضع للضريبه العربي:</label>
+                                                        <input type="text" class="form-control" placeholder="اسم خاضع للضريبه العربي" ng-model="gridData.ARSubjectToVat">
+                                                    </div>
+
+                                                    <div class="form-group col-md-4">
+                                                        <label>اسم خاضع للضريبه اللاتيني:</label>
+                                                        <input type="text" class="form-control" placeholder="اسم خاضع للضريبه اللاتيني" ng-model="gridData.ENSubjectToVat">
+                                                    </div>
+
+                                                    <div class="form-group col-md-4">
+                                                        <label>اسم نسبه الضريبه العربي:</label>
+                                                        <input type="text" class="form-control" placeholder="اسم نسبه الضريبه العربي" ng-model="gridData.ARVatRate">
+                                                    </div>
+
+                                                    <div class="form-group col-md-4">
+                                                        <label>اسم نسبه الضريبه اللاتيني:</label>
+                                                        <input type="text" class="form-control" placeholder="اسم نسبه الضريبه اللاتيني" ng-model="gridData.ENVatRate">
+                                                    </div>
+
+                                                    <div class="form-group col-md-4">
+                                                        <label>اسم قيمة الضريبه العربي:</label>
+                                                        <input type="text" class="form-control" placeholder="اسم قيمة الضريبه العربي" ng-model="gridData.ARVatValue">
+                                                    </div>
+
+                                                    <div class="form-group col-md-4">
+                                                        <label>اسم قيمة الضريبه اللاتيني:</label>
+                                                        <input type="text" class="form-control" placeholder="اسم قيمة الضريبه اللاتيني" ng-model="gridData.ENVatValue">
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                        <div class="clearfix"></div>
+
+                                        <ul class="pager pull-right">                                           
+                                            <li class="" ng-class="{disabled: !hasPreviousStep()}">
+                                                <a href="javascript:void(0);" ng-click="decrementStep()">&larr; Previous Step</a>
+                                            </li>
+                                            <li class="" ng-class="{disabled: !hasNextStep()}">
+                                                <a href="javascript:void(0);" ng-click="incrementStep()">Next Step &rarr;</a>
+                                            </li>
+                                        </ul>
+                                        <!--<div class="pull-right"><button style="margin:20px 0;" class="btn btn-success">Confirm and Register</button></div>-->
+                                        <div class="clearfix"></div>
+
+                                        <div class="col-md-12 my-btn-group margin-bottom-25 text-center">
+                                            <button type="button" class="btn btn-primary btn-wide  margin-top-10" ng-disabled="!billSettingForm.$valid" ng-click="savebillSetting()">save&nbsp;&nbsp;<i class="fa fa-save"></i></button>
+                                            <button type="button" class="btn btn-wide btn-success margin-top-10 " ng-click="refreshData()">Refresh&nbsp;&nbsp;<i class="fa fa-refresh"></i></button>
+                                            <button type="button" class="btn btn-wide btn-info   margin-top-10" ng-click="clearEnity()">New&nbsp;&nbsp;<i class="fa fa-paste"></i></button>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div class="panel">
+                                    <div class="panel-group accordion" id="accordion">
+                                        <div class="panel panel-white">
+                                            <div class="panel-heading">
+                                                <h5 class="panel-title"><a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" data-target="#collapseTwo"> <i class="icon-arrow"></i> Previous Bill Setting </a></h5>
+                                            </div>
+                                            <div id="collapseTwo" class="collapse">
+                                                <div class="panel-body">
+                                                    <div class="table-responsive">
+                                                        <div class="col-md-3 pull-lef ">
+                                                            <table class="table table-stylish">
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td class="center text-extra-large"><i class="ti-save"></i></td>
+                                                                        <td><span class="text-dark block">Bill Setting Total:</span></td>
+                                                                        <td class="center">{{billSettingTotalCount}}</td>
+                                                                        <td class="center"><i class="fa fa-caret-down text-red"></i></td>
+                                                                    </tr>
+
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+
+                                                        <div class="col-md-12">
+                                                            <table class="table table-bordered table-hover table-full-width ps-scrollbar-x small  panel-full-screen  fc-scroller  " style="height:150px;overflow:auto;" id="sample-table-2">
+                                                                <thead>
+                                                                    <tr class=" success ">
+                                                                        <th class="hidden-xs">#</th>
+                                                                        <th>Arabic Name</th>
+                                                                        <th>Latin Name</th>
+                                                                        <th class="hidden-xs">Arabic Abbreviation</th>
+                                                                        <th class="hidden-xs">Latin Abbreviation</th>
+                                                                        <th class="hidden-xs">Show Number</th>
+                                                                        <th>Edit / Delete</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr ng-repeat="bill in billSettingList">
+                                                                        <td class="hidden-xs center">{{ $index + 1 }}</td>
+                                                                        <td>{{ bill.BILL_AR_NAME }}</td>
+                                                                        <td>{{ bill.BILL_EN_NAME }}</td>
+                                                                        <td class="hidden-xs">{{ bill.BILL_ABRV_AR }}</td>
+                                                                        <td class="hidden-xs">{{ bill.BILL_ABRV_EN }}</td>
+                                                                        <td class="hidden-xs">{{ bill.BILL_SHOW_NAME }}</td>
+                                                                        <td class="center">
+
+                                                                            <div class="visible-md visible-lg hidden-sm hidden-xs">
+                                                                                <a href="" ng-click="dirEnity(bill)" class="btn btn-transparent btn-xs" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fa fa-pencil"></i></a>
+                                                                                <a href="#" class="btn btn-transparent btn-xs tooltips" data-toggle="tooltip" data-placement="top" title="Remove"><i class="fa fa-times fa fa-white"></i></a>
+                                                                            </div>
+
+                                                                            <div class="visible-xs visible-sm hidden-md hidden-lg">
+                                                                                <div class="btn-group dropdown">
+                                                                                    <button type="button" class="btn btn-o btn-sm dropdown-toggle" data-toggle="dropdown"><i class="fa fa-cog"></i>&nbsp;<span class="caret"></span></button>
+                                                                                    <ul class="dropdown-menu pull-right dropdown-light" role="menu">
+                                                                                        <li><a href="" ng-click="dirEnity(bill)"> Edit </a></li>
+                                                                                        <li><a href="#"> Remove </a></li>
+                                                                                    </ul>
+                                                                                </div>
+                                                                            </div>
+                                                                            <!--<a class="label partition-blue" href="" ng-click="dirEnity(bill)"><i class="glyphicon glyphicon-share"></i>  Edit</a>
+                    <a class="label partition-red" href="" ng-click="deleteEnity(bill)"><i class="glyphicon glyphicon-remove-circle"></i> Delete</a>-->
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                            <ul uib-pagination total-items="billSettingTotalCount" ng-model="pageNum" max-size="maxSize" class="pagination-sm" boundary-links="true" num-pages="numPages" ng-change="pageChanged()"></ul>
+                                                            <pre>Page: {{pageNum}} / {{numPages}}</pre>
+                                                        </div>
+                                                       
+                                                    </div><!--/.table-responsive-->
+                                                </div>
+                                                <!--/.panel-body-->
+                                            </div>
+                                            <!--/.panel-collapse-->
+                                        </div>
+                                        <!--/.panel-->
+                                    </div>
+                                    <!--/.panel-group-->
+                                </div>
+                                <!--/.panel /.panel-white-->
+                            </div>
+                            <!--/.panel-->
+                        </ng-form>
+                    </div>
+                    <!--/.col-md-12-->
+                </div>
+                <!--/.row-->
+            </div>
+            <!--/.container-fluid-->
+        </div>
+        <!--/.wrap-content-->
+    </div>
+    <!--/.main-content-->
+</div>
+<!--/.app-content-->

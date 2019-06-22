@@ -1,0 +1,88 @@
+﻿<style>
+    .app-navbar-fixed {
+        padding: 0
+    }
+</style>
+<div class="login-body">
+    <div class="row two-half no-margin no-padding">
+        <!-- Start First Half -->
+        <div class="col-md-6 flex-content no-padding panel-white">
+            <div class="col-xs-12">
+                <!-- start: LOGIN BOX -->
+                <div class="box-login">
+                    <!--<p class="text-center">
+                       Sign In
+                    </p>-->
+                    <form id="login" name="login">
+                        <div class="form-content form-content col-sm-8 col-sm-offset-2">
+                            <!--<ng-form id="test" name="test">-->
+                            <div class="form-group">
+
+                                <div class="logo text-center">
+                                    <img src="/Content/assets//images/logo4.png" />
+                                </div>
+                            </div>
+                            <!--validation-->
+                            <!--<div ng-class="{'has-error': test.$invalid}" class="form-group">-->
+                            <div class="form-group">
+                                <div class="input-icon">
+                                    <input type="text" class="form-control" placeholder=" User Name " name="usern" data-ng-model="loginData.userName" required autofocus>
+                                    <!--<div class="help-block error" style="display:inline" ng-show="test.usern.$error.required">*</div>-->
+                                    <i class="fa fa-user"></i>
+                                </div>
+                            </div>
+
+                            <div class="form-group form-actions">
+                                <div class="input-icon">
+                                    <input type="password" class="form-control" placeholder="Password" name="pass" data-ng-model="loginData.password" required>
+                                    <!--<div class="help-block error" style="display:inline" ng-show="test.pass.$error.required">*</div>-->
+                                    <i class="fa fa-lock"></i>
+                                </div>
+                            </div>
+
+                            <div class="form-group ">
+                                <label>
+                                    <!--remember me-->
+                                    <label for="remember">Keep Me Sign in </label>
+                                </label> |
+                                <a href="" ng-click="forgetPassword()" class="text-grey">Forget Password</a>
+                            </div>
+                            <div class="form-actions">
+                                <button class="btn btn-lg btn-info btn-block" type="submit" data-ng-click="login11()" press-Enter="login11()">Enter</button>
+                                <!--<input type="submit" value="Enter" class="btn btn-wide btn-red  pull-left " />-->
+                                <div data-ng-hide="message == ''" class="alert alert-danger">
+                                    {{message}}
+                                </div>
+                            </div>
+
+                            <div class="new-account margin-top-35">
+                                Have No Account ?<a href="#/technicalSupport" class="text-center text-primary text-bold">  Technical Support </a>
+                            </div>
+
+                            <div class="new-account margin-top-35 ">
+                                <a href="#/Registeration" class="text-grey"> Sign up New User </a>
+                            </div>
+
+                        </div>
+                    </form>
+                    <!-- start: COPYRIGHT -->
+                </div>
+                <!-- end: LOGIN BOX -->
+                <div class="copyright text-dark text-center">
+                    © <b> Unicom Group </b> 2017. All Right Reserved.
+                </div>
+                <!--</ng-form>-->
+                <!-- end: COPYRIGHT -->
+            </div>
+        </div>
+        <!-- Start Second Half-->
+        <div class="col-md-6 register-section center no-padding hidden-xs hidden-sm">
+            <a href="#/Registeration" class="btn panel-white btn-lg">Register</a>
+            <!-- start: COPYRIGHT -->
+            <div class="copyright text-dark text-center">
+                © <b> Unicom Group </b> 2017. All Right Reserved.
+            </div>
+        </div>
+        <!-- End Second Half-->
+    </div>
+</div>

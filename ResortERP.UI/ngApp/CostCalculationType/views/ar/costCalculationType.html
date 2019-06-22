@@ -1,0 +1,107 @@
+﻿<div class="app-content">
+    <div class="main-content">
+        <div class="wrap-content container" id="container">
+            <div class="container-fluid container-fullw">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="panel panel-white">
+                            <div class="panel-heading border-bottom">
+                                <h4 class="panel-title">تعريف طريقة حساب التكلفة</h4>
+                                <div class="panel-tools">
+                                    <a data-original-title="Refresh" data-toggle="tooltip" data-placement="top" data-trigger="hover" class="btn btn-transparent btn-sm panel-refresh" href="#"><i class="fa fa-circle-o"></i></a>
+                                    <a data-original-title="Expand" data-toggle="tooltip" data-placement="top" data-trigger="hover" class="btn btn-transparent btn-sm panel-expand" href="#"><i class="fa fa-compress expand-on"></i><i class="fa fa-expand expand-off"></i></a>
+                                </div>
+                            </div>
+
+                            <div class="panel-body">
+
+                                <div class="col-md-6">
+
+                                    <div class="form-group col-md-12">
+                                        <label>كود طريقة حساب التكلفة:</label>
+                                        <input type="text" class="form-control" placeholder="الكود" ng-model="costCalculationType.Code" required>
+                                    </div>
+                                    <div class="form-group col-md-12">
+                                        <label>اسم طريقة حساب التكلفة العربى:</label>
+                                        <input type="text" class="form-control" placeholder="اسم طريقة حساب التكلفة العربى" ng-model="costCalculationType.ARName" required>
+                                    </div>
+                                    <div class="form-group col-md-12">
+                                        <label>اسم طريقة حساب التكلفة اللاتينى:</label>
+                                        <input type="text" class="form-control" placeholder="اسم طريقة حساب التكلفة اللاتينى" ng-model="costCalculationType.LatName" required>
+                                    </div>
+                                    <div class="form-group col-md-12">
+                                        <label>ملاحظات:</label>
+                                        <input type="text" class="form-control" placeholder="ملاحظات" ng-model="costCalculationType.Notes">
+                                    </div>
+
+                                </div>
+                                <div class="col-md-6">
+
+                                    <div class="space12 center">
+                                        <div class="btn-group">
+                                            <button class="btn btn-primary">
+                                                <i class="fa fa-step-forward"></i>
+                                            </button>
+
+
+                                            <button class="btn btn-primary">
+                                                <i class="fa fa-chevron-right"></i>
+                                            </button>
+
+                                            <button class="btn btn-primary">
+                                                <i class="fa fa-chevron-left"></i>
+                                            </button>
+                                            <button class="btn btn-primary">
+                                                <i class="fa fa-step-backward"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 margin-bottom-25 text-center">
+                                    <button type="button" class="btn btn-primary btn-wide  margin-top-10" ng-click="savecostCalculationTypeGroup()">حفظ&nbsp;&nbsp;<i class="fa fa-save"></i></button>
+                                    <button type="button" class="btn btn-wide btn-success margin-top-10 " ng-click="refreshData()">تحديث&nbsp;&nbsp;<i class="fa fa-refresh"></i></button>
+                                    <button type="button" class="btn btn-wide btn-info   margin-top-10" ng-click="clearEnity()">جديد&nbsp;&nbsp;<i class="fa fa-paste"></i></button>
+                                </div>
+                                <hr />
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <table class="table table-bordered table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th class="center text-extra-large"><i class="ti-arrow-down"></i></th>
+                                                    <th class="center"> كود طريقة حساب التكلفة </th>
+                                                    <th class="center">اسم طريقة حساب التكلفة</th>
+                                                    <th class="center">اسم طريقة حساب التكلفة اللاتينى</th>
+                                                    <th class="center">ملاحظات</th>
+                                                    <th></th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="item in costCalculationTypeList">
+                                                    <td class="hidden-xs">{{ $index + 1 }}</td>
+                                                    <td>{{ item.Code }}</td>
+                                                    <td>{{ item.ARName }}</td>
+                                                    <td>{{ item.LatName }}</td>
+                                                    <td class="hidden-xs">{{ item.Notes }}</td>
+                                                    <td>
+                                                        <a class="label partition-blue" href="" ng-click="dirEnity(item)"><i class="glyphicon glyphicon-share"></i>تعديل</a>
+                                                    </td>
+                                                    <td>
+                                                        <a class="label partition-red" href="" ng-click="deleteEnity(item)"><i class="glyphicon glyphicon-remove-circle"></i> حذف</a>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <ul uib-pagination total-items="costCalculationTypeTotalCount" ng-model="pageNum" max-size="maxSize" class="pagination-sm" boundary-links="true" num-pages="numPages" ng-change="pageChanged()"></ul>
+                                        <pre>صفحه: {{pageNum}} / {{numPages}}</pre>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,177 @@
+﻿<div class="app-content">
+    <div class="main-content">
+        <div class="wrap-content container" id="container">
+            <div class="container-fluid container-fullw">
+                <ng-form id="test" name="test">
+                    <div class="col-xs-12 margin-top-10 margin-bottom-10">
+                        <div class="breadcrumb-wrapper no-margin">
+                            <h4 class="mainTitle no-margin">الاقسام</h4>
+                            <ul class="pull-right breadcrumb">
+                                <li><a href="#!"><i class="fa fa-home margin-left-5 text-large text-dark"></i>الرئيسية</a></li>
+                                <li>الاقسام</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 margin-bottom-10">
+                        <div class="panel-white panel-body no-margin">
+                            <div class="pull-right">
+                                <button type="button" class="btn btn-o btn-default no-border" ng-disabled="test.$invalid" ng-click="savedepartments()">حفظ  <i class="fa fa-save"></i></button>
+                                <button type="button" class="btn btn-o btn-default no-border" ng-click="refreshData()">تحديث  <i class="fa fa-refresh"></i></button>
+                                <button type="button" class="btn btn-o btn-default no-border" ng-click="clearEnity()">جديد  <i class="fa fa-paste"></i></button>
+                            </div>
+                            <div class="pull-left">
+                                <div class="checkbox clip-check check-primary checkbox-inline">
+                                    <input type="checkbox" id="showHidden" show-hidden-elements />
+                                    <label for="showHidden">اظهار جميع الحقول</label>
+                                </div>
+                                <div class="checkbox clip-check check-primary checkbox-inline">
+                                    <input type="checkbox" id="updateResourse" />
+                                    <label for="updateResourse">تغيير اعدادات الحقول</label>
+                                </div>                                
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="panel" style="height:100%;overflow:auto;">
+                            <div class="panel-body panel-white">
+
+                                <div ng-class="{'has-error': test.$invalid}" class="">
+                                    <div class="form-group col-md-6">
+                                        <label>كود القسم:</label>
+                                        <div class="help-block error" style="display:inline" ng-show="test.code.$error.required">*</div>
+                                        <input type="text" class="form-control" name="code" placeholder="كود القسم" ng-model="departments.DEPT_CODE" required-resource-directive>
+                                    </div>
+                                </div>
+                                <div ng-class="{'has-error': test.$invalid}" class="form-group">
+                                    <div class="form-group col-md-6">
+                                        <label>فرع الشركة:</label>
+                                        <div class="help-block error" style="display:inline" ng-show="test.cbranch.$error.required">*</div>
+                                        <select ng-model="departments.COM_BRN_ID" class="form-control" name="cbranch" ng-options="x.COM_BRN_ID as x.COM_BRN_AR_NAME for x in CompanyBranchesList" required-resource-directive>
+                                            <option value="">اختر فرع الشركة</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div ng-class="{'has-error': test.$invalid}" class="form-group">
+                                    <div class="form-group col-md-6">
+                                        <label>اسم القسم العربى:</label>
+                                        <div class="help-block error" style="display:inline" ng-show="test.arname.$error.required">*</div>
+                                        <input type="text" class="form-control" name="arname" placeholder="اسم القسم العربى" ng-model="departments.DEPT_AR_NAME" required-resource-directive>
+                                    </div>
+                                </div>
+                                <div ng-class="{'has-error': test.$invalid}" class="form-group">
+                                    <div class="form-group col-md-6">
+                                        <label>اسم القسم اللاتينى:</label>
+                                        <div class="help-block error" style="display:inline" ng-show="test.enname.$error.required">*</div>
+                                        <input type="text" class="form-control" name="enname" placeholder="اسم القسم اللاتينى" ng-model="departments.DEPT_EN_NAME" required-resource-directive>
+                                    </div>
+                                </div>
+                                <div ng-class="{'has-error': test.$invalid}" class="form-group col-md-6">
+                                    <label>اسم الإختصار العربى:</label>
+                                    <div class="help-block error" style="display:inline" ng-show="test.ar_abrv.$error.required">*</div>
+                                    <input type="text" name="ar_abrv" class="form-control" placeholder="اسم الإختصار العربى" ng-model="departments.DEPT_AR_ABRV" required-resource-directive>
+                                </div>
+                                <div ng-class="{'has-error': test.$invalid}" class="form-group col-md-6">
+                                    <label>اسم الإختصار اللاتينى:</label>
+                                    <div class="help-block error" style="display:inline" ng-show="test.en_abrv.$error.required">*</div>
+                                    <input type="text" name="en_abrv" class="form-control" placeholder="اسم الإختصار اللاتينى" ng-model="departments.DEPT_EN_ABRV" required-resource-directive>
+                                </div>
+
+
+                                    <div class="col-md-12 margin-bottom-25 my-btn-group center text-center">
+                                        <button type="button" class="btn btn-primary  margin-top-10" ng-disabled="test.$invalid" ng-click="savedepartments()">حفظ  <i class="fa fa-save"></i></button>
+                                        <button type="button" class="btn btn-success margin-top-10 " ng-click="refreshData()">تحديث  <i class="fa fa-refresh"></i></button>
+                                        <button type="button" class="btn btn-info   margin-top-10" ng-click="clearEnity()">جديد  <i class="fa fa-paste"></i></button>
+                                    </div>
+                                </ng-form>
+
+                                <div class="col-md-12">
+
+                                    <div class="panel-group accordion" id="accordion">
+                                        <div class="panel panel-white">
+                                            <div class="panel-heading">
+                                                <h5 class="panel-title"><a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" data-target="#collapseTwo"> <i class="icon-arrow"></i> الاقسام المعرفة سابقا </a></h5>
+                                            </div>
+                                            <div id="collapseTwo" class="col-md-12 panel-collapse panel-white collapse">
+                                                <div class="panel-body">
+
+                                                    <div class="table-responsive">
+                                                        <div class="col-md-3 pull-left no-padding">
+                                                            <table class="table table-stylish">
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td class="center text-extra-large"><i class="ti-save"></i></td>
+                                                                        <td><span class="text-dark block">إجمالي عدد الاقسام :</span></td>
+                                                                        <td class="center">{{departmentsTotalCount}}</td>
+                                                                        <td class="center"><i class="fa fa-caret-down text-red"></i></td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+
+                                                        <table class="table table-bordered table-hover table-full-width ps-scrollbar-x small  panel-full-screen  fc-scroller  " style="height:150px;overflow:auto;" id="sample-table-2">
+                                                            <thead>
+                                                                <tr class="border-right success ">
+                                                                    <th class="center no-border border-right border-left">#</th>
+                                                                    <th class="center no-border border-right border-left">كود القسم</th>
+                                                                    <th class="center no-border border-right border-left">اسم القسم العربى</th>
+                                                                    <th class="center no-border border-right border-left">اسم القسم اللاتينى</th>
+                                                                    <th class="center no-border border-right border-left">اسم الإختصار العربى</th>
+                                                                    <th class="center no-border border-right border-left">اسم الإختصار اللاتينى</th>
+                                                                    <th>تعديل / حذف</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr ng-repeat="dept in departmentsList">
+                                                                    <td class="hidden-xs">{{ $index + 1 }}</td>
+                                                                    <td>{{ dept.DEPT_CODE }}</td>
+                                                                    <td>{{ dept.DEPT_AR_NAME }}</td>
+                                                                    <td>{{ dept.DEPT_EN_NAME }}</td>
+                                                                    <td class="hidden-xs">{{ dept.DEPT_AR_ABRV }}</td>
+                                                                    <td class="hidden-xs">{{ dept.DEPT_EN_ABRV }}</td>
+                                                                    <td>
+
+                                                                        <div class="visible-md visible-lg hidden-sm hidden-xs">
+                                                                            <a href="" ng-click="dirEnity(dept)" class="btn btn-transparent btn-xs" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fa fa-pencil"></i></a>
+                                                                            <a href="" ng-click="deleteEnity(dept)" class="btn btn-transparent btn-xs tooltips" data-toggle="tooltip" data-placement="top" title="Remove"><i class="fa fa-times fa fa-white"></i></a>
+                                                                        </div>
+
+                                                                    <div class="visible-xs visible-sm hidden-md hidden-lg">
+                                                                        <div class="btn-group dropdown ">
+                                                                            <button type="button" class="btn btn-o btn-sm dropdown-toggle" data-toggle="dropdown"><i class="fa fa-cog"></i>&nbsp;<span class="caret"></span></button>
+                                                                            <ul class="dropdown-menu pull-right dropdown-light" role="menu">
+                                                                                <li><a ng-click="dirEnity(dept)"> تعديل </a></li>
+                                                                                <li><a href="" ng-click="deleteEnity(dept)"> حذف </a></li>
+                                                                            </ul>
+                                                                        </div>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+
+                                            <ul uib-pagination total-items="departmentsTotalCount" ng-model="pageNum" max-size="maxSize" class="pagination-sm" boundary-links="true" num-pages="numPages" ng-change="pageChanged()"></ul>
+                                            <pre>صفحه: {{pageNum}} / {{numPages}}</pre>
+                                        </div>
+                                        <!--/.panel-body-->
+                                    </div>
+                                    <!--/.panel-collapse-->
+                                </div>
+                                <!--/.panel-->
+                            </div>
+                            <!--/.accordion-->
+                        </div>
+                        <!--/.panel-->
+                    </div>
+                    <!--/.col-md-12-->
+                </ng-form>
+            </div>
+            <!--/.container-fluid-->
+        </div>
+        <!--/.wrap-content-->
+    </div>
+    <!--/.main-content-->
+</div>
+<!--/.app-content-->

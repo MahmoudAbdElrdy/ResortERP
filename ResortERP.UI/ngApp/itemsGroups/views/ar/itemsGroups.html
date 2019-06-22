@@ -1,0 +1,294 @@
+﻿<div class="app-content">
+    <div class="main-content">
+        <div class="wrap-content container" id="container">
+            <div class="container-fluid container-fullw">
+                <div class="col-xs-12 margin-top-10 margin-bottom-10">
+                    <div class="breadcrumb-wrapper no-margin">
+                        <h4 class="mainTitle no-margin">تعريف مجموعة اصناف</h4>
+                        <ul class="pull-right breadcrumb">
+                            <li><a href="#!"><i class="fa fa-home margin-left-5 text-large text-dark"></i>الرئيسية</a>
+                            </li>
+                            <li>تعريف مجموعة اصناف</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-xs-12 margin-bottom-10">
+                    <div class="panel-white panel-body no-margin">
+                        <button type="button" class="btn  btn-o btn-default no-border" ng-disabled="test.$invalid"
+                            ng-click="saveItemsGroup()"><i class="fa fa-save"></i><span>حفظ</span></button>
+                        <button type="button" class="btn  btn-o btn-default no-border" ng-click="refreshData()"><i
+                                class="fa fa-refresh"></i><span>تحديث</span></button>
+                        <button type="button" class="btn  btn-o btn-default no-border" ng-click="clearEnity()"><i
+                                class="fa fa-paste"></i><span>جديد</span></button>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="panel">
+                        <div class="panel-body panel-white">
+                            <div ng-form="subForm">
+                                <ng-form id="test" name="test">
+                                    <!--<form>-->
+                                    <div ng-class="{'has-error': test.$invalid}" class="form-group">
+                                        <div class="form-group col-md-4">
+                                            <label for="GroupCode">الكود:</label>
+                                            <div class="help-block error" style="display:inline"
+                                                ng-show="test.code.$error.required">*</div>
+                                            <input type="text" name="code" class="form-control" id="GroupCode"
+                                                placeholder="الكود" ng-model="itemsGroup.GroupCode" required>
+
+                                        </div>
+                                    </div>
+                                    <!--  -->
+                                    <!--  -->
+                                    <div ng-class="{'has-error': test.$invalid}" class="form-group">
+                                        <div class="form-group col-md-4">
+                                            <label for="GroupARName">الاسم عربى:</label>
+                                            <div class="help-block error" style="display:inline"
+                                                ng-show="test.arname.$error.required">*</div>
+                                            <input type="text" name="arname" class="form-control" id="GroupARName"
+                                                placeholder="الاسم عربى" ng-model="itemsGroup.GroupARName" required>
+                                            <!--<div class="help-block error" ng-show="test.field.$error.required">Required</div>-->
+                                        </div>
+                                    </div>
+
+                                    <div ng-class="{'has-error': test.$invalid}" class="form-group">
+                                        <div class="form-group col-md-4">
+                                            <label for="GroupENName">الاسم انجليزى:</label>
+                                            <div class="help-block error" style="display:inline"
+                                                ng-show="test.enname.$error.required">*</div>
+                                            <input type="text" class="form-control" id="GroupENName" name="enname"
+                                                placeholder="الاسم انجليزى" ng-model="itemsGroup.GroupENName" required>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="form-group col-md-4">
+                                        <label for="GroupRemarks">ملاحظات:</label>
+                                        <input type="text" class="form-control" id="GroupRemarks" name="remark"
+                                            placeholder="ملاحظات" ng-model="itemsGroup.GroupRemarks">
+                                    </div>
+
+
+
+                                    <div class="form-group col-md-4">
+                                        <label>&nbsp;</label>
+                                        <select ng-model="itemsGroup.GroupMasterID"
+                                            ng-options="x.GroupID as x.GroupARName for x in mainItemsGroupsList"
+                                            class="form-control">
+                                            <option value="">المجموعة الرئيسية</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group col-md-4" ng-show="!flagHide">
+                                        <label>&nbsp;</label>
+                                        <select ng-model="itemsGroup.CaliberID"
+                                            ng-options="x.ID as x.ARName for x in itemCalibersList"
+                                            class="form-control">
+                                            <option value="">العيار</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group col-md-4">
+                                        <label>&nbsp;</label>
+                                        <select ng-model="itemsGroup.COST_CALCULATION_TYPE"
+                                            ng-options="x.ID as x.ARName for x in costCalculationTypes"
+                                            class="form-control">
+                                            <option value="">طريقة حساب التكلفة</option>
+                                        </select>
+                                    </div>
+
+
+                                    <div class="form-group col-md-4">
+                                        <label>حالة الصنف:</label>
+                                        <select ng-model="itemsGroup.ItemStatusID"
+                                            ng-options="x.ID as x.ARName for x in itemStatusList"
+                                            class="form-control input-sm">
+                                            <option value="">حالة الصنف:</option>
+                                        </select>
+                                    </div>
+
+
+                                    <div class="form-group col-md-4" ng-show="!flagHide">
+                                        <label>حساب صندوق الذهب :</label>
+                                        <select ng-model="itemsGroup.GoldAccID"
+                                            ng-options="x.ACC_ID as x.ACC_AR_NAME for x in GoldBoxAccounts"
+                                            class="js-example-basic-hide-search js-states form-control input-sm">
+                                            <option value=""> حساب صندوق الذهب </option>
+                                        </select>
+                                    </div>
+
+
+
+                                    <div ng-class="{'has-error': test.$invalid}" class="form-group">
+                                        <div class="form-group col-md-4">
+                                            <label>&nbsp;</label>
+                                            <div class="checkbox clip-check check-primary no-margin">
+                                                <input type="checkbox" id="itemsGroup.DOESTHEQUANTITYISAPARTOFBARCODE"
+                                                    name="DOESTHEQUANTITYISAPARTOFBARCODE"
+                                                    ng-model="itemsGroup.DOESTHEQUANTITYISAPARTOFBARCODE">
+                                                <label for="itemsGroup.DOESTHEQUANTITYISAPARTOFBARCODE">الكمية جزء من
+                                                    الباركود؟</label>
+                                                <div class="help-block error" style="display:inline"
+                                                    ng-show="test.enname.$error.required">*</div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group col-md-4">
+                                        <label for="QUANTITYLENGTHATTHEBARCODE">عدد الارقام:</label>
+                                        <input type="number" class="form-control" id="QUANTITYLENGTHATTHEBARCODE"
+                                            name="remark" placeholder="عدد الارقام"
+                                            ng-model="itemsGroup.QUANTITYLENGTHATTHEBARCODE">
+                                    </div>
+
+                                    <div class="form-group col-md-4">
+                                        <label for="QUANTITYPARTSTARTATTHEBARCODE">بداية الارقام لجزء الكمية:</label>
+                                        <input type="number" class="form-control" id="QUANTITYPARTSTARTATTHEBARCODE"
+                                            name="remark" placeholder="بداية الارقام لجزء الكمية"
+                                            ng-model="itemsGroup.QUANTITYPARTSTARTATTHEBARCODE">
+                                    </div>
+
+                                    <div class="form-group col-md-4">
+                                        <label for="QUANTITYPARTLENGTHATTHEBARCODE">عدد الارقام لجزء الكمية:</label>
+                                        <input type="number" class="form-control" id="QUANTITYPARTLENGTHATTHEBARCODE"
+                                            name="remark" placeholder="عدد الارقام لجزء الكمية"
+                                            ng-model="itemsGroup.QUANTITYPARTLENGTHATTHEBARCODE">
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <label>&nbsp;</label>
+
+                                        <div class="checkbox clip-check check-primary">
+                                            <input type="checkbox" id="checkbox1"
+                                                ng-model="itemsGroup.AppearOnSalePoint">
+                                            <label for="checkbox1">تظهر فى نقطة المبيع</label>
+                                        </div>
+                                    </div>
+                                </ng-form>
+                                <!--</form>-->
+                            </div>
+                            <!--/.panel-group-->
+                        </div>
+                        <!--/.panel-body panel-white-->
+                        <div class="clearfix"></div>
+
+                        <div class="panel-group accordion" id="accordion">
+                            <div class="panel panel-white">
+                                <div class="panel-heading">
+                                    <h5 class="panel-title"><a class="accordion-toggle collapsed" data-toggle="collapse"
+                                            data-parent="#accordion" data-target="#collapseTwo"> <i
+                                                class="icon-arrow"></i> مجموعة الاصناف المعرفة مسبقاً </a></h5>
+                                </div>
+                                <div id="collapseTwo" class="collapse">
+                                    <div class="panel-body">
+                                        <div class="col-md-12">
+                                            <!--   Results:{{itemsGroupsTotalCount}}-->
+                                            <div class="col-md-3 pull-left ">
+                                                <table class="table table-stylish">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td class="center text-extra-large"><i class="ti-save"></i>
+                                                            </td>
+                                                            <td><span class="text-dark block">مجموع الأصناف :</span>
+                                                            </td>
+                                                            <td class="center">{{itemsGroupsTotalCount}}</td>
+                                                            <td class="center"><i class="fa fa-caret-down text-red"></i>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <!--/.col-md-3-->
+                                            <div class="col-md-12">
+                                                <table class="table table-bordered table-hover center">
+                                                    <tr class="success">
+                                                        <th class="hidden-xs">#</th>
+                                                        <th>كود</th>
+                                                        <th>الاسم عربى </th>
+                                                        <th>الاسم انجليزى</th>
+                                                        <th class="hidden-xs">المجموعه الرئيسيه</th>
+                                                        <th class="hidden-xs">ملاحظات</th>
+                                                        <th class="hidden-xs">تظهر في نقطة البيع</th>
+                                                        <th>تعديل / حذف</th>
+                                                    </tr>
+                                                    <tr ng-repeat="item in itemsGroupsList">
+
+                                                        <td class="hidden-xs">{{ item.GroupID }}</td>
+                                                        <td>{{ item.GroupCode }}</td>
+                                                        <td>{{ item.GroupARName }}</td>
+                                                        <td>{{ item.GroupENName }}</td>
+                                                        <td>{{getID(item.GroupMasterID)}}</td>
+                                                        <td>{{ item.GroupRemarks }}</td>
+                                                        <td>
+                                                            <div class="checkbox clip-check check-primary">
+                                                                <input type="checkbox" id="myCheckbox{{$index}}"
+                                                                    ng-checked="item.AppearOnSalePoint" />
+                                                                <label for="myCheckbox{{$index}}"></label>
+                                                            </div>
+                                                        </td>
+                                                        <td class="center">
+                                                            <div class="visible-md visible-lg hidden-sm hidden-xs">
+                                                                <a href="" ng-click="dirEnity(item)"
+                                                                    class="btn btn-transparent btn-xs"
+                                                                    data-toggle="tooltip" data-placement="top"
+                                                                    title="Edit"><i class="fa fa-pencil"></i></a>
+                                                                <a href="" ng-click="deleteEnity(item)"
+                                                                    class="btn btn-transparent btn-xs tooltips"
+                                                                    data-toggle="tooltip" data-placement="top"
+                                                                    title="Remove"><i
+                                                                        class="fa fa-times fa fa-white"></i></a>
+                                                            </div>
+                                                            <div class="visible-xs visible-sm hidden-md hidden-lg">
+                                                                <div class="btn-group dropdown ">
+                                                                    <button type="button"
+                                                                        class="btn btn-o btn-sm dropdown-toggle"
+                                                                        data-toggle="dropdown">
+                                                                        <i class="fa fa-cog"></i>&nbsp;<span
+                                                                            class="caret"></span>
+                                                                    </button>
+                                                                    <ul class="dropdown-menu pull-right dropdown-light"
+                                                                        role="menu">
+                                                                        <li>
+                                                                            <a href="" ng-click="dirEnity(item)"> Edit
+                                                                            </a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <a href="" ng-click="deleteEnity(item)">
+                                                                                Remove </a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                                <ul uib-pagination total-items="itemsGroupsTotalCount"
+                                                    ng-model="pageNum" max-size="maxSize" class="pagination-sm"
+                                                    boundary-links="true" num-pages="numPages"
+                                                    ng-change="pageChanged()"></ul>
+                                                <pre>صفحه: {{pageNum}} / {{numPages}}</pre>
+                                            </div>
+                                            <!--/.col-md-12-->
+                                        </div>
+                                        <!--/.col-md-12-->
+                                    </div>
+                                    <!--/.panel-body-->
+                                </div>
+                                <!--/.panel-collapse-->
+                            </div>
+                            <!--/.panel-->
+                        </div>
+                    </div>
+                    <!--/.panel-->
+                </div>
+                <!--/.col-md-12-->
+            </div>
+            <!--/.container-fluid-->
+        </div>
+        <!--/.wrap-content-->
+    </div>
+    <!--/.main-content-->
+</div>
+<!--/.app-content-->

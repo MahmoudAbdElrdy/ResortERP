@@ -1,0 +1,1306 @@
+﻿<!DOCTYPE html>
+<html ng-app="app">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> ResortERP Global Solution .. Local Customization </title>
+    <link href="~/Content/loading-bar.min.css" rel="stylesheet" />
+
+    <link href="~/Content/fonts/exfonts.css" rel="stylesheet" />
+    <!-- start: MAIN CSS -->
+
+    <link href="~/Content/fonts/stylesheet.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/Content/bower_components/bootstrap/dist/css/bootstrap.min.css" media="all">
+    <link href="~/Content/ui-bootstrap-csp.css" rel="stylesheet" />
+    <link ng-if="language == 'ar'" rel="stylesheet" href="~/Content/bower_components/bootstrap-rtl/dist/css/bootstrap-rtl.min.css">
+    <link rel="stylesheet" href="~/Content/bower_components/font-awesome/css/font-awesome.min.css">
+    <link href="~/Content/sweetalert2.min.css" rel="stylesheet" />
+    
+    <link rel="stylesheet" href="~/Content/bower_components/themify-icons/themify-icons.css">
+    <link rel="stylesheet" href="~/Content/bower_components/flag-icon-css/css/flag-icon.min.css">
+    <link rel="stylesheet" href="~/Content/bower_components/animate.css/animate.min.css">
+    <link rel="stylesheet" href="~/Content/bower_components/perfect-scrollbar/css/perfect-scrollbar.min.css">
+    <link rel="stylesheet" href="~/Content/bower_components/switchery/dist/switchery.min.css">
+    <link rel="stylesheet" href="~/Content/bower_components/seiyria-bootstrap-slider/dist/css/bootstrap-slider.min.css">
+    <link rel="stylesheet" href="~/Content/bower_components/ladda/dist/ladda-themeless.min.css">
+    <link rel="stylesheet" href="~/Content/bower_components/slick.js/slick/slick.css">
+    <link rel="stylesheet" href="~/Content/bower_components/slick.js/slick/slick-theme.css">
+    <link href="~/Content/xeditable.min.css" rel="stylesheet" />
+    <link href="~/Content/angular-dimmer.min.css" rel="stylesheet" />
+    <link href="~/Content/angular-block-ui.min.css" rel="stylesheet" />
+    <link href="~/Content/viewer.css" rel="stylesheet" />
+    <link href="~/Content/PdfJsViewerDesign.css" rel="stylesheet" />
+    <link href="~/Content/ng-MaterialDesign.css" rel="stylesheet" />
+    <link href="~/Content/ngPrint.css" media="all" rel="stylesheet" />
+    <link href="~/Content/ui-grid.min.css" rel="stylesheet" />
+    <link href="~/Scripts/IntegralUI Web 17.1 - TRIAL/AngularJS/css/integralui.css" rel="stylesheet" />
+    <link href="~/Scripts/IntegralUI Web 17.1 - TRIAL/AngularJS/css/integralui.checkbox.css" rel="stylesheet" />
+    <link href="~/Scripts/IntegralUI Web 17.1 - TRIAL/AngularJS/css/integralui.grid.css" rel="stylesheet" />
+    <link href="~/Scripts/IntegralUI Web 17.1 - TRIAL/AngularJS/css/themes/theme-flat-blue.css" rel="stylesheet" />
+    <link href="~/Content/bower_components/jquery-ui/jquery-ui.min.css" rel="stylesheet" />
+
+   @* <link href="~/Content/autoComplete/autocomplete.css" rel="stylesheet" />*@
+    <!-- end: MAIN CSS -->
+    <!-- start: CSS REQUIRED FOR THIS PAGE ONLY -->
+    <!-- end: CSS REQUIRED FOR THIS PAGE ONLY -->
+    <!-- start: Packet CSS -->
+    <link rel="stylesheet" href="~/Content/assets/css/styles.css">
+    <link rel="stylesheet" href="~/Content/assets/css/plugins.css">
+    <link ng-if="language == 'ar'" rel="stylesheet" href="~/Content/assets/css/rtl.css">
+    <link rel="stylesheet" href="~/Content/assets/css/themes/lyt2-theme-7.css" id="skin_color">
+    <!-- end: Packet CSS -->
+
+    <!-- CSS Data TAble -->
+    <link href="~/Content/bower_components/DataTables/media/css/dataTables.bootstrap.min.css" rel="stylesheet" />
+    
+<link href="~/Views/Shared/StyleSheet1.css" rel="stylesheet" />
+    <!-- Favicon -->
+
+    <link rel="stylesheet" href="~/Content/bower_components/jstree/dist/themes/default/style.min.css">
+
+
+    <link rel="shortcut icon" href="~/Content/assets/images/favicon.ico">
+    <!-- Retina iPad Touch Icon-->
+    <link rel="apple-touch-icon" sizes="144x144" href="~/Content/assets/images/favicon.ico">
+
+    <!-- Retina iPhone Touch Icon-->
+    <link rel="apple-touch-icon" sizes="114x114" href="~/Content/assets/images/favicon.ico">
+    <!-- Standard iPad Touch Icon-->
+    <link rel="apple-touch-icon" sizes="72x72" href="~/Content/assets/images/favicon.ico">
+    <!-- Standard iPhone Touch Icon-->
+    <link rel="apple-touch-icon" sizes="57x57" href="~/Content/assets/images/favicon.ico">
+    <link href="~/Content/autoComplete/angucomplete-alt.css" rel="stylesheet" />
+    @*<link href="~/Content/bower_components/vakata-jstree-0097fab/dist/themes/default/style.min.css" rel="stylesheet" />*@
+
+    @*  Select 2 *@
+    <link href="~/Content/angular-ui-tree.min.css" rel="stylesheet" />
+    @*<link href="~/Content/bower_components/selectnew.css" rel="stylesheet" />*@
+    <link href="~/Content/select.min.css" rel="stylesheet" />
+    @*<link href="~/Content/bower_components/select2/dist/css/select2.min.css" rel="stylesheet" />*@
+    <link href="~/Content/bower_components/angular-tree-control-master/css/tree-control.css" rel="stylesheet" />
+    <link href="~/Content/bower_components/angular-tree-control-master/css/tree-control-attribute.css" rel="stylesheet" />
+    <link href="~/Content/angular.treeview.css" rel="stylesheet" />
+    @*   <link href="~/Content/autoComplete/structure.css" rel="stylesheet" />*@
+    <link href="~/Content/bower_components/vakata-jstree-0097fab/dist/themes/default/style.css" rel="stylesheet" />
+    <link href="~/Content/angular-material.min.css" rel="stylesheet" />
+    <link href="~/Content/bower_components/multi-select/css/multi-select.css" rel="stylesheet" />
+    
+    <style>
+        #menu::-webkit-scrollbar {
+            width: 1em;
+        }
+
+        #menu::-webkit-scrollbar-track {
+            -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+        }
+
+        #menu::-webkit-scrollbar-thumb {
+            background-color: darkgrey;
+            outline: 1px solid slategrey;
+            position: fixed;
+            bottom: 0;
+        }
+    </style>
+    <style>
+        .jstree-themeicon {
+            color: #715392;
+        }
+
+        treecontrol li {
+            background: #f8faff;
+            /*border: 1px solid #dae2ea;*/
+            color: #832e32;
+            padding: 10px 10px;
+            font-size: 17px;
+        }
+
+        .a5 {
+            padding: 100px 100px
+        }
+
+        treecontrol .tree-label {
+        }
+
+        .gly-flipped {
+            /*rotation-point: 50% 50%;*/
+            rotation: 180deg;
+        }
+
+        .multiselect-parent {
+            width: 100%;
+            margin-top: -6px;
+        }
+
+        .multiselect-parent ul.dropdown-menu {
+            width: 100%;
+        }
+
+        .multiselect-parent ul.dropdown-menu li div.checkbox input.checkboxInput {
+            margin-top: -4px;
+        }
+
+    </style>
+
+</head>
+
+<body ng-controller="indexController" ng-cloak>
+    @*<span us-spinner="{radius:10,top:'20%', width:4, length: 8}" class="resultsoverlay "></span>*@
+
+    <div id="app" class="lyt-2">
+        <!-- sidebar -->
+        <div class="sidebar app-aside" id="sidebar" ng-show="authentication.isAuth">
+            <div class="sidebar-container perfect-scrollbar">
+                <div id="menu" style="overflow-x:auto; min-height:100%">
+                    <!-- start: SEARCH FORM -->
+                    <div class="search-form hidden-md hidden-lg">
+                        <a class="s-open" href="#"> <i class="ti-search"></i> </a>
+                        <form class="navbar-form" role="search">
+                            <a class="s-remove" href="#" target=".navbar-form"> <i class="ti-close"></i> </a>
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Enter search text here...">
+                                <button class="btn search-button" type="submit">
+                                    <i class="ti-search"></i>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                    <!-- end: SEARCH FORM -->
+                    <!-- start: USER OPTIONS -->
+                    @*<login-status></login-status>*@
+                    @*end: USER OPTIONS*@
+                    @*<custom-menu ng-controller="MenuController" ng-init="GetCompany()"></custom-menu>*@
+                    <login-status></login-status>
+                    <custom-menu ng-if="authentication.isAuth == true" ng-controller="MenuController"></custom-menu>
+
+                </div>
+            </div>
+        </div>
+        <!-- / sidebar -->
+        <!-- start: TOP NAVBAR -->
+        @*<custom-header></custom-header>*@
+        @*@RenderPage("~/Views/header/headr.cshtml")*@
+        <div class="app-content">
+            <custom-header ng-if="authentication.isAuth == true" ng-controller="headerController" ng-init="HeaderPageLoad()"></custom-header>
+            @RenderBody()
+        </div>
+
+        <!-- start: FOOTER -->
+        <footer ng-if="authentication.isAuth">
+            <div class="footer-inner">
+                <div class="pull-right">
+                    &copy; <span class="current-year"></span><span class="copyright text-warningtext-bold text-uppercase">      <b>مجموعة المتكامل</b> <b class="hidden-xs">  2018. جميع الحقوق محفوظه.</b></span>
+                </div>
+                @*<div class="copyright text-warning text-center">
+                        © <b>مجموعة المتكامل</b> 2018. جميع الحقوق محفوظه.
+                    </div>*@
+                <div class="pull-left">
+                    <span class="go-top"><i class="ti-angle-up"></i></span>
+                </div>
+            </div>
+        </footer>
+        <!-- end: FOOTER -->
+        <!-- start: OFF-SIDEBAR -->
+        <div id="off-sidebar" class="sidebar" ng-show="authentication.isAuth">
+            <div class="sidebar-wrapper">
+                <ul class="nav nav-tabs nav-justified">
+                    <li>
+                        <a href="#off-users" aria-controls="off-users" role="tab" data-toggle="tab"> <i class="ti-comments"></i> </a>
+                    </li>
+
+                    <li class="active">
+                        <a href="#off-settings" aria-controls="off-settings" role="tab" data-toggle="tab"> <i class="ti-settings"></i> </a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane " id="off-users">
+                        <div id="users" active-class="chat-open">
+                            <div class="users-list">
+                                <div class="sidebar-content perfect-scrollbar">
+                                    <h5 class="sidebar-title">On-line</h5>
+                                    <ul class="media-list">
+                                        <li class="media">
+                                            <a data-toggle-class="chat-open" data-toggle-target="#users" href="#">
+                                                <i class="fa fa-circle status-online"></i> <img alt="..." src="~/Content/assets/images/avatar-2.jpg" class="media-object">
+                                                <div class="media-body">
+                                                    <h4 class="media-heading">Nicole Bell</h4>
+                                                    <span> Content Designer </span>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li class="media">
+                                            <a data-toggle-class="chat-open" data-toggle-target="#users" href="#">
+                                                <div class="user-label">
+                                                    <span class="label label-success">3</span>
+                                                </div> <i class="fa fa-circle status-online"></i> <img alt="..." src="~/Content/assets/images/avatar-3.jpg" class="media-object">
+                                                <div class="media-body">
+                                                    <h4 class="media-heading">Steven Thompson</h4>
+                                                    <span> Visual Designer </span>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li class="media">
+                                            <a data-toggle-class="chat-open" data-toggle-target="#users" href="#">
+                                                <i class="fa fa-circle status-online"></i> <img alt="..." src="~/Content/assets/images/avatar-4.jpg" class="media-object">
+                                                <div class="media-body">
+                                                    <h4 class="media-heading">Ella Patterson</h4>
+                                                    <span> Web Editor </span>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li class="media">
+                                            <a data-toggle-class="chat-open" data-toggle-target="#users" href="#">
+                                                <i class="fa fa-circle status-online"></i> <img alt="..." src="~/Content/assets/images/avatar-5.jpg" class="media-object">
+                                                <div class="media-body">
+                                                    <h4 class="media-heading">Kenneth Ross</h4>
+                                                    <span> Senior Designer </span>
+                                                </div>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                    <h5 class="sidebar-title">Off-line</h5>
+                                    <ul class="media-list">
+                                        <li class="media">
+                                            <a data-toggle-class="chat-open" data-toggle-target="#users" href="#">
+                                                <img alt="..." src="~/Content/assets/images/avatar-6.jpg" class="media-object">
+                                                <div class="media-body">
+                                                    <h4 class="media-heading">Nicole Bell</h4>
+                                                    <span> Content Designer </span>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li class="media">
+                                            <a data-toggle-class="chat-open" data-toggle-target="#users" href="#">
+                                                <div class="user-label">
+                                                    <span class="label label-success">3</span>
+                                                </div> <img alt="..." src="~/Content/assets/images/avatar-7.jpg" class="media-object">
+                                                <div class="media-body">
+                                                    <h4 class="media-heading">Steven Thompson</h4>
+                                                    <span> Visual Designer </span>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li class="media">
+                                            <a data-toggle-class="chat-open" data-toggle-target="#users" href="#">
+                                                <img alt="..." src="~/Content/assets/images/avatar-8.jpg" class="media-object">
+                                                <div class="media-body">
+                                                    <h4 class="media-heading">Ella Patterson</h4>
+                                                    <span> Web Editor </span>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li class="media">
+                                            <a data-toggle-class="chat-open" data-toggle-target="#users" href="#">
+                                                <img alt="..." src="~/Content/assets/images/avatar-9.jpg" class="media-object">
+                                                <div class="media-body">
+                                                    <h4 class="media-heading">Kenneth Ross</h4>
+                                                    <span> Senior Designer </span>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li class="media">
+                                            <a data-toggle-class="chat-open" data-toggle-target="#users" href="#">
+                                                <img alt="..." src="~/Content/assets/images/avatar-10.jpg" class="media-object">
+                                                <div class="media-body">
+                                                    <h4 class="media-heading">Ella Patterson</h4>
+                                                    <span> Web Editor </span>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li class="media">
+                                            <a data-toggle-class="chat-open" data-toggle-target="#users" href="#">
+                                                <img alt="..." src="~/Content/assets/images/avatar-5.jpg" class="media-object">
+                                                <div class="media-body">
+                                                    <h4 class="media-heading">Kenneth Ross</h4>
+                                                    <span> Senior Designer </span>
+                                                </div>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="user-chat">
+                                <div class="chat-content">
+                                    <a class="sidebar-back pull-left" href="#" data-toggle-class="chat-open" data-toggle-target="#users"><i class="ti-angle-right"></i> <span>Back</span></a>
+                                    <div class="sidebar-content perfect-scrollbar">
+                                        <ol class="discussion">
+                                            <li class="messages-date">
+                                                Sunday, Feb 9, 12:58
+                                            </li>
+                                            <li class="self">
+                                                <div class="message">
+                                                    <div class="message-name">
+                                                        Peter Clark
+                                                    </div>
+                                                    <div class="message-text">
+                                                        Hi, Nicole
+                                                    </div>
+                                                    <div class="message-avatar">
+                                                        <img src="~/Content/assets/images/avatar-1.jpg" alt="">
+                                                    </div>
+                                                </div>
+                                                <div class="message">
+                                                    <div class="message-name">
+                                                        Nicole Bell
+                                                    </div>
+                                                    <div class="message-text">
+                                                        How are you?
+                                                    </div>
+                                                    <div class="message-avatar">
+                                                        <img src="~/Content/assets/images/avatar-1.jpg" alt="">
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li class="other">
+                                                <div class="message">
+                                                    <div class="message-name">
+                                                        Nicole Bell
+                                                    </div>
+                                                    <div class="message-text">
+                                                        Hi, i am good
+                                                    </div>
+                                                    <div class="message-avatar">
+                                                        <img src="~/Content/assets/images/avatar-2.jpg" alt="">
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li class="self">
+                                                <div class="message">
+                                                    <div class="message-name">
+                                                        Peter Clark
+                                                    </div>
+                                                    <div class="message-text">
+                                                        Glad to see you ;)
+                                                    </div>
+                                                    <div class="message-avatar">
+                                                        <img src="~/Content/assets/images/avatar-1.jpg" alt="">
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li class="messages-date">
+                                                Sunday, Feb 9, 13:10
+                                            </li>
+                                            <li class="other">
+                                                <div class="message">
+                                                    <div class="message-name">
+                                                        Nicole Bell
+                                                    </div>
+                                                    <div class="message-text">
+                                                        What do you think about my new Dashboard?
+                                                    </div>
+                                                    <div class="message-avatar">
+                                                        <img src="~/Content/assets/images/avatar-2.jpg" alt="">
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li class="messages-date">
+                                                Sunday, Feb 9, 15:28
+                                            </li>
+                                            <li class="other">
+                                                <div class="message">
+                                                    <div class="message-name">
+                                                        Nicole Bell
+                                                    </div>
+                                                    <div class="message-text">
+                                                        Alo...
+                                                    </div>
+                                                    <div class="message-avatar">
+                                                        <img src="~/Content/assets/images/avatar-2.jpg" alt="">
+                                                    </div>
+                                                </div>
+                                                <div class="message">
+                                                    <div class="message-name">
+                                                        Nicole Bell
+                                                    </div>
+                                                    <div class="message-text">
+                                                        Are you there?
+                                                    </div>
+                                                    <div class="message-avatar">
+                                                        <img src="~/Content/assets/images/avatar-2.jpg" alt="">
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li class="self">
+                                                <div class="message">
+                                                    <div class="message-name">
+                                                        Peter Clark
+                                                    </div>
+                                                    <div class="message-text">
+                                                        Hi, i am here
+                                                    </div>
+                                                    <div class="message-avatar">
+                                                        <img src="~/Content/assets/images/avatar-1.jpg" alt="">
+                                                    </div>
+                                                </div>
+                                                <div class="message">
+                                                    <div class="message-name">
+                                                        Nicole Bell
+                                                    </div>
+                                                    <div class="message-text">
+                                                        Your Dashboard is great
+                                                    </div>
+                                                    <div class="message-avatar">
+                                                        <img src="~/Content/assets/images/avatar-1.jpg" alt="">
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li class="messages-date">
+                                                Friday, Feb 7, 23:39
+                                            </li>
+                                            <li class="other">
+                                                <div class="message">
+                                                    <div class="message-name">
+                                                        Nicole Bell
+                                                    </div>
+                                                    <div class="message-text">
+                                                        How does the binding and digesting work in AngularJS?, Peter?
+                                                    </div>
+                                                    <div class="message-avatar">
+                                                        <img src="~/Content/assets/images/avatar-2.jpg" alt="">
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li class="self">
+                                                <div class="message">
+                                                    <div class="message-name">
+                                                        Peter Clark
+                                                    </div>
+                                                    <div class="message-text">
+                                                        oh that's your question?
+                                                    </div>
+                                                    <div class="message-avatar">
+                                                        <img src="~/Content/assets/images/avatar-1.jpg" alt="">
+                                                    </div>
+                                                </div>
+                                                <div class="message">
+                                                    <div class="message-name">
+                                                        Peter Clark
+                                                    </div>
+                                                    <div class="message-text">
+                                                        little reduntant, no?
+                                                    </div>
+                                                    <div class="message-avatar">
+                                                        <img src="~/Content/assets/images/avatar-1.jpg" alt="">
+                                                    </div>
+                                                </div>
+                                                <div class="message">
+                                                    <div class="message-name">
+                                                        Peter Clark
+                                                    </div>
+                                                    <div class="message-text">
+                                                        literally we get the question daily
+                                                    </div>
+                                                    <div class="message-avatar">
+                                                        <img src="~/Content/assets/images/avatar-1.jpg" alt="">
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li class="other">
+                                                <div class="message">
+                                                    <div class="message-name">
+                                                        Nicole Bell
+                                                    </div>
+                                                    <div class="message-text">
+                                                        I know. I, however, am not a nerd, and want to know
+                                                    </div>
+                                                    <div class="message-avatar">
+                                                        <img src="~/Content/assets/images/avatar-2.jpg" alt="">
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li class="self">
+                                                <div class="message">
+                                                    <div class="message-name">
+                                                        Peter Clark
+                                                    </div>
+                                                    <div class="message-text">
+                                                        for this type of question, wouldn't it be better to try Google?
+                                                    </div>
+                                                    <div class="message-avatar">
+                                                        <img src="~/Content/assets/images/avatar-1.jpg" alt="">
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li class="other">
+                                                <div class="message">
+                                                    <div class="message-name">
+                                                        Nicole Bell
+                                                    </div>
+                                                    <div class="message-text">
+                                                        Lucky for us :)
+                                                    </div>
+                                                    <div class="message-avatar">
+                                                        <img src="~/Content/assets/images/avatar-2.jpg" alt="">
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </ol>
+                                    </div>
+                                </div>
+                                <div class="message-bar">
+                                    <div class="message-inner">
+                                        <a class="link icon-only" href="#"><i class="fa fa-camera"></i></a>
+                                        <div class="message-area">
+                                            <textarea placeholder="Message"></textarea>
+                                        </div>
+                                        <a class="link" href="#"> Send </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane" id="off-favorites">
+                        <div class="users-list">
+                            <div class="sidebar-content perfect-scrollbar">
+                                <h5 class="sidebar-title">Favorites</h5>
+                                <ul class="media-list">
+                                    <li class="media">
+                                        <a href="#">
+                                            <img alt="..." src="~/Content/assets/images/avatar-7.jpg" class="media-object">
+                                            <div class="media-body">
+                                                <h4 class="media-heading">Nicole Bell</h4>
+                                                <span> Content Designer </span>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li class="media">
+                                        <a href="#">
+                                            <div class="user-label">
+                                                <span class="label label-success">3</span>
+                                            </div> <img alt="..." src="~/Content/assets/images/avatar-6.jpg" class="media-object">
+                                            <div class="media-body">
+                                                <h4 class="media-heading">Steven Thompson</h4>
+                                                <span> Visual Designer </span>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li class="media">
+                                        <a href="#">
+                                            <img alt="..." src="~/Content/assets/images/avatar-10.jpg" class="media-object">
+                                            <div class="media-body">
+                                                <h4 class="media-heading">Ella Patterson</h4>
+                                                <span> Web Editor </span>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li class="media">
+                                        <a href="#">
+                                            <img alt="..." src="~/Content/assets/images/avatar-2.jpg" class="media-object">
+                                            <div class="media-body">
+                                                <h4 class="media-heading">Kenneth Ross</h4>
+                                                <span> Senior Designer </span>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li class="media">
+                                        <a href="#">
+                                            <img alt="..." src="~/Content/assets/images/avatar-4.jpg" class="media-object">
+                                            <div class="media-body">
+                                                <h4 class="media-heading">Ella Patterson</h4>
+                                                <span> Web Editor </span>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li class="media">
+                                        <a href="#">
+                                            <img alt="..." src="~/Content/assets/images/avatar-5.jpg" class="media-object">
+                                            <div class="media-body">
+                                                <h4 class="media-heading">Kenneth Ross</h4>
+                                                <span> Senior Designer </span>
+                                            </div>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane active" id="off-settings">
+                        <div class="sidebar-content perfect-scrollbar">
+                            <h5 class="sidebar-title">الاعدادات العامة</h5>
+                            <ul class="media-list">
+                                <li class="media">
+                                    <div class="padding-10">
+                                        <div class="display-table-cell">
+                                            <input type="checkbox" class="js-switch" checked />
+                                        </div>
+                                        <span class="display-table-cell vertical-align-middle padding-right-10"> تمكين إخطارات </span>
+                                    </div>
+                                </li>
+
+
+
+
+
+                                <li class="media">
+                                    <div class="padding-10">
+                                        <div class="display-table-cell">
+                                            <input type="checkbox" class="js-switch" />
+                                        </div>
+                                        <span class="display-table-cell vertical-align-middle padding-right-10">  عرض البريد الإلكتروني  </span>
+                                    </div>
+                                </li>
+                                <li class="media">
+                                    <div class="padding-10">
+                                        <div class="display-table-cell">
+                                            <input type="checkbox" class="js-switch" checked />
+                                        </div>
+                                        <span class="display-table-cell vertical-align-middle padding-right-10"> مشاهدة غير متصل </span>
+                                    </div>
+                                </li>
+                                <li class="media">
+                                    <div class="padding-10">
+                                        <div class="display-table-cell">
+                                            <input type="checkbox" class="js-switch" checked />
+                                        </div>
+                                        <span class="display-table-cell vertical-align-middle padding-right-10"> تنبيهات البريد الإلكتروني </span>
+                                    </div>
+                                </li>
+                                <li class="media">
+                                    <div class="padding-10">
+                                        <div class="display-table-cell">
+                                            <input type="checkbox" class="js-switch" />
+                                        </div>
+                                        <span class="display-table-cell vertical-align-middle padding-right-10"> تنبيهات الرسائل القصيرة  </span>
+                                    </div>
+                                </li>
+                            </ul>
+                            <div class="save-options">
+                                <button class="btn btn-success">
+                                    <i class="icon-settings"></i><span>حفظ التغييرات</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end: OFF-SIDEBAR -->
+        <!-- start: SETTINGS -->
+        <div class="settings panel panel-default hidden-xs hidden-sm" id="settings" ng-show="authentication.isAuth">
+            <button data-toggle-class="active" data-toggle-target="#settings" class="btn btn-default">
+                <i class="fa fa-spin fa-gear"></i>
+            </button>
+            <div class="panel-heading">
+                تغيير سمات
+            </div>
+            <div class="panel-body">
+                <!-- start: FIXED HEADER -->
+                <div class="setting-box clearfix">
+                    <span class="setting-title pull-right"> رأس الصفحة الثابتة</span>
+                    <span class="setting-switch pull-left">
+                        <input type="checkbox" class="js-switch" id="fixed-header" />
+                    </span>
+                </div>
+                <!-- end: FIXED HEADER -->
+                <!-- start: FIXED SIDEBAR -->
+                <div class="setting-box clearfix">
+                    <span class="setting-title pull-right">الشريط الجانبي ثابت</span>
+                    <span class="setting-switch pull-left">
+                        <input type="checkbox" class="js-switch" id="fixed-sidebar" />
+                    </span>
+                </div>
+                <!-- end: FIXED SIDEBAR -->
+                <!-- start: CLOSED SIDEBAR -->
+                <div class="setting-box clearfix">
+                    <span class="setting-title pull-right">الشريط الجانبي مغلق</span>
+                    <span class="setting-switch pull-left">
+                        <input type="checkbox" class="js-switch" id="closed-sidebar" />
+                    </span>
+                </div>
+                <!-- end: CLOSED SIDEBAR -->
+                <!-- start: FIXED FOOTER -->
+                <div class="setting-box clearfix">
+                    <span class="setting-title pull-right">اخر الصفحة ثابت</span>
+                    <span class="setting-switch pull-left">
+                        <input type="checkbox" class="js-switch" id="fixed-footer" />
+                    </span>
+                </div>
+                <!-- end: FIXED FOOTER -->
+                <!-- start: THEME SWITCHER -->
+                <div class="colors-row setting-box">
+                    <div class="color-theme lyt2-theme-1">
+                        <div class="color-layout">
+                            <label>
+                                <input type="radio" name="setting-theme" value="lyt2-theme-1">
+                                <span class="fa fa-check-circle lyt-check text-extra-large"></span> <span class="split header"> <span class="color th-header"></span> <span class="color th-collapse"><i class="color-button"></i></span> </span> <span class="split"> <span class="color th-sidebar"><i class="element"></i></span> <span class="color th-body"></span> </span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="color-theme lyt2-theme-2">
+                        <div class="color-layout">
+                            <label>
+                                <input type="radio" name="setting-theme" value="lyt2-theme-2">
+                                <span class="fa fa-check-circle lyt-check text-extra-large"></span> <span class="split header"> <span class="color th-header"></span> <span class="color th-collapse"><i class="color-button"></i></span> </span> <span class="split"> <span class="color th-sidebar"><i class="element"></i></span> <span class="color th-body"></span> </span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="colors-row setting-box">
+                    <div class="color-theme lyt2-theme-3">
+                        <div class="color-layout">
+                            <label>
+                                <input type="radio" name="setting-theme" value="lyt2-theme-3">
+                                <span class="fa fa-check-circle lyt-check text-extra-large"></span> <span class="split header"> <span class="color th-header"></span> <span class="color th-collapse"><i class="color-button"></i></span> </span> <span class="split"> <span class="color th-sidebar"><i class="element"></i></span> <span class="color th-body"></span> </span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="color-theme lyt2-theme-4">
+                        <div class="color-layout">
+                            <label>
+                                <input type="radio" name="setting-theme" value="lyt2-theme-4">
+                                <span class="fa fa-check-circle lyt-check text-extra-large"></span> <span class="split header"> <span class="color th-header"></span> <span class="color th-collapse"><i class="color-button"></i></span> </span> <span class="split"> <span class="color th-sidebar"><i class="element"></i></span> <span class="color th-body"></span> </span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="colors-row setting-box">
+                    <div class="color-theme lyt2-theme-5">
+                        <div class="color-layout">
+                            <label>
+                                <input type="radio" name="setting-theme" value="lyt2-theme-5">
+                                <span class="fa fa-check-circle lyt-check text-extra-large"></span> <span class="split header"> <span class="color th-header"></span> <span class="color th-collapse"><i class="color-button"></i></span> </span> <span class="split"> <span class="color th-sidebar"><i class="element"></i></span> <span class="color th-body"></span> </span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="color-theme lyt2-theme-6">
+                        <div class="color-layout">
+                            <label>
+                                <input type="radio" name="setting-theme" value="lyt2-theme-6">
+                                <span class="fa fa-check-circle lyt-check text-extra-large"></span> <span class="split header"> <span class="color th-header"></span> <span class="color th-collapse"><i class="color-button"></i></span> </span> <span class="split"> <span class="color th-sidebar"><i class="element"></i></span> <span class="color th-body"></span> </span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="colors-row setting-box">
+                    <div class="color-theme lyt2-theme-7">
+                        <div class="color-layout">
+                            <label>
+                                <input type="radio" name="setting-theme" value="lyt2-theme-7">
+                                <span class="fa fa-check-circle lyt-check text-extra-large"></span> <span class="split header"> <span class="color th-header"></span> <span class="color th-collapse"><i class="color-button"></i></span> </span> <span class="split"> <span class="color th-sidebar"><i class="element"></i></span> <span class="color th-body"></span> </span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="color-theme lyt2-theme-8">
+                        <div class="color-layout">
+                            <label>
+                                <input type="radio" name="setting-theme" value="lyt2-theme-8">
+                                <span class="fa fa-check-circle lyt-check text-extra-large"></span> <span class="split header"> <span class="color th-header"></span> <span class="color th-collapse"><i class="color-button"></i></span> </span> <span class="split"> <span class="color th-sidebar"><i class="element"></i></span> <span class="color th-body"></span> </span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <!-- end: THEME SWITCHER -->
+                <div class="panel-footer">
+                    <button class="btn btn-primary ladda-button btn-squared btn-sm btn-o" data-style="slide-up" data-spinner-size="10" data-spinner-color="#999999" id="reset-layout">
+                        <span class="ladda-label">إعادة تعيين</span>
+                    </button>
+                    <button class="btn btn-primary ladda-button pull-right btn-squared btn-sm btn-wide" data-style="slide-up" data-spinner-size="10" id="save-layout">
+                        <span class="ladda-label">حفظ</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- end: SETTINGS -->
+
+    </div>
+    @*<div  ng-class="authentication.isAuth?'container body-content':''">
+            @RenderBody()
+            <hr ng-show="authentication.isAuth"/>
+            <footer ng-show="authentication.isAuth">
+                <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            </footer>
+        </div>*@
+    <script src="~/Scripts/pdf.js"></script>
+    <script src="~/Scripts/Tafqeet.js"></script>
+
+    <!--angualr-->
+    <script src="~/Scripts/angular.js"></script>
+    <script src="~/Scripts/angular-route.min.js"></script>
+    <script src="~/Scripts/angular-local-storage.min.js"></script>
+    <script src="~/Scripts/loading-bar.min.js"></script>
+    <script src="~/Scripts/angular-base64.js"></script>
+
+    <!--jquery-->
+    @*<script src="~/Scripts/jquery-3.1.1.min.js"></script>
+        <script src="~/Scripts/bootstrap.min.js"></script>*@
+
+
+    <script src="~/Content/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="~/Content/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="~/Content/bower_components/underscore-master/underscore-min.js"></script>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.js"></script>
+    <script src="~/Scripts/angularjs-dropdown-multiselect.min.js"></script>
+
+    <script src="~/Scripts/spin.min.js"></script>
+    <script src="~/Scripts/angular-loading-spinner.js"></script>
+    <script src="~/Scripts/angular-spinner.js"></script>
+
+    <script src="~/Scripts/angular-ui/ui-bootstrap.min.js"></script>
+    <script src="~/Scripts/angular-ui/ui-bootstrap-tpls.min.js"></script>
+
+    <script src="~/Scripts/sweetalert2.min.js"></script>
+
+
+    <script src="~/Content/bower_components/components-modernizr/modernizr.js"></script>
+    <script src="~/Content/bower_components/js-cookie/src/js.cookie.js"></script>
+    <script src="~/Content/bower_components/perfect-scrollbar/js/perfect-scrollbar.jquery.min.js"></script>
+    <script src="~/Content/bower_components/jquery-fullscreen/jquery.fullscreen-min.js"></script>
+    <script src="~/Content/bower_components/switchery/dist/switchery.min.js"></script>
+    <script src="~/Content/bower_components/jquery.knobe/dist/jquery.knob.min.js"></script>
+    <script src="~/Content/bower_components/seiyria-bootstrap-slider/dist/bootstrap-slider.min.js"></script>
+    <script src="~/Content/bower_components/slick.js/slick/slick.min.js"></script>
+    <script src="~/Content/bower_components/jquery-numerator/jquery-numerator.js"></script>
+    <script src="~/Content/bower_components/ladda/dist/spin.min.js"></script>
+    <script src="~/Content/bower_components/ladda/dist/ladda.min.js"></script>
+    <script src="~/Content/bower_components/ladda/dist/ladda.jquery.min.js"></script>
+    <script src="~/Content/bower_components/select2/dist/js/select2.min.js"></script>
+
+    <!-- start: JAVASCRIPTS REQUIRED FOR THIS PAGE ONLY -->
+    <script src="~/Content/bower_components/jstree/dist/jstree.min.js"></script>
+    <!-- end: JAVASCRIPTS REQUIRED FOR THIS PAGE ONLY -->
+    <!-- start: JavaScript Event Handlers for this page -->
+    <script src="~/Content/assets/js/ui-treeview.js"></script>
+    <!-- end: JavaScript Event Handlers for this page -->
+
+    <script src="~/Scripts/xeditable.min.js"></script>
+    <script src="~/Scripts/angular-block-ui.min.js"></script>
+    <script src="~/Scripts/angular-file-upload.min.js"></script>
+    <script src="~/Scripts/pdf.js"></script>
+    <script src="~/Scripts/angular-pdfjs-viewer.js"></script>
+    <script src="~/Scripts/ngPrint.min.js"></script>
+    <script src="~/Scripts/angular-dimmer.min.js"></script>
+    @*<script src="~/Scripts/angular-filter.js"></script>*@
+    <script src="~/Scripts/ui-grid.js"></script>
+    <script src="~/Scripts/draggable-rows.js"></script>
+
+    <script src="~/Scripts/select.min.js"></script>
+    <script src="~/Scripts/angular-sanitize.min.js"></script>
+    <link href="~/Content/bower_components/select2/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="~/Scripts/angular-ui-tree.min.js"></script>
+    <script src="~/Scripts/angular-ui-tree-filter.min.js"></script>
+    <script src="~/Scripts/angular.treeview.min.js"></script>
+    @*<script src="~/Content/bower_components/vakata-jstree-0097fab/dist/jstree.min.js"></script>*@
+    <script src="~/Content/bower_components/vakata-jstree-0097fab/dist/jstree.js"></script>
+    <script src="~/Scripts/jquery.slimscroll.min.js"></script>
+    <!-- end: MAIN JAVASCRIPTS -->
+    <!-- start: JAVASCRIPTS REQUIRED FOR THIS PAGE ONLY -->
+    <script src="~/Content/bower_components/Chart-js/Chart.min.js"></script>
+    <!-- end: JAVASCRIPTS REQUIRED FOR THIS PAGE ONLY -->
+    <!-- start: Packet JAVASCRIPTS -->
+    <script src="~/Content/assets/js/letter-icons.js"></script>
+    <script src="~/Content/assets/js/main.js"></script>
+    <!-- end: Packet JAVASCRIPTS -->
+    <!-- start: JavaScript Event Handlers for this page -->
+    <script src="~/Content/assets/js/index.js"></script>
+    <script src="~/Content/bower_components/quicksearch/jquery.quicksearch.js"></script>
+    <script src="~/Content/bower_components/multi-select/js/jquery.multi-select.js"></script>
+
+    <script src="https://rawgit.com/abdennour/hijri-date/master/cdn/hijri-date-latest.js" type="text/javascript"></script>
+
+
+    <script>
+        $(function () {
+            jQuery(document).ready(function () {
+                Main.init();
+                Index.init();
+            });
+        });
+    </script>
+
+    <script src="~/Scripts/angucomplete-alt.min.js"></script>
+    <script src="~/Scripts/angular-animate/angular-animate.min.js"></script>
+
+    <script src="~/Scripts/angular-aria/angular-aria.min.js"></script>
+    <script src="~/Scripts/angular-material/angular-material.min.js"></script>
+    @*<script src="https://gitcdn.xyz/repo/angular/bower-material/master/angular-material.js"></script>*@
+
+    @*<script src="~/Scripts/autocomplete/autocomplete.js"></script>*@
+
+    <!--App-->
+    @**********************************************    APP    ****************************************************@
+    <script src="~/ngApp/app.js"></script>
+
+
+    <!--services-->
+    @**********************************************    SERVICES    ****************************************************@
+    <script src="~/ngApp/authentication/Services/authInterceptorService.js"></script>
+    <script src="~/ngApp/authentication/Services/authService.js"></script>
+    <script src="~/ngApp/itemsGroups/services/itemsGroupsService.js"></script>
+    <script src="~/ngApp/items/services/itemsService.js"></script>
+    <script src="~/ngApp/registeration/Services/RegService.js"></script>
+    <script src="~/ngApp/companystores/services/companystoresService.js"></script>
+    <script src="~/ngApp/units/services/unitsService.js"></script>
+    <script src="~/ngApp/PointOfSale/services/PointOfSaleService.js"></script>
+    <script src="~/ngApp/generalViews/Services/MenuService.js"></script>
+    <script src="~/ngApp/generalViews/Services/headerService.js"></script>
+    <script src="~/ngApp/innerRegister/services/innerRegisterService.js"></script>
+    <script src="~/ngApp/currency/services/currencyService.js"></script>
+    <script src="~/ngApp/Departments/services/departmentsService.js"></script>
+    <script src="~/ngApp/Employees/services/employeesService.js"></script>
+
+    <script src="~/ngApp/EmployeeTypes/services/employeeTypesService.js"></script>
+    <script src="~/ngApp/Customers/services/customersService.js"></script>
+    <script src="~/ngApp/ReportPage/ItemsMotion/Services/itemReportPageService.js"></script>
+    <script src="~/ngApp/ReportPage/BillProfit/Services/billProfitReportPageService.js"></script>
+    <script src="~/ngApp/activation/services/activationService.js"></script>
+    <script src="~/ngApp/companystores/services/CSIGService.js"></script>
+    <script src="~/ngApp/BillSettings/Services/billSettingService.js"></script>
+    <script src="~/ngApp/EntrySettings/Services/entrySettingService.js"></script>
+    <script src="~/ngApp/SystemOptions/Services/SystemOptionsService.js"></script>
+    <script src="~/ngApp/userPrivilages/services/userPrivilagesService.js"></script>
+    <script src="~/ngApp/Shared/Services/ordersService.js"></script>
+    <script src="~/ngApp/ChangePassword/Services/changePasswordService.js"></script>
+    <script src="~/ngApp/ForgetPassword/Services/forgetPasswordService.js"></script>
+    <script src="~/ngApp/itemCaliber/services/itemCaliberService.js"></script>
+    <script src="~/ngApp/itemStatus/services/itemStatusService.js"></script>
+    <script src="~/ngApp/CostCenters/services/costCentersService.js"></script>
+    <script src="~/ngApp/CostCenters/services/costService.js"></script>
+    <script src="~/ngApp/manufacturingWages/services/manufacturingWagesService.js"></script>
+    <script src="~/ngApp/CompanyBranches/services/compBranchesService.js"></script>
+    <script src="~/ngApp/Address/services/addressService.js"></script>
+    <script src="~/ngApp/goldWorldPrice/services/goldWorldPriceService.js"></script>
+    <script src="~/ngApp/costCalculationType/services/costCalculationTypeService.js"></script>
+    <script src="~/ngApp/Banks/services/bankService.js"></script>
+    <script src="~/ngApp/Entries/services/entryService.js"></script>
+    <script src="~/ngApp/PayTypes/services/payTypesService.js"></script>
+    <script src="~/ngApp/CurrencyCategories/services/currencyCategoriesService.js"></script>
+    <script src="~/ngApp/Accounts/services/accountsService.js"></script>
+    <script src="~/ngApp/Shared/Services/billPayTypesService.js"></script>
+    <script src="~/ngApp/Shared/Services/billCaliberTransactionsService.js"></script>
+    <script src="~/ngApp/tree/services/treeService.js"></script>
+
+    <script src="~/ngApp/itemsGuide/services/itemsGuideService.js"></script>
+    <script src="~/ngApp/chartOfAcc/services/chartOfAccService.js"></script>
+
+    <script src="~/ngApp/UserPriviligeBranches/services/userPriviligeBranchesService.js"></script>
+    <script src="~/ngApp/ReportPage/AccountStatement/Services/accountStatementService.js"></script>
+    <script src="~/ngApp/ReportPage/TrialBalance/Services/trialBalanceService.js"></script>
+    <script src="~/ngApp/ReportPage/GeneralLedger/Services/generalLedgerService.js"></script>
+    <script src="~/ngApp/ReportPage/TrialBalanceGold/Services/trialBalanceGoldService.js"></script>
+    <script src="~/ngApp/ReportPage/GeneralLedgerGold/Services/generalLedgerGoldService.js"></script>
+    <script src="~/ngApp/LogFileReport/services/logFileReportService.js"></script>
+    <script src="~/ngApp/QuickAccount/services/quickAccountService.js"></script>
+
+    <script src="~/ngApp/ReportPage/TotalBillsMotion/Services/TotalBillsMotionService.js"></script>
+    <script src="~/ngApp/ReportPage/AccountDetectingReport/Services/AccountDetectingReportService.js"></script>
+    <script src="~/ngApp/ReportPage/SalesTaxReport/Services/SalesTaxReportService.js"></script>
+    <script src="~/ngApp/ReportPage/PurchasingTaxReport/Services/PurchasingTaxReportService.js"></script>
+    <script src="~/ngApp/ReportPage/AccountStatementDaily/Services/accountStatementDailyService.js"></script>
+    <script src="~/ngApp/ReportPage/AccountStatementGoldDaily/Services/accountStatementGoldDailyService.js"></script>
+    <script src="~/ngApp/ReportPage/AccountStatementMonthly/Services/accountStatementMonthlyService.js"></script>
+    <script src="~/ngApp/ReportPage/AccountStatementGoldMonthly/Services/accountStatementGoldMonthlyService.js"></script>
+    <script src="~/ngApp/AssetsGroup/services/assetsGroupService.js"></script>
+    <script src="~/ngApp/userPriviligeBranches/services/userPriviligeBranchesService.js"></script>
+    @*<script src="~/ngApp/ReportPage/ExpensesTax/Services/ExpensesTaxService.js"></script>*@
+    <script src="~/ngApp/AssetMaster/services/AssetMasterService.js"></script>
+    <script src="~/ngApp/AssetCompanyDetails/services/assetCompanyDetailsService.js"></script>
+    <script src="~/ngApp/AssetOperationMaster/services/AssetOperationMasterService.js"></script>
+    <script src="~/ngApp/Shared/Services/ReportsService.js"></script>
+    <script src="~/ngApp/StoresGuide/services/storesGuideService.js"></script>
+    <script src="~/ngApp/CostCentersGuide/services/costCentersGuideService.js"></script>
+    <script src="~/ngApp/accountsGroup/services/accountsGroupService.js"></script>
+    @*<script src="~/ngApp/ReportPage/RiyalFundMotion/Services/RiyalFundMotionService.js"></script>
+        <script src="~/ngApp/ReportPage/RiyalFundMotionDaily/Services/RiyalFundMotionDailyService.js"></script>
+        <script src="~/ngApp/ReportPage/RiyalFundMotionDailyMonthly/Services/RiyalFundMotionMonthlyService.js"></script>*@
+    <!--directives-->
+    @**********************************************    DIRECTIVES    ****************************************************@
+    <script src="~/ngApp/itemsGroups/directives/itemsGroupsDirective.js"></script>
+    <script src="~/ngApp/items/directives/itemsDirective.js"></script>
+    <script src="~/ngApp/items/directives/fileread.js"></script>
+    <script src="~/ngApp/authentication/directives/loginDirective.js"></script>
+    <script src="~/ngApp/registeration/directives/compare.js"></script>
+    <script src="~/ngApp/companystores/directives/companystoresDirective.js"></script>
+    <script src="~/ngApp/units/directives/unitsDirective.js"></script>
+    <script src="~/ngApp/PointOfSale/directives/PointOfSaleDirective.js"></script>
+    <script src="~/ngApp/innerRegister/directives/innerRegisterDirective.js"></script>
+    <script src="~/ngApp/currency/directives/currencyDirective.js"></script>
+    <script src="~/ngApp/Departments/directives/departmentsDirective.js"></script>
+    <script src="~/ngApp/Employees/directives/employeesDirective.js"></script>
+
+    <script src="~/ngApp/EmployeeTypes/directives/employeeTypesDirective.js"></script>
+    <script src="~/ngApp/Customers/directives/customersDirective.js"></script>
+    <script src="~/ngApp/BillSettings/Directives/billSettingDirective.js"></script>
+    <script src="~/ngApp/EntrySettings/Directives/entrySettingDirective.js"></script>
+    <script src="~/ngApp/SystemOptions/Directives/SystemOptionsDirective.js"></script>
+    <script src="~/ngApp/userPrivilages/directives/userPrivilagesDirective.js"></script>
+    <script src="~/ngApp/home/Directives/homeDirective.js"></script>
+    <script src="~/ngApp/activation/Directives/activationDirective.js"></script>
+    <script src="~/ngApp/registeration/directives/registerationDirective.js"></script>
+    <script src="~/ngApp/ReportPage/BillProfit/Directives/BillProfitDirective.js"></script>
+    <script src="~/ngApp/ReportPage/CompanyStores/Directives/CompanyStoresRepoDirective.js"></script>
+    <script src="~/ngApp/ReportPage/Currency/Directives/CurrencyRepoDirective.js"></script>
+    <script src="~/ngApp/ReportPage/ItemsMotion/Directives/ItemsMotionDirective.js"></script>
+    <script src="~/ngApp/technicalSupport/Directives/technicalSupportDirective.js"></script>
+    <script src="~/ngApp/ChangePassword/Directives/changePasswordDirective.js"></script>
+    <script src="~/ngApp/ForgetPassword/Directives/forgetPasswordDirective.js"></script>
+    <script src="~/ngApp/itemCaliber/directives/itemCaliberDirective.js"></script>
+    <script src="~/ngApp/itemStatus/directives/itemStatusDirective.js"></script>
+    <script src="~/ngApp/CostCenters/directives/costCentersDirective.js"></script>
+    <script src="~/ngApp/manufacturingWages/directives/manufacturingWagesDirective.js"></script>
+
+    <script src="~/ngApp/CompanyBranches/directives/companyBranchesDirectives.js"></script>
+    <script src="~/ngApp/Address/directives/addressDirectives.js"></script>
+    <script src="~/ngApp/goldWorldPrice/directives/goldWorldPriceDirective.js"></script>
+    <script src="~/ngApp/Banks/directives/bankDirective.js"></script>
+    <script src="~/ngApp/Entries/directives/entryDirective.js"></script>
+
+    <script src="~/ngApp/PayTypes/directives/payTypesDirective.js"></script>
+    <script src="~/ngApp/Accounts/directives/accountsDirective.js"></script>
+    <script src="~/ngApp/tree/directives/treeDirective.js"></script>
+
+
+
+    <script src="~/ngApp/chartOfAcc/directives/chartOfAccDirective.js"></script>
+    <script src="~/ngApp/itemsGuide/directives/itemsGuideDirective.js"></script>
+    <script src="~/ngApp/UserPriviligeBranches/directives/userPriviligeBranchesDirective.js"></script>
+    <script src="~/ngApp/ReportPage/AccountStatement/Directives/AccountStatementRepoDirective.js"></script>
+    <script src="~/ngApp/ReportPage/AccountStatementGold/Directives/AccountStatementGoldRepoDirective.js"></script>
+    <script src="~/ngApp/ReportPage/TrialBalance/Directives/trialBalanceDirective.js"></script>
+    <script src="~/ngApp/ReportPage/GeneralLedger/Directives/generalLedgerDirective.js"></script>
+    <script src="~/ngApp/ReportPage/TrialBalanceGold/Directives/trialBalanceGoldDirective.js"></script>
+    <script src="~/ngApp/ReportPage/GeneralLedgerGold/Directives/generalLedgerGoldDirective.js"></script>
+    <script src="~/ngApp/LogFileReport/Directives/logFileReportDirective.js"></script>
+    <script src="~/ngApp/QuickAccount/directives/quickAccountDirective.js"></script>
+
+    <script src="~/ngApp/ReportPage/TotalBillsMotion/Directives/TotalBillsMotionDirective.js"></script>
+    <script src="~/ngApp/ReportPage/AccountDetectingReport/Directives/AccountDetectingReportDirective.js"></script>
+    <script src="~/ngApp/ReportPage/SalesTaxReport/Directives/SalesTaxReportDirective.js"></script>
+    <script src="~/ngApp/ReportPage/PurchasingTaxReport/Directives/PurchasingTaxReportDirective.js"></script>
+    <script src="~/ngApp/ReportPage/AccountStatementDaily/Directives/accountStatementDailyDirective.js"></script>
+    <script src="~/ngApp/ReportPage/AccountStatementGoldDaily/Directives/AccountStatementGoldDailyDirective.js"></script>
+    <script src="~/ngApp/ReportPage/AccountStatementMonthly/Directives/accountStatementMonthlyDirective.js"></script>
+    <script src="~/ngApp/ReportPage/AccountStatementGoldMonthly/Directives/AccountStatementGoldMonthlyDirective.js"></script>
+    <script src="~/ngApp/ReportPage/TrialBalanceTotals/Directives/trialBalanceTotalsDirective.js"></script>
+    <script src="~/ngApp/ReportPage/TrialBalanceTotalsGold/Directives/trialBalanceTotalsGoldDirective.js"></script>
+    <script src="~/ngApp/ReportPage/RiyalFundMotion/Directives/RiyalFundMotionDirective.js"></script>
+    <script src="~/ngApp/ReportPage/RiyalFundMotionDaily/Directives/RiyalFundMotionDailyDirective.js"></script>
+    <script src="~/ngApp/ReportPage/RiyalFundMotionMonthly/Directives/RiyalFundMotionMonthlyDirective.js"></script>
+    <script src="~/ngApp/ReportPage/GoldBoxMotion/Directives/GoldBoxMotionDirective.js"></script>
+    <script src="~/ngApp/ReportPage/GoldBoxMotionDaily/Directives/GoldBoxMotionDailyDirective.js"></script>
+    <script src="~/ngApp/ReportPage/GoldBoxMotionMonthly/Directives/GoldBoxMotionMonthlyDirective.js"></script>
+    <script src="~/ngApp/ReportPage/BrokenGoldBoxMotion/Directives/BrokenGoldBoxMotionDirective.js"></script>
+    <script src="~/ngApp/ReportPage/BrokenGoldBoxMotionDaily/Directives/BrokenGoldBoxMotionDailyDirective.js"></script>
+    <script src="~/ngApp/ReportPage/BrokenGoldBoxMotionMonthly/Directives/BrokenGoldBoxMotionMonthlyDirective.js"></script>
+    <script src="~/ngApp/AssetsGroup/directives/assetsGroupDirective.js"></script>
+    @*<script src="~/ngApp/ReportPage/ExpensesTax/Directives/ExpensesTaxDirective.js"></script>
+    <script src="~/ngApp/ReportPage/ExpensesTaxDaily/Directives/ExpensesTaxDailyDirective.js"></script>
+    <script src="~/ngApp/ReportPage/ExpensesTaxMonthly/Directives/ExpensesTaxMonthlyDirective.js"></script>*@
+    <script src="~/ngApp/AssetMaster/directives/AssetMasterDirective.js"></script>
+    <script src="~/ngApp/AssetOperationMaster/directives/AssetOperationMasterDirective.js"></script>
+    <script src="~/ngApp/AssetLocation/directives/AssetLocationDirective.js"></script>
+    <script src="~/ngApp/AssignAssetToEmployee/directives/AssignAssetToEmployeeDirective.js"></script>
+    <script src="~/ngApp/ReceivingAssetFromEmployee/directives/ReceivingAssetFromEmployeeDirective.js"></script>
+    <script src="~/ngApp/ReportPage/ItemsInventory/Directives/ItemsInventoryDirective.js"></script>
+    <!--Controllers-->
+    <script src="~/ngApp/AssetCompanyDetails/directives/assetCompanyDetailsDirective.js"></script>
+    <script src="~/ngApp/userPriviligeBranches/directives/userPriviligeBranchesDirective.js"></script>
+    <script src="~/ngApp/StoresGuide/directives/storesGuideDirective.js"></script>
+    <script src="~/ngApp/CostCentersGuide/directives/costCentersGuideDirective.js"></script>
+    <script src="~/ngApp/accountsGroup/directives/accountsGroupDirective.js"></script>
+    <script src="~/ngApp/billType/directives/billTypeDirective.js"></script>
+    <script src="~/ngApp/entryType/directives/entryTypeDirective.js"></script>
+    <script src="~/ngApp/ReportPage/AccountBalances/Directives/AccountBalancesDirective.js"></script>
+    <script src="~/ngApp/BillPosting/Directives/BillPostingDirective.js"></script>
+    <script src="~/ngApp/EntryPosting/Directives/EntryPostingDirective.js"></script>
+    @**********************************************    CONTROLLERS    ****************************************************@
+    <script src="~/ngApp/index/controllers/indexController.js"></script>
+    <script src="~/ngApp/authentication/controllers/loginController.js"></script>
+    <script src="~/ngApp/home/controllers/homeController.js"></script>
+    <script src="~/ngApp/itemsGroups/controllers/itemsGroupsController.js"></script>
+    <script src="~/ngApp/registeration/controllers/RegisterationController.js"></script>
+    <script src="~/ngApp/companystores/controllers/companystoresController.js"></script>
+    <script src="~/ngApp/items/controllers/itemsController.js"></script>
+    <script src="~/ngApp/units/controllers/unitsController.js"></script>
+    <script src="~/ngApp/PointOfSale/controllers/PointOfSaleController.js"></script>
+    <script src="~/ngApp/generalViews/controllers/MenuController.js"></script>
+    <script src="~/ngApp/generalViews/controllers/headerController.js"></script>
+    <script src="~/ngApp/innerRegister/controllers/innerRegisterController.js"></script>
+    <script src="~/ngApp/currency/controllers/currencyController.js"></script>
+    <script src="~/ngApp/Departments/controllers/departmentsController.js"></script>
+    <script src="~/ngApp/Employees/controllers/employeesController.js"></script>
+    <script src="~/ngApp/itemsGuide/controllers/itemsGuideController.js"></script>
+    <script src="~/ngApp/EmployeeTypes/controllers/employeeTypesController.js"></script>
+    <script src="~/ngApp/Customers/controllers/customersController.js"></script>
+    <script src="~/ngApp/ReportPage/Currency/controllers/currencyReportPageController.js"></script>
+    @*<script src="~/ngApp/Reports/currency/controllers/currencyReportController.js"></script>*@
+    <script src="~/ngApp/ReportPage/CompanyStores/Controllers/companyStoresReportPageController.js"></script>
+    <script src="~/ngApp/ReportPage/ItemsMotion/Controllers/itemsReportPageController.js"></script>
+    <script src="~/ngApp/ReportPage/BillProfit/Controllers/billProfitReportPageController.js"></script>
+    <script src="~/ngApp/activation/controllers/activationController.js"></script>
+    <script src="~/ngApp/BillSettings/Controllers/billSettingController.js"></script>
+    <script src="~/ngApp/EntrySettings/Controllers/entrySettingController.js"></script>
+    <script src="~/ngApp/SystemOptions/Controllers/SystemOptionsController.js"></script>
+    <script src="~/ngApp/userPrivilages/controllers/userPrivilagesController.js"></script>
+    <script src="~/ngApp/technicalSupport/Controllers/technicalSupportController.js"></script>
+    <script src="~/ngApp/ChangePassword/Controllers/changePasswordController.js"></script>
+    <script src="~/ngApp/ForgetPassword/Controllers/forgetPasswordController.js"></script>
+    <script src="~/ngApp/itemCaliber/controllers/itemCaliberController.js"></script>
+    <script src="~/ngApp/itemStatus/controllers/itemStatusController.js"></script>
+    <script src="~/ngApp/CostCenters/controllers/costCentersController.js"></script>
+    <script src="~/ngApp/manufacturingWages/controllers/manufacturingWagesController.js"></script>
+
+    <script src="~/ngApp/CompanyBranches/controllers/companyBranchesController.js"></script>
+    <script src="~/ngApp/Address/controllers/addressController.js"></script>
+    <script src="~/ngApp/goldWorldPrice/controllers/goldWorldPriceController.js"></script>
+    <script src="~/ngApp/costCalculationType/controllers/costCalculationTypeController.js"></script>
+    <script src="~/ngApp/Banks/controllers/bankController.js"></script>
+    <script src="~/ngApp/PayTypes/controllers/payTypesController.js"></script>
+    <script src="~/ngApp/Entries/controllers/entryController.js"></script>
+    <script src="~/ngApp/Accounts/controllers/accountsController.js"></script>
+    <script src="~/ngApp/tree/controllers/treeController.js"></script>
+
+    <script src="~/ngApp/userPriviligeBranches/controllers/userPriviligeBranchesController.js"></script>
+    <script src="~/ngApp/chartOfAcc/controllers/chartOfAccController.js"></script>
+    <script src="~/Content/bower_components/angular-tree-control-master/angular-tree-control.js"></script>
+    <script src="~/Content/bower_components/angular-tree-control-master/context-menu.js"></script>
+    <script src="~/ngApp/itemsGuide/controllers/itemsGuideController.js"></script>
+    <script src="~/ngApp/UserPriviligeBranches/controllers/userPriviligeBranchesController.js"></script>
+    <script src="~/ngApp/ReportPage/AccountStatement/Controllers/accountStatementReportPageController.js"></script>
+    <script src="~/ngApp/ReportPage/AccountStatementGold/Controllers/accountStatementGoldReportPageController.js"></script>
+    <script src="~/ngApp/ReportPage/TrialBalance/Controllers/trialBalanceReportPageController.js"></script>
+    <script src="~/ngApp/ReportPage/GeneralLedger/Controllers/generalLedgerReportPageController.js"></script>
+    <script src="~/ngApp/ReportPage/TrialBalanceGold/Controllers/trialBalanceGoldReportPageController.js"></script>
+    <script src="~/ngApp/ReportPage/GeneralLedgerGold/Controllers/generalLedgerGoldReportPageController.js"></script>
+
+    <script src="~/ngApp/LogFileReport/Controllers/logFileReportController.js"></script>
+    <script src="~/ngApp/QuickAccount/controllers/quickAccountController.js"></script>
+    <script src="~/ngApp/ReportPage/TotalBillsMotion/Controllers/TotalBillsMotionController.js"></script>
+    <script src="~/ngApp/ReportPage/AccountDetectingReport/Controllers/AccountDetectingReportController.js"></script>
+    <script src="~/ngApp/ReportPage/SalesTaxReport/Controllers/SalesTaxReportController.js"></script>
+    <script src="~/ngApp/ReportPage/PurchasingTaxReport/Controllers/PurchasingTaxReportController.js"></script>
+    <script src="~/ngApp/ReportPage/AccountStatementDaily/Controllers/accountStatementDailyController.js"></script>
+    <script src="~/ngApp/ReportPage/AccountStatementGoldDaily/Controllers/accountStatementGoldDailyController.js"></script>
+    <script src="~/ngApp/ReportPage/AccountStatementMonthly/Controllers/accountStatementMonthlyController.js"></script>
+    <script src="~/ngApp/ReportPage/AccountStatementGoldMonthly/Controllers/accountStatementGoldMonthlyController.js"></script>
+    <script src="~/ngApp/ReportPage/TrialBalanceTotals/Controllers/trialBalanceTotalsController.js"></script>
+    <script src="~/ngApp/ReportPage/TrialBalanceTotalsGold/Controllers/trialBalanceTotalsGoldController.js"></script>
+    <script src="~/ngApp/ReportPage/RiyalFundMotion/Controllers/RiyalFundMotionController.js"></script>
+    <script src="~/ngApp/ReportPage/RiyalFundMotionDaily/Controllers/RiyalFundMotionDailyController.js"></script>
+    <script src="~/ngApp/ReportPage/RiyalFundMotionMonthly/Controllers/RiyalFundMotionMonthlyController.js"></script>
+    <script src="~/ngApp/ReportPage/GoldBoxMotion/Controllers/GoldBoxMotionController.js"></script>
+    <script src="~/ngApp/ReportPage/GoldBoxMotionDaily/Controllers/GoldBoxMotionDailyController.js"></script>
+    <script src="~/ngApp/ReportPage/GoldBoxMotionMonthly/Controllers/GoldBoxMotionMonthlyController.js"></script>
+    <script src="~/ngApp/ReportPage/BrokenGoldBoxMotion/Controllers/BrokenGoldBoxMotionController.js"></script>
+    <script src="~/ngApp/ReportPage/BrokenGoldBoxMotionDaily/Controllers/BrokenGoldBoxMotionDailyController.js"></script>
+    <script src="~/ngApp/ReportPage/BrokenGoldBoxMotionMonthly/Controllers/BrokenGoldBoxMotionMonthlyController.js"></script>
+    <script src="~/ngApp/AssetsGroup/controllers/assetsGroupController.js"></script>
+    @*<script src="~/ngApp/ReportPage/ExpensesTax/Controllers/ExpensesTaxController.js"></script>
+    <script src="~/ngApp/ReportPage/ExpensesTaxDaily/Controllers/ExpensesTaxDailyController.js"></script>
+    <script src="~/ngApp/ReportPage/ExpensesTaxMonthly/Controllers/ExpensesTaxMonthlyController.js"></script>*@
+    <script src="~/ngApp/AssetMaster/controllers/AssetMasterController.js"></script>
+    <script src="~/ngApp/AssetCompanyDetails/controllers/assetCompanyDetailsController.js"></script>
+    <script src="~/ngApp/AssetOperationMaster/controllers/AssetOperationMasterController.js"></script>
+    <script src="~/ngApp/AssetLocation/controllers/AssetLocationController.js"></script>
+    <script src="~/ngApp/AssignAssetToEmployee/controllers/AssignAssetToEmployeeController.js"></script>
+    <script src="~/ngApp/ReceivingAssetFromEmployee/controllers/ReceivingAssetFromEmployeeController.js"></script>
+    <script src="~/ngApp/ReportPage/ItemsInventory/Controllers/ItemsInventoryController.js"></script>
+    <script src="~/ngApp/StoresGuide/controllers/storesGuideController.js"></script>
+    <script src="~/ngApp/CostCentersGuide/controllers/costCentersGuideController.js"></script>
+    <script src="~/ngApp/accountsGroup/controllers/accountsGroupController.js"></script>
+    <script src="~/ngApp/billType/controllers/billTypeController.js"></script>
+    <script src="~/ngApp/entryType/controllers/entryTypeController.js"></script>
+    <script src="~/ngApp/ReportPage/AccountBalances/Controllers/AccountBalancesController.js"></script>
+    <script src="~/ngApp/BillPosting/Controllers/BillPostingController.js"></script>
+    <script src="~/ngApp/EntryPosting/Controllers/EntryPostingController.js"></script>
+    <!--Shared-->
+    @**********************************************   SHARED   ****************************************************@
+
+    <script src="~/ngApp/Shared/Services/userGroupService.js"></script>
+    <script src="~/ngApp/Shared/Services/costCentersService.js"></script>
+    <script src="~/ngApp/Shared/Services/payTypeService.js"></script>
+    <script src="~/ngApp/Shared/Services/billTypeService.js"></script>
+    <script src="~/ngApp/Shared/Services/telephoneService.js"></script>
+    <script src="~/ngApp/Shared/Services/salesTypeService.js"></script>
+    <script src="~/ngApp/Shared/Services/companyBranchesService.js"></script>
+    <script src="~/ngApp/Shared/Services/accountService.js"></script>
+    <script src="~/ngApp/Shared/Services/sharedService.js"></script>
+    <script src="~/ngApp/Shared/Services/commonService.js"></script>
+    <script src="~/ngApp/Shared/Services/billShowOptionService.js"></script>
+    <script src="~/ngApp/Shared/Services/pagerService.js"></script>
+    <script src="~/ngApp/Shared/Services/billOptionService.js"></script>
+    <script src="~/ngApp/Shared/Services/billGridColumn.js"></script>
+    <script src="~/ngApp/Shared/Services/entryTypeService.js"></script>
+    <script src="~/ngApp/Shared/Services/entryShowOptionService.js"></script>
+    <script src="~/ngApp/Shared/Services/entryGridColumnService.js"></script>
+    <script src="~/ngApp/Shared/Services/shortcutService.js"></script>
+    <script src="~/ngApp/Shared/Services/MessageService.js"></script>
+    <script src="~/ngApp/Shared/Services/NotificationsService.js"></script>
+    <script src="~/ngApp/Shared/Services/emailsService.js"></script>
+    <script src="~/ngApp/Shared/Services/incomeAccountTypesService.js"></script>
+    <script src="~/ngApp/Shared/Services/KestOptionService.js"></script>
+    <script src="~/ngApp/Shared/Services/tBoxAccountsService.js"></script>
+    <script src="~/ngApp/Shared/Services/tStoreService.js"></script>
+    <script src="~/ngApp/Shared/Services/tBudgetAccountsService.js"></script>
+
+    <script src="~/ngApp/Shared/directives/sharedDirective.js"></script>
+    <script src="~/ngApp/Shared/Controllers/modalController.js"></script>
+    <script src="~/ngApp/Shared/filters/sharedFilters.js"></script>
+    <script src="~/ngApp/Shared/Services/addressPartsService.js"></script>
+    <script src="~/ngApp/Shared/Services/resoursesTranslationService.js"></script>
+    <script src="~/ngApp/Shared/Services/exportService.js"></script>
+
+
+    <link rel="stylesheet" href="~/Content/bower_components/ng-dialog/ngDialog.min.css">
+    <link rel="stylesheet" href="~/Content/bower_components/ng-dialog/ngDialog-theme-default.min.css">
+    <script src="~/Content/bower_components/ng-dialog/ngDialog.min.js"></script>
+
+
+    <script src="~/Content/pdfmake-master/build/pdfmake.js"></script>
+    <script src="~/Content/pdfmake-master/build/vfs_fonts.js"></script>
+    <script src="~/Content/pdfmake-master/build/vfs_fonts_arabic.js"></script>
+    <script src="~/Content/pdfmake-master/build/logoFileString.js"></script>
+    <script src="~/Content/bower_components/jquery-ui/jquery-ui.min.js"></script>
+    <script src="~/Content/assets/js/form-elements.js"></script>
+
+    @*<script>
+            $(function () {
+                jQuery(document).ready(function () {
+                    TableData.init();
+                    FormElements.init();
+                });
+            });
+        </script>*@
+
+    <!-- Data Table -->
+    <script src="~/Content/bower_components/DataTables/media/js/jquery.dataTables.min.js"></script>
+    <script src="~/Content/bower_components/DataTables/media/js/dataTables.bootstrap.min.js"></script>
+    <!-- Data Table JavaScript Event Handlers for this page -->
+    <script src="~/Content/assets/js/table-data.js"></script>
+
+    @********************************************************************************************************@
+    <script>
+        $(document).on('click', '.settings.table .btn ', function () {
+            $(this).parent('.settings.table').toggleClass('active');
+        })
+
+        /* Open / Close SideBar */
+        $(document).on('click', 'button.btn.sidebar-toggler', function () {
+            $('#app').toggleClass('app-sidebar-closed');
+        });
+
+        $(document).on('click', 'p.action .fa', function () {
+            $(this).parents(".my-panel-collapse").toggleClass("panel-collapsed");
+            $(this).toggleClass("fa-chevron-circle-right fa-chevron-circle-left");
+        });
+
+        $(document).on('click', '#settings2 .dropdown-menu li', function () {
+            $(this).siblings().removeClass('active')
+        });
+
+
+        var y = $('.actionBar').offset().top;
+        $(window).on('scroll', function () {
+            if ($(this).scrollTop() > y) {
+                $('.actionBar').addClass('sticky-btns-bar');
+            } else {
+                $('.actionBar').removeClass('sticky-btns-bar');
+            }
+        });
+
+
+    </script>
+
+
+</body>
+</html>

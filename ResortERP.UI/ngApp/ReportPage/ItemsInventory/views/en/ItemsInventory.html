@@ -1,0 +1,499 @@
+﻿<div class="app-content">
+    <div class="main-content">
+        <div class="wrap-content container" id="container">
+            <div class="container-fluid container-fullw">
+
+                <div class="col-xs-12 margin-top-10 margin-bottom-10">
+                    <div class="breadcrumb-wrapper no-margin">
+                        <h4 class="mainTitle no-margin">تقرير جرد المخازن</h4>
+                        <ul class="pull-right breadcrumb">
+                            <li><a href="#!"><i class="fa fa-home margin-left-5 text-large text-dark"></i>الرئيسية</a></li>
+                            <li> تقرير جرد المخازن</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-xs-12 margin-bottom-10">
+                    <div class="panel-white panel-body no-margin">
+                        <button class="btn btn-o btn-default no-border" ng-disabled="DisablePrint" ng-click="PrintReport()"><i class="ti-printer"></i>طباعة</button>
+                        <button class="btn btn-o btn-default no-border" ng-click="clearEnity()"><i class="fa fa-refresh"></i>جديد</button>
+                        <button class="btn btn-o btn-default no-border" ng-click="GetSearchResult()"><i class="fa fa-search"></i>بحث</button>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="panel">
+                        <!--Start Panel Body -->
+
+                        <div class="row">
+                            <div class="col-md-8 padding-left-5">
+                                <div class="panel panel-white ">
+                                    <div class="panel-body" style="padding: 33px 0 !important">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>المجموعة</label>
+                                                <select ng-model="ItemsInventory.GroupId" ng-options="x.OptionValue as x.OptionText for x in ItemGroupList" class="form-control">
+                                                    <option value="">اختر عنصر</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>المخزن</label>
+                                                <select ng-model="ItemsInventory.StoreId" ng-options="x.OptionValue as x.OptionText for x in StoresList" class="form-control">
+                                                    <option value="">اختر عنصر</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label class="control-label">مركز التكلفة</label>
+                                                <select ng-model="ItemsInventory.CostCenterId" ng-options="x.OptionValue as x.OptionText for x in CostCenterList" class="form-control">
+                                                    <option value="">اختر عنصر</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label class="control-label">من تاريخ</label>
+                                                <input type="date" class="form-control" ng-model="ItemsInventory.dateFrom" placeholder="من تاريخ">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label class="control-label">الي تاريخ</label>
+                                                <input type="date" class="form-control" ng-model="ItemsInventory.dateTo" placeholder="الي تاريخ">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label class="control-label"> تاريخ الصلاحية ينتهى قبل</label>
+                                                <input type="date" class="form-control" ng-model="ItemsInventory.ExpireDate" placeholder="تاريخ الصلاحية">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 padding-right-5">
+                                <div class="panel panel-white">
+                                    <div class="panel-heading border-bottom">
+                                        <div class="panel-title">الاسعار</div>
+                                    </div>
+                                    <div class="panel-body">
+                                        <form>
+                                            <div ng-repeat="bil in SellTypeList">
+                                                <div class="col-md-6 form-group">
+                                                    <div class="checkbox clip-check check-primary checkbox-inline">
+                                                        <input id="bil.OptionValue{{$index}}" type="checkbox" name="rad_bill" ng-model="bil.SELECTED" value="bil.OptionValue" />
+                                                        <label for="bil.OptionValue{{$index}}">{{bil.OptionText}} </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--/.row-->
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="panel panel-white">
+                                    <div class="panel-heading border-bottom">
+                                        <div class="panel-title">خيارات التقارير</div>
+                                    </div>
+                                    <div class="panel-body">
+                                        <div ng-repeat="rpt in reportOptionList">
+                                            <div class="col-md-6 form-group">
+                                                <div class="checkbox clip-check check-primary checkbox-inline">
+                                                    <input id="rpt.ID{{$index}}" type="checkbox" ng-change="CheckBoxChange(rpt,$index)" name="rad_rpt" ng-model="rpt.SELECTED" />
+                                                    <label for="rpt.ID{{$index}}">{{rpt.NAME}} </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="control-label">سعر الجرد</label>
+                                                <select ng-model="ItemsInventory.SellTypeId" ng-options="x.OptionValue as x.OptionText for x in SellTypeList" class="form-control">
+                                                    <!--<option value="">اختر عنصر</option>-->
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="control-label">الترتيب</label>
+                                                <select ng-model="ItemsInventory.SortBy" class="form-control">
+                                                    <option value="1">كود الصنف</option>
+                                                    <option value="2">اسم الصنف</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="panel panel-white">
+                                    <div class="panel-heading border-bottom">
+                                        <div class="panel-title">خيارات الطباعة</div>
+                                    </div>
+                                    <div class="panel-body">
+                                        <div class="col-md-6 form-group" ng-if="ReportType == 2">
+                                            <div class="checkbox clip-check check-primary checkbox-inline">
+                                                <input id="ShowInputs" type="checkbox" name="ShowInputs" ng-model="PrintOptions.ShowInputs" />
+                                                <label for="ShowInputs">عرض الادخالات</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 form-group" ng-if="ReportType == 2">
+                                            <div class="checkbox clip-check check-primary checkbox-inline">
+                                                <input id="ShowOutputs" type="checkbox" name="ShowOutputs" ng-model="PrintOptions.ShowOutputs" />
+                                                <label for="ShowOutputs">عرض الاخراجات</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 form-group" ng-if="ReportType == 2">
+                                            <div class="checkbox clip-check check-primary checkbox-inline">
+                                                <input id="ShowTransfer" type="checkbox" name="ShowTransfer" ng-model="PrintOptions.ShowTransfer" />
+                                                <label for="ShowTransfer">عرض التحويلات</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 form-group" ng-if="ReportType == 2">
+                                            <div class="checkbox clip-check check-primary checkbox-inline">
+                                                <input id="ShowEmptyItems" type="checkbox" name="ShowEmptyItems" ng-model="PrintOptions.ShowEmptyItems" />
+                                                <label for="ShowEmptyItems">عرض الاصناف الفارغة</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 form-group" ng-if="ReportType == 2">
+                                            <div class="checkbox clip-check check-primary checkbox-inline">
+                                                <input id="ShowBalance" type="checkbox" name="ShowBalance" ng-model="PrintOptions.ShowBalance" />
+                                                <label for="ShowBalance">عرض الرصيد</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 form-group">
+                                            <div class="checkbox clip-check check-primary checkbox-inline">
+                                                <input id="PrintLandscape" type="checkbox" name="PrintLandscape" ng-model="PrintOptions.PrintLandscape" />
+                                                <label for="PrintLandscape">طباعة الصفحة عرضى</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="panel">
+                            <div class="panel-group accordion" id="accordion">
+                                <div class="panel panel-white">
+                                    <div class="panel-heading">
+                                        <h5 class="panel-title"><a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" data-target="#collapseTwo"> <i class="icon-arrow"></i> نتيجة البحث</a></h5>
+                                    </div>
+                                    <div id="collapseTwo" class="collapse">
+                                        <div class="panel-body">
+                                            <ul class="nav nav-tabs" ng-if="ReportType == 2">
+                                                <li class="active"><a data-toggle="tab" data-target="#InputsResult">ادخالات</a></li>
+                                                <li><a data-toggle="tab" data-target="#OutputResult">اخراجات</a></li>
+                                                <li><a data-toggle="tab" data-target="#TransferResult">تحويلات</a></li>
+                                                <li><a data-toggle="tab" data-target="#EmptyResult">الاصناف الفارغة</a></li>
+                                                <li><a data-toggle="tab" data-target="#BalanceResult">الرصيد</a></li>
+                                            </ul>
+
+                                            <div class="tab-content">
+                                                <div id="InputsResult" class="tab-pane fade in active" ng-if="ReportType == 2">
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <table class="table table-bordered table-hover" ng-init="LoopIndex = 0">
+                                                                <thead>
+                                                                    <tr class="success">
+                                                                        <th class="center">#</th>
+                                                                        <th class="center">الكود</th>
+                                                                        <th class="center">الاسم</th>
+                                                                        <th class="center">الكمية</th>
+                                                                        <th class="center" ng-show="ItemsInventory.ShowStoreDetails">المخزن</th>
+                                                                        <th class="center" ng-show="ItemsInventory.ShowExpired">تاريخ انتهاء الصلاحية</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <!--| groupBy: 'GROUP_ID'-->
+                                                                <tbody ng-if="showGroup" ng-repeat="group in ReportResult.InputsOnGroups">
+                                                                    <tr>
+                                                                        <td colspan="{{getTableWidthSpan()}}" class="center" style="background-color:#d4d4d4;">{{group.GROUP_AR_NAME}}</td>
+                                                                    </tr>
+                                                                    <tr ng-repeat="item in ReportResult.Inputs | filter : {GROUP_ID:group.GROUP_ID} : true track by $index">
+                                                                        <td class="center">{{ $index + 1 }}</td>
+                                                                        <td class="center">{{item.ITEM_CODE }}</td>
+                                                                        <td class="center">{{item.ITEM_AR_NAME }}</td>
+                                                                        <td class="center">{{item.QTY}}</td>
+                                                                        <th class="center" ng-show="ItemsInventory.ShowStoreDetails">{{item.COM_STORE_ID}}</th>
+                                                                        <th class="center" ng-show="ItemsInventory.ShowExpired">{{item.EXPIRED_DATE}}</th>
+                                                                    </tr>
+                                                                </tbody>
+                                                                <tbody ng-if="!showGroup">
+                                                                    <tr ng-repeat="item in ReportResult.Inputs track by $index">
+                                                                        <td class="center">{{ $index + 1}}</td>
+                                                                        <td class="center">{{item.ITEM_CODE }}</td>
+                                                                        <td class="center">{{item.ITEM_AR_NAME }}</td>
+                                                                        <td class="center">{{item.QTY}}</td>
+                                                                        <th class="center" ng-show="ItemsInventory.ShowStoreDetails">{{item.COM_STORE_ID}}</th>
+                                                                        <th class="center" ng-show="ItemsInventory.ShowExpired">{{item.EXPIRED_DATE}}</th>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div id="OutputResult" class="tab-pane fade in" ng-if="ReportType == 2">
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <table class="table table-bordered table-hover">
+                                                                <thead>
+                                                                    <tr class="success">
+                                                                        <th class="center">#</th>
+                                                                        <th class="center">الكود</th>
+                                                                        <th class="center">الاسم</th>
+                                                                        <th class="center">الكمية</th>
+                                                                        <th class="center" ng-show="ItemsInventory.ShowStoreDetails">المخزن</th>
+                                                                        <th class="center" ng-show="ItemsInventory.ShowExpired">تاريخ انتهاء الصلاحية</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody ng-if="showGroup" ng-repeat="group in ReportResult.OutputOnGroups">
+                                                                    <tr>
+                                                                        <td colspan="{{getTableWidthSpan()}}" class="center" style="background-color:#d4d4d4;">{{group.GROUP_AR_NAME}}</td>
+                                                                    </tr>
+                                                                    <tr ng-repeat="item in ReportResult.Outputs | filter : {GROUP_ID:group.GROUP_ID} : true track by $index">
+                                                                        <td class="center">{{ $index + 1 }}</td>
+                                                                        <td class="center">{{item.ITEM_CODE }}</td>
+                                                                        <td class="center">{{item.ITEM_AR_NAME }}</td>
+                                                                        <td class="center">{{item.QTY}}</td>
+                                                                        <th class="center" ng-show="ItemsInventory.ShowStoreDetails">{{item.COM_STORE_ID}}</th>
+                                                                        <th class="center" ng-show="ItemsInventory.ShowExpired">{{item.EXPIRED_DATE}}</th>
+                                                                    </tr>
+                                                                </tbody>
+                                                                <tbody ng-if="!showGroup">
+                                                                    <tr ng-repeat="item in ReportResult.Outputs track by $index">
+                                                                        <td class="center">{{ $index + 1}}</td>
+                                                                        <td class="center">{{item.ITEM_CODE }}</td>
+                                                                        <td class="center">{{item.ITEM_AR_NAME }}</td>
+                                                                        <td class="center">{{item.QTY}}</td>
+                                                                        <th class="center" ng-show="ItemsInventory.ShowStoreDetails">{{item.COM_STORE_ID}}</th>
+                                                                        <th class="center" ng-show="ItemsInventory.ShowExpired">{{item.EXPIRED_DATE}}</th>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div id="TransferResult" class="tab-pane fade in" ng-if="ReportType == 2">
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <table class="table table-bordered table-hover">
+                                                                <thead>
+                                                                    <tr class="success">
+                                                                        <th class="center">#</th>
+                                                                        <th class="center">الكود</th>
+                                                                        <th class="center">الاسم</th>
+                                                                        <th class="center">الكمية</th>
+                                                                        <th class="center" ng-show="ItemsInventory.ShowStoreDetails">المخزن</th>
+                                                                        <th class="center" ng-show="ItemsInventory.ShowExpired">تاريخ انتهاء الصلاحية</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody ng-if="showGroup" ng-repeat="group in ReportResult.TransferOnGroups">
+                                                                    <tr>
+                                                                        <td colspan="{{getTableWidthSpan()}}" class="center" style="background-color:#d4d4d4;">{{group.GROUP_AR_NAME}}</td>
+                                                                    </tr>
+                                                                    <tr ng-repeat="item in ReportResult.Transfer | filter : {GROUP_ID:group.GROUP_ID} : true track by $index">
+                                                                        <td class="center">{{ $index + 1 }}</td>
+                                                                        <td class="center">{{item.ITEM_CODE }}</td>
+                                                                        <td class="center">{{item.ITEM_AR_NAME }}</td>
+                                                                        <td class="center">{{item.QTY}}</td>
+                                                                        <th class="center" ng-show="ItemsInventory.ShowStoreDetails">{{item.COM_STORE_ID}}</th>
+                                                                        <th class="center" ng-show="ItemsInventory.ShowExpired">{{item.EXPIRED_DATE}}</th>
+                                                                    </tr>
+                                                                </tbody>
+                                                                <tbody ng-if="!showGroup">
+                                                                    <tr ng-repeat="item in ReportResult.Transfer track by $index">
+                                                                        <td class="center">{{ $index + 1}}</td>
+                                                                        <td class="center">{{item.ITEM_CODE }}</td>
+                                                                        <td class="center">{{item.ITEM_AR_NAME }}</td>
+                                                                        <td class="center">{{item.QTY}}</td>
+                                                                        <th class="center" ng-show="ItemsInventory.ShowStoreDetails">{{item.COM_STORE_ID}}</th>
+                                                                        <th class="center" ng-show="ItemsInventory.ShowExpired">{{item.EXPIRED_DATE}}</th>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div id="EmptyResult" class="tab-pane fade in" ng-if="ReportType == 2">
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <table class="table table-bordered table-hover">
+                                                                <thead>
+                                                                    <tr class="success">
+                                                                        <th class="center">#</th>
+                                                                        <th class="center">الكود</th>
+                                                                        <th class="center">الاسم</th>
+                                                                        <th class="center" ng-show="ItemsInventory.ShowStoreDetails">المخزن</th>
+                                                                        <th class="center" ng-show="ItemsInventory.ShowExpired">تاريخ انتهاء الصلاحية</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody ng-if="showGroup" ng-repeat="group in ReportResult.EmptyItemsOnGroups">
+                                                                    <tr>
+                                                                        <td colspan="{{getTableWidthSpan()}}" class="center" style="background-color:#d4d4d4;">{{group.GROUP_AR_NAME}}</td>
+                                                                    </tr>
+                                                                    <tr ng-repeat="item in ReportResult.EmptyItems | filter : {GROUP_ID:group.GROUP_ID} : true track by $index">
+                                                                        <td class="center">{{ $index + 1 }}</td>
+                                                                        <td class="center">{{item.ITEM_CODE }}</td>
+                                                                        <td class="center">{{item.ITEM_AR_NAME }}</td>
+                                                                        <th class="center" ng-show="ItemsInventory.ShowStoreDetails">{{item.COM_STORE_ID}}</th>
+                                                                        <th class="center" ng-show="ItemsInventory.ShowExpired">{{item.EXPIRED_DATE}}</th>
+                                                                    </tr>
+                                                                </tbody>
+                                                                <tbody ng-if="!showGroup">
+                                                                    <tr ng-repeat="item in ReportResult.EmptyItems track by $index">
+                                                                        <td class="center">{{ $index + 1}}</td>
+                                                                        <td class="center">{{item.ITEM_CODE }}</td>
+                                                                        <td class="center">{{item.ITEM_AR_NAME }}</td>
+                                                                        <th class="center" ng-show="ItemsInventory.ShowStoreDetails">{{item.COM_STORE_ID}}</th>
+                                                                        <th class="center" ng-show="ItemsInventory.ShowExpired">{{item.EXPIRED_DATE}}</th>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div id="BalanceResult" ng-class="{'tab-pane fade in' : ReportType == 2}">
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <table class="table table-bordered table-hover">
+                                                                <thead>
+                                                                    <tr class="success">
+                                                                        <th class="center">#</th>
+                                                                        <th class="center">الكود</th>
+                                                                        <th class="center">الاسم</th>
+                                                                        <th class="center">الكمية</th>
+                                                                        <th class="center" ng-show="ItemsInventory.ShowStoreDetails">المخزن</th>
+                                                                        <th class="center" ng-show="ItemsInventory.ShowExpired">تاريخ انتهاء الصلاحية</th>
+                                                                        <th ng-show="(SellTypeList|filter : {OptionValue:1} : true)[0].SELECTED || ItemsInventory.SellTypeId == 1" class="center">سعر الجملة</th>
+                                                                        <th ng-show="(SellTypeList|filter : {OptionValue:2} : true)[0].SELECTED || ItemsInventory.SellTypeId == 2" class="center">سعر نصف جملة</th>
+                                                                        <th ng-show="(SellTypeList|filter : {OptionValue:3} : true)[0].SELECTED || ItemsInventory.SellTypeId == 3" class="center">سعر قطاعى</th>
+                                                                        <th ng-show="(SellTypeList|filter : {OptionValue:4} : true)[0].SELECTED || ItemsInventory.SellTypeId == 4" class="center">سعر مستهلك</th>
+                                                                        <th ng-show="(SellTypeList|filter : {OptionValue:5} : true)[0].SELECTED || ItemsInventory.SellTypeId == 5" class="center">سعر مندوب</th>
+                                                                        <th ng-show="(SellTypeList|filter : {OptionValue:6} : true)[0].SELECTED || ItemsInventory.SellTypeId == 6" class="center">سعر تصدير</th>
+                                                                        <th ng-show="(SellTypeList|filter : {OptionValue:7} : true)[0].SELECTED || ItemsInventory.SellTypeId == 7" class="center">سعر اخر شراء</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody ng-if="showGroup" ng-repeat="group in ReportResult.ItemsBalanceOnGroup">
+                                                                    <tr>
+                                                                        <td colspan="{{getBalancesTableWidthSpan()}}" class="center" style="background-color:#d4d4d4;">{{group.GROUP_AR_NAME}}</td>
+                                                                    </tr>
+                                                                    <tr ng-repeat="item in ReportResult.ItemsBalance | filter : {GROUP_ID:group.GROUP_ID} : true track by $index">
+                                                                        <td class="center">{{ $index + 1 }}</td>
+                                                                        <td class="center">{{item.ITEM_CODE }}</td>
+                                                                        <td class="center">{{item.ITEM_AR_NAME }}</td>
+                                                                        <td class="center">{{item.QTY}}</td>
+                                                                        <th class="center" ng-show="ItemsInventory.ShowStoreDetails">{{item.COM_STORE_ID}}</th>
+                                                                        <th class="center" ng-show="ItemsInventory.ShowExpired">{{item.EXPIRED_DATE}}</th>
+                                                                        <td ng-show="(SellTypeList|filter : {OptionValue:1} : true)[0].SELECTED || ItemsInventory.SellTypeId == 1" class="center">{{item.WHOLE_PRICEQTY || 0 }}</td>
+                                                                        <td ng-show="(SellTypeList|filter : {OptionValue:2} : true)[0].SELECTED || ItemsInventory.SellTypeId == 2" class="center">{{item.HALF_WHOLE_PRICEQTY || 0 }}</td>
+                                                                        <td ng-show="(SellTypeList|filter : {OptionValue:3} : true)[0].SELECTED || ItemsInventory.SellTypeId == 3" class="center">{{item.RETAIL_PRICEQTY || 0 }}</td>
+                                                                        <td ng-show="(SellTypeList|filter : {OptionValue:4} : true)[0].SELECTED || ItemsInventory.SellTypeId == 4" class="center">{{item.CONSUMER_PRICEQTY || 0}}</td>
+                                                                        <td ng-show="(SellTypeList|filter : {OptionValue:5} : true)[0].SELECTED || ItemsInventory.SellTypeId == 5" class="center">{{item.EMP_PRICEQTY || 0}}</td>
+                                                                        <td ng-show="(SellTypeList|filter : {OptionValue:6} : true)[0].SELECTED || ItemsInventory.SellTypeId == 6" class="center">{{item.EXPORT_PRICEQTY || 0 }}</td>
+                                                                        <td ng-show="(SellTypeList|filter : {OptionValue:7} : true)[0].SELECTED || ItemsInventory.SellTypeId == 7" class="center">{{item.LAST_BUY_PRICEQTY || 0}}</td>
+                                                                    </tr>
+                                                                </tbody>
+                                                                <tbody ng-if="!showGroup">
+                                                                    <tr ng-repeat="item in ReportResult.ItemsBalance track by $index">
+                                                                        <td class="center">{{ $index + 1}}</td>
+                                                                        <td class="center">{{item.ITEM_CODE }}</td>
+                                                                        <td class="center">{{item.ITEM_AR_NAME }}</td>
+                                                                        <td class="center">{{item.QTY}}</td>
+                                                                        <th class="center" ng-show="ItemsInventory.ShowStoreDetails">{{item.COM_STORE_ID}}</th>
+                                                                        <th class="center" ng-show="ItemsInventory.ShowExpired">{{item.EXPIRED_DATE}}</th>
+                                                                        <td ng-show="(SellTypeList|filter : {OptionValue:1} : true)[0].SELECTED || ItemsInventory.SellTypeId == 1" class="center">{{item.WHOLE_PRICEQTY || 0 }}</td>
+                                                                        <td ng-show="(SellTypeList|filter : {OptionValue:2} : true)[0].SELECTED || ItemsInventory.SellTypeId == 2" class="center">{{item.HALF_WHOLE_PRICEQTY || 0 }}</td>
+                                                                        <td ng-show="(SellTypeList|filter : {OptionValue:3} : true)[0].SELECTED || ItemsInventory.SellTypeId == 3" class="center">{{item.RETAIL_PRICEQTY || 0 }}</td>
+                                                                        <td ng-show="(SellTypeList|filter : {OptionValue:4} : true)[0].SELECTED || ItemsInventory.SellTypeId == 4" class="center">{{item.CONSUMER_PRICEQTY || 0}}</td>
+                                                                        <td ng-show="(SellTypeList|filter : {OptionValue:5} : true)[0].SELECTED || ItemsInventory.SellTypeId == 5" class="center">{{item.EMP_PRICEQTY || 0}}</td>
+                                                                        <td ng-show="(SellTypeList|filter : {OptionValue:6} : true)[0].SELECTED || ItemsInventory.SellTypeId == 6" class="center">{{item.EXPORT_PRICEQTY || 0 }}</td>
+                                                                        <td ng-show="(SellTypeList|filter : {OptionValue:7} : true)[0].SELECTED || ItemsInventory.SellTypeId == 7" class="center">{{item.LAST_BUY_PRICEQTY || 0}}</td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <table class="table table-bordered table-hover">
+                                                        <!--<thead>
+                                                            <tr class="success">
+                                                                <th class="center">#</th>
+                                                                <th class="center">الكود</th>
+                                                                <th class="center">الاسم</th>
+                                                            </tr>ReportResult.EmptyItems
+                                                        </thead>-->
+                                                        <tbody>
+                                                            <tr>
+                                                                <td class="center">الاجمالى بسعر الجملة</td>
+                                                                <td class="center">{{ReportResult.TotalPrices.WHOLE_PRICETafqeet }}</td>
+                                                                <th class="center">{{ReportResult.TotalPrices.WHOLE_PRICE}}</th>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="center">الاجمالى بسعر نصف الجملة</td>
+                                                                <td class="center">{{ReportResult.TotalPrices.HALF_WHOLE_PRICETafqeet }}</td>
+                                                                <th class="center">{{ReportResult.TotalPrices.HALF_WHOLE_PRICE}}</th>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="center">الاجمالى بسعر المندوب</td>
+                                                                <td class="center">{{ReportResult.TotalPrices.EMP_PRICETafqeet }}</td>
+                                                                <th class="center">{{ReportResult.TotalPrices.EMP_PRICE}}</th>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="center">الاجمالى بسعر التصدير</td>
+                                                                <td class="center">{{ReportResult.TotalPrices.EXPORT_PRICETafqeet }}</td>
+                                                                <th class="center">{{ReportResult.TotalPrices.EXPORT_PRICE}}</th>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="center">الاجمالى بسعر القطاعى</td>
+                                                                <td class="center">{{ReportResult.TotalPrices.RETAIL_PRICETafqeet }}</td>
+                                                                <th class="center">{{ReportResult.TotalPrices.RETAIL_PRICE}}</th>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="center">الاجمالى بسعر المستهلك</td>
+                                                                <td class="center">{{ReportResult.TotalPrices.CONSUMER_PRICETafqeet }}</td>
+                                                                <th class="center">{{ReportResult.TotalPrices.CONSUMER_PRICE}}</th>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="center">الاجمالى بسعر اخر شراء</td>
+                                                                <td class="center">{{ReportResult.TotalPrices.LAST_BUY_PRICETafqeet }}</td>
+                                                                <th class="center">{{ReportResult.TotalPrices.LAST_BUY_PRICE}}</th>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                            <!--/.col-md-12-->
+                                        </div>
+                                        <!--/.panel-body-->
+                                    </div>
+                                    <!--/.panel-collapse-->
+                                </div>
+                                <!--/.panel-->
+                            </div>
+                            <!--/.panel-group-->
+                        </div>
+                        <!--/.panel -->
+                    </div>
+                    <!--/.panel-->
+                </div>
+                <!--/.col-md-12-->
+            </div>
+            <!--/.container-fluid-->
+        </div>
+        <!--/.wrap-content-->
+    </div>
+    <!--/.main-content-->
+</div>
+<!--/.app-content-->

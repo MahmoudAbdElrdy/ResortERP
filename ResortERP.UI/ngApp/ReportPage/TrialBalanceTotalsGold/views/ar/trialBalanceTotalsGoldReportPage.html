@@ -1,0 +1,362 @@
+﻿<div class="app-content">
+    <div class="main-content">
+        <div class="wrap-content container" id="container">
+            <div class="container-fluid container-fullw">
+
+                <div class="col-xs-12 margin-top-10 margin-bottom-10">
+                    <div class="breadcrumb-wrapper no-margin">
+                        <h4 class="mainTitle no-margin"> ميزان المراجعة بالمجاميع - ذهب </h4>
+                        <ul class="pull-right breadcrumb">
+                            <li><a href="#!"><i class="fa fa-home margin-left-5 text-large text-dark"></i>الرئيسية</a></li>
+                            <li>ميزان المراجعة بالمجاميع - ذهب</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-xs-12 margin-bottom-10">
+                    <div class="panel-white panel-body no-margin">
+                        <button class="btn btn-o btn-default no-border" ng-click="fnExcelReport()" ng-show="show_print"> طباعة <i class="ti-printer"></i></button>
+                        <button class="btn btn-o btn-default no-border" ng-click="clearEnity()">جديد <i class="fa fa-refresh"></i></button>
+                        <button class="btn btn-o btn-default no-border" ng-click="GetSearchResult()"> بحث <i class="fa fa-search"></i> </button>
+                    </div>
+                </div>
+
+                <div class="col-md-9 padding-left-5">
+                    <div class="panel-body panel-white">
+                        <div class="col-md-4">
+                            <label>الفرع</label>
+                            <div ng-dropdown-multiselect="" extra-settings="dropdownSetting" class="form-control"
+                                 options="UserBranches" selected-model="SelectedBranch">
+                            </div> 
+                        </div>
+                        <!--<div class="col-md-4">
+                            <div class="form-group">
+                                <label>مركز التكلفة</label>
+                                <ui-select ng-model="var.COST_CENTER_ID" theme="bootstrap" id="cost_Center_ID" on-select="getCostCenter($item)">
+                                    <ui-select-match placeholder="اختر مركز التكلفة">
+                                        {{$select.selected.COST_CENTER_AR_NAME}}
+                                    </ui-select-match>
+                                    <ui-select-choices repeat="value.COST_CENTER_ID as value in mainCostCenterList | filter: $select.search">
+                                        <div ng-bind-html="value.COST_CENTER_AR_NAME | highlight: $select.search"></div>
+                                    </ui-select-choices>
+                                </ui-select>
+                            </div>
+                        </div>-->
+                        <!--<div class="col-md-4">
+                            <div class="form-group">
+                                <label>النوع</label>
+                                <select ng-model="type" id="type" class="form-control">
+                                    <option value="0" ng-selected="true">مجموع</option>
+                                    <option value="1">ارصدة</option>
+                                </select>
+
+                            </div>
+                        </div>-->
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>من تاريخ</label>
+                                <input type="date" name="firstName" ng-model="startDate" class="form-control" placeholder="من تاريخ">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="control-label">إلى تاريخ</label>
+                                <input type="date" class="form-control" ng-model="endDate" placeholder="إلى تاريخ">
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>العملة</label>
+                                <ui-select ng-model="var.CURRENCY_ID" theme="bootstrap" id="currencies" on-select="changeCurrencyRate($item)">
+                                    <ui-select-match placeholder="اختر العملة">
+                                        {{$select.selected.CURRENCY_AR_NAME}}
+                                    </ui-select-match>
+                                    <ui-select-choices repeat="value.CURRENCY_ID as value in currenciesList | filter: $select.search">
+                                        <div ng-bind-html="value.CURRENCY_AR_NAME | highlight: $select.search"></div>
+                                    </ui-select-choices>
+                                </ui-select>
+
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>سعر الصرف</label>
+                                <input type="text" ng-model="CURRENCY_RATE" id="CURRENCY_RATE" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>ترتيب الحسابات</label>
+                                <select ng-model="ACC_Order" id="ACC_Order" class="form-control">
+                                    <option value="1">الكود</option>
+                                    <option value="2">الاسم</option>
+                                </select>
+
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>مستوى الحسابات</label>
+
+                                <select ng-model="ACC_Level" id="ACC_Level" class="form-control" ng-change="filterAccountsLevels()">
+                                    <option value="">اختر مستوى الحساب</option>
+                                    <option value="1">الاول</option>
+                                    <option value="2">الثانى</option>
+                                    <option value="2">الثالث</option>
+                                </select>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <!--/.col-md-8-->
+
+                <div class="col-md-3 padding-right-5">
+                    <div class="panel panel-white">
+                        <div class="panel-heading border-light">
+                            <h4 class="panel-title">خيارات التقرير</h4>
+                        </div>
+                        <div class="panel-body min-height-280">
+                            <div class="col-xs-12 form-group">
+                                <div class="checkbox clip-check check-primary">
+                                    <input type="checkbox" id="MainAcc" name="MainAcc" ng-model="MainAcc" checked ng-change="filterMainAccounts()" />
+                                    <label for="MainAcc">اظهار الحسابات الرئيسية</label>
+                                </div>
+                            </div>
+                            
+
+                            <div class="col-xs-12 form-group">
+                                <div class="checkbox clip-check check-primary">
+                                    <input type="checkbox" id="SubAcc" name="SubAcc" ng-model="SubAcc" checked ng-change="filterSubAccounts()" />
+                                    <label for="SubAcc">اظهار الحسابات الفرعية</label>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 form-group">
+                                <div class="checkbox clip-check check-primary">
+                                    <input type="checkbox" id="BalancedAcc" name="BalancedAcc" ng-model="BalancedAcc" checked ng-change="filterBalancedAccounts()" />
+                                    <label for="BalancedAcc">اظهار الحسابات المرصدة</label>
+                                </div>
+
+                            </div>
+                            
+                            <div class="col-xs-12 form-group">
+                                <div class="checkbox clip-check check-primary">
+                                    <input type="checkbox" id="EmptyAcc" name="EmptyAcc" ng-model="EmptyAcc" checked ng-change="filterEmptyAccounts()" />
+                                    <label for="EmptyAcc">اظهار الحسابات الفارغة</label>
+                                </div>
+                            </div>
+                            
+
+
+                        </div>
+                    </div>
+                </div>
+                <!--/.col-md-4-->
+                <div class="col-xs-12">
+                    <div class="panel-body panel-white">
+                        <div class="col-xs-12 no-padding margin-top-15 margin-bottom-15">
+                            <div class="col-md-2 col-md-offset-1">
+                                <table class="table">
+                                    <tbody>
+                                        <tr>
+                                            <td>مركز التكلفة</td>
+                                            <td>{{selectedCostCenter.COST_CENTER_AR_NAME}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-md-2">
+                                <table class="table">
+                                    <tbody>
+                                        <tr>
+                                            <td>من تاريخ</td>
+                                            <td>{{startDate | date}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-md-2">
+                                <table class="table">
+                                    <tbody>
+                                        <tr>
+                                            <td>إلى تاريخ</td>
+                                            <td>{{endDate | date}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-md-2">
+                                <table class="table">
+                                    <tbody>
+                                        <tr>
+                                            <td>العملة</td>
+                                            <td>{{selectedCurrency.CURRENCY_AR_NAME}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-md-2">
+                                <table class="table">
+                                    <tbody>
+                                        <tr>
+                                            <td>سعر الصرف</td>
+                                            <td>{{CURRENCY_RATE}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-12">
+                            <div class="space12 text-center margin-top-20">
+                                <div class="btn-group">
+                                    <a class="btn btn-o btn-default btn-wide" ng-click="getPrevious()">السابق</a>
+                                    <a class="btn btn-o btn-default btn-wide" ng-click="getNext()">التالى</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel">
+                        <div class="panel-group accordion" id="accordion">
+                            <div class="panel panel-white">
+                                <div class="panel-heading">
+                                    <h5 class="panel-title"><a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" data-target="#collapseTwo"> <i class="icon-arrow"></i> ميزان المراجعة المعرفة سابقاً </a></h5>
+                                </div>
+                                <div id="collapseTwo" class="collapse">
+                                    <div class="panel-body">
+                                        <div class="col-md-12">
+
+                                            <div class="table-responsive">
+                                                <table class="table table-bordered table-hover">
+                                                    <thead>
+                                                        <tr>
+                                                            <th colspan="2"></th>
+                                                            <th colspan="4" class="center">ذهب عيار 24</th>
+                                                            <th colspan="4" class="center">ذهب عيار 22</th>
+                                                            <th colspan="4" class="center">ذهب عيار 21</th>
+                                                            <th colspan="4" class="center">ذهب عيار 18</th>
+                                                        </tr>
+                                                        <tr class="warning">
+                                                            <th class="center">مسلسل</th>
+                                                            <th class="center">اسم الحساب</th>
+
+                                                            <th class="center">رصيد دائن 24</th>
+                                                            <th class="center">رصيد مدين 24</th>
+                                                            <th class="center">24 مجموع دائن</th>
+                                                            <th class="center">مجموع مدين 24</th>
+
+                                                            <th class="center">رصيد دائن 22</th>
+                                                            <th class="center">رصيد مدين 22</th>
+                                                            <th class="center">22 مجموع دائن</th>
+                                                            <th class="center">مجموع مدين 22</th>
+
+                                                            <th class="center">رصيد دائن 21</th>
+                                                            <th class="center">رصيد مدين 21</th>
+                                                            <th class="center">21 مجموع دائن</th>
+                                                            <th class="center">مجموع مدين 21</th>
+
+                                                            <th class="center">رصيد دائن 18</th>
+                                                            <th class="center">رصيد مدين 18</th>
+                                                            <th class="center">18 مجموع دائن</th>
+                                                            <th class="center">مجموع مدين 18</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr ng-repeat="acc in entryMasterList">
+                                                            <td class="center">{{ $index + 1 }}</td>
+                                                            <td class="center">{{acc.AC_NAME }}</td>
+
+                                                            <!--------------------->
+
+                                                            <td class="center">{{ acc.B_DEBIT_Gold24 }}</td>
+                                                            <td class="center">{{ acc.B_CREDIT_Gold24 }}</td>
+
+                                                            <td class="center">{{acc.IN_DEBIT_Gold24 }}</td>
+                                                            <td class="center">{{acc.IN_CREDIT_Gold24 }}</td>
+
+                                                            <!--------------------->
+
+                                                            <td class="center">{{ acc.B_DEBIT_Gold22 }}</td>
+                                                            <td class="center">{{ acc.B_CREDIT_Gold22 }}</td>
+
+                                                            <td class="center">{{acc.IN_DEBIT_Gold22 }}</td>
+                                                            <td class="center">{{acc.IN_CREDIT_Gold22 }}</td>
+
+                                                            <!--------------------->
+
+                                                            <td class="center">{{ acc.B_DEBIT_Gold21 }}</td>
+                                                            <td class="center">{{ acc.B_CREDIT_Gold21 }}</td>
+
+                                                            <td class="center">{{acc.IN_DEBIT_Gold21 }}</td>
+                                                            <td class="center">{{acc.IN_CREDIT_Gold21 }}</td>
+
+                                                            <!--------------------->
+
+                                                            <td class="center">{{ acc.B_DEBIT_Gold18 }}</td>
+                                                            <td class="center">{{ acc.B_CREDIT_Gold18 }}</td>
+
+                                                            <td class="center">{{acc.IN_DEBIT_Gold18 }}</td>
+                                                            <td class="center">{{acc.IN_CREDIT_Gold18 }}</td>
+
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="center">المجموع</td>
+                                                            <td class="center"></td>
+
+                                                            <td class="center">{{sum_BDEBIT_24}}</td>
+                                                            <td class="center">{{sum_BCREDIT_24}}</td>
+                                                            <td class="center">{{sum_ADEBIT_24}}</td>
+                                                            <td class="center">{{sum_ACREDIT_24}}</td>
+
+                                                            <td class="center">{{sum_BDEBIT_22}}</td>
+                                                            <td class="center">{{sum_BCREDIT_22}}</td>
+                                                            <td class="center">{{sum_ADEBIT_22}}</td>
+                                                            <td class="center">{{sum_ACREDIT_22}}</td>
+
+                                                            <td class="center">{{sum_BDEBIT_21}}</td>
+                                                            <td class="center">{{sum_BCREDIT_21}}</td>
+                                                            <td class="center">{{sum_ADEBIT_21}}</td>
+                                                            <td class="center">{{sum_ACREDIT_21}}</td>
+
+                                                            <td class="center">{{sum_BDEBIT_18}}</td>
+                                                            <td class="center">{{sum_BCREDIT_18}}</td>
+                                                            <td class="center">{{sum_ADEBIT_18}}</td>
+                                                            <td class="center">{{sum_ACREDIT_18}}</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <ul uib-pagination total-items="currencyCount" ng-model="pageNum" max-size="maxSize" class="pagination" boundary-links="true" num-pages="numPages" ng-change="pageChanged()"></ul>
+                                            <pre>صفحه: {{pageNum}} / {{numPages}}</pre>
+                                        </div>
+                                        <!--/.col-md-12-->
+                                    </div>
+                                    <!--/.panel-body-->
+                                </div>
+                                <!--/.panel-collapse-->
+                            </div>
+                            <!--/.panel-->
+                        </div>
+                        <!--/.panel-group-->
+                    </div>
+
+                </div>
+                <!--/.panel -->
+            </div>
+            <!--/.container-fluid-->
+        </div>
+        <!--/.wrap-content-->
+    </div>
+    <!--/.main-content-->
+</div>
+<!--/.app-content-->
+
+<style>
+    .ui-select-toggle .ng-binding.ng-scope {
+        text-align: right;
+    }
+</style>

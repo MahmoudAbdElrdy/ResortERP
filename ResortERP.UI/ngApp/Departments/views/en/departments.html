@@ -1,0 +1,164 @@
+﻿<div class="app-content">
+    <div class="main-content">
+        <div class="wrap-content container" id="container">
+            <div class="container-fluid container-fullw ">
+                <div class="row">
+                    <div class="col-md-12">
+
+                        <div class="panel " style="height:100%;overflow:auto;">
+                            <div class="panel-heading border-bottom panel-white ">
+                                <h4 class="panel-title">Department</h4>
+                                <div class="panel-tools">
+                                    <a data-original-title="Refresh" data-toggle="tooltip" data-placement="top" data-trigger="hover" class="btn btn-transparent btn-sm panel-refresh" href="#"><i class="fa fa-circle-o"></i></a>
+                                    <a data-original-title="Expand" data-toggle="tooltip" data-placement="top" data-trigger="hover" class="btn btn-transparent btn-sm panel-expand" href="#"><i class="fa fa-compress expand-on"></i><i class="fa fa-expand expand-off"></i></a>
+                                </div>
+                            </div>
+
+                            <div class="panel-body panel-white">
+                                <ng-form id="test" name="test">
+
+                                    <div class="col-md-12 margin-bottom-25">
+                                        <div ng-class="{'has-error': test.$invalid}" class="">
+                                            <div class="form-group col-md-6">
+                                                <label>Department Code :</label>
+                                                <div class="help-block error" style="display:inline" ng-show="test.code.$error.required">*</div>
+                                                <input type="text" class="form-control" name="code" placeholder="Department Code " ng-model="departments.DEPT_CODE" required>
+                                            </div>
+                                        </div>
+
+                                        <div ng-class="{'has-error': test.$invalid}" class="form-group">
+                                            <div class="form-group col-md-6">
+                                                <label>Company Branch:</label>
+                                                <div class="help-block error" style="display:inline" ng-show="test.cbranch.$error.required">*</div>
+                                                <select ng-model="departments.COM_BRN_ID" name="cbranch" class="form-control" ng-options="x.COM_BRN_ID as x.COM_BRN_AR_NAME for x in CompanyBranchesList" required>
+                                                    <option value="">Choose Company Branch</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div ng-class="{'has-error': test.$invalid}" class="form-group">
+                                            <div class="form-group col-md-6">
+                                                <label>Department Arabic Name:</label>
+                                                <div class="help-block error" style="display:inline" ng-show="test.arname.$error.required">*</div>
+                                                <input type="text" class="form-control" name="arname" placeholder="Department Arabic Name" ng-model="departments.DEPT_AR_NAME" required>
+                                            </div>
+                                        </div>
+
+                                        <div ng-class="{'has-error': test.$invalid}" class="form-group">
+                                            <div class="form-group col-md-6">
+                                                <label>Department Latin Name:</label>
+                                                <div class="help-block error" style="display:inline" ng-show="test.enname.$error.required">*</div>
+                                                <input type="text" class="form-control" name="enname" placeholder="Department Latin Name" ng-model="departments.DEPT_EN_NAME" required>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group col-md-6">
+                                            <label>Department Arabic Abbreviation</label>
+                                            <input type="text" class="form-control" placeholder="Department Arabic Abbreviation" ng-model="departments.DEPT_AR_ABRV">
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label>Department Latin Abbreviation:</label>
+                                            <input type="text" class="form-control" placeholder="Department Latin Abbreviation" ng-model="departments.DEPT_EN_ABRV">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-12 margin-bottom-25 my-btn-group center text-center">
+                                        <button type="button" class="btn btn-primary margin-top-10" ng-disabled="test.$invalid" ng-click="savedepartments()">Save <i class="fa fa-save"></i></button>
+                                        <button type="button" class="btn btn-success margin-top-10" ng-click="refreshData()">Refresh<i class="fa fa-refresh"></i></button>
+                                        <button type="button" class="btn btn-info margin-top-10" ng-click="clearEnity()">New<i class="fa fa-paste"></i></button>
+                                    </div>
+                                    <!--/.my-btn-group-->
+                                </ng-form>
+                            </div>
+
+                            <div class="panel-group accordion" id="accordion">
+                                <div class="panel panel-white">
+                                    <div class="panel-heading">
+                                        <h5 class="panel-title"><a class="accordion-toggle collapsed" style="border: none" data-toggle="collapse" data-parent="#accordion" data-target="#collapseTwo"> <i class="icon-arrow"></i>Previously Defined Departments</a></h5>
+                                    </div>
+                                    <!--/.panel-heading-->
+                                    <div id="collapseTwo" class="col-md-12 panel-collapse panel-white collapse">
+                                        <div class="panel-body">
+                                            <div class="table-responsive">
+                                                <div class="col-md-3 pull-left ">
+                                                    <table class="table table-stylish">
+                                                        <tbody>
+                                                            <tr>
+                                                                <td class="center text-extra-large"><i class="ti-save"></i></td>
+                                                                <td><span class="text-dark block">Total Departments Number :</span></td>
+                                                                <td class="center">{{departmentsTotalCount}}</td>
+                                                                <td class="center"><i class="fa fa-caret-down text-red"></i></td>
+                                                            </tr>
+
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <table class="table table-hover table-full-width ps-scrollbar-x small  panel-full-screen  fc-scroller  " style="height:150px;overflow:auto;" id="sample-table-2">
+                                                        <thead>
+                                                            <tr class=" success ">
+                                                                <th>#</th>
+                                                                <th>Department Code</th>
+                                                                <th>Department Arabic Name</th>
+                                                                <th>Department Latin Name</th>
+                                                                <th>Department Arabic Abbreviation</th>
+                                                                <th>Department Latin Abbreviation</th>
+                                                                <th>Edit / Delete</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr ng-repeat="dept in departmentsList">
+                                                                <td class="center hidden-xs">{{ $index + 1 }}</td>
+                                                                <td class="center ">{{ dept.DEPT_CODE }}</td>
+                                                                <td class="center ">{{ dept.DEPT_AR_NAME }}</td>
+                                                                <td class="center ">{{ dept.DEPT_EN_NAME }}</td>
+                                                                <td class="center hidden-xs">{{ dept.DEPT_AR_ABRV }}</td>
+                                                                <td class="center hidden-xs">{{ dept.DEPT_EN_ABRV }}</td>
+                                                                <td class="center">
+                                                                    <div class="visible-md visible-lg hidden-sm hidden-xs">
+                                                                        <a href="" ng-click="dirEnity(dept)" class="btn btn-transparent btn-xs" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fa fa-pencil"></i></a>
+                                                                        <a href="" ng-click="deleteEnity(dept)" class="btn btn-transparent btn-xs tooltips" data-toggle="tooltip" data-placement="top" title="Remove"><i class="fa fa-times fa fa-white"></i></a>
+                                                                    </div>
+                                                                    <div class="visible-xs visible-sm hidden-md hidden-lg">
+                                                                        <div class="btn-group dropdown">
+                                                                            <button type="button" class="btn btn-o btn-sm dropdown-toggle" data-toggle="dropdown">
+                                                                                <i class="fa fa-cog"></i>&nbsp;<span class="caret"></span>
+                                                                            </button>
+                                                                            <ul class="dropdown-menu pull-right dropdown-light" role="menu">
+                                                                                <li><a href="" ng-click="dirEnity(dept)"> Edit </a></li>
+                                                                                <li><a href="" ng-click="deleteEnity(dept)"> Delete </a></li>
+                                                                            </ul>
+                                                                        </div>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <!--/.col-md-12-->
+                                            </div>
+                                            <!--/.table-responsive-->
+                                            <ul uib-pagination total-items="departmentsTotalCount" ng-model="pageNum" max-size="maxSize" class="pagination-sm" boundary-links="true" num-pages="numPages" ng-change="pageChanged()"></ul>
+                                            <pre>Page: {{pageNum}} / {{numPages}}</pre>
+                                        </div>
+                                        <!--/.panel-body-->
+                                    </div>
+                                    <!--/.panel-collapse-->
+                                </div>
+                                <!--/.panel -->
+                            </div>
+                            <!--/.accordion-->
+                        </div>
+                        <!--/.panel-->
+                    </div>
+                    <!--/.col-md-12-->
+                </div>
+                <!--/.row-->
+            </div>
+            <!--/.container-fluid-->
+        </div>
+        <!--/.wrap-content-->
+    </div>
+    <!--/.main-content-->
+</div>
+<!--/.app-content-->

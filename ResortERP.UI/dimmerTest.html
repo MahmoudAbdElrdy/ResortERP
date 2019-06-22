@@ -1,0 +1,126 @@
+﻿
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AngularJS Dimmer</title>
+    <link rel="stylesheet" href="Content/bootstrap.min.css">
+    <link rel="stylesheet" href="Content/bootstrap-theme.min.css">
+    <!--<link rel="stylesheet" href="assets/vendor/prism.css">-->
+    <link rel="stylesheet" href="app.css">
+    <link rel="stylesheet" href="Content/angular-dimmer.css">
+    <link href='http://fonts.googleapis.com/css?family=Ubuntu:400,700' rel='stylesheet' type='text/css'>
+</head>
+<body ng-app="demo">
+    <section class="wrapper" ng-controller="AngularDimmerDemoController">
+        <dimmer z-index="20000"></dimmer>
+        <header>
+            <h1>Angular Dimmer</h1>
+            <p></p>
+        </header>
+        <section class="main">
+            <form>
+                <div class="form-group">
+                    <label for="cityInput">City</label>
+                    <input type="city" class="form-control" id="cityInput" ng-model="city" placeholder="Enter city">
+                </div>
+                <button type="submit" class="btn btn-primary" ng-click="search()" ng-disabled="isEmpty()">Search</button>
+            </form>
+        </section>
+        <section class="result" ng-show="showResult()">
+            <h3>Result: </h3>
+            <pre>
+                {{weatherResult}}
+            </pre>
+        </section>
+    </section>
+
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular-animate.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular-route.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular-resource.min.js"></script>
+    <!--<script src="assets/vendor/prism.js"></script>-->
+    <script src="Content/bower_components/spin.js/spin.js"></script>
+    <script>
+        'use strict';
+
+        angular.module('demo', ['ngRoute', 'ngResource', 'dimmerModule'])
+            .config(['$httpProvider', function ($httpProvider) {
+                var $http,
+                    interceptor = ['$q', '$injector', '$timeout', '$dimmer', function ($q, $injector, $timeout, $dimmer) {
+                        function success(response) {
+                            // get $http via $injector because of circular dependency problem
+                            $http = $http || $injector.get('$http');
+                            if ($http.pendingRequests.length < 1) {
+                                $timeout(function () {
+                                    $dimmer.hide();
+                                }, 2000);
+                            }
+                            return response;
+                        }
+
+                        function error(response) {
+                            // get $http via $injector because of circular dependency problem
+                            $http = $http || $injector.get('$http');
+                            if ($http.pendingRequests.length < 1) {
+                                $timeout(function () {
+                                    $dimmer.hide();
+                                }, 2000);
+                            }
+                            return $q.reject(response);
+                        }
+
+                        return function (promise) {
+                            $dimmer.show();
+                            return promise.then(success, error);
+                        }
+                    }];
+
+                $httpProvider.responseInterceptors.push(interceptor);
+            }])
+            .factory('DemoService', ['$resource', function ($resource) {
+                return $resource(
+                    'http://api.openweathermap.org/data/2.5/weather',
+                    null,
+                    {
+                        'demo': { method: 'GET', 'params': { 'q': 'Berlin' }, isArray: false }
+                    }
+                );
+            }])
+            .controller('AngularDimmerDemoController', ['$scope', '$http', '$resource',
+                function ($scope, $http, $resource) {
+                    console.log('initialize controller ...');
+                    $scope.city = '';
+                    $scope.weatherResult = null;
+
+                    $scope.search = function () {
+                        //DemoService.demo({ 'q': $scope.city })
+                        //.$promise.then(function (result) {
+                        //    $scope.weatherResult = result;
+                        //});
+
+                        $http.get('http://localhost:55515/units/get?pageNum=' + 1 + '&pageSize=' + 30)
+                        .then(function (result) {
+                            $scope.weatherResult = result;
+                        }
+                    )};
+
+                    $scope.isEmpty = function () {
+                        return angular.isUndefined($scope.city) || $scope.city === '';
+                    };
+
+                    $scope.showResult = function () {
+                        return angular.isDefined($scope.weatherResult) && $scope.weatherResult !== null;
+                    };
+
+                    $scope.$watch('city', function (newVal) {
+                        if (newVal === '') {
+                            $scope.weatherResult = null;
+                        }
+                    });
+                }
+            ]);
+    </script>
+    <script src="Scripts/angular-dimmer.js"></script>
+</body>
+</html>

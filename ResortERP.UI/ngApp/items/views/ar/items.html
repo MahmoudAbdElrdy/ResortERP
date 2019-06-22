@@ -1,0 +1,1057 @@
+﻿<script type="text/ng-template" id="customTemplate.html">
+    <a><span ng-bind-html="match.label | uibTypeaheadHighlight:query"></span></a>
+</script>
+
+<items ng-controller="itemsController" ng-init="itemsPageLoad()"></items>
+<div class="main-content">
+    <div class="wrap-content container" id="container">
+        <div class="container-fluid container-fullw ">
+            <div class="col-xs-12 margin-top-10 margin-bottom-10">
+                <div class="breadcrumb-wrapper no-margin">
+                    <h4 class="mainTitle no-margin">بيانات الصنف</h4>
+                    <ul class="pull-right breadcrumb">
+                        <li><a href="#!"><i class="fa fa-home margin-left-5 text-large text-dark"></i>الرئيسية</a></li>
+                        <li>بيانات الصنف</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-xs-12 margin-bottom-10">
+                <div class="panel-white panel-body no-margin">
+                    <button type="button" class="btn btn-o btn-default no-border" ng-click="clearEnity()"><i
+                            class="fa fa-paste"></i><span>جديد</span></button>
+                    <button type="button" class="btn btn-o btn-default no-border" ng-disabled="test.$invalid"
+                        ng-click="saveItems()"><i class="fa fa-save"></i><span>حفظ الكل</span></button>
+                    <button type="button" class="btn btn-o btn-default no-border" data-toggle="modal"
+                        data-target="#myModal"><i class="fa fa-info-circle"></i><span>التفاصيل</span></button>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="panel" style="height:100%;overflow:auto;">
+                    <div class="panel-body panel-body panel-white">
+                        <ng-form id="test" name="test">
+
+                            <div class="col-md-10">
+                                <div ng-class="{'has-error': test.$invalid}" class="">
+                                    <div class="form-group col-md-4">
+                                        <label for="ITEM_CODE">كود الصنف:</label>
+                                        <div class="help-block error" style="display:inline"
+                                            ng-show="test.ITEM_CODE.$error.required">*</div>
+                                        <input type="text" id="ITEM_CODE" name="ITEM_CODE" ng-model="item.ITEM_CODE"
+                                            class="form-control" placeholder="كود الصنف" required-resource-directive>
+                                    </div>
+                                </div>
+
+
+                                <div ng-class="{'has-error': test.$invalid}" class="">
+                                    <div class="form-group col-md-4">
+                                        <label for="ITEM_AR_NAME">اسم الصنف العربى:</label>
+                                        <div class="help-block error" style="display:inline"
+                                            ng-show="test.ITEM_AR_NAME.$error.required">*</div>
+                                        <input type="text" id="ITEM_AR_NAME" name="ITEM_AR_NAME"
+                                            ng-model="item.ITEM_AR_NAME" class="form-control"
+                                            placeholder="اسم الصنف العربى" required-resource-directive>
+                                    </div>
+                                </div>
+
+                                <div ng-class="{'has-error': test.$invalid}" class="form-group">
+                                    <div class="form-group col-md-4">
+                                        <label for="ITEM_EN_NAME">اسم الصنف اللاتينى:</label>
+                                        <div class="help-block error" style="display:inline"
+                                            ng-show="test.ITEM_EN_NAME.$error.required">*</div>
+                                        <input type="text" id="ITEM_EN_NAME" name="ITEM_EN_NAME"
+                                            ng-model="item.ITEM_EN_NAME" class="form-control"
+                                            placeholder="اسم الصنف اللاتينى" required-resource-directive>
+                                    </div>
+                                </div>
+
+
+                                <div ng-class="{'has-error': test.$invalid}" class="form-group">
+                                    <div class="form-group col-md-4">
+                                        <label>مجموعة الصنف:</label>
+                                        <div class="help-block error" style="display:inline"
+                                            ng-show="test.gid.$error.required">*</div>
+                                        <select ng-model="item.GROUP_ID" name="gid"
+                                            ng-options="x.GroupID as x.GroupARName for x in itemGroupsList"
+                                            class="form-control" ng-change="getItemGroupdata();getSystemOption()"
+                                            required-resource-directive>
+                                            <option value="">المجموعة الصنف</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div ng-class="{'has-error': test.$invalid}" class="form-group"> <!--ng-show="!flagHide"-->
+                                    <div class="form-group col-md-4">
+                                        <label>عيار الصنف:</label>
+                                        <div class="help-block error" style="display:inline"
+                                            ng-show="test.caliberid.$error.required">*</div>
+                                        <select ng-model="item.CaliberID"
+                                            ng-options="x.ID as x.ARName for x in itemCalibersList" name="caliberid"
+                                            ng-change="getClearnessRateByCaliber()" class="form-control"
+                                            required-resource-directive>
+                                            <option value="">عيار الصنف</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group"> <!--ng-show="!flagHide"-->
+                                    <div class="form-group col-md-4">
+                                        <label for="ClearnessRate">درجه النقاوه:</label>
+                                        <input type="text" id="ClearnessRate" name="ClearnessRate"
+                                            ng-model="item.ClearnessRate" class="form-control"
+                                            placeholder="درجه النقاوه">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <!--ng-show="!flagHide"-->
+                                    <div class="form-group col-md-4">
+                                        <!--<div class="input-group-addon">
+                                            اجور التصنيع
+                                        </div>-->
+                                        <label for="ManufacturingWages">اجور التصنيع:</label>
+                                        <input class="form-control" type="number"
+                                               id="item.ManufacturingWages"
+                                               name="ManufacturingWages"
+                                               ng-model="item.ManufacturingWages"
+                                               ng-change="calculateItemPrice()">
+                                    </div>
+                                </div>
+                                <!--/.form-group-->
+
+                                <div class="form-group">
+                                    <!--ng-show="!flagHide"-->
+                                    <div class="form-group col-md-4">
+                                        <!--<div class="input-group-addon">
+                                            هامش الربح
+                                        </div>-->
+                                        <label for="ProfitMargin">  هامش الربح:</label>
+                                        <input class="form-control" type="number"
+                                               id="item.ProfitMargin"
+                                               name="ProfitMargin"
+                                               ng-model="item.ProfitMargin"
+                                               ng-change="calculateItemPrice()">
+                                    </div>
+                                </div>
+                               
+
+                                <div class="form-group col-md-4">
+                                    <label>المورد:</label>
+                                    <ui-select style="margin-top:0" ng-model="item.COMPANY_ID" theme="bootstrap" focus-on="UiSelectDemo1"
+                                               id="custDdl" name="custDdl" on-select="select2EventEnter()">
+                                        <ui-select-match allow-clear="false" placeholder="المورد">
+                                            {{$select.selected.ACC_AR_NAME}}
+                                        </ui-select-match>
+                                        <ui-select-choices repeat="x.ACC_ID as x in CustomersAccounts | filter: $select.search" onfocus="true"
+                                                           ui-select-opened on-select="select2EventEnter()">
+                                            <div ng-bind-html="x.ACC_AR_NAME | highlight: $select.search"></div>
+                                        </ui-select-choices>
+                                    </ui-select>
+
+                                    <!--<select ng-model="item.COMPANY_ID"
+                                        ng-options="x.ACC_ID as x.ACC_AR_NAME for x in CustomersAccounts | filter: $select.search"
+                                        class="form-control" required-resource-directive>
+                                        <option value="">المورد</option>
+                                    </select>-->
+                                </div>
+
+                                <div class="form-group col-md-4" ng-show="!flagHide">
+                                    <label>حساب صندوق الذهب :</label>
+                                    <select ng-model="item.GoldAccID"
+                                        ng-options="x.ACC_ID as x.ACC_AR_NAME for x in GoldBoxAccounts"
+                                        class="js-example-basic-hide-search js-states form-control input-sm">
+                                        <option value=""> حساب صندوق الذهب </option>
+                                    </select>
+                                </div>
+
+
+                                <div class="form-group col-md-4" ng-show="!flagHide">
+                                    <label>وزن الفصوص :</label>
+                                    <input type="text" id="GemsWeight" name="GemsWeight" ng-model="item.GemsWeight"
+                                        class="form-control" placeholder="وزن الفصوص">
+                                </div>
+
+                                <div class="form-group col-md-4" ng-show="!flagHide">
+                                    <label> اجره الفصوص:</label>
+                                    <input type="text" id="GemsWages" name="GemsWages" ng-model="item.GemsWages"
+                                           class="form-control" placeholder="اجره الفصوص">
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="ITEM_REMARKS">ملاحظات:</label>
+                                    <textarea type="text" id="ITEM_REMARKS" name="ITEM_REMARKS"
+                                        ng-model="item.ITEM_REMARKS" class="form-control" placeholder="ملاحظات"
+                                        style="height: 35px"></textarea>
+                                </div>
+                            </div>
+
+                            <div class="col-md-2">
+                                <div class="form-group center form-group center upload-img">
+                                    <div class="help-block error" style="display:inline"
+                                        ng-show="test.itemImg.$error.required">*</div>
+                                    <img id="imgPersonal" class="img-responsive img-rounded img-thumbnail"
+                                        style="width:100%;height:150px !important;" ng-src="{{imageSrc}}"
+                                        alt="اختر صورة" />
+                                    <span class="btn btn-block btn-primary fileinput-button">
+                                        <i class="glyphicon glyphicon-plus"></i> <span>استعراض..</span>
+                                        <input type="file" class="btn btn-primary" title="استعراض" name="itemImg"
+                                            style="width:100% !important;" ng-model-instant
+                                            onchange="angular.element(this).scope().imageUpload(event)" />
+                                    </span>
+                                </div>
+                            </div>
+
+                        </ng-form>
+                        <div id="myModal" class="modal fade" role="dialog">
+                            <div class="modal-dialog">
+                                <!-- Modal content-->
+                                <div class="modal-content">
+
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">×</span>
+                                        </button>
+                                        <h4 class="modal-title">تفاصيل</h4>
+                                    </div>
+
+                                    <div class="modal-body">
+                                        <div class="row no-margin">
+                                            <div class="col-md-12 margin-bottom-25 margin-top-35">
+                                                <div class="tabbable tabs-right bg-body">
+                                                    <ul id="myTab1" class="nav nav-tabs no-border width-150">
+                                                        <li class="active"><a href="#myTab1_example1" data-toggle="tab"
+                                                                target="_self"> الوحدات </a></li>
+                                                        <li><a href="#myTab1_example2" data-toggle="tab" target="_self">
+                                                                الأسعار </a></li>
+                                                        <li><a href="#myTab1_example3" data-toggle="tab" target="_self">
+                                                                خيارت</a></li>
+                                                    </ul>
+                                                    <div class="tab-content no-border">
+                                                        <div class="tab-pane no-border fade in active"
+                                                            id="myTab1_example1">
+                                                            <div class="table-responsive ">
+                                                                <table class="table table-hover" id="sample-table-1">
+                                                                    <tr class="success">
+                                                                        <td>#</td>
+                                                                        <td>كود الوحدة </td>
+                                                                        <td>أسم الوحدة</td>
+                                                                        <td>عامل التحويل</td>
+                                                                        <td>الوحدة الافتراضية </td>
+                                                                        <td>الباركود</td>
+                                                                        <td>حذف</td>
+                                                                    </tr>
+                                                                    <tr
+                                                                        ng-repeat="item in itemUnitsList track by $index ">
+                                                                        <td class="center">{{ $index+1 }}</td>
+                                                                        <td>
+                                                                            <span e-name="UNIT_CODE"
+                                                                                e-press-enter="getUnitDataUsingUnitCode($data,$index)"
+                                                                                ng-show="rowform.$show()"
+                                                                                editable-text="item.UNIT_CODE"
+                                                                                e-form="rowform">
+                                                                                {{ item.UNIT_CODE || 'empty' }}
+                                                                            </span>
+                                                                        </td>
+                                                                        <td>
+                                                                            <span editable-text="item.UNIT_AR_NAME"
+                                                                                e-name="ITEM_AR_NAME"
+                                                                                ng-show="rowform.$show()"
+                                                                                e-form="rowform">
+                                                                                {{ item.UNIT_AR_NAME || 'empty' }}
+                                                                            </span>
+                                                                        </td>
+                                                                        <td>
+                                                                            <span e-name="UNIT_TRANS_RATE"
+                                                                                e-ng-change="updateItemUnitsListOnChange('UNIT_TRANS_RATE',$data,$index)"
+                                                                                ng-show="rowform.$show()"
+                                                                                editable-text="item.UNIT_TRANS_RATE"
+                                                                                e-form="rowform">
+                                                                                {{ item.UNIT_TRANS_RATE || 1 }}
+                                                                            </span>
+                                                                        </td>
+                                                                        <td class="hidden-xs">
+
+                                                                            <span
+                                                                                class="checkStyle checkbox clip-check check-primary"
+                                                                                e-name="IS_DEFAULT"
+                                                                                e-ng-change="updateItemUnitsListOnChange('IS_DEFAULT',$data,$index)"
+                                                                                ng-show="rowform.$show()"
+                                                                                editable-checkbox="item.IS_DEFAULT"
+                                                                                e-form="rowform">
+                                                                                {{ item.IS_DEFAULT || false }}
+                                                                            </span>
+                                                                        </td>
+                                                                        <td>
+                                                                            <span e-name="UNIT_BARCODE"
+                                                                                e-ng-change="updateItemUnitsListOnChange('UNIT_BARCODE',$data,$index)"
+                                                                                ng-show="rowform.$show()"
+                                                                                editable-text="item.UNIT_BARCODE"
+                                                                                e-form="rowform">
+                                                                                {{ item.UNIT_BARCODE || 0 }}
+                                                                            </span>
+                                                                        </td>
+                                                                        <td class="center">
+                                                                            <form editable-form name="rowform"
+                                                                                ng-show="rowform.$show()"
+                                                                                class="form-buttons form-inline"
+                                                                                shown="inserted == item"></form>
+                                                                            <div class="buttons"
+                                                                                ng-show="!rowform.$show()">
+                                                                                <div
+                                                                                    class="visible-md visible-lg hidden-sm hidden-xs">
+                                                                                    <a href=""
+                                                                                        ng-click="removeItemUnit($index)"
+                                                                                        class="btn btn-transparent btn-xs tooltips"
+                                                                                        data-toggle="tooltip"
+                                                                                        data-placement="top"
+                                                                                        title="Remove"><i
+                                                                                            class="fa fa-times fa fa-white"></i></a>
+                                                                                </div>
+                                                                                <div
+                                                                                    class="visible-xs visible-sm hidden-md hidden-lg">
+                                                                                    <div class="btn-group dropdown">
+                                                                                        <button type="button"
+                                                                                            class="btn btn-o btn-sm dropdown-toggle"
+                                                                                            data-toggle="dropdown">
+                                                                                            <i
+                                                                                                class="fa fa-cog"></i>&nbsp;<span
+                                                                                                class="caret"></span>
+                                                                                        </button>
+                                                                                        <ul class="dropdown-menu pull-right dropdown-light"
+                                                                                            role="menu">
+                                                                                            <li><a
+                                                                                                    ng-click="removeItemUnit($index)">
+                                                                                                    Delete </a></li>
+                                                                                        </ul>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </div>
+                                                            <button type="button"
+                                                                class="btn btn-wide btn-primary margin-top-10"
+                                                                ng-click="addEmptyItemUnit()">جديد</button>
+                                                        </div>
+                                                        <div class="tab-pane no-border fade" id="myTab1_example2">
+                                                            <div class="table-responsive">
+                                                                <table class="table  table-hover" id="sample-table-1">
+                                                                    <tr class="success" style="font-weight: bold">
+                                                                        <td>أسم الوحدة</td>
+                                                                        <td>جملة</td>
+                                                                        <td>نصف جملة</td>
+                                                                        <td>قطاعي</td>
+                                                                        <td>مستهلك</td>
+                                                                        <td>مندوب</td>
+                                                                        <td>تصدير</td>
+                                                                        <td>آخر شراء</td>
+                                                                        <td>حذف</td>
+                                                                    </tr>
+                                                                    <tr
+                                                                        ng-repeat="item in itemUnitsList track by $index ">
+                                                                        <td>
+                                                                            <span ng-model="item.UNIT_AR_NAME"
+                                                                                editable-text="item.UNIT_AR_NAME"
+                                                                                e-name="ITEM_AR_NAME"
+                                                                                ng-show="rowform.$show()"
+                                                                                e-form="rowform">
+                                                                                {{ item.UNIT_AR_NAME || 'empty' }}
+                                                                            </span>
+                                                                        </td>
+                                                                        <td>
+                                                                            <span e-name="WHOLE_PRICE"
+                                                                                e-ng-change="updateItemUnitsListOnChange('WHOLE_PRICE',$data,$index)"
+                                                                                ng-show="rowform.$show()"
+                                                                                editable-text="item.WHOLE_PRICE"
+                                                                                e-form="rowform">
+                                                                                {{ item.WHOLE_PRICE || 0 }}
+                                                                            </span>
+                                                                        </td>
+                                                                        <td>
+                                                                            <span e-name="HALF_WHOLE_PRICE"
+                                                                                e-ng-change="updateItemUnitsListOnChange('HALF_WHOLE_PRICE',$data,$index)"
+                                                                                ng-show="rowform.$show()"
+                                                                                editable-text="item.HALF_WHOLE_PRICE"
+                                                                                e-form="rowform">
+                                                                                {{ item.HALF_WHOLE_PRICE || 0 }}
+                                                                            </span>
+                                                                        </td>
+                                                                        <td>
+                                                                            <span e-name="RETAIL_PRICE"
+                                                                                e-ng-change="updateItemUnitsListOnChange('RETAIL_PRICE',$data,$index)"
+                                                                                ng-show="rowform.$show()"
+                                                                                editable-text="item.RETAIL_PRICE"
+                                                                                e-form="rowform">
+
+                                                                                {{ item.RETAIL_PRICE || 0 }}
+                                                                            </span>
+                                                                        </td>
+                                                                        <td>
+                                                                            <span e-name="CONSUMER_PRICE"
+                                                                                e-ng-change="updateItemUnitsListOnChange('CONSUMER_PRICE',$data,$index)"
+                                                                                ng-show="rowform.$show()"
+                                                                                editable-text="item.CONSUMER_PRICE"
+                                                                                e-form="rowform">
+                                                                                {{ item.CONSUMER_PRICE || 0 }}
+                                                                            </span>
+                                                                        </td>
+                                                                        <td>
+                                                                            <span e-name="EMP_PRICE"
+                                                                                e-ng-change="updateItemUnitsListOnChange('EMP_PRICE',$data,$index)"
+                                                                                ng-show="rowform.$show()"
+                                                                                editable-text="item.EMP_PRICE"
+                                                                                e-form="rowform">
+
+                                                                                {{ item.EMP_PRICE || 0 }}
+                                                                            </span>
+                                                                        </td>
+                                                                        <td>
+                                                                            <span e-name="EXPORT_PRICE"
+                                                                                e-ng-change="updateItemUnitsListOnChange('EXPORT_PRICE',$data,$index)"
+                                                                                ng-show="rowform.$show()"
+                                                                                editable-text="item.EXPORT_PRICE"
+                                                                                e-form="rowform">
+
+                                                                                {{ item.EXPORT_PRICE || 0 }}
+                                                                            </span>
+                                                                        </td>
+                                                                        <td>
+                                                                            <span e-name="LAST_BUY_PRICE"
+                                                                                e-ng-change="updateItemUnitsListOnChange('LAST_BUY_PRICE',$data,$index)"
+                                                                                ng-show="rowform.$show()"
+                                                                                editable-text="item.LAST_BUY_PRICE"
+                                                                                e-form="rowform">
+                                                                                {{ item.LAST_BUY_PRICE || 0 }}
+                                                                            </span>
+                                                                        </td>
+                                                                        <td class="center">
+                                                                            <form editable-form name="rowform"
+                                                                                ng-show="rowform.$show()"
+                                                                                class="form-buttons form-inline"
+                                                                                shown="inserted == item"></form>
+                                                                            <div class="buttons"
+                                                                                ng-show="!rowform.$show()">
+                                                                                <div
+                                                                                    class="visible-md visible-lg hidden-sm hidden-xs">
+                                                                                    <a href=""
+                                                                                        ng-click="removeItemUnit($index)"
+                                                                                        class="btn btn-transparent btn-xs tooltips"
+                                                                                        data-toggle="tooltip"
+                                                                                        data-placement="top"
+                                                                                        title="Remove"><i
+                                                                                            class="fa fa-times fa fa-white"></i></a>
+                                                                                </div>
+
+                                                                                <div
+                                                                                    class="visible-xs visible-sm hidden-md hidden-lg">
+                                                                                    <div class="btn-group dropdown">
+                                                                                        <button type="button"
+                                                                                            class="btn btn-o btn-sm dropdown-toggle"
+                                                                                            data-toggle="dropdown">
+                                                                                            <i
+                                                                                                class="fa fa-cog"></i>&nbsp;<span
+                                                                                                class="caret"></span>
+                                                                                        </button>
+                                                                                        <ul class="dropdown-menu pull-right dropdown-light"
+                                                                                            role="menu">
+                                                                                            <li><a
+                                                                                                    ng-click="removeItemUnit($index)">
+                                                                                                    حذف </a></li>
+                                                                                        </ul>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </div>
+                                                            <button type="button"
+                                                                class="btn btn-wide btn-primary margin-top-10"
+                                                                ng-click="addEmptyItemUnit()">جديد</button>
+                                                        </div>
+                                                        <div class="tab-pane no-border fade" id="myTab1_example3">
+                                                            <!--الخيارات-->
+                                                            <div class="col-md-8">
+                                                                <div class="panel-body panel-white">
+
+                                                                    <div class="form-group">
+                                                                        <div class="input-group">
+                                                                            <div class="input-group-addon">نوع الصنف:
+                                                                            </div>
+                                                                            <select ng-model="item.ITEM_TYPE"
+                                                                                ng-options="x.typeID as x.typeName for x in itemTypes"
+                                                                                class="form-control  "></select>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="form-group">
+                                                                        <div class="input-group">
+                                                                            <div class="input-group-addon">حالة الصنف:
+                                                                            </div>
+                                                                            <select ng-model="item.ItemStatus"
+                                                                                ng-options="x.ID as x.ARName for x in itemStatusList"
+                                                                                class="form-control  "></select>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="form-group">
+                                                                        <div class="input-group">
+                                                                            <div class="input-group-addon">حد الطلب:
+                                                                            </div>
+                                                                            <input type="text" id="item.MIN_QTY"
+                                                                                name="MIN_QTY" ng-model="item.MIN_QTY"
+                                                                                class="form-control  ">
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="form-group">
+                                                                        <div class="input-group">
+                                                                            <div class="input-group-addon">رقم الموديل:
+                                                                            </div>
+                                                                            <input type="text" id="item.ITEM_MODEL"
+                                                                                name="ITEM_MODEL"
+                                                                                ng-model="item.ITEM_MODEL"
+                                                                                class="form-control  ">
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="form-group">
+                                                                        <div class="input-group">
+                                                                            <div class="input-group-addon">طريقة حساب
+                                                                                التكلفة:</div>
+                                                                            <select
+                                                                                ng-model="item.COST_CALCULATION_TYPE"
+                                                                                ng-options="x.ID as x.ARName for x in costCalculationTypes"
+                                                                                class="form-control  "></select>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="form-group">
+                                                                        <div class="input-group">
+                                                                            <div class="input-group-addon">لون الصنف:
+                                                                            </div>
+                                                                            <input type="color" ng-hide="true"
+                                                                                id="item.ITEM_COLOR" name="ITEM_COLOR"
+                                                                                ng-model="item.ITEM_COLOR"
+                                                                                ng-change="setItemColor(item.ITEM_COLOR)"
+                                                                                class="form-control  ">
+                                                                            <input type="color" ng-model="ITEM_COLOR"
+                                                                                ng-change="setItemColor(ITEM_COLOR)"
+                                                                                class="form-control  ">
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="form-group">
+                                                                        <div class="input-group">
+                                                                            <div class="input-group-addon">خصم البيع:
+                                                                            </div>
+                                                                            <input type="number" id="item.SELLEDISCOUNT"
+                                                                                name="SELLEDISCOUNT"
+                                                                                ng-model="item.SELLEDISCOUNT"
+                                                                                class="form-control  ">
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="form-group">
+                                                                        <div class="input-group">
+                                                                            <div class="input-group-addon">خصم الشراء
+                                                                            </div>
+                                                                            <input type="number"
+                                                                                id="item.BURCHASEDISCOUNT"
+                                                                                name="BURCHASEDISCOUNT"
+                                                                                ng-model="item.BURCHASEDISCOUNT"
+                                                                                class="form-control">
+                                                                        </div>
+                                                                    </div>
+                                                                    <!--/.form-group-->
+
+                                                                    <div class="form-group">
+                                                                        <div class="input-group">
+                                                                            <div class="input-group-addon">عدد الارقام
+                                                                            </div>
+                                                                            <input type="number"
+                                                                                id="item.QUANTITYLENGTHATTHEBARCODE"
+                                                                                name="QUANTITYLENGTHATTHEBARCODE"
+                                                                                ng-model="item.QUANTITYLENGTHATTHEBARCODE"
+                                                                                class="form-control  ">
+                                                                        </div>
+                                                                    </div>
+                                                                    <!--/.form-group-->
+
+                                                                    <div class="form-group">
+                                                                        <div class="input-group">
+                                                                            <div class="input-group-addon">بداية الارقام
+                                                                                لجزء الكمية</div>
+                                                                            <input type="number"
+                                                                                id="item.QUANTITYPARTSTARTATTHEBARCODE"
+                                                                                name="QUANTITYPARTSTARTATTHEBARCODE"
+                                                                                ng-model="item.QUANTITYPARTSTARTATTHEBARCODE"
+                                                                                class="form-control  ">
+                                                                        </div>
+                                                                    </div>
+                                                                    <!--/.form-group-->
+
+                                                                    <div class="form-group">
+                                                                        <div class="input-group">
+                                                                            <div class="input-group-addon">عدد الارقام
+                                                                                لجزء الكمية</div>
+                                                                            <input type="number"
+                                                                                id="item.QUANTITYPARTLENGTHATTHEBARCODE"
+                                                                                name="QUANTITYPARTLENGTHATTHEBARCODE"
+                                                                                ng-model="item.QUANTITYPARTLENGTHATTHEBARCODE"
+                                                                                class="form-control  ">
+                                                                        </div>
+                                                                    </div>
+                                                                    <!--/.form-group-->
+
+                                                                    <div class="form-group">
+                                                                        <div class="input-group">
+                                                                            <div class="input-group-addon">نسبة الضريبة
+                                                                                %</div>
+                                                                            <input class="form-control" type="number"
+                                                                                id="item.VATRate"
+                                                                                ng-disabled="!disableVATRate"
+                                                                                name="VATRate" ng-model="item.VATRate">
+                                                                        </div>
+                                                                    </div>
+                                                                    <!--/.form-group-->
+
+                                                                    <div class="form-group" ng-show="!flagHide">
+                                                                        <div class="input-group">
+                                                                            <div class="input-group-addon"> سعر الذهب
+                                                                                العالمي للجرام</div>
+                                                                            <input class="form-control" type="number"
+                                                                                id="item.GlobalGoldPrice"
+                                                                                name="GlobalGoldPrice"
+                                                                                ng-model="item.GlobalGoldPrice"
+                                                                                ng-change="calculateItemPrice()">
+                                                                        </div>
+                                                                    </div>
+                                                                    <!--/.form-group-->
+
+                                                                    <div class="form-group"> <!--ng-show="!flagHide"-->
+                                                                        <div class="input-group">
+                                                                            <div class="input-group-addon">اجور التصنيع
+                                                                            </div>
+                                                                            <input class="form-control" type="number"
+                                                                                id="item.ManufacturingWages"
+                                                                                name="ManufacturingWages"
+                                                                                ng-model="item.ManufacturingWages"
+                                                                                ng-change="calculateItemPrice()">
+                                                                        </div>
+                                                                    </div>
+                                                                    <!--/.form-group-->
+
+                                                                    <div class="form-group"> <!--ng-show="!flagHide"-->
+                                                                        <div class="input-group">
+                                                                            <div class="input-group-addon">هامش الربح
+                                                                            </div>
+                                                                            <input class="form-control" type="number"
+                                                                                id="item.ProfitMargin"
+                                                                                name="ProfitMargin"
+                                                                                ng-model="item.ProfitMargin"
+                                                                                ng-change="calculateItemPrice()">
+                                                                        </div>
+                                                                    </div>
+                                                                    <!--/.form-group-->
+
+                                                                    <div class="form-group">
+                                                                        <div class="input-group">
+                                                                            <div class="input-group-addon">سعر الصنف
+                                                                            </div>
+                                                                            <input class="form-control" type="number"
+                                                                                id="item.ItemPrice" name="ItemPrice"
+                                                                                ng-model="item.ItemPrice"
+                                                                                ng-change="getPrices()">
+                                                                        </div>
+                                                                    </div>
+                                                                    <!--/.form-group-->
+
+                                                                    <div class="form-group">
+                                                                        <div class="input-group">
+                                                                            <div class="input-group-addon"
+                                                                                ng-show="!flagHide">سعر الكيلو</div>
+                                                                            <input class="form-control" type="number"
+                                                                                id="item.KiloPrice" name="ItemPrice"
+                                                                                ng-model="item.KiloPrice" readonly>
+                                                                        </div>
+                                                                    </div>
+                                                                    <!--/.form-group-->
+
+                                                                    <div class="form-group">
+                                                                        <div class="input-group">
+                                                                            <div class="input-group-addon"
+                                                                                ng-show="!flagHide">سعر الوقيه</div>
+                                                                            <input class="form-control" type="number"
+                                                                                id="item.OuncePrice" name="ItemPrice"
+                                                                                ng-model="item.OuncePrice" readonly>
+                                                                        </div>
+                                                                    </div>
+                                                                    <!--/.form-group-->
+
+                                                                    <div class="form-group">
+                                                                        <div class="input-group">
+                                                                            <div class="input-group-addon">اقل سعر بيع
+                                                                            </div>
+                                                                            <input class="form-control" type="number"
+                                                                                id="item.LowestSellingPrice"
+                                                                                name="LowestSellingPrice"
+                                                                                ng-model="item.LowestSellingPrice">
+                                                                        </div>
+                                                                    </div>
+                                                                    <!--/.form-group-->
+
+                                                                    <div class="form-group">
+                                                                        <div class="input-group">
+                                                                            <div class="input-group-addon">وزن الصنف
+                                                                            </div>
+                                                                            <input class="form-control" type="number"
+                                                                                id="item.ItemWeight" name="ItemWeight"
+                                                                                ng-model="item.ItemWeight">
+                                                                        </div>
+                                                                    </div>
+                                                                    <!--/.form-group-->
+                                                                </div>
+                                                                <!--/. panel-white-->
+                                                            </div>
+                                                            <!--/.col-md-8-->
+
+                                                            <div class="col-md-4">
+                                                                <div class="panel-body panel-white">
+                                                                    <div class="form-group">
+                                                                        <div class="input-group">
+                                                                            <div
+                                                                                class="checkbox clip-check check-primary checkbox-inline">
+                                                                                <input type="checkbox"
+                                                                                    id="item.SERIAL_IN_INPUT"
+                                                                                    name="SERIAL_IN_INPUT"
+                                                                                    ng-model="item.SERIAL_IN_INPUT">
+                                                                                <label for="item.SERIAL_IN_INPUT">طلب
+                                                                                    الرقم المسلسل عند الادخال</label>
+                                                                            </div>
+                                                                            <!--/.checkbox-->
+                                                                        </div>
+                                                                        <!--/.input-group-->
+                                                                    </div>
+
+                                                                    <div class="form-group">
+                                                                        <div class="input-group">
+                                                                            <div
+                                                                                class="checkbox clip-check check-primary checkbox-inline">
+                                                                                <input type="checkbox"
+                                                                                    id="item.PRODUCTION_DATE"
+                                                                                    name="PRODUCTION_DATE"
+                                                                                    ng-model="item.PRODUCTION_DATE">
+                                                                                <label for="item.PRODUCTION_DATE">إدخال
+                                                                                    تاريخ الانتاج</label>
+                                                                            </div>
+                                                                            <!--/.checkbox-->
+                                                                        </div>
+                                                                        <!--/.input-group-->
+                                                                    </div>
+                                                                    <!--/.form-group-->
+
+                                                                    <div class="form-group">
+                                                                        <div class="input-group">
+                                                                            <div
+                                                                                class="checkbox clip-check check-primary checkbox-inline">
+                                                                                <input type="checkbox"
+                                                                                    id="item.SERIAL_IN_OUTPUT"
+                                                                                    name="SERIAL_IN_OUTPUT"
+                                                                                    ng-model="item.SERIAL_IN_OUTPUT">
+                                                                                <label for="item.SERIAL_IN_OUTPUT">طلب
+                                                                                    الرقم المسلسل عند الإخراج</label>
+                                                                            </div>
+                                                                            <!--/.checkbox-->
+                                                                        </div>
+                                                                        <!--/.input-group-->
+                                                                    </div>
+                                                                    <!--/.form-group-->
+
+                                                                    <div class="form-group">
+                                                                        <div class="input-group">
+                                                                            <div
+                                                                                class="checkbox clip-check check-primary checkbox-inline">
+                                                                                <input type="checkbox"
+                                                                                    id="item.EXPIRED_DATE"
+                                                                                    name="EXPIRED_DATE"
+                                                                                    ng-model="item.EXPIRED_DATE">
+                                                                                <label for="item.EXPIRED_DATE">إدخال
+                                                                                    تاريخ إنتهاء الصلاحية</label>
+                                                                            </div>
+                                                                            <!--/.checkbox-->
+                                                                        </div>
+                                                                        <!--/.input-group-->
+                                                                    </div>
+                                                                    <!--/.form-group-->
+
+                                                                    <div class="form-group">
+                                                                        <div class="input-group">
+                                                                            <div
+                                                                                class="checkbox clip-check check-primary checkbox-inline">
+                                                                                <input type="checkbox"
+                                                                                    id="item.DOESTHEQUANTITYISAPARTOFBARCODE"
+                                                                                    name="DOESTHEQUANTITYISAPARTOFBARCODE"
+                                                                                    ng-model="item.DOESTHEQUANTITYISAPARTOFBARCODE">
+                                                                                <label
+                                                                                    for="item.DOESTHEQUANTITYISAPARTOFBARCODE">الكمية
+                                                                                    جزء من الباركود؟</label>
+                                                                            </div>
+                                                                            <!--/.checkbox-->
+                                                                        </div>
+                                                                        <!--/.input-group-->
+                                                                    </div>
+                                                                    <!--/.form-group-->
+
+                                                                    <div class="form-group">
+                                                                        <div class="input-group">
+                                                                            <div
+                                                                                class="checkbox clip-check check-primary checkbox-inline">
+                                                                                <input type="checkbox"
+                                                                                    id="item.SubjectToVAT"
+                                                                                    ng-click="checked(disableVATRate)"
+                                                                                    name="SubjectToVAT"
+                                                                                    ng-model="item.SubjectToVAT">
+                                                                                <label for="item.SubjectToVAT">اخضاع
+                                                                                    للضريبة ؟</label>
+                                                                            </div>
+                                                                            <!--/.checkbox-->
+                                                                        </div>
+                                                                        <!--/.input-group-->
+                                                                    </div>
+                                                                    <!--/.form-group-->
+                                                                </div>
+                                                                <!--/.panel-white-->
+                                                            </div>
+                                                            <!--/.col-md-4-->
+
+                                                        </div>
+                                                    </div>
+                                                    <!--/.tab-content-->
+                                                </div>
+                                                <!--/.tabbable-->
+                                            </div>
+                                            <!--/.col-md-12-->
+                                        </div>
+                                        <!--/.row-->
+                                    </div>
+                                    <!--/.modal-body-->
+                                    <div class="modal-footer">
+                                        <div class="col-md-12">
+                                            <button type="button" class="btn btn-wide btn-danger"
+                                                data-dismiss="modal">إغلاق</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="panel-group accordion" id="accordion">
+                        <div class="panel panel-white">
+                            <div class="panel-heading">
+                                <h5 class="panel-title"><a class="accordion-toggle collapsed" data-toggle="collapse"
+                                        data-parent="#accordion" data-target="#collapseTwo"> <i class="icon-arrow"></i>
+                                        أصناف تم تعريفها مسبقاً </a></h5>
+                            </div>
+                            <div id="collapseTwo" class="panel-collapse collapse">
+                                <div class="panel-body panel-white">
+                                    <div class="table-responsive">
+                                        <div class="col-md-3 pull-left ">
+                                            <table class="table table-stylish">
+                                                <tbody>
+                                                    <tr>
+                                                        <td class="center text-extra-large"><i class="ti-save"></i></td>
+                                                        <td><span class="text-dark block">إجمالي الاصناف :</span></td>
+                                                        <td class="center">{{itemsTotalCount}}</td>
+                                                        <td class="center"><i class="fa fa-caret-down text-red"></i>
+                                                        </td>
+                                                    </tr>
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <table class="table table-bordered table-hover center" id="sample-table-1">
+                                                <tr class="success">
+                                                    <th></th>
+                                                    <!--<th class="hidden-xs">المسلسل</th>-->
+                                                    <th class="hidden-xs">كود الصنف</th>
+                                                    <th>الاسم عربى </th>
+                                                    <th>الاسم انجليزى</th>
+                                                    <th class="hidden-xs">المجموعه الرئيسيه</th>
+                                                    <th class="hidden-xs">ملاحظات</th>
+                                                    <th class="hidden-xs">المورد</th>
+                                                    <th>تعديل / حذف</th>
+                                                </tr>
+                                                <tr ng-repeat="item in items">
+                                                    <td class="hidden-xs">{{ $index + 1 }}</td>
+                                                    <td>{{ item.ITEM_CODE }}</td>
+                                                    <td>{{ item.ITEM_AR_NAME }}</td>
+                                                    <td>{{ item.ITEM_EN_NAME }}</td>
+                                                    <td class="hidden-xs">{{ item.GROUP_ID }}</td>
+                                                    <td class="hidden-xs">{{ item.ITEM_REMARKS }}</td>
+                                                    <td class="hidden-xs">{{item.COMPANY_ID}}</td>
+                                                    <td class="center">
+                                                        <div class="visible-md visible-lg hidden-sm hidden-xs">
+                                                            <a href="" ng-click="dirEnity(item)"
+                                                                class="btn btn-transparent btn-xs" data-toggle="tooltip"
+                                                                data-placement="top" title="Edit"><i
+                                                                    class="fa fa-pencil"></i></a>
+                                                            <a href="" ng-click="deleteEnity(item)"
+                                                                class="btn btn-transparent btn-xs tooltips"
+                                                                data-toggle="tooltip" data-placement="top"
+                                                                title="Remove"><i
+                                                                    class="fa fa-times fa fa-white"></i></a>
+                                                        </div>
+                                                        <div class="visible-xs visible-sm hidden-md hidden-lg">
+                                                            <div class="btn-group dropdown ">
+                                                                <button type="button"
+                                                                    class="btn btn-o btn-sm dropdown-toggle"
+                                                                    data-toggle="dropdown">
+                                                                    <i class="fa fa-cog"></i>&nbsp;<span
+                                                                        class="caret"></span>
+                                                                </button>
+                                                                <ul class="dropdown-menu pull-right dropdown-light"
+                                                                    role="menu">
+                                                                    <li>
+                                                                        <a href="" ng-click="dirEnity(item)"> تعديل </a>
+                                                                    </li>
+
+                                                                    <li>
+                                                                        <a href="" ng-click="deleteEnity(item)"> حذف
+                                                                        </a>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                        <ul uib-pagination total-items="itemsTotalCount" ng-model="pageNum"
+                                            max-size="maxSize" class="pagination-sm" boundary-links="true"
+                                            num-pages="numPages" ng-change="pageChanged()"></ul>
+                                        <pre>صفحه: {{pageNum}} / {{numPages}}</pre>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--/.panel-collapse-->
+                        </div>
+                        <!--/.panel-->
+                    </div>
+                    <!--/.panel-group-->
+                    <div id="collapsedDetails" class="collapse">
+                        <div class="col-md-12 margin-bottom-25 text-center">
+                            <div class="tabbable">
+                                <ul id="myTab1" class="nav nav-tabs">
+                                    <li class="active">
+                                        <a href="#myTab1_example1" data-toggle="tab" target="_self"> الوحدات </a>
+                                    </li>
+                                    <li>
+                                        <a href="#myTab1_example2" data-toggle="tab" target="_self"> الأسعار </a>
+                                    </li>
+                                    <li>
+                                        <a href="#myTab1_example3" data-toggle="tab" target="_self"> خيارت</a>
+                                    </li>
+                                </ul>
+                                <div class="tab-content">
+                                    <div class="tab-pane fade in active" id="myTab1_example1">
+                                        <div class="table-responsive">
+                                            <div class="col-md-6">
+                                                <div class="form-group col-md-12 margin-top-10">
+                                                    <label for="UNIT_ID">الوحدة</label>
+                                                    <input type="text" id="UNIT_ID" name="UNIT_ID"
+                                                        ng-model="itemUnit.UNIT_ID" class="form-control"
+                                                        placeholder="الوحدة">
+                                                </div>
+                                                <div class="form-group col-md-12 margin-top-10 ">
+                                                    <label for="UNIT_TRANS_RATE">عامل التحويل</label>
+                                                    <input type="text" id="UNIT_TRANS_RATE" name="UNIT_TRANS_RATE"
+                                                        ng-model="itemUnit.UNIT_TRANS_RATE" class="form-control"
+                                                        placeholder="عامل التحويل">
+                                                </div>
+                                                <div class="form-group col-md-12 margin-top-10 ">
+                                                    <label for="IS_DEFAULT">الوحدة الافتراضية</label>
+                                                    <input type="text" id="IS_DEFAULT" name="IS_DEFAULT"
+                                                        ng-model="itemUnit.IS_DEFAULT" class="form-control"
+                                                        placeholder="الوحدة الافتراضية">
+                                                </div>
+
+                                                <div class="form-group col-md-12 margin-top-10">
+                                                    <label for="UNIT_BARCODE">الباركود</label>
+                                                    <input type="text" id="UNIT_BARCODE" name="UNIT_BARCODE"
+                                                        ng-model="itemUnit.UNIT_BARCODE" class="form-control"
+                                                        placeholder="الباركود">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <button type="button" class="btn btn-primary btn-sm  margin-top-10"
+                                            ng-click="addItemUnit(itemUnit)">إضافة وحدة </button>
+
+                                        <p class="pull-right">الوحدات المضافة</p>
+
+                                        <table
+                                            class="table table-striped table-bordered table-hover table-full-width ps-scrollbar-x small  panel-full-screen  fc-scroller  "
+                                            style="height:150px;overflow:auto;" id="sample-table-2">
+                                            <thead>
+
+                                                <tr class="border-right  success ">
+                                                    <th class="center no-border border-right border-left hidden-xs">#
+                                                    </th>
+
+                                                    <th class="center no-border border-right border-left">
+                                                        الوحدة
+                                                    </th>
+                                                    <th class="center no-border border-right border-left hidden-xs">
+                                                        عامل التحويل
+                                                    </th>
+                                                    <th class="center no-border border-right border-left hidden-xs">
+                                                        الوحدة الافتراضية
+                                                    </th>
+                                                    <th class="center no-border border-right border-left">
+                                                        الباركود
+                                                    </th>
+                                                    <th>تعديل</th>
+                                                    <th>حذف</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="itemUnit in itemUnitsList">
+                                                    <td class="hidden-xs"> {{$index+1}}</td>
+                                                    <td>{{itemUnit.UNIT_ID}}</td>
+                                                    <td class="hidden-xs">{{itemUnit.UNIT_TRANS_RATE}}</td>
+                                                    <td class="hidden-xs">{{itemUnit.IS_DEFAULT}}</td>
+                                                    <td>{{itemUnit.UNIT_BARCODE}}</td>
+                                                    <td>
+                                                        <a class="label partition-blue" href=""
+                                                            ng-click="editItemUnit(itemUnit)"><i
+                                                                class="glyphicon glyphicon-share"></i> تعديل</a>
+                                                    </td>
+                                                    <td>
+                                                        <a class="label partition-red" href=""
+                                                            ng-click="deleteItemUnit(itemUnit)"><i
+                                                                class="glyphicon glyphicon-remove-circle"></i> حذف</a>
+
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--/.panel-->
+            </div>
+            <!--/.col-md-12-->
+
+        </div>
+        <!--/.container-fluid-->
+    </div>
+    <!--/.wrap-content-->
+</div>
+<!--/.main-content-->

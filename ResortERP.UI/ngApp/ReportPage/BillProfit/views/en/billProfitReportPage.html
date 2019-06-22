@@ -1,0 +1,426 @@
+﻿﻿
+<script type="text/ng-template" id="customTemplate.html">
+    <a>
+        <span ng-bind-html="match.label | uibTypeaheadHighlight:query"></span>
+    </a>
+</script>
+
+<div class="modal-demo">
+    <script type="text/ng-template" id="customerModal.html">
+        <div class="modal-header">
+            Supplier / Choose Customer
+        </div>
+        <div class="modal-body" id="modal-body">
+            <div class="panel-body panel-body panel-white">
+                <div class="table-responsive">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <form role="search" class="navbar-form main-search">
+                                <div class="form-group">
+                                    <input type="text" ng-model="billProfit.customerName" press-enter="searchForCustomer()" placeholder="Search with Customer Code or Name" class="form-control">
+                                    <button class="btn search-button" ng-click="searchForCustomer()"></button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <br />
+                    <table class="table table-bordered table-hover" id="tableCustomer">
+                        <tr>
+                            <th></th>
+                            <th class="hidden-xs">Customer Code</th>
+                            <th>Customer Arabic Name</th>
+                            <th>Customer Latin Name</th>
+                            <th class="hidden-xs">Customer Account Code</th>
+                            <th class="hidden-xs">Arabic Customer Acount Name</th>
+                            <th class="hidden-xs">Latin Customer Acount Name</th>
+                            <th class="hidden-xs">Customer Account Type</th>
+                            <th></th>
+                        </tr>
+                        <tr ng-repeat="cust in searchCustomers">
+                            <td class="hidden-xs">{{ $index + 1 }}</td>
+                            <td>{{ cust.CUST_CODE }}</td>
+                            <td>{{ cust.CUST_AR_NAME }}</td>
+                            <td>{{ cust.CUST_EN_NAME }}</td>
+                            <td class="hidden-xs">{{ cust.Account.ACC_CODE }}</td>
+                            <td class="hidden-xs">{{ cust.Account.ACC_AR_NAME }}</td>
+                            <td class="hidden-xs">{{ cust.Account.ACC_EN_NAME }}</td>
+                            <td class="hidden-xs">{{ cust.AccountTypeARName }}</td>
+                            <td><button type="button" class="btn btn-primary" ng-click="addSelectedCustomer(cust)">Add</button></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" id="closeItemModal" class="btn btn-danger" ng-click="cancel()">Close</button>
+        </div>
+    </script>
+</div>
+
+<div class="modal-demo">
+    <script type="text/ng-template" id="storeModal.html">
+        <div class="modal-header">
+            Choose Store
+        </div>
+        <div class="modal-body" id="modal-body">
+            <div class="panel-body panel-body panel-white">
+                <div class="table-responsive">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <form role="search" class="navbar-form main-search">
+                                <div class="form-group">
+                                    <input type="text" ng-model="billProfit.storeName" press-enter="searchForStore()" placeholder="البحث بكود او اسم العميل" class="form-control">
+                                    <button class="btn search-button" ng-click="searchForStore()"></button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <br />
+                    <table class="table table-bordered table-hover" id="tableStore">
+                        <tr>
+                            <th></th>
+                            <th class="hidden-xs">كود المخزن</th>
+                            <th>اسم المخزن العربي </th>
+                            <th>اسم المخزن الانجليزى</th>
+                            <th>اسم فرع الشركة</th>
+                            <th>اسم مدير المخزن</th>
+                            <th></th>
+                        </tr>
+                        <tr ng-repeat="stor in searchStores">
+                            <td class="hidden-xs">{{ $index + 1 }}</td>
+                            <td>{{ stor.COM_STORE_CODE }}</td>
+                            <td>{{ stor.COM_STORE_AR_NAME }}</td>
+                            <td>{{ stor.COM_STORE_EN_NAME }}</td>
+                            <td class="hidden-xs">{{ stor.CompanyBranchAR }}</td>
+                            <td class="hidden-xs">{{ stor.StoreManagerNameAr }}</td>
+                            <td><button type="button" class="btn btn-primary" ng-click="addSelectedStore(stor)">إضافة</button></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" id="closeItemModal" class="btn btn-danger" ng-click="cancel()">اغلاق</button>
+        </div>
+    </script>
+</div>
+
+<div class="modal-demo">
+    <script type="text/ng-template" id="EmployeeModal.html">
+        <div class="modal-header">
+            hoose Saler
+        </div>
+        <div class="modal-body" id="modal-body">
+            <div class="panel-body panel-body panel-white">
+                <div class="table-responsive">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <form role="search" class="navbar-form main-search">
+                                <div class="form-group">
+                                    <input type="text" ng-model="billProfit.EmployeeName" press-enter="searchForEmployee()" placeholder="Search with Employee Code or Name" class="form-control">
+                                    <button class="btn search-button" ng-click="searchForEmployee()"></button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <br />
+                    <table class="table table-bordered table-hover" id="tableEmployee">
+                        <tr>
+                            <th></th>
+                            <th class="hidden-xs">Employee Code</th>
+                            <th>Employee Arabic Name </th>
+                            <th>Employee English Name</th>
+                            <th></th>
+                        </tr>
+                        <tr ng-repeat="emp in searchEmployeess">
+                            <td class="hidden-xs">{{ $index + 1 }}</td>
+                            <td>{{ emp.EMP_CODE }}</td>
+                            <td>{{ emp.EMP_AR_NAME }}</td>
+                            <td>{{ emp.EMP_EN_NAME }}</td>
+                            <td><button type="button" class="btn btn-primary" ng-click="addSelectedEmployee(emp)">Add</button></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" id="closeItemModal" class="btn btn-danger" ng-click="cancel()">Close</button>
+        </div>
+    </script>
+</div>
+
+
+<div class="modal-demo">
+    <script type="text/ng-template" id="CostCenterModal.html">
+        <div class="modal-header">
+            Choose Cost Center
+        </div>
+        <div class="modal-body" id="modal-body">
+            <div class="panel-body panel-body panel-white">
+                <div class="table-responsive">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <form role="search" class="navbar-form main-search">
+                                <div class="form-group">
+                                    <input type="text" ng-model="billProfit.CostCenterName" press-enter="searchForCostCenter()" placeholder="Search With Cost Center Code Or Name" class="form-control">
+                                    <button class="btn search-button" ng-click="searchForCostCenter()"></button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <br />
+                    <table class="table table-bordered table-hover" id="tableCostCenter">
+                        <tr>
+                            <th></th>
+                            <th class="hidden-xs">Cost Center Code</th>
+                            <th>Cost Center  Arabic Name  </th>
+                            <th>Cost Center English Name </th>
+                            <th></th>
+                        </tr>
+                        <tr ng-repeat="cost in searchCostCenters">
+                            <td class="hidden-xs">{{ $index + 1 }}</td>
+                            <td>{{ cost.COST_CENTER_CODE }}</td>
+                            <td>{{ cost.COST_CENTER_AR_NAME }}</td>
+                            <td>{{ cost.COST_CENTER_EN_NAME }}</td>
+                            <td><button type="button" class="btn btn-primary" ng-click="addSelectedCostCenter(cost)">Add</button></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" id="closeItemModal" class="btn btn-danger" ng-click="cancel()">Close</button>
+        </div>
+    </script>
+</div>
+
+
+<div class="main-content">
+    <div class="wrap-content container" id="container">
+        <!-- start: PAGE TITLE -->
+        <section id="page-title" class="padding-top-15 padding-bottom-15">
+            <div class="row">
+                <div class="col-sm-6">
+                    <h1 class="mainTitle">Bill Profits Search</h1>
+                    <span class="mainDescription ">
+                        Search Page for Bill Profits
+                    </span>
+                </div>
+            </div>
+        </section>
+
+        <!-- end: PAGE TITLE -->
+        <!-- start: SEARCH RESULT -->
+        <div class="container-fluid container-fullw bg-white">
+            <div class="row">
+                <div class="col-md-7">
+                    <div class="panel panel-white min-height-270">
+
+                        <div class="panel-body">
+                            <div class="col-lg-6 col-md-6 col-sm-3 col-xs-6">
+                                <div class="form-group">
+                                    <label>
+                                        Customer
+                                    </label>
+                                    <input type="text" ng-model="billProfit.customerName" press-enter="searchForCustomer()" placeholder="Customer" class="form-control" required />
+                                    <input id="hdn_CustomerID" ng-model="billProfit.customerID" type="hidden" />
+                                    <!--<input type="text" ng-model="billProfit.customer" placeholder="العميل" uib-typeahead="x as x.CUST_AR_NAME for x in customersList| filter:{CUST_AR_NAME:$viewValue} | limitTo:8" typeahead-template-url="customTemplate.html" class="form-control" typeahead-show-hint="true" typeahead-min-length="0" autofocus required>-->
+
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-3 col-xs-6">
+                                <div class="form-group">
+                                    <label>
+                                        Customer Account
+                                    </label>
+                                    <input type="text" ng-model="billProfit.accountName" placeholder="Customer Account" class="form-control" disabled required>
+                                    <input id="hdn_AccountID" ng-model="billProfit.accountID" type="hidden" />
+                                </div>
+                            </div>
+                            <div class="col-lg-12 col-md-12 col-sm-3 col-xs-12">
+                                <div class="form-group">
+                                    <label>
+                                        Store
+                                    </label>
+                                    <input type="text" ng-model="billProfit.storeName" placeholder="Store" class="form-control" press-enter="searchForStore()">
+                                    <input id="hdn_StoreID" ng-model="billProfit.storeID" type="hidden" />
+                                </div>
+                            </div>
+                            <div class="col-lg-12 col-md-12 col-sm-3 col-xs-12">
+                                <div class="form-group">
+                                    <label class="control-label">
+                                        Saler
+                                    </label>
+                                    <input type="text" ng-model="billProfit.EmployeeName" placeholder="Saler" class="form-control" press-enter="searchForEmployee()">
+                                    <input id="hdn_EmployeeID" ng-model="billProfit.employeeID" type="hidden" />
+                                    <!--<input type="text" ng-model="billProfit.Employee" placeholder="Saler" uib-typeahead="x as x.EMP_AR_NAME for x in EmpList| filter:{EMP_AR_NAME:$viewValue} | limitTo:8" typeahead-template-url="customTemplate.html" class="form-control" typeahead-show-hint="true" typeahead-min-length="0">-->
+                                </div>
+                            </div>
+                            <div class="col-lg-12 col-md-12 col-sm-3 col-xs-12">
+                                <div class="form-group">
+                                    <label class="control-label">
+                                        Cost Center
+                                    </label>
+                                    <input type="text" ng-model="billProfit.CostCenterName" placeholder="Cost Center" class="form-control" press-enter="searchForCostCenter()">
+                                    <input id="hdn_CostCenterID" ng-model="billProfit.CostCenterID" type="hidden" />
+                                    <!--<input type="text" ng-model="billProfit.CostCenter" placeholder="Cost Center" uib-typeahead="x as x.COST_CENTER_AR_NAME for x in costCentersList| filter:{COST_CENTER_AR_NAME:$viewValue} | limitTo:8" typeahead-template-url="customTemplate.html" class="form-control" typeahead-show-hint="true" typeahead-min-length="0">-->
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-3 col-xs-6">
+                                <div class="form-group">
+                                    <label class="control-label">
+                                        From
+                                    </label>
+                                    <input type="date" class="form-control" ng-model="billProfit.dateFrom" placeholder="From ">
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-3 col-xs-6">
+                                <div class="form-group">
+                                    <label class="control-label">
+                                        To
+                                    </label>
+                                    <input type="date" class="form-control" ng-model="billProfit.dateTo" placeholder="To">
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-3 col-xs-6">
+                                <div class="form-group">
+                                    <label class="control-label">
+                                        Currency
+                                    </label>
+                                    <input type="text" ng-model="billProfit.currency" placeholder="Currency" ng-blur="getCurrencyRate()" uib-typeahead="x as x.CURRENCY_AR_NAME for x in currencyList| filter:{CURRENCY_AR_NAME:$viewValue} | limitTo:8" typeahead-template-url="customTemplate.html" class="form-control" typeahead-show-hint="true" typeahead-min-length="0" typeahead-show-on-focus>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-3 col-xs-6">
+                                <div class="form-group">
+                                    <label class="control-label">
+                                        Currency Rate
+                                    </label>
+                                    <input type="text" class="form-control" ng-model="billProfit.currencyRate" placeholder="Currency Rate" disabled>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <div class="panel panel-white min-height-270">
+                        <div class="panel-heading border-bottom">
+                            <div class="panel-title">
+                                Report Resouorces
+                            </div>
+                        </div>
+                        <div class="panel-body">
+                            <form>
+                                <div ng-repeat="bil in billTypesList">
+                                    <input type="checkbox" name="rad_bill" ng-model="bil.SELECTED" value="bil.BILL_SETTING_ID" />&nbsp;{{bil.BILL_TYPE_AR_NAME}}
+                                </div>
+                            </form>
+                            <br />
+                            <label class="control-label">
+                                filtering
+                            </label>
+                            <select class="form-control" ng-model="billProfit.finalize" placeholder="filtering">
+                                <option value="">Without</option>
+                                <option value="1">Cash</option>
+                                <option value="2">Delayed</option>
+                            </select>
+
+                        </div>
+                    </div>
+                    <div class="panel panel-white min-height-270">
+                        <div class="panel-heading border-bottom">
+                            <div class="panel-title">
+                                Report Options
+                            </div>
+                        </div>
+                        <div class="panel-body">
+                            <form>
+                                <div ng-repeat="rpt in reportOptionList">
+                                    <input type="checkbox" name="rad_rpt" ng-model="rpt.SELECTED" value="rpt.ID" />&nbsp;{{rpt.NAME}}
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12  ">
+                <button class="btn btn-wide btn-primary pull-left margin-right-10 margin-top-10"> Print <i class="ti-printer"></i></button>
+
+                <button class="btn btn-wide btn-default pull-left margin-right-10 margin-top-10" ng-click="clearEnity()">New <i class="fa fa-refresh"></i></button>
+
+
+                <button class="btn btn-wide btn-primary pull-left margin-right-10 margin-top-10" ng-click="GetSearchResult()">Search <i class="fa fa-search"></i> </button>
+
+            </div>
+        </div>
+        <hr />
+        <div class="container-fluid container-fullw bg-white">
+            <div class="row">
+                <div class="col-md-12">
+
+                    <div class="table-responsive">
+                        <div class="col-md-3 pull-left ">
+                            <table class="table table-stylish">
+                                <tbody>
+                                    <tr>
+                                        <td class="center text-extra-large"><i class="ti-save"></i></td>
+                                        <td><span class="text-dark block">Items Total:</span></td>
+                                        <td class="center">{{count}}</td>
+                                        <td class="center"><i class="fa fa-caret-down text-red"></i></td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col-md-12 ">
+                            <table class="table table-bordered table-hover" id="sample-table-1">
+                                <thead>
+                                    <tr class="warning">
+                                        <th class="center">Bill</th>
+                                        <th class="center">Date</th>
+                                        <th class="center">Explain</th>
+                                        <th class="center">Customer</th>
+                                        <th class="center">Total</th>
+                                        <th class="center">Cost</th>
+                                        <th class="center">Profit</th>
+                                        <th class="center">Net Profit</th>
+                                        <th class="center">Cost Rate</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="itm in billProfitList track by $index">
+                                        <td class="center">{{itm.BILL_ABRV_AR}} : {{itm.BILL_NUMBER}}</td>
+                                        <td class="center">{{itm.BILL_DATE | date:'dd/MM/yyyy'}}</td>
+                                        <td class="center">{{itm.QTY1}}</td>
+                                        <td class="center">{{itm.Price1}}</td>
+                                        <td class="center">{{itm.Result1}}</td>
+                                        <td class="center">{{itm.QTY2}}</td>
+                                        <td class="center">{{itm.Price2}}</td>
+                                        <td class="center">{{itm.ACC_CODE}} - {{itm.ACC_AR_NAME}}</td>
+                                        <td class="center">{{itm.Result2}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="center">Total</td>
+                                        <td class="center"></td>
+                                        <td class="center">{{TotalQTY1}}</td>
+                                        <td class="center"></td>
+                                        <td class="center">{{TotalResult1}}</td>
+                                        <td class="center">{{TotalQTY2}}</td>
+                                        <td class="center"></td>
+                                        <td class="center"></td>
+                                        <td class="center">{{TotalResult2}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <ul uib-pagination total-items="currencyCount" ng-model="pageNum" max-size="maxSize" class="pagination" boundary-links="true" num-pages="numPages" ng-change="pageChanged()"></ul>
+            <pre>Page: {{pageNum}} / {{numPages}}</pre>
+
+        </div>
+    </div>
+</div>

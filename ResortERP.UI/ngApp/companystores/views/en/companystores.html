@@ -1,0 +1,344 @@
+﻿<div class="app-content">
+    <div class="main-content">
+        <div class="wrap-content container" id="container">
+            <div class="container-fluid container-fullw ">
+                <div class="row">
+                    <div class="col-md-12">
+
+                        <div class="panel" style="height:100%;overflow:auto;">
+                            <div class="panel-heading border-bottom  panel-white ">
+                                <h4 class="panel-title">Store Data</h4>
+                                <div class="panel-tools">
+                                    <a data-original-title="Refresh" data-toggle="tooltip" data-placement="top" data-trigger="hover" class="btn btn-transparent btn-sm panel-refresh" href="#"><i class="fa fa-circle-o"></i></a>
+                                    <a data-original-title="Expand" data-toggle="tooltip" data-placement="top" data-trigger="hover" class="btn btn-transparent btn-sm panel-expand" href="#"><i class="fa fa-compress expand-on"></i><i class="fa fa-expand expand-off"></i></a>
+                                </div>
+                            </div>
+
+                            <div class="panel-body panel-white">
+                                <ng-form id="test" name="test">
+                                    <div class="col-md-12">
+
+                                        <div ng-class="{'has-error': test.$invalid}" class="form-group col-md-4">
+                                            <div class="">
+                                                <label>Store Code :</label>
+                                                <div class="help-block error" style="display:inline" ng-show="test.code.$error.required">*</div>
+                                                <input type="text" class="form-control" name="code" placeholder="Store Code" ng-model="companyStore.COM_STORE_CODE" readonly required autofocus>
+                                            </div>
+                                        </div>
+                                        <!--/.form-group col-md-4-->
+
+                                        <div class="form-group col-md-4">
+                                            <label>Main Store : </label>
+                                            <div class="help-block error" style="display:inline" ng-show="test.master.$error.required">*</div>
+                                            <select ng-model="companyStore.COM_MASTER_STORE_ID" name="master" class="js-example-basic-hide-search js-states form-control" ng-options="x.COM_STORE_ID as x.COM_STORE_AR_NAME for x in companyStoresList">
+                                                <option value="">Choose Main Store :</option>
+                                            </select>
+                                        </div>
+                                        <!--/.col-md-4-->
+
+                                        <div ng-class="{'has-error': test.$invalid}" class="form-group">
+                                            <div class="form-group col-md-4">
+                                                <label> Store Arabic Name : </label>
+                                                <div class="help-block error" style="display:inline" ng-show="test.arname.$error.required">*</div>
+                                                <input type="text" class="form-control" name="arname" placeholder="Store Arabic Name" ng-model="companyStore.COM_STORE_AR_NAME" required>
+                                            </div>
+                                        </div>
+                                        <!--/.form-group-->
+
+                                        <div ng-class="{'has-error': test.$invalid}" class="form-group">
+                                            <div class="form-group col-md-4">
+                                                <label>Store Latin Name : </label>
+                                                <div class="help-block error" style="display:inline" ng-show="test.enname.$error.required">*</div>
+                                                <input type="text" class="form-control" name="=enname" placeholder="Store Latin Name" ng-model="companyStore.COM_STORE_EN_NAME" required>
+                                            </div>
+                                        </div>
+                                        <!--/.form-group-->
+
+                                        <div class="form-group col-md-4">
+                                            <label>Arabic Abbreviation : </label>
+                                            <input type="text" class="form-control" placeholder="Arabic Abbreviation" ng-model="companyStore.COM_STORE_AR_ABRV">
+                                        </div>
+                                        <!--/.col-md-4-->
+
+                                        <div class="form-group col-md-4">
+                                            <label> Latin Abbreviation : </label>
+                                            <input type="text" class="form-control" placeholder="Latin Abbreviation " ng-model="companyStore.COM_STORE_EN_ABRV">
+                                        </div>
+                                        <!--/.col-md-4-->
+
+                                        <div class="form-group col-md-4">
+                                            <label> Company Branch :</label>
+                                            <div class="input-group">
+                                                <select ng-model="companyStore.COM_BRN_ID" class="js-example-basic-hide-search js-states form-control" ng-options="x.COM_BRN_ID as x.COM_BRN_AR_NAME for x in CompanyBranchesList">
+                                                    <option value="">Choose Company Branch</option>
+                                                </select>
+                                                <span class="input-group-addon"><i class="fa fa-binoculars"></i></span>
+                                            </div>
+                                        </div>
+                                        <!--/.form-group-->
+
+                                        <div class="form-group col-md-4">
+                                            <label> Store Employee : </label>
+                                            <div class="input-group">
+                                                <select ng-model="companyStore.EMP_ID" class="js-example-basic-hide-search js-states form-control" ng-options="x.EMP_ID as x.EMP_AR_NAME for x in EmployeesList">
+                                                    <option value=""> Choose Store Employee </option>
+                                                </select>
+                                                <span class="input-group-addon"><i class="fa fa-binoculars"></i></span>
+                                            </div>
+                                            <!--/.input-group-->
+                                        </div>
+
+                                        <div class="form-group col-md-4">
+                                            <label> Printer</label>
+                                            <div class="input-group">
+                                                <input type="text" class="form-control" placeholder="Printer" ng-model="companyStore.COM_PRINTER_NAME">
+                                                <span class="input-group-addon"><i class="fa fa-print"></i></span>
+                                            </div>
+                                        </div>
+                                        <!--/.col-md-4-->
+
+                                        <div class="form-group col-md-4">
+                                            <label>Notes </label>
+                                            <textarea rows="3" class="form-control" placeholder="Notes" ng-model="companyStore.COM_STORE_REMARKS" style="resize:none"></textarea>
+                                        </div>
+                                        <!--/.col-md-4-->
+
+                                        <div class="form-group col-md-12">
+                                            <label>Store Items Group </label>
+                                            <uib-accordion close-others="oneAtATime">
+                                                <div uib-accordion-group class="panel" heading="Store Items Group" is-open="status.isFirstOpen" is-disabled="status.isFirstDisabled">
+                                                    Item Groups Data & adding New Group
+                                                </div>
+                                            </uib-accordion>
+                                        </div>
+                                        <!--/.form-group,col-md-12-->
+                                    </div>
+                                    <!--/.col-md-12-->
+                                    <div class="col-md-12">
+
+                                        <div class="col-sm-12 col-md-6">
+                                            <div class="panel panel-white panel-default">
+                                                <div class="panel-heading border-bottom">
+                                                    <div class="panel-title text-primary">store Address</div>
+                                                    <div class="panel-tools">
+                                                        <a data-original-title="Collapse" data-toggle="tooltip" data-placement="top" class="btn btn-transparent btn-sm panel-collapse" href="#"><i class="ti-minus collapse-off"></i><i class="ti-plus collapse-on"></i></a>
+                                                    </div>
+                                                </div>
+                                                <!--/.panel-heading-->
+
+                                                <div class="panel-body min-height-280">
+                                                    <div class="form-group col-md-6">
+                                                        <label>Country : </label>
+                                                        <select ng-model="companyStore.NATION_ID" class="js-example-basic-hide-search js-states form-control" ng-options="x.NATION_ID as x.NATION_AR_NAME for x in NationList" ng-change="getAllNastionGovernate()">
+                                                            <option value="">Choose Country</option>
+                                                        </select>
+                                                    </div>
+
+                                                    <div class="form-group col-md-6">
+                                                        <label>Governerate : </label>
+                                                        <select ng-model="companyStore.GOV_ID" class="js-example-basic-hide-search js-states form-control" ng-options="x.GOV_ID as x.GOV_AR_NAME for x in GovernateListByNationID" ng-change="getAllGovernateTown()">
+                                                            <option value="">Choose Governerate </option>
+                                                        </select>
+                                                    </div>
+
+                                                    <div class="form-group col-md-6">
+                                                        <label>Town :</label>
+                                                        <select ng-model="companyStore.TOWN_ID" class="js-example-basic-hide-search js-states form-control" ng-options="x.TOWN_ID as x.TOWN_AR_NAME for x in TownsListByGovernateID" ng-change="getAllTownVillage()">
+                                                            <option value="">Choose Town </option>
+                                                        </select>
+                                                    </div>
+
+                                                    <div class="form-group col-md-6">
+                                                        <label>Village : </label>
+                                                        <select ng-model="companyStore.VILLAGE_ID" class="js-example-basic-hide-search js-states form-control" ng-options="x.VILLAGE_ID as x.VILLAGE_AR_NAME for x in VillagesListByTownID">
+                                                            <option value="">Choose Village</option>
+                                                        </select>
+                                                    </div>
+
+                                                    <div class="form-group col-md-12">
+                                                        <label>Address Details : </label>
+                                                        <textarea rows="3" class="form-control" placeholder="Address Details" ng-model="companyStore.COM_STORE_ADDR_REMARKS" style="resize:none"></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-12 col-md-6">
+                                            <div class="panel panel-white panel-default">
+                                                <div class="panel-heading border-bottom">
+                                                    <div class="panel-title text-primary">Store Phones</div>
+                                                    <div class="panel-tools">
+                                                        <a data-original-title="Collapse" data-toggle="tooltip" data-placement="top" class="btn btn-transparent btn-sm panel-collapse" href="#"><i class="ti-minus collapse-off"></i><i class="ti-plus collapse-on"></i></a>
+                                                    </div>
+                                                </div>
+                                                <!--/.panel-heading-->
+
+                                                <div class="panel-body min-height-280">
+                                                    <div class="table-responsive no-border">
+                                                        <table class="table table-bordered table-hover center" id="sample-table-2">
+                                                            <thead>
+                                                                <tr class="success">
+                                                                    <td class="center text-extra-large"><i class="ti-arrow-down"></i></td>
+                                                                    <td class="center"> Phone Number: </td>
+                                                                    <td class="center">Phone Type :</td>
+                                                                    <td></td>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr ng-repeat="tele in TelephoneList track by $index" style="max-height:50px !important;">
+                                                                    <!--track by $index-->
+                                                                    <td class="center">{{ $index+1 }}</td>
+                                                                    <td>
+                                                                        <span e-name="TELE_NUMBER" ng-show="rowform.$show()" editable-text="tele.TELE_NUMBER" e-form="rowform" e-only-Number>
+                                                                            {{ tele.TELE_NUMBER || 'empty' }}
+                                                                        </span>
+                                                                    </td>
+                                                                    <td>
+                                                                        <span e-name="TELE_CAT_ID" editable-select="tele.TELE_CAT_ID" ng-show="rowform.$show()" e-form="rowform" e-ng-options="x.TELE_CAT_ID as x.TELE_CAT_AR_NAME for x in catList">
+                                                                            {{ showSelectedTeleCatTypes(tele.TELE_CAT_ID) }}
+                                                                        </span>
+                                                                    </td>
+
+                                                                    <td class="text-center" style="white-space: nowrap">
+                                                                        <!-- form -->
+                                                                        <form editable-form name="rowform" ng-show="!rowform.$show()" class="form-buttons form-inline" shown="telephoneItem == tele" onbeforesave="insertItem($data,$index)">
+
+                                                                            <div class="visible-md visible-lg hidden-sm hidden-xs">
+                                                                                <button type="submit" class="btn btn-transparent btn-xs" ng-click="rowform.$show()" ng-show="hideButton($index);" data-toggle="tooltip" data-placement="top"><i class="fa fa-plus-circle"></i></button>
+
+                                                                                <button type="button" class="btn btn-transparent btn-xs tooltips" ng-click="removeGridItem($index)" ng-show="showButton($index);" data-toggle="tooltip" data-placement="top"><i class="fa fa-times fa fa-white"></i></button>
+                                                                            </div>
+
+                                                                            <div class="visible-xs visible-sm hidden-md hidden-lg">
+                                                                                <div class="btn-group dropdown ">
+                                                                                    <button type="button" class="btn btn-o btn-sm dropdown-toggle" data-toggle="dropdown">
+                                                                                        <i class="fa fa-cog"></i>&nbsp;<span class="caret"></span>
+                                                                                    </button>
+                                                                                    <ul class="dropdown-menu pull-right dropdown-light" role="menu">
+                                                                                        <li>
+                                                                                            <button type="submit" class="btn btn-transparent btn-xs" ng-click="rowform.$show()" ng-show="hideButton($index);" data-toggle="tooltip" data-placement="top">Add</button>
+                                                                                        </li>
+                                                                                        <li>
+                                                                                            <button type="button" class="btn btn-transparent btn-xs tooltips" ng-click="removeGridItem($index)" ng-show="showButton($index);" data-toggle="tooltip" data-placement="top">Delete</button>
+                                                                                        </li>
+                                                                                    </ul>
+                                                                                </div>
+                                                                            </div>
+                                                                        </form>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-12 my-btn-group margin-bottom-25 text-center">
+                                        <button type="button" class="btn btn-primary margin-top-10" ng-disabled="test.$invalid" ng-click="saveCompanyStores()">Save<i class="fa fa-save"></i></button>
+                                        <button type="button" class="btn btn-success margin-top-10" ng-click="refreshData()">Refresh<i class="fa fa-refresh"></i></button>
+                                        <button type="button" class="btn btn-info margin-top-10" ng-click="clearEnity()">New<i class="fa fa-paste"></i></button>
+                                    </div>
+                                </ng-form>
+                            </div>
+                            <!--/.panel-body-->
+
+                            <div class="panel">
+
+                                <div class="panel-group accordion" id="accordion">
+                                    <div class="panel panel-white">
+                                        <div class="panel-heading">
+                                            <h5 class="panel-title"><a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" data-target="#collapseTwo"> <i class="icon-arrow"></i> Previously Defined Company Stores </a></h5>
+                                        </div>
+                                        <div id="collapseTwo" class="panel-collapse collapse">
+                                            <div class="table-responsive panel-body">
+                                                <div class="col-md-3 pull-left">
+                                                    <table class="table table-stylish">
+                                                        <tbody>
+                                                            <tr>
+                                                                <td class="center text-extra-large"><i class="ti-save"></i></td>
+                                                                <td><span class="text-dark block">Store Total :</span></td>
+                                                                <td class="center">{{companyStoresTotalCount}}</td>
+                                                                <td class="center"><i class="fa fa-caret-down text-red"></i></td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <table class="table table-bordered table-hover center" id="sample-table-2">
+                                                        <thead>
+                                                            <tr class="border-right success">
+                                                                <th class="hidden-xs">#</th>
+                                                                <th>Store Code</th>
+                                                                <th>Main Store</th>
+                                                                <th>Store Arabic Name</th>
+                                                                <th>Store Latin Name</th>
+                                                                <th class="hidden-xs">Arabic Abbreviation</th>
+                                                                <th class="hidden-xs">Latin abbreviation</th>
+                                                                <th class="hidden-xs">Compny Branch</th>
+                                                                <th class="hidden-xs">Store Employee</th>
+                                                                <th>Edit / Delete</th>
+                                                            </tr>
+
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr ng-repeat="store in companyStoresList">
+                                                                <td class="hidden-xs">{{ $index + 1 }}</td>
+                                                                <td>{{ store.COM_STORE_CODE }}</td>
+                                                                <td>{{ store.CompanyMainStore }}</td>
+                                                                <td>{{ store.COM_STORE_AR_NAME }}</td>
+                                                                <td>{{ store.COM_STORE_EN_NAME }}</td>
+                                                                <td class="hidden-xs">{{ store.COM_STORE_AR_ABRV }}</td>
+                                                                <td class="hidden-xs">{{ store.COM_STORE_EN_ABRV }}</td>
+                                                                <td class="hidden-xs">{{store.CompanyBranchAR}}</td>
+                                                                <td class="hidden-xs">{{ store.StoreManagerNameAr }}</td>
+                                                                <td class="center">
+                                                                    <div class="visible-md visible-lg hidden-sm hidden-xs">
+                                                                        <a href="" class="btn btn-transparent btn-xs" ng-click="dirEnity(store)" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit"><i class="fa fa-pencil"></i></a>
+                                                                        <a href="" ng-click="deleteEnity(store)" class="btn btn-transparent btn-xs tooltips" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"><i class="fa fa-times fa fa-white"></i></a>
+                                                                    </div>
+                                                                    <div class="visible-xs visible-sm hidden-md hidden-lg">
+                                                                        <div class="btn-group dropdown ">
+                                                                            <button type="button" class="btn btn-o btn-sm dropdown-toggle" data-toggle="dropdown">
+                                                                                <i class="fa fa-cog"></i>&nbsp;<span class="caret"></span>
+                                                                            </button>
+                                                                            <ul class="dropdown-menu pull-right dropdown-light" role="menu">
+                                                                                <li>
+                                                                                    <a href="" class="btn btn-transparent btn-xs" ng-click="dirEnity(store)" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit"><i class="fa fa-pencil"></i> Edit </a>
+                                                                                </li>
+                                                                                <li>
+                                                                                    <a href="" ng-click="deleteEnity(store)" class="btn btn-transparent btn-xs tooltips" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"><i class="fa fa-times fa fa-white"></i> Delete </a>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </div>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                    <ul uib-pagination total-items="companyStoresTotalCount" ng-model="pageNum" max-size="maxSize" class="pagination-sm" boundary-links="true" num-pages="numPages" ng-change="pageChanged()"></ul>
+                                                    <pre>Page: {{pageNum}} / {{numPages}}</pre>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--/.panel-body-->
+                                    </div>
+                                    <!--/.panel-collapse-->
+                                </div>
+                                <!--/.panel-->
+                            </div>
+                            <!--/.panel-group-->
+                        </div>
+                        <!--/.panel /.panel-white-->
+                    </div>
+                    <!--/.col-md-12-->
+                </div>
+            </div>
+            <!--/.container-fluid-->
+        </div>
+        <!--/.wrap-content-->
+    </div>
+    <!--/.main-content-->
+</div>
+<!--/.app-content-->

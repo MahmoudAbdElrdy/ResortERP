@@ -1,0 +1,769 @@
+﻿<!DOCTYPE html>
+
+<html>
+@*<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+</head>*@
+<head>
+    <title>UnicomPOS</title>
+    <!-- start: META -->
+    <!--[if IE]><meta http-equiv='X-UA-Compatible' content="IE=edge,IE=9,IE=8,chrome=1" /><![endif]-->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta content="" name="description" />
+    <meta content="" name="author" />
+    <!-- end: META -->
+    <!-- start: GOOGLE FONTS -->
+    <link href="http://fonts.googleapis.com/css?family=Lato:300,400,400italic,600,700|Raleway:300,400,500,600,700|Crete+Round:400italic" rel="stylesheet" type="text/css" />
+    <!-- end: GOOGLE FONTS -->
+    <!-- start: MAIN CSS -->
+    <link href="~/Content/fonts/stylesheet.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/Content/bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/Content/bower_components/bootstrap-rtl/dist/css/bootstrap-rtl.min.css">
+    <link rel="stylesheet" href="~/Content/bower_components/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="~/Content/bower_components/themify-icons/themify-icons.css">
+    <link rel="stylesheet" href="~/Content/bower_components/flag-icon-css/css/flag-icon.min.css">
+    <link rel="stylesheet" href="~/Content/bower_components/animate.css/animate.min.css">
+    <link rel="stylesheet" href="~/Content/bower_components/perfect-scrollbar/css/perfect-scrollbar.min.css">
+    <link rel="stylesheet" href="~/Content/bower_components/switchery/dist/switchery.min.css">
+    <link rel="stylesheet" href="~/Content/bower_components/seiyria-bootstrap-slider/dist/css/bootstrap-slider.min.css">
+    <link rel="stylesheet" href="~/Content/bower_components/ladda/dist/ladda-themeless.min.css">
+    <link rel="stylesheet" href="~/Content/bower_components/slick.js/slick/slick.css">
+    <link rel="stylesheet" href="~/Content/bower_components/slick.js/slick/slick-theme.css">
+    <!-- end: MAIN CSS -->
+    <!-- start: CSS REQUIRED FOR THIS PAGE ONLY -->
+    <!-- end: CSS REQUIRED FOR THIS PAGE ONLY -->
+    <!-- start: Packet CSS -->
+    <link rel="stylesheet" href="~/Content/assets/css/styles.css">
+    <link rel="stylesheet" href="~/Content/assets/css/plugins.css">
+    <link rel="stylesheet" href="~/Content/assets/css/rtl.css">
+    <link rel="stylesheet" href="~/Content/assets/css/themes/lyt2-theme-7.css" id="skin_color">
+
+
+
+    <!-- end: Packet CSS -->
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="favicon.ico" />
+</head>
+@*<body>
+    <div>
+        @RenderBody()
+    </div>
+</body>*@
+<body>
+    <div id="app" class="lyt-2">
+        <!-- sidebar -->
+        <div class="sidebar app-aside" id="sidebar">
+            <div class="sidebar-container perfect-scrollbar">
+                <div>
+                    <!-- start: SEARCH FORM -->
+                    <div class="search-form hidden-md hidden-lg">
+                        <a class="s-open" href="#"> <i class="ti-search"></i> </a>
+                        <form class="navbar-form" role="search">
+                            <a class="s-remove" href="#" target=".navbar-form"> <i class="ti-close"></i> </a>
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Enter search text here...">
+                                <button class="btn search-button" type="submit">
+                                    <i class="ti-search"></i>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                    <!-- end: SEARCH FORM -->
+                    <!-- start: USER OPTIONS -->
+                    @Html.Partial("_LoginPartial")
+                    @*<div class="nav-user-wrapper">
+                        <div class="media">
+                            <div class="media-left">
+                                <a class="profile-card-photo" href="#"><img alt="" src="~/Content/assets/images/avatar-1.jpg"></a>
+                            </div>
+                            <div class="media-body">
+                                <span class="media-heading text-white">Mhmoud Ahmed</span>
+                                <div class="text-small text-white-transparent">
+                                    UI Designer
+                                </div>
+                            </div>
+                            <div class="media-right media-middle">
+                                <div class="dropdown">
+                                    <button href class="btn btn-transparent text-white dropdown-toggle" data-toggle="dropdown">
+                                        <i class="fa fa-caret-down"></i>
+                                    </button>
+                                    <ul class="dropdown-menu animated fadeInRight pull-right">
+                                        <li>
+                                            <a href="#"> My Profile </a>
+                                        </li>
+                                        <li>
+                                            <a href="#"> My Calendar </a>
+                                        </li>
+                                        <li>
+                                            <a href="#"> My Messages (3) </a>
+                                        </li>
+                                        <li>
+                                            <a href="#"> Lock Screen </a>
+                                        </li>
+                                        <li class="divider"></li>
+                                        <li>
+                                            <a href="#"> Log Out </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>*@
+                    <!-- end: USER OPTIONS -->
+                    @RenderPage("~/Views/Menu/Menu.cshtml")
+                </div>
+            </div>
+        </div>
+        <!-- / sidebar -->
+        <div class="app-content">
+            <!-- start: TOP NAVBAR -->
+            @RenderPage("~/Views/header/headr.cshtml")
+            <!-- end: TOP NAVBAR -->
+            <!-- start: HORIZONTAL MENU -->
+            
+            <!-- end: HORIZONTAL MENU -->
+            <div class="main-content">
+                <div class="wrap-content container" id="container">
+                 @*   @RenderPage("~/Views/Menu/horizontal.cshtml")*@
+                        <!-- start: BREADCRUMB -->
+                        
+
+
+                        @RenderBody()
+                    </div>
+            </div>
+        </div>
+        <!-- start: FOOTER -->
+        <footer>
+            <div class="footer-inner">
+                <div class="pull-right">
+                    &copy; <span class="current-year"></span><span class="text-bold text-uppercase"> Unicom For Information Technology and Software</span>
+                </div>
+                <div class="pull-left">
+                    <span class="go-top"><i class="ti-angle-up"></i></span>
+                </div>
+            </div>
+        </footer>
+        <!-- end: FOOTER -->
+        <!-- start: OFF-SIDEBAR -->
+        <div id="off-sidebar" class="sidebar">
+            <div class="sidebar-wrapper">
+                <ul class="nav nav-tabs nav-justified">
+                    <li class="active">
+                        <a href="#off-users" aria-controls="off-users" role="tab" data-toggle="tab"> <i class="ti-comments"></i> </a>
+                    </li>
+                    <li>
+                        <a href="#off-favorites" aria-controls="off-favorites" role="tab" data-toggle="tab"> <i class="ti-heart"></i> </a>
+                    </li>
+                    <li>
+                        <a href="#off-settings" aria-controls="off-settings" role="tab" data-toggle="tab"> <i class="ti-settings"></i> </a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane active" id="off-users">
+                        <div id="users" active-class="chat-open">
+                            <div class="users-list">
+                                <div class="sidebar-content perfect-scrollbar">
+                                    <h5 class="sidebar-title">On-line</h5>
+                                    <ul class="media-list">
+                                        <li class="media">
+                                            <a data-toggle-class="chat-open" data-toggle-target="#users" href="#">
+                                                <i class="fa fa-circle status-online"></i> <img alt="..." src="~/Content/assets/images/avatar-2.jpg" class="media-object">
+                                                <div class="media-body">
+                                                    <h4 class="media-heading">Nicole Bell</h4>
+                                                    <span> Content Designer </span>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li class="media">
+                                            <a data-toggle-class="chat-open" data-toggle-target="#users" href="#">
+                                                <div class="user-label">
+                                                    <span class="label label-success">3</span>
+                                                </div> <i class="fa fa-circle status-online"></i> <img alt="..." src="~/Content/assets/images/avatar-3.jpg" class="media-object">
+                                                <div class="media-body">
+                                                    <h4 class="media-heading">Steven Thompson</h4>
+                                                    <span> Visual Designer </span>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li class="media">
+                                            <a data-toggle-class="chat-open" data-toggle-target="#users" href="#">
+                                                <i class="fa fa-circle status-online"></i> <img alt="..." src="~/Content/assets/images/avatar-4.jpg" class="media-object">
+                                                <div class="media-body">
+                                                    <h4 class="media-heading">Ella Patterson</h4>
+                                                    <span> Web Editor </span>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li class="media">
+                                            <a data-toggle-class="chat-open" data-toggle-target="#users" href="#">
+                                                <i class="fa fa-circle status-online"></i> <img alt="..." src="~/Content/assets/images/avatar-5.jpg" class="media-object">
+                                                <div class="media-body">
+                                                    <h4 class="media-heading">Kenneth Ross</h4>
+                                                    <span> Senior Designer </span>
+                                                </div>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                    <h5 class="sidebar-title">Off-line</h5>
+                                    <ul class="media-list">
+                                        <li class="media">
+                                            <a data-toggle-class="chat-open" data-toggle-target="#users" href="#">
+                                                <img alt="..." src="~/Content/assets/images/avatar-6.jpg" class="media-object">
+                                                <div class="media-body">
+                                                    <h4 class="media-heading">Nicole Bell</h4>
+                                                    <span> Content Designer </span>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li class="media">
+                                            <a data-toggle-class="chat-open" data-toggle-target="#users" href="#">
+                                                <div class="user-label">
+                                                    <span class="label label-success">3</span>
+                                                </div> <img alt="..." src="~/Content/assets/images/avatar-7.jpg" class="media-object">
+                                                <div class="media-body">
+                                                    <h4 class="media-heading">Steven Thompson</h4>
+                                                    <span> Visual Designer </span>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li class="media">
+                                            <a data-toggle-class="chat-open" data-toggle-target="#users" href="#">
+                                                <img alt="..." src="~/Content/assets/images/avatar-8.jpg" class="media-object">
+                                                <div class="media-body">
+                                                    <h4 class="media-heading">Ella Patterson</h4>
+                                                    <span> Web Editor </span>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li class="media">
+                                            <a data-toggle-class="chat-open" data-toggle-target="#users" href="#">
+                                                <img alt="..." src="~/Content/assets/images/avatar-9.jpg" class="media-object">
+                                                <div class="media-body">
+                                                    <h4 class="media-heading">Kenneth Ross</h4>
+                                                    <span> Senior Designer </span>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li class="media">
+                                            <a data-toggle-class="chat-open" data-toggle-target="#users" href="#">
+                                                <img alt="..." src="~/Content/assets/images/avatar-10.jpg" class="media-object">
+                                                <div class="media-body">
+                                                    <h4 class="media-heading">Ella Patterson</h4>
+                                                    <span> Web Editor </span>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li class="media">
+                                            <a data-toggle-class="chat-open" data-toggle-target="#users" href="#">
+                                                <img alt="..." src="~/Content/assets/images/avatar-5.jpg" class="media-object">
+                                                <div class="media-body">
+                                                    <h4 class="media-heading">Kenneth Ross</h4>
+                                                    <span> Senior Designer </span>
+                                                </div>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="user-chat">
+                                <div class="chat-content">
+                                    <a class="sidebar-back pull-left" href="#" data-toggle-class="chat-open" data-toggle-target="#users"><i class="ti-angle-right"></i> <span>Back</span></a>
+                                    <div class="sidebar-content perfect-scrollbar">
+                                        <ol class="discussion">
+                                            <li class="messages-date">
+                                                Sunday, Feb 9, 12:58
+                                            </li>
+                                            <li class="self">
+                                                <div class="message">
+                                                    <div class="message-name">
+                                                        Peter Clark
+                                                    </div>
+                                                    <div class="message-text">
+                                                        Hi, Nicole
+                                                    </div>
+                                                    <div class="message-avatar">
+                                                        <img src="~/Content/assets/images/avatar-1.jpg" alt="">
+                                                    </div>
+                                                </div>
+                                                <div class="message">
+                                                    <div class="message-name">
+                                                        Nicole Bell
+                                                    </div>
+                                                    <div class="message-text">
+                                                        How are you?
+                                                    </div>
+                                                    <div class="message-avatar">
+                                                        <img src="~/Content/assets/images/avatar-1.jpg" alt="">
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li class="other">
+                                                <div class="message">
+                                                    <div class="message-name">
+                                                        Nicole Bell
+                                                    </div>
+                                                    <div class="message-text">
+                                                        Hi, i am good
+                                                    </div>
+                                                    <div class="message-avatar">
+                                                        <img src="~/Content/assets/images/avatar-2.jpg" alt="">
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li class="self">
+                                                <div class="message">
+                                                    <div class="message-name">
+                                                        Peter Clark
+                                                    </div>
+                                                    <div class="message-text">
+                                                        Glad to see you ;)
+                                                    </div>
+                                                    <div class="message-avatar">
+                                                        <img src="~/Content/assets/images/avatar-1.jpg" alt="">
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li class="messages-date">
+                                                Sunday, Feb 9, 13:10
+                                            </li>
+                                            <li class="other">
+                                                <div class="message">
+                                                    <div class="message-name">
+                                                        Nicole Bell
+                                                    </div>
+                                                    <div class="message-text">
+                                                        What do you think about my new Dashboard?
+                                                    </div>
+                                                    <div class="message-avatar">
+                                                        <img src="~/Content/assets/images/avatar-2.jpg" alt="">
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li class="messages-date">
+                                                Sunday, Feb 9, 15:28
+                                            </li>
+                                            <li class="other">
+                                                <div class="message">
+                                                    <div class="message-name">
+                                                        Nicole Bell
+                                                    </div>
+                                                    <div class="message-text">
+                                                        Alo...
+                                                    </div>
+                                                    <div class="message-avatar">
+                                                        <img src="~/Content/assets/images/avatar-2.jpg" alt="">
+                                                    </div>
+                                                </div>
+                                                <div class="message">
+                                                    <div class="message-name">
+                                                        Nicole Bell
+                                                    </div>
+                                                    <div class="message-text">
+                                                        Are you there?
+                                                    </div>
+                                                    <div class="message-avatar">
+                                                        <img src="~/Content/assets/images/avatar-2.jpg" alt="">
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li class="self">
+                                                <div class="message">
+                                                    <div class="message-name">
+                                                        Peter Clark
+                                                    </div>
+                                                    <div class="message-text">
+                                                        Hi, i am here
+                                                    </div>
+                                                    <div class="message-avatar">
+                                                        <img src="~/Content/assets/images/avatar-1.jpg" alt="">
+                                                    </div>
+                                                </div>
+                                                <div class="message">
+                                                    <div class="message-name">
+                                                        Nicole Bell
+                                                    </div>
+                                                    <div class="message-text">
+                                                        Your Dashboard is great
+                                                    </div>
+                                                    <div class="message-avatar">
+                                                        <img src="~/Content/assets/images/avatar-1.jpg" alt="">
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li class="messages-date">
+                                                Friday, Feb 7, 23:39
+                                            </li>
+                                            <li class="other">
+                                                <div class="message">
+                                                    <div class="message-name">
+                                                        Nicole Bell
+                                                    </div>
+                                                    <div class="message-text">
+                                                        How does the binding and digesting work in AngularJS?, Peter?
+                                                    </div>
+                                                    <div class="message-avatar">
+                                                        <img src="~/Content/assets/images/avatar-2.jpg" alt="">
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li class="self">
+                                                <div class="message">
+                                                    <div class="message-name">
+                                                        Peter Clark
+                                                    </div>
+                                                    <div class="message-text">
+                                                        oh that's your question?
+                                                    </div>
+                                                    <div class="message-avatar">
+                                                        <img src="~/Content/assets/images/avatar-1.jpg" alt="">
+                                                    </div>
+                                                </div>
+                                                <div class="message">
+                                                    <div class="message-name">
+                                                        Peter Clark
+                                                    </div>
+                                                    <div class="message-text">
+                                                        little reduntant, no?
+                                                    </div>
+                                                    <div class="message-avatar">
+                                                        <img src="~/Content/assets/images/avatar-1.jpg" alt="">
+                                                    </div>
+                                                </div>
+                                                <div class="message">
+                                                    <div class="message-name">
+                                                        Peter Clark
+                                                    </div>
+                                                    <div class="message-text">
+                                                        literally we get the question daily
+                                                    </div>
+                                                    <div class="message-avatar">
+                                                        <img src="~/Content/assets/images/avatar-1.jpg" alt="">
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li class="other">
+                                                <div class="message">
+                                                    <div class="message-name">
+                                                        Nicole Bell
+                                                    </div>
+                                                    <div class="message-text">
+                                                        I know. I, however, am not a nerd, and want to know
+                                                    </div>
+                                                    <div class="message-avatar">
+                                                        <img src="~/Content/assets/images/avatar-2.jpg" alt="">
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li class="self">
+                                                <div class="message">
+                                                    <div class="message-name">
+                                                        Peter Clark
+                                                    </div>
+                                                    <div class="message-text">
+                                                        for this type of question, wouldn't it be better to try Google?
+                                                    </div>
+                                                    <div class="message-avatar">
+                                                        <img src="~/Content/assets/images/avatar-1.jpg" alt="">
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li class="other">
+                                                <div class="message">
+                                                    <div class="message-name">
+                                                        Nicole Bell
+                                                    </div>
+                                                    <div class="message-text">
+                                                        Lucky for us :)
+                                                    </div>
+                                                    <div class="message-avatar">
+                                                        <img src="~/Content/assets/images/avatar-2.jpg" alt="">
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </ol>
+                                    </div>
+                                </div>
+                                <div class="message-bar">
+                                    <div class="message-inner">
+                                        <a class="link icon-only" href="#"><i class="fa fa-camera"></i></a>
+                                        <div class="message-area">
+                                            <textarea placeholder="Message"></textarea>
+                                        </div>
+                                        <a class="link" href="#"> Send </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane" id="off-favorites">
+                        <div class="users-list">
+                            <div class="sidebar-content perfect-scrollbar">
+                                <h5 class="sidebar-title">Favorites</h5>
+                                <ul class="media-list">
+                                    <li class="media">
+                                        <a href="#">
+                                            <img alt="..." src="~/Content/assets/images/avatar-7.jpg" class="media-object">
+                                            <div class="media-body">
+                                                <h4 class="media-heading">Nicole Bell</h4>
+                                                <span> Content Designer </span>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li class="media">
+                                        <a href="#">
+                                            <div class="user-label">
+                                                <span class="label label-success">3</span>
+                                            </div> <img alt="..." src="~/Content/assets/images/avatar-6.jpg" class="media-object">
+                                            <div class="media-body">
+                                                <h4 class="media-heading">Steven Thompson</h4>
+                                                <span> Visual Designer </span>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li class="media">
+                                        <a href="#">
+                                            <img alt="..." src="~/Content/assets/images/avatar-10.jpg" class="media-object">
+                                            <div class="media-body">
+                                                <h4 class="media-heading">Ella Patterson</h4>
+                                                <span> Web Editor </span>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li class="media">
+                                        <a href="#">
+                                            <img alt="..." src="~/Content/assets/images/avatar-2.jpg" class="media-object">
+                                            <div class="media-body">
+                                                <h4 class="media-heading">Kenneth Ross</h4>
+                                                <span> Senior Designer </span>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li class="media">
+                                        <a href="#">
+                                            <img alt="..." src="~/Content/assets/images/avatar-4.jpg" class="media-object">
+                                            <div class="media-body">
+                                                <h4 class="media-heading">Ella Patterson</h4>
+                                                <span> Web Editor </span>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li class="media">
+                                        <a href="#">
+                                            <img alt="..." src="~/Content/assets/images/avatar-5.jpg" class="media-object">
+                                            <div class="media-body">
+                                                <h4 class="media-heading">Kenneth Ross</h4>
+                                                <span> Senior Designer </span>
+                                            </div>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane" id="off-settings">
+                        <div class="sidebar-content perfect-scrollbar">
+                            <h5 class="sidebar-title">General Settings</h5>
+                            <ul class="media-list">
+                                <li class="media">
+                                    <div class="padding-10">
+                                        <div class="display-table-cell">
+                                            <input type="checkbox" class="js-switch" checked />
+                                        </div>
+                                        <span class="display-table-cell vertical-align-middle padding-left-10">Enable Notifications</span>
+                                    </div>
+                                </li>
+                                <li class="media">
+                                    <div class="padding-10">
+                                        <div class="display-table-cell">
+                                            <input type="checkbox" class="js-switch" />
+                                        </div>
+                                        <span class="display-table-cell vertical-align-middle padding-left-10">Show your E-mail</span>
+                                    </div>
+                                </li>
+                                <li class="media">
+                                    <div class="padding-10">
+                                        <div class="display-table-cell">
+                                            <input type="checkbox" class="js-switch" checked />
+                                        </div>
+                                        <span class="display-table-cell vertical-align-middle padding-left-10">Show Offline Users</span>
+                                    </div>
+                                </li>
+                                <li class="media">
+                                    <div class="padding-10">
+                                        <div class="display-table-cell">
+                                            <input type="checkbox" class="js-switch" checked />
+                                        </div>
+                                        <span class="display-table-cell vertical-align-middle padding-left-10">E-mail Alerts</span>
+                                    </div>
+                                </li>
+                                <li class="media">
+                                    <div class="padding-10">
+                                        <div class="display-table-cell">
+                                            <input type="checkbox" class="js-switch" />
+                                        </div>
+                                        <span class="display-table-cell vertical-align-middle padding-left-10">SMS Alerts</span>
+                                    </div>
+                                </li>
+                            </ul>
+                            <div class="save-options">
+                                <button class="btn btn-success">
+                                    <i class="icon-settings"></i><span>Save Changes</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end: OFF-SIDEBAR -->
+        <!-- start: SETTINGS -->
+        <div class="settings panel panel-default hidden-xs hidden-sm" id="settings">
+            <button data-toggle-class="active" data-toggle-target="#settings" class="btn btn-default">
+                <i class="fa fa-spin fa-gear"></i>
+            </button>
+            <div class="panel-heading">
+                Style Selector
+            </div>
+            <div class="panel-body">
+                <!-- start: FIXED HEADER -->
+                <div class="setting-box clearfix">
+                    <span class="setting-title pull-left"> Fixed header</span>
+                    <span class="setting-switch pull-right">
+                        <input type="checkbox" class="js-switch" id="fixed-header" />
+                    </span>
+                </div>
+                <!-- end: FIXED HEADER -->
+                <!-- start: FIXED SIDEBAR -->
+                <div class="setting-box clearfix">
+                    <span class="setting-title pull-left">Fixed sidebar</span>
+                    <span class="setting-switch pull-right">
+                        <input type="checkbox" class="js-switch" id="fixed-sidebar" />
+                    </span>
+                </div>
+                <!-- end: FIXED SIDEBAR -->
+                <!-- start: CLOSED SIDEBAR -->
+                <div class="setting-box clearfix">
+                    <span class="setting-title pull-left">Closed sidebar</span>
+                    <span class="setting-switch pull-right">
+                        <input type="checkbox" class="js-switch" id="closed-sidebar" />
+                    </span>
+                </div>
+                <!-- end: CLOSED SIDEBAR -->
+                <!-- start: FIXED FOOTER -->
+                <div class="setting-box clearfix">
+                    <span class="setting-title pull-left">Fixed footer</span>
+                    <span class="setting-switch pull-right">
+                        <input type="checkbox" class="js-switch" id="fixed-footer" />
+                    </span>
+                </div>
+                <!-- end: FIXED FOOTER -->
+                <!-- start: THEME SWITCHER -->
+                <div class="colors-row setting-box">
+                    <div class="color-theme lyt2-theme-1">
+                        <div class="color-layout">
+                            <label>
+                                <input type="radio" name="setting-theme" value="lyt2-theme-1">
+                                <span class="fa fa-check-circle lyt-check text-extra-large"></span> <span class="split header"> <span class="color th-header"></span> <span class="color th-collapse"><i class="color-button"></i></span> </span> <span class="split"> <span class="color th-sidebar"><i class="element"></i></span> <span class="color th-body"></span> </span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="color-theme lyt2-theme-2">
+                        <div class="color-layout">
+                            <label>
+                                <input type="radio" name="setting-theme" value="lyt2-theme-2">
+                                <span class="fa fa-check-circle lyt-check text-extra-large"></span> <span class="split header"> <span class="color th-header"></span> <span class="color th-collapse"><i class="color-button"></i></span> </span> <span class="split"> <span class="color th-sidebar"><i class="element"></i></span> <span class="color th-body"></span> </span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="colors-row setting-box">
+                    <div class="color-theme lyt2-theme-3">
+                        <div class="color-layout">
+                            <label>
+                                <input type="radio" name="setting-theme" value="lyt2-theme-3">
+                                <span class="fa fa-check-circle lyt-check text-extra-large"></span> <span class="split header"> <span class="color th-header"></span> <span class="color th-collapse"><i class="color-button"></i></span> </span> <span class="split"> <span class="color th-sidebar"><i class="element"></i></span> <span class="color th-body"></span> </span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="color-theme lyt2-theme-4">
+                        <div class="color-layout">
+                            <label>
+                                <input type="radio" name="setting-theme" value="lyt2-theme-4">
+                                <span class="fa fa-check-circle lyt-check text-extra-large"></span> <span class="split header"> <span class="color th-header"></span> <span class="color th-collapse"><i class="color-button"></i></span> </span> <span class="split"> <span class="color th-sidebar"><i class="element"></i></span> <span class="color th-body"></span> </span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="colors-row setting-box">
+                    <div class="color-theme lyt2-theme-5">
+                        <div class="color-layout">
+                            <label>
+                                <input type="radio" name="setting-theme" value="lyt2-theme-5">
+                                <span class="fa fa-check-circle lyt-check text-extra-large"></span> <span class="split header"> <span class="color th-header"></span> <span class="color th-collapse"><i class="color-button"></i></span> </span> <span class="split"> <span class="color th-sidebar"><i class="element"></i></span> <span class="color th-body"></span> </span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="color-theme lyt2-theme-6">
+                        <div class="color-layout">
+                            <label>
+                                <input type="radio" name="setting-theme" value="lyt2-theme-6">
+                                <span class="fa fa-check-circle lyt-check text-extra-large"></span> <span class="split header"> <span class="color th-header"></span> <span class="color th-collapse"><i class="color-button"></i></span> </span> <span class="split"> <span class="color th-sidebar"><i class="element"></i></span> <span class="color th-body"></span> </span>
+                            </label>
+                        </div>
+                    </div>
+                   
+                </div>
+                <div class="colors-row setting-box">
+                <!-- end: THEME SWITCHER -->
+                <div class="panel-footer">
+                    <button class="btn btn-primary ladda-button btn-squared btn-sm btn-o" data-style="slide-up" data-spinner-size="10" data-spinner-color="#999999" id="reset-layout">
+                        <span class="ladda-label">Reset</span>
+                    </button>
+                    <button class="btn btn-primary ladda-button pull-right btn-squared btn-sm btn-wide" data-style="slide-up" data-spinner-size="10" id="save-layout">
+                        <span class="ladda-label">Save</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- end: SETTINGS -->
+    </div>
+    <!-- start: MAIN JAVASCRIPTS -->
+    <script src="~/Content/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="~/Content/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="~/Content/bower_components/components-modernizr/modernizr.js"></script>
+    <script src="~/Content/bower_components/js-cookie/src/js.cookie.js"></script>
+    <script src="~/Content/bower_components/perfect-scrollbar/js/perfect-scrollbar.jquery.min.js"></script>
+    <script src="~/Content/bower_components/jquery-fullscreen/jquery.fullscreen-min.js"></script>
+    <script src="~/Content/bower_components/switchery/dist/switchery.min.js"></script>
+    <script src="~/Content/bower_components/jquery.knobe/dist/jquery.knob.min.js"></script>
+    <script src="~/Content/bower_components/seiyria-bootstrap-slider/dist/bootstrap-slider.min.js"></script>
+    <script src="~/Content/bower_components/slick.js/slick/slick.min.js"></script>
+    <script src="~/Content/bower_components/jquery-numerator/jquery-numerator.js"></script>
+    <script src="~/Content/bower_components/ladda/dist/spin.min.js"></script>
+    <script src="~/Content/bower_components/ladda/dist/ladda.min.js"></script>
+    <script src="~/Content/bower_components/ladda/dist/ladda.jquery.min.js"></script>
+    <!-- end: MAIN JAVASCRIPTS -->
+    <!-- start: JAVASCRIPTS REQUIRED FOR THIS PAGE ONLY -->
+    <script src="~/Content/bower_components/Chart-js/Chart.min.js"></script>
+    <!-- end: JAVASCRIPTS REQUIRED FOR THIS PAGE ONLY -->
+    <!-- start: Packet JAVASCRIPTS -->
+    <script src="~/Content/assets/js/letter-icons.js"></script>
+    <script src="~/Content/assets/js/main.js"></script>
+    <!-- end: Packet JAVASCRIPTS -->
+    <!-- start: JavaScript Event Handlers for this page -->
+    <script src="~/Content/assets/js/index.js"></script>
+    <script>
+			jQuery(document).ready(function() {
+				Main.init();
+				Index.init();
+			});
+    </script>
+
+    <!-- end: JavaScript Event Handlers for this page -->
+</body>
+</html>

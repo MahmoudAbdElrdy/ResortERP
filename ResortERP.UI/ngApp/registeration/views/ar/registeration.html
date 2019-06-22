@@ -1,0 +1,166 @@
+﻿<style>
+    input.ng-invalid-required {
+        background-color: #f7f7f7 !important;
+        border: 1px red solid;
+    }
+
+    .my-drop-zone {
+        border: dotted 3px lightgray;
+    }
+
+    .nv-file-over {
+        border: dotted 3px red;
+    }
+
+    /* Default class applied to drop zones on over */
+
+    .another-file-over-class {
+        border: dotted 3px green;
+    }
+
+    .app-navbar-fixed {
+        padding: 0
+    }
+</style>
+
+
+<div class="login-body">
+
+    <div class="row two-half no-margin no-padding">
+        <!-- Start First Half -->
+        <div class="col-md-6 register-section center no-padding hidden-xs hidden-sm">
+            <a href="#/login" class="btn panel-white btn-lg">تسجيل دخول</a>
+            <!-- start: COPYRIGHT -->
+            <div class="copyright text-center text-white">
+                © <b>مجموعة المتكامل</b> 2018. جميع الحقوق محفوظه.
+            </div>
+        </div>       
+        <!-- End First Half-->
+
+        <!-- Start Second Half-->
+        <div class="col-md-6 flex-content no-padding panel-white">
+            <div class="col-md-12 col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2">
+                <!-- start: LOGIN BOX -->
+                <div class="box-login">
+                    <form name="registrationForm" novalidate>
+                        <div class="form-group">
+
+                            <div class="logo text-center">
+                                <img src="/Content/assets//images/logo5.png" />
+                            </div>
+                        </div>
+
+                        <div class="form-group form-actions  col-sm-12  col-md-6">
+                            <span class="input-icon">
+                                <input type="text" name="companyARName" class="form-control" placeholder="اسم الشركة العربي" data-ng-model="user.COMPANY_AR_NAME" required autofocus>
+                                <i class="fa fa-building"></i>
+                            </span>
+                        </div>
+                        <div class="form-group form-actions col-sm-12  col-md-6">
+                            <span class="input-icon">
+                                <input type="text" name="companyENName" class="form-control" placeholder="اسم الشركة اللاتيني" data-ng-model="user.COMPANY_EN_NAME" required>
+                                <i class="fa fa-building"></i>
+                            </span>
+                        </div>
+                        <div class="form-group form-actions col-sm-12">
+                            <span class="input-icon">
+                                <input type="text" name="userName" class="form-control" placeholder="اسم المستخدم" data-ng-model="user.UID" required>
+                                <i class="fa fa-user"></i>
+                            </span>
+                        </div>
+
+                        <div class="form-group form-actions col-sm-12">
+                            <span class="input-icon">
+                                <input type="text" name="email" class="form-control" placeholder="البريد الالكتروني للشركة" data-ng-model="user.COMPANY_EMAIL" ng-pattern="emailPattern" required>
+                                <i class="fa fa-envelope"></i>
+                            </span>
+                            <span ng-show="registrationForm.email.$error.pattern && registrationForm.email.$invalid " class="help-block" style="color:red"> البريد الالكتروني غير صحيح</span>
+                            <span ng-show="IsMailExist && registrationForm.email.$invalid " class="help-block" style="color:red"> تم تسجيل نفس البريد الالكتروني سابقا</span>
+                        </div>
+                        <div class="form-group form-actions col-sm-12">
+                            <span class="input-icon">
+                                <input type="password" name="password" class="form-control" placeholder="كلمة المرور" data-ng-model="user.UPWD" required>
+                                <i class="fa fa-lock"></i>
+                            </span>
+
+                        </div>
+                        <div class="form-group form-actions col-sm-12">
+                            <span class="input-icon">
+                                <input type="password" id="confirmPassword" name="confirmPassword" class="form-control" placeholder="تأكيد كلمة المرور" ng-model="user.ConfirmPassword" required
+                                       compare-to="user.UPWD">
+                                <i class="fa fa-lock"></i>
+                            </span>
+                            <div ng-messages="registrationForm.confirmPassword.$error" ng-messages-include="messages.html"></div>
+                        </div>
+                        <div class="form-group form-actions col-sm-12">
+                            <span class="input-icon">
+                                <input type="text" name="companyARName" class="form-control" placeholder="عنوان الشركة العربي" data-ng-model="user.COMPANY_AR_ADRESS">
+                                <i class="fa fa-home"></i>
+                            </span>
+                        </div>
+                        <div class="form-group form-actions col-sm-12">
+                            <span class="input-icon">
+                                <input type="text" name="companyARName" class="form-control" placeholder="عنوان الشركة اللاتيني" data-ng-model="user.COMPANY_EN_ADRESS">
+                                <i class="fa fa-home"></i>
+                            </span>
+                        </div>
+                        <div class="form-group form-actions col-sm-12">
+                            <span class="input-icon">
+                                <input type="text" name="companyARName" class="form-control" placeholder="التليفون" data-ng-model="user.COMPANY_TELEPHONE" only-number>
+                                <i class="fa fa-phone"></i>
+                            </span>
+                        </div>
+                        <div class="form-group form-actions col-sm-12">
+                            <span class="input-icon">
+                                <input type="text" name="companyARName" class="form-control" placeholder="الفاكس" data-ng-model="user.COMPANY_FAX" only-number>
+                                <i class="fa fa-fax"></i>
+                            </span>
+                        </div>
+                        <div class="form-group form-actions col-sm-12">
+                            <select name="userNumbers" class="form-control cs-select cs-skin-elastic" data-ng-model="user.MaxUsersNumber">
+                                <option value="" disabled ng-selected="true">اختر عدد المستخدمين</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="10">10</option>
+                                <option value="15">15</option>
+                                <option value="20">20</option>
+                            </select>
+                        </div>
+                        <div class="form-group form-actions col-sm-12" ng-show="imageSrc">
+                            <span class="input-icon">
+                                <img id="imgPersonal" class="img-responsive img-rounded img-thumbnail margin-bottom-15" style="height:150px !important;display: block;margin: auto;" ng-src="{{imageSrc}}" alt="اختر صورة" />
+                            </span>
+                        </div>
+                        <div class="form-group form-actions col-sm-12">
+                            <span class="btn btn-block btn-primary fileinput-button">
+                                <i class="glyphicon glyphicon-plus"></i> <span>اختر صورة..</span>
+                                <input type="file" file-model="myFile" onchange="angular.element(this).scope().imageUpload(event)">
+                            </span>
+                        </div>
+                        <div class="form-group form-actions col-sm-12 ">
+
+                            <button class="btn btn-lg btn-info btn-block" ng-disabled="!registrationForm.$valid" type="submit" data-ng-click="saveUser()">تسجيل مستخدم جديد</button>
+                        </div>
+
+                        <div class="new-account text-white margin-top-15">
+                            <div class="col-xs-6"><a href="#/login" class="text-right">تسجيل الدخول</a></div>
+
+                            <div class="col-xs-6 text-left"><a href="" class="text-left">التواصل مع دعم الفنى</a></div>
+                        </div>
+
+                    </form>
+                    <!-- end: COPYRIGHT -->
+                </div>
+                <!-- end: LOGIN BOX -->
+            </div>
+            <div class="copyright text-dark text-center hidden-md hidden-lg">
+                © <b>مجموعة المتكامل</b> 2018. جميع الحقوق محفوظه.
+            </div>
+        </div>
+        <!-- End Second Half-->
+    </div>
+
+</div>

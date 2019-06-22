@@ -1,0 +1,307 @@
+﻿<style>
+    span.btn.btn-default.form-control.ui-select-toggle {
+        padding: 5px;
+    }
+</style>
+<div class="app-content">
+    <div class="main-content">
+        <div class="wrap-content container" id="container">
+            <div class="container-fluid container-fullw ">
+                <ng-form id="AssetOperationMasterForm" name="AssetOperationMasterForm">
+                    <div class="col-xs-12 margin-top-10 margin-bottom-10">
+                        <div class="breadcrumb-wrapper no-margin">
+                            <h4 class="mainTitle no-margin">عمليات الاصول</h4>
+                            <ul class="pull-right breadcrumb">
+                                <li><a href="#!"><i class="fa fa-home margin-left-5 text-large text-dark"></i>الرئيسية</a></li>
+                                <li>عمليات الاصول</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 margin-bottom-10">
+                        <div class="panel-white panel-body no-margin">
+                            <div class="pull-right">
+                                <button type="button" class="btn btn-o btn-default no-border" ng-disabled="AssetOperationMasterForm.$invalid" ng-click="saveAssetOperationMaster()">  <i class="fa fa-save"></i>حفظ</button>
+                                <button type="button" class="btn btn-o btn-default no-border " ng-click="refreshData()"><i class="fa fa-refresh"></i>تحديث</button>
+                                <button type="button" class="btn btn-o btn-default no-border" ng-click="clearEnity()"><i class="fa fa-paste"></i>جديد</button>
+                                <button type="button" class="btn btn-o btn-default no-border" ng-disabled="hideEntry" ng-click="openEntryPopup()">
+                                    <i class="glyphicon glyphicon-folder-close"></i>{{AssetOperationMaster.ENTRY_ID}}سند
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12">
+                        <div class="panel">
+                            <div role="form">
+                                <div class="panel-body panel-white">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label> الحساب </label>
+                                                <ui-select style="margin-top:0;padding:0;" ng-model="AssetOperationMaster.FromAccountID" theme="bootstrap" focus-on="UiSelectDemo1"
+                                                           id="custDdl" name="custDdl" on-select="select2EventEnter()">
+                                                    <ui-select-match allow-clear="false" placeholder="اختر حساب">
+                                                        {{$select.selected.OptionText}}
+                                                    </ui-select-match>
+                                                    <ui-select-choices repeat="x.OptionValue as x in AccountList | filter: $select.search" onfocus="true"
+                                                                       ui-select-opened on-select="select2EventEnter()">
+                                                        <div ng-bind-html="x.OptionText | highlight: $select.search"></div>
+                                                    </ui-select-choices>
+                                                </ui-select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group" ng-class="{'has-error': AssetOperationMasterForm.Code.$error.required}">
+                                                <label>الكود </label>
+                                                <div class="help-block error" style="display:inline" ng-show="AssetOperationMasterForm.Code.$error.required">*</div>
+                                                <input name="Code" ng-model="AssetOperationMaster.Code" class="form-control" ng-required="true" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group" ng-class="{'has-error': AssetOperationMasterForm.Number.$error.required}">
+                                                <label>رقم العملية </label>
+                                                <div class="help-block error" style="display:inline" ng-show="AssetOperationMaster.Number.$error.required">*</div>
+                                                <input name="Number" ng-model="AssetOperationMaster.Number" class="form-control" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>تاريخ البداية  </label>
+                                                <input type="date" class="form-control" ng-model="AssetOperationMaster.StartDate" name="StartDate" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>مركز التكلفة </label>
+                                                <select ng-model="AssetOperationMaster.CostCenterID" ng-change="changeMasterCostCenter()" ng-options="x.OptionValue as x.OptionText for x in CostCenterList" class="form-control">
+                                                    <option value="">اختر عنصر</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>القسم </label>
+                                                <select ng-model="AssetOperationMaster.DepartmentID" ng-options="x.OptionValue as x.OptionText for x in DepartmentList" class="form-control">
+                                                    <option value="">اختر عنصر</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>العملة  </label>
+                                                <select ng-model="AssetOperationMaster.CurrencyID" name="CurrencyID" ng-options="x.OptionValue as x.OptionText for x in CurrencyList" id="CurrencyID" class="form-control">
+                                                    <option value="">اختر عنصر</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>معدل التغيير </label>
+                                                <input type="number" class="form-control" step="any" min="0" ng-model="AssetOperationMaster.CurrencyRate" name="CurrencyRate" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>المورد(البائع)  </label>
+                                                <select ng-model="AssetOperationMaster.SellerAccountID" ng-change="changeMasterSeller()" ng-options="x.OptionValue as x.OptionText for x in CompanyList" class="form-control">
+                                                    <option value="">اختر عنصر</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label> اسم الموزع </label>
+                                                <select ng-model="AssetOperationMaster.DistributorID" ng-change="changeMasterDistributer()" ng-options="x.OptionValue as x.OptionText for x in CompanyList" class="form-control">
+                                                    <option value="">اختر عنصر</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>ملاحظات  </label>
+                                                <textarea class="form-control" ng-model="AssetOperationMaster.Notes"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <table class="table table-bordered">
+                                                <tr class="success" style="font-weight: bold">
+                                                    <td>#</td>
+                                                    <td>الاصل</td>
+                                                    <td>القيمة</td>
+                                                    <td>البائع</td>
+                                                    <td>الموزع</td>
+                                                    <td>مركز التكلفة</td>
+                                                    <td>ملاحظات </td>
+                                                    <td>مجموع الاضافات </td>
+                                                    <td>مجموع الاستبعادات </td>
+                                                    <td>مجموع الاهتلاكات</td>
+                                                    <td>حذف</td>
+                                                </tr>
+                                                <tr ng-repeat="item in AssetOperationMaster.OperationDetails track by $index " id="tablebody">
+                                                    <td>{{ $index+1 }}</td>
+                                                    <td>
+                                                        <ui-select style="margin-top:0;padding:0;" ng-model="item.AssetMasterID" theme="bootstrap" focus-on="UiSelectDemo1"
+                                                                   id="custDdl" name="custDdl" on-select="select2EventEnter()">
+                                                            <ui-select-match allow-clear="false" placeholder="اختر اصل">
+                                                                {{$select.selected.OptionText}}
+                                                            </ui-select-match>
+                                                            <ui-select-choices repeat="x.OptionValue as x in AssetMasterList | filter: $select.search" onfocus="true"
+                                                                               ui-select-opened on-select="select2EventEnter()">
+                                                                <div ng-bind-html="x.OptionText | highlight: $select.search"></div>
+                                                            </ui-select-choices>
+                                                        </ui-select>
+                                                    </td>
+                                                    <td>
+                                                        <input type="number" min="0" step="any" ng-model="item.Value" class="form-control" />
+                                                    </td>
+                                                    <td>
+                                                        <select ng-model="item.SellerAccountID" ng-options="x.OptionValue as x.OptionText for x in CompanyList" class="form-control">
+                                                            <option value="">اختر عنصر</option>
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        <select ng-model="item.DistributorID" ng-options="x.OptionValue as x.OptionText for x in CompanyList" class="form-control">
+                                                            <option value="">اختر عنصر</option>
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        <select ng-model="item.CostCenterID" ng-options="x.OptionValue as x.OptionText for x in CostCenterList" class="form-control">
+                                                            <option value="">اختر عنصر</option>
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        <input ng-model="item.Notes" class="form-control" />
+                                                    </td>
+                                                    <td>
+                                                        <input type="number" min="0" step="any" ng-model="item.AssetExtrasSum" class="form-control" />
+                                                    </td>
+                                                    <td>
+                                                        <input type="number" min="0" step="any" ng-model="item.AssetEliminationSum" class="form-control" />
+                                                    </td>
+                                                    <td>
+                                                        <input type="number" min="0" step="any" ng-model="item.AssetDepreciationSum" class="form-control" />
+                                                    </td>
+                                                    <td class="center">
+                                                       <span ng-if="!$last" ng-click="removeoperationDetail($index)" class="glyphicon glyphicon-trash"></span> 
+                                                       <span ng-if="$last" ng-click="addOperationDetail()" class="glyphicon glyphicon-plus"></span>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="panel">
+                            <div class="panel">
+                                <div class="panel-group accordion" id="accordion">
+                                    <div class="panel panel-white">
+                                        <div class="panel-heading">
+                                            <h5 class="panel-title"><a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" data-target="#collapseTwo"> <i class="icon-arrow"></i> العمليات المعرفة سابقا </a></h5>
+                                        </div>
+                                        <div id="collapseTwo" class="collapse">
+                                            <div class="panel-body panel-white">
+                                                <div class="col-md-12">
+                                                    <div class="table-responsive">
+                                                        <div class="col-md-3 pull-left margin-top-10 no-padding">
+                                                            <table class="table table-stylish">
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td class="center text-extra-large"><i class="ti-save"></i></td>
+                                                                        <td><span class="text-dark block"> اجمالى العلمليات :</span></td>
+                                                                        <td class="center">{{assetsTotalCount}}</td>
+                                                                        <td class="center"><i class="fa fa-caret-down text-red"></i></td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+
+                                                        <div class="col-md-12 no-padding">
+                                                            <table class="table table-bordered table-hover table-full-width ps-scrollbar-x small  panel-full-screen  fc-scroller  " style="height:150px;overflow:auto;" id="sample-table-2">
+                                                                <thead>
+                                                                    <tr class="border-right success">
+                                                                        <th class="hidden-xs">#</th>
+                                                                        <th data-rt="EmployeeCode">الكود </th>
+                                                                        <th data-rt="EmployeeFirstName">رقم العملية</th>
+                                                                        <th data-rt="EmployeeFirstNameEn">الحساب </th>
+                                                                        <!--<th data-rt="EmployeeFirstNameEn">مجموعة الاصل</th>
+                                                                        <th data-rt="NationalID">الباركود</th>-->
+                                                                        <th>تعديل / حذف</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr ng-repeat="emp in AssetsList">
+                                                                        <td class="hidden-xs center">{{ $index + 1 }}</td>
+                                                                        <td>{{ emp.Code }}</td>
+                                                                        <td>{{ emp.Number }}</td>
+                                                                        <td>{{ emp.AccountName }}</td>
+                                                                        <!--<td>{{ emp.Barcode }}</td>
+                                                                        <td>{{ emp.AssetGroup }}</td>-->
+                                                                        <td class="center">
+                                                                            <div class="visible-md visible-lg hidden-sm hidden-xs">
+                                                                                <a href="" ng-click="dirEnity(emp)" class="btn btn-transparent btn-xs" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fa fa-pencil"></i></a>
+                                                                                <a href="" ng-click="deleteEnity(emp)" class="btn btn-transparent btn-xs tooltips" data-toggle="tooltip" data-placement="top" title="Remove"><i class="fa fa-times fa fa-white"></i></a>
+                                                                            </div>
+
+                                                                            <div class="visible-xs visible-sm hidden-md hidden-lg">
+                                                                                <div class="btn-group dropdown ">
+                                                                                    <button type="button" class="btn btn-o btn-sm dropdown-toggle" data-toggle="dropdown">
+                                                                                        <i class="fa fa-cog"></i>&nbsp;<span class="caret"></span>
+                                                                                    </button>
+                                                                                    <ul class="dropdown-menu pull-right dropdown-light" role="menu">
+                                                                                        <li>
+                                                                                            <a href="" ng-click="dirEnity(emp)"> تعديل </a>
+                                                                                        </li>
+
+                                                                                        <li>
+                                                                                            <a href="" ng-click="deleteEnity(emp)"> حذف </a>
+                                                                                        </li>
+
+
+                                                                                    </ul>
+                                                                                </div>
+                                                                            </div>
+                                                                            <!--<a class="label partition-blue" href="" ng-click="dirEnity(emp)"><i class="glyphicon glyphicon-share"></i>  {{ moduleResourse["UpdateButton"] }}</a>
+                                                                            <a class="label partition-red" href="" ng-click="deleteEnity(emp)"><i class="glyphicon glyphicon-remove-circle"></i> {{ moduleResourse["DeleteButton"] }}</a>-->
+
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+
+                                                        </div>
+                                                        <ul uib-pagination total-items="employeesTotalCount" ng-model="pageNum" max-size="maxSize" class="pagination-sm" boundary-links="true" num-pages="numPages" ng-change="pageChanged()"></ul>
+                                                        <pre>صفحه: {{pageNum}} / {{pagesCount}}</pre>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--/.panel-collapse-->
+                                    </div>
+                                    <!--/.panel-->
+                                </div>
+                                <!--/.panel-group-->
+                            </div>
+                            <!--/.panel /.panel-white-->
+                        </div>
+                        <!--/.panel-->
+                    </div>
+                    <!--/.col-md-12-->
+                </ng-form>
+            </div>
+            <!--/.container-fluid-->
+        </div>
+        <!--/.wrap-content-->
+    </div>
+    <!--/.main-content-->
+</div>
+<!--/.app-content-->

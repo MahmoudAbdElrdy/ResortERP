@@ -1,0 +1,337 @@
+﻿<div class="app-content">
+    <div class="main-content">
+        <div class="wrap-content container" id="container">
+            <div class="container-fluid container-fullw">
+
+                <div class="col-xs-12 margin-top-10 margin-bottom-10">
+                    <div class="breadcrumb-wrapper no-margin">
+                        <h4 class="mainTitle no-margin"> {{ReportTitle}} </h4>
+                        <ul class="pull-right breadcrumb">
+                            <li><a href="#!"><i class="fa fa-home margin-left-5 text-large text-dark"></i>الرئيسية</a></li>
+                            <li> {{ReportTitle}} </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-xs-12 margin-bottom-10">
+                    <div class="panel-white panel-body no-margin">
+                        <button class="btn btn-o btn-default no-border" ng-click="PrintReport()" ng-show="show_print"> طباعة <i class="ti-printer"></i></button>
+                        <button class="btn btn-o btn-default no-border" ng-click="clearEnity()">جديد <i class="fa fa-refresh"></i></button>
+                        <button class="btn btn-o btn-default no-border" ng-click="GetSearchResult()"> بحث <i class="fa fa-search"></i> </button>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="panel-body panel-white">
+                        <div class="col-md-12">
+                            <!--<div class="row">-->
+                            <div class="col-md-4">
+                                <label>الحسابات</label>
+                                <select style="height:140px" id="cust_Acc_ID" ng-model="cust_Acc_ID" multiple="multiple" class="multiselect js-example-basic-hide-search js-states form-control"></select>
+                            </div>
+                            <!--</div>
+                            <div class="row">-->
+                            <!--<div class="col-md-4">
+                                <label>الفرع</label>
+                                <div ng-dropdown-multiselect="" extra-settings="dropdownSetting" class="form-control"
+                                     options="UserBranches" selected-model="SelectedBranch">
+                                </div>
+                            </div>-->
+                            <!--<div class="col-md-4">
+                                <div class="form-group">
+                                    <label>النوع</label>
+                                    <select ng-model="type" id="type" class="form-control">
+                                        <option value="0" ng-selected="true">مجموع</option>
+                                        <option value="1">ارصدة</option>
+                                    </select>
+                                </div>
+                            </div>-->
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>
+                                        من تاريخ
+                                    </label>
+                                    <input type="date" name="startDate" ng-model="startDate" class="form-control" placeholder="من تاريخ">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="control-label">
+                                        إلى تاريخ
+                                    </label>
+                                    <input type="date" class="form-control" ng-model="endDate" placeholder="إلى تاريخ">
+                                </div>
+                            </div>
+                            <!--<div class="col-md-4">
+                                <div class="form-group">
+                                    <label>العملة</label>
+                                    <select ng-model="accountBalance.CurrencyId" ng-options="x.CURRENCY_ID as x.CURRENCY_AR_NAME for x in currenciesList" class="form-control">
+                                        <option value="">اختر العملة</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>سعر الصرف</label>
+                                    <input type="text" ng-model="CURRENCY_RATE" id="CURRENCY_RATE" class="form-control">
+                                </div>
+                            </div>-->
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>
+                                        مركز التكلفة
+                                    </label>
+                                    <select ng-model="accountBalance.CostCenterId" ng-options="x.COST_CENTER_ID as x.COST_CENTER_AR_NAME for x in mainCostCenterList" class="form-control">
+                                        <option value="">اختر مركز التكلفة</option>
+                                    </select>
+                                    <!--<ui-select ng-model="var.COST_CENTER_ID" theme="bootstrap" id="cost_Center_ID" on-select="getCostCenter($item)">
+                                        <ui-select-match placeholder="اختر مركز التكلفة">
+                                            {{$select.selected.COST_CENTER_AR_NAME}}
+                                        </ui-select-match>
+                                        <ui-select-choices repeat="value.COST_CENTER_ID as value in mainCostCenterList | filter: $select.search">
+                                            <div ng-bind-html="value.COST_CENTER_AR_NAME | highlight: $select.search"></div>
+                                        </ui-select-choices>
+                                    </ui-select>-->
+                                </div>
+                            </div>
+                            <div class="col-md-4" ng-if="ReportType == 1 || ReportType == 2">
+                                <div class="form-group">
+                                    <label class="control-label">
+                                        عدد الحركات
+                                    </label>
+                                    <input type="number" class="form-control" ng-model="accountBalance.Number" placeholder="عدد الحركات">
+                                </div>
+                            </div>
+                            <!--</div>-->
+                        </div>
+                        <div class="col-md-8">
+                            <div class="panel panel-white ">
+                                <div class="panel-heading border-bottom">
+                                    <div class="panel-title">مصادر التقارير</div>
+                                </div>
+                                <div class="panel-body">
+                                    <div ng-repeat="bil in entrySettingsList">
+                                        <div class="col-lg-3 col-md-4 col-sm-6">
+                                            <div class="checkbox clip-check check-primary">
+                                                <input id="bil.ENTRY_SETTING_AR_NAME{{$index}}" type="checkbox" name="rad_bill" ng-init="bil.selected=true" value="bil.ENTRY_SETTING_ID" ng-checked="bil.selected" ng-model="bil.selected" />
+                                                <label for="bil.ENTRY_SETTING_AR_NAME{{$index}}"> {{bil.ENTRY_SETTING_AR_NAME}} </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="row">
+                                <div class="panel panel-white ">
+                                    <div class="panel-heading border-bottom">
+                                        <div class="panel-title">خيارات الاظهار</div>
+                                    </div>
+                                    <div class="panel-body">
+                                        <div class="col-md-6">
+                                            <div class="checkbox clip-check check-primary">
+                                                <input id="LastCreditTransaction" type="checkbox" name="LastCreditTransaction" ng-model="LastCreditTransaction" />
+                                                <label for="LastCreditTransaction">اخر حركة دائنة </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="checkbox clip-check check-primary">
+                                                <input id="LastDebitTransaction" type="checkbox" name="LastDebitTransaction" ng-model="LastDebitTransaction" />
+                                                <label for="LastDebitTransaction"> اخر حركة مدينة</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="panel panel-white ">
+                                    <div class="panel-heading border-bottom">
+                                        <div class="panel-title">خيارات ارصدة الحسابات</div>
+                                    </div>
+                                    <div class="panel-body">
+                                        <div class="col-md-6">
+                                            <div class="checkbox clip-check check-primary">
+                                                <input id="ShowPrevBalance" type="checkbox" name="ShowPrevBalance" ng-model="PreviousBalance" />
+                                                <label for="ShowPrevBalance">اظهار الرصيد السابق </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="checkbox clip-check check-primary">
+                                                <input id="ShowTotalBalances" type="checkbox" name="ShowTotalBalances" ng-model="TotalBalances" />
+                                                <label for="ShowTotalBalances"> اظهار مجاميع الارصدة</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--<div class="panel-body panel-white">
+                        <div class="col-xs-12 no-padding margin-top-15 margin-bottom-15">
+                            <div class="col-md-2">
+                                <table class="table">
+                                    <tbody>
+                                        <tr>
+                                            <td>من تاريخ</td>
+                                            <td>{{startDate | date}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-md-2">
+                                <table class="table">
+                                    <tbody>
+                                        <tr>
+                                            <td>إلى تاريخ</td>
+                                            <td>{{endDate | date}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-md-2">
+                                <table class="table">
+                                    <tbody>
+                                        <tr>
+                                            <td>العملة</td>
+                                            <td>{{selectedCurrency.CURRENCY_AR_NAME}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-md-2">
+                                <table class="table">
+                                    <tbody>
+                                        <tr>
+                                            <td>سعر الصرف</td>
+                                            <td>{{CURRENCY_RATE}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-md-2">
+                                <table class="table">
+                                    <tbody>
+                                        <tr>
+                                            <td>اسم الحساب</td>
+                                            <td>{{entryMasterList[index].ACCOUNT}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12">
+                            <div class="space12 text-center margin-top-20">
+                                <div class="btn-group">
+                                    <a class="btn btn-o btn-default btn-wide" ng-click="getPrevious()">السابق</a>
+                                    <a class="btn btn-o btn-default btn-wide" ng-click="getNext()">التالى</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>-->
+
+                    <div class="panel">
+                        <div class="panel-group accordion" id="accordion">
+                            <div class="panel panel-white">
+                                <div class="panel-heading">
+                                    <h5 class="panel-title"><a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" data-target="#collapseTwo"> <i class="icon-arrow"></i> نتائج التقرير </a></h5>
+                                </div>
+                                <div id="collapseTwo" class="collapse">
+                                    <div class="panel-body">
+                                        <div class="col-md-12">
+
+                                            <div class="table-responsive">
+                                                <table class="table table-bordered table-hover" id="sample-table-1">
+                                                    <!--<thead>
+                                                        <tr>
+                                                            <td colspan="9" class="center" style="font-weight:bold;background-color: aliceblue;">{{ entryMasterList[index][0].ACCOUNT }}</td>
+                                                        </tr>
+                                                    </thead>-->
+                                                    <thead>
+                                                        <tr class="success">
+                                                            <th class="center">مسلسل</th>
+                                                            <th class="center"> الحساب</th>
+                                                            <th class="center" ng-show="PreviousBalance">دائن سابق</th>
+                                                            <th class="center" ng-show="PreviousBalance">مدين سابق</th>
+                                                            <th class="center" ng-show="PreviousBalance">الرصيد السابق</th>
+                                                            <th class="center">الدائن</th>
+                                                            <th class="center">المدين</th>
+                                                            <th class="center">الرصيد</th>
+                                                            <th class="center" ng-show="LastCreditTransaction">اخر حركة دائنة</th>
+                                                            <th class="center" ng-show="LastDebitTransaction">اخر حركة مدينة</th>
+                                                            <th class="center" ng-show="{{ReportType == 1 || ReportType == 2}}">عدد الحركات</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr ng-repeat="acc in ReportResult.Transactions">
+                                                            <td class="center">{{ $index + 1 }}</td>
+                                                            <td class="center">{{acc.ACC_AR_NAME }}</td>
+                                                            <td class="center" ng-show="PreviousBalance">{{acc.PreviousCredit.toFixed(2)}}</td>
+                                                            <td class="center" ng-show="PreviousBalance">{{acc.PreviousDebit.toFixed(2)}}</td>
+                                                            <td class="center" ng-show="PreviousBalance">{{acc.PreviousBalance.toFixed(2)}}</td>
+                                                            <td class="center">{{acc.CREDIT.toFixed(2) }}</td>
+                                                            <td class="center">{{acc.DEBIT.toFixed(2)}}</td>
+                                                            <td class="center">{{ acc.Balance.toFixed(2) }}</td>
+                                                            <td class="center" ng-show="LastCreditTransaction">{{acc.LAST_CREDIT.toFixed(2)}}</td>
+                                                            <td class="center" ng-show="LastDebitTransaction">{{acc.LAST_DEBIT.toFixed(2)}}</td>
+                                                            <td class="center" ng-show="{{ReportType == 1 || ReportType == 2}}">{{ acc.NUMBER }}</td>
+                                                        </tr>
+                                                    </tbody>
+                                                    <tfoot ng-show="TotalBalances">
+                                                        <tr>
+                                                            <td class="center" colspan="2">المجموع</td>
+                                                            <td class="center" ng-show="PreviousBalance">{{ReportResult.TotalPrevCredit.toFixed(2)}}</td>
+                                                            <td class="center" ng-show="PreviousBalance">{{ReportResult.TotalPrevDebit.toFixed(2)}}</td>
+                                                            <td class="center" ng-show="PreviousBalance">{{ReportResult.TotalPrevBalance.toFixed(2)}}</td>
+                                                            <td class="center">{{ReportResult.TotalCredit.toFixed(2)}}</td>
+                                                            <td class="center">{{ReportResult.TotalDebit.toFixed(2)}}</td>
+                                                            <td class="center">{{ReportResult.TotalBalance.toFixed(2)}}</td>
+                                                            <td class="center" ng-show="LastCreditTransaction">{{}}</td>
+                                                            <td class="center" ng-show="LastDebitTransaction">{{}}</td>
+                                                            <td ng-show="{{ReportType == 1 || ReportType == 2}}">{{}}</td>
+                                                        </tr>
+                                                    </tfoot>
+                                                </table>
+                                            </div>
+
+                                            <!--<ul uib-pagination total-items="currencyCount" ng-model="pageNum" max-size="maxSize" class="pagination" boundary-links="true" num-pages="numPages" ng-change="pageChanged()"></ul>
+                                            <pre>صفحه: {{pageNum}} / {{numPages}}</pre>-->
+
+                                        </div>
+                                        <!--/.col-md-12-->
+                                    </div>
+                                    <!--/.panel-body-->
+                                </div>
+                                <!--/.panel-collapse-->
+                            </div>
+                            <!--/.panel-->
+                        </div>
+                        <!--/.panel-group-->
+                    </div>
+                    <!--/.panel -->
+
+                </div>
+                <!--/.col-md-12-->
+            </div>
+            <!--/.container-fluid-->
+        </div>
+        <!--/.wrap-content-->
+    </div>
+    <!--/.main-content-->
+</div>
+<!--/.app-content-->
+
+<style>
+    .ms-container {
+        width: 100%;
+    }
+
+        .ms-container .ms-selectable {
+            float: right;
+        }
+
+        .ms-container .ms-selection {
+            float: left;
+        }
+</style>

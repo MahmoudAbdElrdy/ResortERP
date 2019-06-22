@@ -1,0 +1,142 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head>
+    <title>Tooltip - Overview</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="../../css/samples.css" />
+    <link rel="stylesheet" href="../../css/integralui.tooltip.css" />
+    <link rel="stylesheet" href="../../css/themes/theme-flat-blue.css" id="theme" />
+    <script type="text/javascript" src="../theme.selector.min.js"></script>
+    <script type="text/javascript" src="../../external/angular.min.js"></script>
+    <script type="text/javascript" src="../../js/angular.integralui.min.js"></script>
+    <script type="text/javascript" src="../../js/angular.integralui.tooltip.min.js"></script>
+    <script type="text/javascript">
+ 		angular
+			.module("appModule", ["integralui"])
+			.controller("appCtrl", function($scope){
+                initTheme($scope);
+                
+                $scope.tooltipPositions = [ 'mouse', 'above', 'below', 'left', 'right' ];
+
+                $scope.tooltipSettings = {
+                    autoPopDelay: 2000,
+                    enabled: true,
+                    initialDelay: 1000,
+                    position: 'mouse',
+                    showMarker: true,
+                    title: 'First line<br/>Second Line'
+                }
+		});
+    </script>
+    <style type="text/css">
+        .feature-content
+        {
+            width: 850px;
+        }
+        .directive
+        {
+            float: left;
+        	width: 100px;
+        	height: 25px;
+            font-size
+        }
+        .panel
+        {
+            padding-top: 20px;
+            height: 250px;
+        }
+        .panel
+        {
+            background: white;
+            border: thin solid gray;
+            width: 400px;
+            height: 250px;
+        }
+        .panel span
+        {
+            color: #808080;
+            cursor: default;
+            display: block;
+            margin: 110px auto;
+            text-align: center;
+        }
+        .iui-tooltip
+        {
+            font-size: 0.75em;
+        }
+        .control-panel
+        {
+            padding-left: 20px;
+            width: 350px;
+        }
+        .control-panel label
+        {
+            display: inline-block;
+            text-align: center;
+            width: 200px;
+        }
+        .control-panel span
+        {
+            display: inline-block;
+            margin-right: 5px;
+            text-align: right;
+            width: 120px;
+        }
+        .control-panel input
+        {
+            margin: 7px 3px;
+            width: 50px;
+        }
+        .control-panel select
+        {
+            padding: 2px 0;
+            width: 100px;
+        }
+   </style>
+</head>
+<body ng-app="appModule" ng-controller="appCtrl">
+    <div class="header">
+        <div class="header-block">
+            <div class="header-content">
+                <h1><span style="color:#c60d0d">IntegralUI</span> Web <span style="font-size:0.75em; font-style:italic">for AngularJS</span></h1>
+            </div>
+            <div class="theme-selector"><label>Active Theme: <select class="theme-combo" ng-model="selTheme" ng-options="theme.name for theme in themeList"></select></label></div>
+        </div>
+        <hr class="head-separator" />
+    </div>
+    <div class="content">
+        <div class="feature">
+	        <h2 class="feature-title">Tooltip - Overview</h2>
+	        <div class="feature-content">
+                <div class="panel" iui-tooltip="tooltipSettings">
+                    <span>Move mouse cursor here to show a tooltip.</span>
+                </div>
+                <div class="control-panel">
+                    <label>Tooltip Properties: </label><br /><br />
+                    <span>Enabled</span><input type="checkbox" ng-model="tooltipSettings.enabled" style="width:auto" /><br />
+                    <span>Show Marker</span><input type="checkbox" ng-model="tooltipSettings.showMarker" style="width:auto" ng-disabled="!tooltipSettings.enabled" /><br />
+                    <span>Title</span><input type="text" ng-model="tooltipSettings.title" style="width:200px" ng-disabled="!tooltipSettings.enabled" /><br />
+                    <span>Position</span> <select ng-model="tooltipSettings.position" ng-options="pos as pos for pos in tooltipPositions" style="width:100px" ng-disabled="!tooltipSettings.enabled"></select><br />
+                    <span>Initial Delay</span><input type="number" ng-model="tooltipSettings.initialDelay" ng-attr-min="0" ng-disabled="!tooltipSettings.enabled" /><br />
+                    <span>Auto-Pop Delay</span><input type="number" ng-model="tooltipSettings.autoPopDelay" ng-attr-min="0" ng-disabled="!tooltipSettings.enabled" />
+                </div>
+                <br style="clear:both;"/>
+                <div class="feature-help">
+                    <p><span class="initial-space"></span>IntegralUI Tooltip is a native AngularJS directive which displays a tooltip. It can be attached to any HTML element or other directive. Using options in right panel, you can check out some of the built-in properties of the Tooltip directive:</p>
+                     <ul class="feature-points">
+                        <li><span style="color:#c60d0d">enabled</span> - determines whether the Tooltip is enabled or disabled</li>
+                        <li><span style="color:#c60d0d">showMarker</span> - when true, an arrow marker will be displayed for the Tooltip window</li>
+                        <li><span style="color:#c60d0d">title</span> - title of the Tooltip, can contain multiple lines of text or any custom HTML</li>
+                        <li><span style="color:#c60d0d">position</span> - determines where the Tooltip will appear: above, below, left or right side of the target element or at mouse position</li>
+                        <li><span style="color:#c60d0d">initialDelay</span> - the time in miliseconds prior Tooltip is shown</li>
+                        <li><span style="color:#c60d0d">autoPopDelay</span> - the time in miliseconds for Tooltip to remain visible</li>
+                    </ul>
+                    <p><span class="initial-space"></span>By default Tooltip is positioned at mouse cursor position. If a <span style="color:#c60d0d">title</span> is not provided, the tooltip will not appear.</p>
+                    <p><span class="initial-space"></span>The appearance of the tooltip is fully customizable. This directive has a separate CSS classes, which can be modified on your side.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

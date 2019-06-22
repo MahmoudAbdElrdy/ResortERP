@@ -1,0 +1,222 @@
+﻿<div class="app-content">
+    <div class="main-content">
+        <div class="wrap-content container" id="container">
+            <div class="container-fluid container-fullw ">
+                <div class="row">
+                    <div class="col-md-12">
+
+                        <div class="panel " style="height:100%;overflow:auto;">
+                            <div class="panel-heading border-bottom  panel-white ">
+                                <h4 class="panel-title">
+                                    مستخدم جديد
+                                </h4>
+                                <div class="panel-tools">
+                                    <a data-original-title="Refresh" data-toggle="tooltip" data-placement="top" data-trigger="hover" class="btn btn-transparent btn-sm panel-refresh" href="#"><i class="fa fa-circle-o"></i></a>
+                                    <a data-original-title="Expand" data-toggle="tooltip" data-placement="top" data-trigger="hover" class="btn btn-transparent btn-sm panel-expand" href="#"><i class="fa fa-compress expand-on"></i><i class="fa fa-expand expand-off"></i></a>
+                                </div>
+                            </div>
+
+                            <div class="panel-body panel-body panel-white">
+
+                                <div class="col-md-12" ng-show="IsShow">
+                                    <form name="registrationForm" id="registrationForm" novalidate>
+                                        <div class="col-md-12">
+                                            <div ng-class="{'has-error': registrationForm.$invalid}">
+                                                <div class="form-group col-sm-12  col-md-6">
+                                                    <label>الاسم بالعربي:</label><div class="help-block error" style="display:inline" ng-show="registrationForm.userARName.$error.required">*</div>
+                                                    <span class="input-icon">
+                                                        <input type="text" name="userARName" class="form-control" placeholder="الاسم بالعربي" data-ng-model="user.COMPANY_AR_NAME" required autofocus>
+                                                        <i class="fa fa-building"></i>
+                                                    </span>
+                                                    <!--<span ng-show="registrationForm.userARName.$invalid " class="help-block" style="color:red"> * </span>-->
+                                                </div>
+                                            </div>
+                                       
+                                            <div ng-class="{'has-error': registrationForm.$invalid}" class="form-group col-sm-12  col-md-6">
+                                                <label> : الاسم باللاتيني</label><div class="help-block error" style="display:inline" ng-show="registrationForm.userENName.$error.required">*</div>
+                                                <span class="input-icon">
+                                                    <input type="text" name="userENName" class="form-control" placeholder="الاسم باللاتيني" data-ng-model="user.COMPANY_EN_NAME" required>
+                                                    <i class="fa fa-building"></i>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div ng-class="{'has-error': registrationForm.$invalid}" class="form-group col-sm-12  col-md-6">
+                                                <label>اسم المستخدم : </label><div class="help-block error" style="display:inline" ng-show="registrationForm.userName.$error.required">*</div>
+                                                <span class="input-icon">
+                                                    <input type="text" name="userName" class="form-control" placeholder="اسم المستخدم" data-ng-model="user.UID" ng-change="checkUserName()" required>
+                                                    <i class="fa fa-user"></i>
+                                                    <span>@{{CompanyENName}}</span>
+                                                    <span  ng-show="IsUserNameExist" class="help-block" style="color:red"> اسم المستخدم غير متاح </span>
+
+                                                </span>
+                                            </div>
+                                            <div ng-class="{'has-error': registrationForm.$invalid}" class="form-group col-sm-12  col-md-6">
+                                                <label>: البريد الالكتروني للمستخدم</label><div class="help-block error" style="display:inline" ng-show="registrationForm.email.$error.required">*</div>
+                                                <span class="input-icon">
+                                                    <input type="text" name="email" class="form-control" placeholder="البريد الالكتروني للمستخدم" data-ng-model="user.COMPANY_EMAIL" ng-pattern="emailPattern" ng-change="checkEmail()" required>
+                                                    <i class="fa fa-envelope"></i>
+
+                                                    <span ng-show="registrationForm.email.$error.pattern && registrationForm.email.$invalid " class="help-block" style="color:red"> البريد الالكتروني غير صحيح</span>
+                                                    <span id="ErrId" ng-show="IsMailExist" class="help-block" style="color:red"> تم تسجيل نفس البريد الالكتروني سابقا</span>
+
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div ng-class="{'has-error': registrationForm.$invalid}" class="form-group col-sm-12  col-md-6">
+                                                <label>كلمة المرور: </label><div class="help-block error" style="display:inline" ng-show="registrationForm.password.$error.required">*</div>
+                                                <span class="input-icon">
+                                                    <input type="password" name="password" class="form-control" placeholder="كلمة المرور" data-ng-model="user.UPWD" required>
+                                                    <i class="fa fa-lock"></i>
+                                                </span>
+
+                                            </div>
+                                            <div ng-class="{'has-error': registrationForm.$invalid}" class="form-group col-sm-12  col-md-6">
+                                                <label>تأكيد كلمة المرور : </label><div class="help-block error" style="display:inline" ng-show="registrationForm.password.$error.required">*</div>
+                                                <span class="input-icon">
+                                                    <input type="password" id="confirmPassword" name="confirmPassword" class="form-control" placeholder="تأكيد كلمة المرور" ng-model="user.ConfirmPassword" required
+                                                           compare-to="user.UPWD">
+                                                    <i class="fa fa-lock"></i>
+                                                </span>
+                                                <div ng-messages="registrationForm.confirmPassword.$error"
+                                                     ng-messages-include="messages.html"></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group col-sm-12  col-md-6">
+                                                <label>عنوان الموظف العربي</label>
+                                                <span class="input-icon">
+                                                    <input type="text" name="companyARName" class="form-control" placeholder="عنوان الموظف العربي" data-ng-model="user.COMPANY_AR_ADRESS">
+                                                    <i class="fa fa-home"></i>
+                                                </span>
+                                            </div>
+                                            <div class="form-group col-sm-12  col-md-6">
+                                                <label>عنوان الموظف اللاتيني</label>
+                                                <span class="input-icon">
+                                                    <input type="text" name="companyARName" class="form-control" placeholder="عنوان الموظف اللاتيني" data-ng-model="user.COMPANY_EN_ADRESS">
+                                                    <i class="fa fa-home"></i>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group col-sm-12  col-md-6">
+                                                <label>التليفون</label>
+                                                <span class="input-icon">
+                                                    <input type="text" name="companyARName" class="form-control" placeholder="التليفون" data-ng-model="user.COMPANY_TELEPHONE" only-number>
+                                                    <i class="fa fa-phone"></i>
+                                                </span>
+                                            </div>
+                                            <div class="form-group col-sm-12  col-md-6">
+                                                <label>الفاكس</label>
+                                                <span class="input-icon">
+                                                    <input type="text" name="companyARName" class="form-control" placeholder="الفاكس" data-ng-model="user.COMPANY_FAX" only-number>
+                                                    <i class="fa fa-fax"></i>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div ng-class="{'has-error': registrationForm.$invalid}" class="form-group col-sm-12 col-md-6">
+                                                <label> : صلاحية المستخدم</label><div class="help-block error" style="display:inline" ng-show="registrationForm.password.$error.required">*</div>
+                                                <span class="input-icon">
+                                                    <select name="userType" class="form-control" placeholder="صلاحية المستخدم" ng-model="user.USER_TYPE" ng-options="x.ID as x.ARName for x in userGroupList" required>
+                                                        <option value="">اختر صلاحية المستخدم</option>
+                                                    </select>
+                                                    <i class="fa fa-user-plus"></i>
+                                                </span>
+                                            </div>
+                                            <div class="form-group col-sm-12  col-md-6">
+                                                <span class="input-icon"></span>
+                                            </div>
+                                              <div class="form-group col-sm-12  col-md-6">
+                                                <label>اختصار الاسم العربي</label>
+                                                <span class="input-icon">
+                                                    <input type="text" name="userLetter" class="form-control" placeholder="اختصار الاسم العربي" data-ng-model="user.USER_LETTER">
+                                                    <i class="fa fa-user"></i>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+
+                                <div class="col-md-12 margin-bottom-25 text-center" ng-show="IsShow">
+                                    <button type="button" class="btn btn-primary btn-wide  margin-top-10" ng-disabled="!registrationForm.$valid||IsMailExist||IsUserNameExist" data-ng-click="saveUser()">حفظ&nbsp;&nbsp;<i class="fa fa-save"></i></button>
+                                    <button type="button" class="btn btn-wide btn-success margin-top-10 " ng-click="refreshData()">تحديث&nbsp;&nbsp;<i class="fa fa-refresh"></i></button>
+                                    <button type="button" class="btn btn-wide btn-info   margin-top-10" ng-click="clearEnity()">جديد&nbsp;&nbsp;<i class="fa fa-paste"></i></button>
+                                </div>
+
+                                <div class="col-md-12">
+
+                                    <fieldset class="panel-white">
+                                        <legend>
+                                            المستخدين المعرفين سابقا
+                                        </legend>
+                                        <div class="table-responsive">
+
+                                            <table class="table table-striped table-bordered table-hover table-full-width ps-scrollbar-x small  panel-full-screen  fc-scroller  " style="height:150px;overflow:auto;" id="sample-table-2">
+                                                <thead>
+
+                                                    <tr class="border-right  success ">
+                                                        <th class="center no-border border-right border-left hidden-xs">#</th>
+
+                                                        <th class="center no-border border-right border-left ">
+                                                            الاسم بالعربي
+                                                        </th>
+                                                        <th class="center no-border border-right border-left hidden-xs">
+                                                            الاسم باللاتيني
+                                                        </th>
+                                                        <th class="center no-border border-right border-left">
+                                                            اسم المستخدم
+                                                        </th>
+                                                        <th class="center no-border border-right border-left hidden-xs">
+                                                            البريد الالكتروني
+                                                        </th>
+                                                        <th class="center no-border border-right border-left hidden-xs">
+                                                            العنوان
+                                                        </th>
+                                                        <th class="center no-border border-right border-left hidden-xs">
+                                                           اختصار الاسم العربي
+                                                        </th>
+                                                        <th class="center no-border border-right border-left hidden-xs">
+                                                            التليفون
+                                                        </th>
+                                                        <th class="center no-border border-right border-left hidden-xs">
+                                                            الفاكس
+                                                        </th>
+                                                        <th></th>
+                                                        <th></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="us in usersList">
+                                                        <td class="hidden-xs">{{ $index + 1 }}</td>
+                                                        <td>{{ us.COMPANY_AR_NAME }}</td>
+                                                        <td class="hidden-xs">{{ us.COMPANY_EN_NAME }}</td>
+                                                        <td>{{ us.UID }}</td>
+                                                        <td class="hidden-xs">{{ us.COMPANY_EMAIL }}</td>
+                                                        <td class="hidden-xs">{{ us.COMPANY_AR_ADRESS }}</td>
+                                                        <td class="hidden-xs">{{ us.USER_LETTER }}</td>
+                                                        <td class="hidden-xs">{{us.COMPANY_TELEPHONE}}</td>
+                                                        <td class="hidden-xs">{{ us.COMPANY_FAX }}</td>
+                                                        <td>
+                                                            <a class="label partition-blue" href="" ng-click="dirEnity(us)"><i class="glyphicon glyphicon-share"></i>  تعديل</a>
+                                                        </td>
+                                                        <td>
+                                                            <a class="label partition-red" href="" ng-click="deleteEnity(us)"><i class="glyphicon glyphicon-remove-circle"></i> حذف</a>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                            <ul uib-pagination total-items="usersTotalCount" ng-model="pageNum" max-size="maxSize" class="pagination-sm" boundary-links="true" num-pages="numPages" ng-change="pageChanged()"></ul>
+                                            <pre>صفحه: {{pageNum}} / {{numPages}}</pre>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

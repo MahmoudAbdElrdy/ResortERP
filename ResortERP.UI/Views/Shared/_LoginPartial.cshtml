@@ -1,0 +1,112 @@
+﻿@*@using Microsoft.AspNet.Identity*@
+@*@if (Request.IsAuthenticated)
+{
+    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+    {
+    @Html.AntiForgeryToken()
+
+    <ul class="nav navbar-nav navbar-right">
+        <li>
+            @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+        </li>
+        <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+    </ul>
+    }
+}
+else
+{
+    <ul class="nav navbar-nav navbar-right">
+        <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+        <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+    </ul>
+}*@
+
+<div class="nav-user-wrapper">
+
+    <div class="media">
+
+       
+           
+                <div class="media-left">
+                    <a class="profile-card-photo" href="#"><img alt="" src="~/Content/assets/images/avatar-1.jpg"></a>
+                </div>
+                <div class="media-body">
+
+                    <span class="media-heading text-white">
+                        @*@User.Identity.GetUserName()*@a
+
+
+                    @*  @Html.ActionLink( User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })*@
+                </span>
+                <div class="text-small text-white-transparent">
+                    مرحبا بك
+                    @*@Html.ActionLink("مرحبا بك ", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })*@
+                </div>
+            </div>
+
+                <div class="media-right media-middle">
+                    <div class="dropdown">
+                        <button href class="btn btn-transparent text-white dropdown-toggle" data-toggle="dropdown">
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <ul class="dropdown-menu animated fadeInRight pull-right">
+
+
+                            <li>
+                                @Html.ActionLink("تغيير كلمة المرور", "ChangePassword", "Manage", routeValues: null, htmlAttributes: new { id = "registerLink" })
+                            </li>
+                            <li>
+                                @Html.ActionLink("تسجيل جديد", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })
+                            </li>
+                            <li>
+                                @Html.ActionLink("إعدادات  ", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <a href="javascript:document.getElementById('logoutForm').submit()">تسجيل الخروج</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+           
+
+            <div class="media-left">
+                <a class="profile-card-photo" href="#"><img alt="" src="~/Content/assets/images/media-user.png"></a>
+            </div>
+            <div class="media-body">
+
+                <span class="media-heading text-white">
+
+
+                    يجب تسجيل الدخول
+
+                </span>
+                <div class="text-small text-white-transparent">
+                    حتى يتسنى لك المتابعة
+
+                </div>
+            </div>
+            <div class="media-right media-middle">
+                <div class="dropdown">
+                    <button href class="btn btn-transparent text-white dropdown-toggle" data-toggle="dropdown">
+                        <i class="fa fa-caret-down"></i>
+                    </button>
+                    <ul class="dropdown-menu animated fadeInRight pull-right">
+
+                        <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+                        <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+                        <li class="divider"></li>
+                        <li>
+                            <a href="javascript:document.getElementById('logoutForm').submit()">تسجيل الخروج</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+       
+
+
+
+
+    </div>
+</div>

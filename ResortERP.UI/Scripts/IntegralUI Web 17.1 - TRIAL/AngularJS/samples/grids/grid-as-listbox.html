@@ -1,0 +1,313 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head>
+    <title>Grids - Grid as ListBox</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="../../css/samples.css" />
+    <link rel="stylesheet" href="../../css/integralui.css" />
+    <link rel="stylesheet" href="../../css/integralui.checkbox.css" />
+    <link rel="stylesheet" href="../../css/integralui.grid.css" />
+    <link rel="stylesheet" href="../../css/themes/theme-flat-blue.css" id="theme" />
+    <script type="text/javascript" src="../theme.selector.min.js"></script>
+    <script type="text/javascript" src="../../external/angular.min.js"></script>
+    <script type="text/javascript" src="../../js/angular.integralui.min.js"></script>
+    <script type="text/javascript" src="../../js/angular.integralui.checkbox.min.js"></script>
+    <script type="text/javascript" src="../../js/angular.integralui.lists.min.js"></script>
+    <script type="text/javascript" src="../../js/angular.integralui.grid.min.js"></script>
+    <script type="text/javascript">
+ 		angular
+			.module("appModule", ["integralui"])
+			.controller("appCtrl", ["$scope", "IntegralUIGridService", "$timeout", function($scope, $gridService, $timeout){
+				$scope.gridName = "gridSample";
+				$scope.columns = [];
+				$scope.rows = [];
+				
+				// Initilaize the Theme Selector for this sample
+                initTheme($scope, $gridService, $scope.gridName);
+
+				$scope.columns = [
+					{ id: 1, editorType: 'checkbox', contentAlignment: 'center', width: 30, fixedWidth: true },
+					{ id: 2, headerText: "Name", width: 300, cellTemplateUrl: "'driver-info.html'" },
+					{ id: 3, headerText: "Version", width: 120, contentAlignment: 'center' },
+					{ id: 4, headerText: "Date", width: 110, contentAlignment: 'center' },
+					{ id: 5, width: 90, contentAlignment: 'center', cellTemplateUrl: "'driver-action.html'" }
+				];
+
+				var getDriverName = function(id){
+					var row = $gridService.findRowById($scope.gridName, id);
+					return row ? row.cells[1].templateObj.name : '';
+				}
+
+				$scope.onUpdateDriver = function(obj){
+					var driverName = getDriverName(obj.id);
+					alert("Update Driver for " + driverName);
+				}
+
+				$scope.rows = [
+					{ 
+						id: 1,
+						cells: [
+							{ cid: 1 },
+							{
+								cid: 2, 
+								templateObj: {
+									icon: 'disk',
+									category: 'Disk drives',
+									name: 'TOSHIBA DT01ACA100 ATA Device'
+								}
+							},
+							{ cid: 3, text: "6.1.7600.16385" },
+							{ cid: 4, text: "21 Jun 2015" },
+							{ 
+								cid: 5, 
+								templateObj: {
+									id: 1, 
+									updateDriver: function(obj){ return $scope.onUpdateDriver(obj) }
+								}
+							}
+						]
+					},
+					{ 
+						id: 2,
+						cells: [
+							{ cid: 1, value: true },
+							{
+								cid: 2, 
+								templateObj: {
+									icon: 'pc',
+									category: 'Display adapters',
+									name: 'NVIDIA GeForce GT 730'
+								}
+							},
+							{ cid: 3, text: "10.18.13.5891" },
+							{ cid: 4, text: "05 Nov 2015" },
+							{ 
+								cid: 5, 
+								templateObj: {
+									id: 2, 
+									updateDriver: function(obj){ return $scope.onUpdateDriver(obj) }
+								}
+							}
+						]
+					},
+					{ 
+						id: 3,
+						cells: [
+							{ cid: 1 },
+							{
+								cid: 2, 
+								templateObj: {
+									icon: 'network',
+									category: 'Network',
+									name: 'Realtek PCIe GBE Family Controller'
+								}
+							},
+							{ cid: 3, text: "7.82.317.2014" },
+							{ cid: 4, text: "17 Mar 2014" },
+							{ 
+								cid: 5, 
+								templateObj: {
+									id: 4, 
+									updateDriver: function(obj){ return $scope.onUpdateDriver(obj) }
+								}
+							}
+						]
+					},
+					{ 
+						id: 4,
+						cells: [
+							{ cid: 1, value: true },
+							{
+								cid: 2, 
+								templateObj: {
+									icon: 'sound',
+									category: 'Sound',
+									name: 'Realtek High Defintion Audio'
+								}
+							},
+							{ cid: 3, text: "6.0.1.7200" },
+							{ cid: 4, text: "14 Mar 2014" },
+							{ 
+								cid: 5, 
+								templateObj: {
+									id: 4, 
+									updateDriver: function(obj){ return $scope.onUpdateDriver(obj) }
+								}
+							}
+						]
+					},
+					{ 
+						id: 5,
+						cells: [
+							{ cid: 1 },
+							{
+								cid: 2, 
+								templateObj: {
+									icon: 'usb',
+									category: 'Universal Serial Bus controllers',
+									name: 'Intel USB 3.0 Root Hub'
+								}
+							},
+							{ cid: 3, text: "3.0.0.16" },
+							{ cid: 4, text: "12 Feb 2014" },
+							{ 
+								cid: 5, 
+								templateObj: {
+									id: 4, 
+									updateDriver: function(obj){ return $scope.onUpdateDriver(obj) }
+								}
+							}
+						]
+					}
+				];
+
+			}]);
+    </script>
+    <style type="text/css">
+		.control-panel
+		{
+			margin-left: 35px;
+			width: 250px;
+		}
+		.feature-content
+		{
+			width: 700px;
+		}
+        .directive
+        {
+        	border: thin solid #dadada;
+        	width: 700px;
+        	height: 255px;
+        }
+		/* Grid settings */
+		.iui-grid-column-header-cell, .iui-grid-column-footer-cell
+		{
+			padding: 2px 2px;
+		}
+		.iui-grid-row-cell-content
+		{
+			padding: 10px 2px;
+		}
+		.iui-grid-row-hovered
+		{
+			background-color: #f5f5f5;
+		}
+		.iui-grid-row-selected
+		{
+			background-color: #e9e9e9;
+			color: black;
+		}
+		.iui-grid-lines-horizontal
+		{
+			border-bottom-color: #dedede;
+		}
+		.iui-grid-row-cell:first-child
+		{
+			border-left-color: transparent;
+		}
+		.iui-grid-row-cell:last-child
+		{
+			border-right-color: transparent;
+		}
+		.iui-grid-row-selected .iui-grid-row-cell:first-child
+		{
+			border-left-color: #d9d9d9;
+		}
+		.iui-grid-row-selected .iui-grid-row-cell:last-child
+		{
+			border-right-color: #d9d9d9;
+		}
+
+		/* Button Cell */
+        .button-cell
+        {
+        	text-align: center;
+        }
+		.button-cell button
+		{
+			background: white; 
+        	border: thin solid #c8c8c8;
+			color: #e05d20;
+        	padding: 5px;
+        	width: 75px;
+		}
+		.button-cell button:hover
+		{
+			background: #e05d20;
+			color: white;
+		}
+
+		/* Icons */
+		.icons-medium
+		{
+			margin: 10px 5px 0 0;
+		    vertical-align: top;
+		}
+		.sound
+		{
+    		background-position: 0 -168px;
+		}
+		.usb
+		{
+    		background-position: -24px -168px;
+		}
+		.driver-info
+		{
+			display: inline-block;
+		}
+		.iui-checkbox-box
+		{
+			border: 0;
+			width: 16px;
+			height: 16px;
+		}
+	    .iui-checkbox-checked
+	    {
+	        background-image: url("../../resources/checkbox/checkbox-checked-1.png");
+	    }
+	    .iui-checkbox-unchecked
+	    {
+	        background-image: url("../../resources/checkbox/checkbox-unchecked-1.png");
+	    }
+    </style>
+</head>
+<body ng-app="appModule" ng-controller="appCtrl">
+	<div class="header">
+        <div class="header-block">
+            <div class="header-content">
+    		    <h1><span style="color:#c60d0d">IntegralUI</span> Web <span style="font-size:0.75em; font-style:italic">for AngularJS</span></h1>
+            </div>
+            <div class="theme-selector"><label>Active Theme: <select class="theme-combo" ng-model="selTheme" ng-options="theme.name for theme in themeList"></select></label></div>
+        </div>
+        <hr class="head-separator" />
+    </div>
+    <div class="content">
+        <div class="feature">
+			<script type="text/ng-template" id="'driver-info.html'">
+				<span class="icons-medium {{obj.icon}}"></span>
+				<div class="driver-info">
+					<a href="">{{obj.category}}</a><br/>
+					<span>{{obj.name}}</span>
+				</div>
+			</script>
+			<script type="text/ng-template" id="'driver-action.html'">
+				<div class="button-cell">
+					<button ng-click="obj.updateDriver(obj)">Update</button>
+				</div>
+			</script>
+	        <h2 class="feature-title">Grids / Grid as ListBox</h2>
+	        <div class="feature-content">
+                <iui-grid name="{{gridName}}" class="directive" columns="columns" rows="rows" show-header="false" show-footer="false" grid-lines="'horizontal'" allow-focus="false"></iui-grid>
+                <br style="clear:both;"/>
+                <div class="feature-help">
+                    <p><span class="initial-space"></span>An example of Grid directive that act as a ListBox. The column header and footer are hidden and templates are used to add custom HTML content in grid cells.</p>
+                    <p><span class="initial-space"></span>On first look, you cannot tell whether the above control is a Grid or a ListBox. By CSS modifications and templates, the Grid appears as a simple list. In this example, we have chosen to show a list of device drivers.</p>
+                    <p><span class="initial-space"></span>For more information check out the source code of this sample.</p>
+                    <p style="margin:10px 50px;padding-bottom:25px"><strong>NOTE</strong> The theme selector in this example will not work, because the grid styles are overriden in this sample code.</p>
+               </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

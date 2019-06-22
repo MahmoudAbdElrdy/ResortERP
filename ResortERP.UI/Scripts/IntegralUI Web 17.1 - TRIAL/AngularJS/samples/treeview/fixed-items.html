@@ -1,0 +1,257 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head>
+    <title>TreeView - Fixed Items on Top and Bottom Side</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="../../css/samples.css" />
+    <link rel="stylesheet" href="../../css/integralui.css" />
+    <link rel="stylesheet" href="../../css/integralui.contextmenu.css" />
+    <link rel="stylesheet" href="../../css/integralui.treeview.css" />
+    <link rel="stylesheet" href="../../css/themes/theme-flat-blue.css" id="theme" />
+    <script type="text/javascript" src="../theme.selector.min.js"></script>
+    <script type="text/javascript" src="../../external/angular.min.js"></script>
+    <script type="text/javascript" src="../../js/angular.integralui.min.js"></script>
+    <script type="text/javascript" src="../../js/angular.integralui.lists.min.js"></script>
+    <script type="text/javascript" src="../../js/angular.integralui.treeview.min.js"></script>
+    <script type="text/javascript" src="../../js/angular.integralui.contextmenu.min.js"></script>
+    <script type="text/javascript">
+ 		angular
+			.module("appModule", ["integralui"])
+			.controller("appCtrl", ["$scope", "IntegralUITreeViewService", "$timeout", function($scope, $treeService, $timeout){
+				$scope.treeName = "treeSample";
+				var currentItem = null;
+				
+                initTheme($scope, $treeService, $scope.treeName);
+
+				// Context menu data for Tree Items
+				var itemContextMenu = [
+					{ text: "Fixed", type: "header" },
+					{ key: 'FIXED_TOP', text: "Top", itemClick: function(e){ return $scope.processMenuItemClicks(e.item); }, icon: 'icons-medium empty' },
+					{ key: 'FIXED_BOTTOM', text: "Bottom", itemClick: function(e){ return $scope.processMenuItemClicks(e.item); }, icon: 'icons-medium empty' },
+					{ key: 'FIXED_NONE', text: "None", checked: true, itemClick: function(e){ return $scope.processMenuItemClicks(e.item); }, icon: 'icons-medium check-mark' },
+				];
+
+				$scope.items = [
+					{ 
+						id: 1,
+						text: "Item1",
+						items: [
+							{ id: 11, pid: 1, text: "Item11" },
+							{ 
+								id: 12,
+								pid: 1,
+								text: "Item12",
+								items: [
+									{ id: 121, pid: 12, text: "Item121" },
+									{ 
+										id: 122,
+										pid: 12,
+										text: "Item122", 
+										expanded: false,
+										items: [
+											{ id: 1221, pid: 122, text: "Item1221" },
+											{ id: 1222, pid: 122, text: "Item1222" }
+										]
+									},
+									{ id: 123, pid: 12, text: "Item123" },
+									{ id: 124, pid: 12, text: "Item124" },
+									{ id: 125, pid: 12, text: "Item125" }
+								]
+							},
+							{ id: 13, pid: 1, text: "Item13" },
+							{
+								id: 14,
+								pid: 1,
+								text: "Item14", 
+								items: [
+									{ id: 141, pid: 14, text: "Item141" },
+									{ id: 142, pid: 14, text: "Item142" }
+								]
+							}
+						]
+					},
+					{
+						id: 2,
+						text: "Item2",
+						expanded: false,
+						items: [
+							{ id: 21, pid: 2, text: "Item21" },
+							{ id: 22, pid: 2, text: "Item22" },
+							{
+								id: 23,
+								pid: 2,
+								text: "Item23", 
+								expanded: false,
+								items: [
+									{ id: 231, pid: 23, text: "Item231" },
+									{ id: 232, pid: 23, text: "Item232" }
+								]
+							}
+						]
+					},
+					{ id: 3, text: "Item3" },
+					{ id: 4, text: "Item4" },
+					{ id: 5, text: "Item5" },
+					{
+						id: 6,
+						text: "Item6",
+						items: [
+							{ id: 61, pid: 6, text: "Item61" },
+							{ id: 62, pid: 6, text: "Item62" }
+						]
+					},
+					{ id: 7, text: "Item7" }
+				];
+
+				var updateMenuIcon = function(menuItem){
+					if (currentItem){
+						switch (menuItem.key){
+							case 'FIXED_TOP':
+								if (currentItem.fixed == 'top'){
+									menuItem.checked = true;
+									menuItem.icon = 'icons-medium check-mark';
+								}
+								else {
+									menuItem.checked = false;
+									menuItem.icon = 'icons-medium empty';
+								}
+								break;
+
+							case 'FIXED_BOTTOM':
+								if (currentItem.fixed == 'bottom'){
+									menuItem.checked = true;
+									menuItem.icon = 'icons-medium check-mark';
+								}
+								else {
+									menuItem.checked = false;
+									menuItem.icon = 'icons-medium empty';
+								}
+								break;
+								
+							case 'FIXED_NONE':
+								if (!currentItem.fixed || currentItem.fixed == 'none'){
+									menuItem.checked = true;
+									menuItem.icon = 'icons-medium check-mark';
+								}
+								else {
+									menuItem.checked = false;
+									menuItem.icon = 'icons-medium empty';
+								}
+								break;
+						}
+					}
+				}
+
+				$scope.processMenuItemClicks = function(menuItem){
+					if (menuItem && currentItem){
+                        for (var i = 0; i < itemContextMenu.length; i++){
+                            if (itemContextMenu[i] != menuItem){
+                                itemContextMenu.checked = false;
+		                        itemContextMenu[i].icon = 'icons-medium empty';
+                            }
+                        }
+
+						switch (menuItem.key){
+							case 'FIXED_TOP':
+								currentItem.fixed = 'top';
+								break;
+								
+							case 'FIXED_BOTTOM':
+								currentItem.fixed = 'bottom';
+								break;
+								
+							case 'FIXED_NONE':
+								currentItem.fixed = 'none';
+								break;
+						}
+
+						menuItem.checked = true;
+                        menuItem.icon = 'icons-medium check-mark';
+
+						$treeService.clearSelection($scope.treeName);
+						$treeService.updateLayout($scope.treeName);
+					}
+				}
+
+				var initTimer = $timeout(function(){
+					var list = $treeService.getFlatList($scope.treeName, true);
+					for (var i = 0; i < list.length; i++)
+						list[i].contextMenu =  itemContextMenu;
+
+					$treeService.updateLayout($scope.treeName);
+
+					$timeout.cancel(initTimer);
+				}, 1);
+				
+				$scope.onItemRightClick = function(e){
+					currentItem = e.item;
+
+                    for (var i = 0; i < itemContextMenu.length; i++)
+                        updateMenuIcon(itemContextMenu[i]);
+				}
+			}]);
+    </script>
+    <style type="text/css">
+		.control-panel
+		{
+			margin-left: 35px;
+			width: 250px;
+		}
+		.feature-content
+		{
+			width: 900px;
+		}
+        .directive
+        {
+        	border: thin solid #dadada;
+        	width: 400px;
+        	height: 350px;
+        }
+        .iui-treeview-item-fixed-disabled
+        {
+        	background: blue;
+        }
+        .iui-contextmenu-item
+        {
+        	width: 100px;
+        }
+        .check-mark
+        {
+            background-position: -192px -120px;
+        }
+   </style>
+</head>
+<body ng-app="appModule" ng-controller="appCtrl">
+	<div class="header">
+        <div class="header-block">
+            <div class="header-content">
+    		    <h1><span style="color:#c60d0d">IntegralUI</span> Web <span style="font-size:0.75em; font-style:italic">for AngularJS</span></h1>
+            </div>
+            <div class="theme-selector"><label>Active Theme: <select class="theme-combo" ng-model="selTheme" ng-options="theme.name for theme in themeList"></select></label></div>
+        </div>
+        <hr class="head-separator" />
+    </div>
+    <div class="content">
+        <div class="feature">
+	        <h2 class="feature-title">TreeView / Fixed Items on Top and Bottom Side</h2>
+	        <div class="feature-content">
+                <iui-treeview name="{{treeName}}" class="directive" items="items" item-rightclick="onItemRightClick(e)" allow-drag="true"></iui-treeview>
+                <div class="control-panel">
+                </div>
+                <br style="clear:both;"/>
+                <div class="feature-help">
+                    <p><span class="initial-space"></span>This example shows how to fix items on top and bottom side in TreeView directive. By right-clicking some item in the TreeView, a context menu will popup showing fixed position: top, bottom or none. By selecting a menu option, the TreeView layout will update showing fixed items.</p>
+                    <p><span class="initial-space"></span>Each item object has a field which allows you to set the side at which it will be fixed.</p>
+                        <ul class="feature-points">
+                            <li><span style="color:#0000ff">fixed</span> - Determines the side at which item will be fixed. This field accepts one of the following values: <span style="color:#c60d0d">'none'</span>, <span style="color:#c60d0d">'top'</span> or <span style="color:#c60d0d">'bottom'</span>.</li>
+                        </ul>
+                    </p>
+                    <p><span class="initial-space"></span>When item is fixed, it cannot expand/collapse, selection is suppressed and also drag drop operations are excluded. If fixed item has child items, they are excluded from TreeView layout. Scrolling is also updated so that only non-fixed items can be scrolled.</p>
+                    <p><span class="initial-space"></span>You can customize the appearance of fixed coluitemsmns by using corresponding CSS styles. You can find more information in code of this sample.</p>
+               </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,41 @@
+
+
+@font-face {
+    font-family: 'diavlo_mediumregular';
+    src: url('diavlo_medium_ii_37_1-webfont.eot');
+    src: url('diavlo_medium_ii_37_1-webfont.eot?#iefix') format('embedded-opentype'),
+         url('diavlo_medium_ii_37_1-webfont.woff') format('woff'),
+         url('diavlo_medium_ii_37_1-webfont.ttf') format('truetype'),
+         url('diavlo_medium_ii_37_1-webfont.svg#diavlo_mediumregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+
+  @font-face
+{
+    font-family: NeoSansArabic;
+    src: url('../fonts/NeoSansArabic.eot');
+    src: url('../fonts/NeoSansArabic.eot?#iefix') format('embedded-opentype'), url('../fonts/NeoSansArabic.woff') format('woff'), url('../fonts/NeoSansArabic.ttf') format('truetype'), url('../fonts/NeoSansArabic.svg#NeoSansArabic') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face
+{
+    font-family: DroidKufi-Regular;
+    src: url('../fonts/DroidKufi-Regular.eot');
+    src: url('../fonts/DroidKufi-Regular.eot?#iefix') format('embedded-opentype'), url('../fonts/DroidKufi-Regular.woff') format('woff'), url('../fonts/DroidKufi-Regular.ttf') format('truetype'), url('../fonts/DroidKufi-Regular.svg#diavlo_medium_ii_37_1-webfont') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face
+{
+    font-family: ge-ss-med;
+    src: url('../fonts/ge-ss-med.eot');
+    src: url('../fonts/ge-ss-med.eot?#iefix') format('embedded-opentype'), url('../fonts/ge-ss-med.woff') format('woff'), url('../fonts/ge-ss-med.ttf') format('truetype'), url('../fonts/ge-ss-med.svg#ge-ss-med') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+

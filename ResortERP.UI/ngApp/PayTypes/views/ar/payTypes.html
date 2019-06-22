@@ -1,0 +1,194 @@
+﻿<div class="app-content">
+    <div class="main-content">
+        <div class="wrap-content container" id="container">
+            <div class="container-fluid container-fullw">
+                <div class="col-xs-12 margin-top-10 margin-bottom-10">
+                    <div class="breadcrumb-wrapper no-margin">
+                        <h4 class="mainTitle no-margin">طريقة الدفع</h4>
+                        <ul class="pull-right breadcrumb">
+                            <li><a href="#!"><i class="fa fa-home margin-left-5 text-large text-dark"></i>الرئيسية</a></li>
+                            <li>طريقة الدفع</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-xs-12 margin-bottom-10">
+                    <div class="panel-white panel-body no-margin">
+                        <button class="btn btn-o btn-default no-border" ng-click="savePayType()" ng-disabled="test.$invalid" type="button"><i class="glyphicon glyphicon-save"></i> حفظ</button>
+                        <button class="btn btn-o btn-default no-border" ng-click="refreshData()" type="button"><i class="glyphicon glyphicon-refresh"></i> تحديث</button>
+                        <button class="btn btn-o btn-default no-border" ng-click="clearData()" type="button"><i class="glyphicon glyphicon-file"></i> جديد</button>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="panel">
+                        <!--/.panel-heading-->
+                        <!--Start Panel Body -->
+                        <div class="panel-body panel-white">
+                            <div class="col-md-12">
+                                <div class="" ng-class="{'has-error': test.$invalid}">
+                                    <div class="form-group col-md-4">
+                                        <label for="payTypeCode">الكود:</label>
+                                        <div class="help-block error" ng-show="test.code.$error.required" style="display:inline">*</div>
+                                        <input class="form-control" id="payTypeCode" name="code" ng-model="payType.PAY_TYPE_CODE" placeholder="الكود" required="" type="text">
+                                    </div>
+                                </div>
+
+                                <div class="" ng-class="{'has-error': test.$invalid}">
+                                    <div class="form-group col-md-4">
+                                        <label for="payTypeArName">الاسم عربى:</label>
+                                        <div class="help-block error" ng-show="test.arname.$error.required" style="display:inline">*</div>
+                                        <input class="form-control" id="payTypeArName" name="arname" ng-model="payType.PAY_TYPE_AR_NAME" placeholder="الاسم عربى" required="" type="text">
+                                    </div>
+                                </div>
+
+                                <div class="" ng-class="{'has-error': test.$invalid}">
+                                    <div class="form-group col-md-4">
+                                        <label for="payTypeEnName">الاسم اللاتيني:</label>
+                                        <div class="help-block error" ng-show="test.enname.$error.required" style="display:inline">*</div>
+                                        <input class="form-control" id="payTypeEnName" name="enname" ng-model="payType.PAY_TYPE_EN_NAME" placeholder="الاسم اللاتيني" required="" type="text">
+                                    </div>
+                                </div>
+
+                                <div class="form-group col-md-4">
+                                    <label for="BankCurrency">الحساب:</label> <select class="js-example-basic-hide-search js-states form-control" ng-model="payType.AccountID" ng-options="p.ACC_ID as p.ACC_AR_NAME for p in acountList">
+                                        <option value="">اختر الحساب </option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group col-md-4">
+                                    <label for="BankAcoountNo">نسبه العموله البنكيه:</label> <input class="form-control" id="BankAcoountNo" ng-model="payType.BankCommissionRate" placeholder="نسبه العموله البنكيه" type="text">
+                                </div>
+
+                                <div class="form-group col-md-4">
+                                    <label for="BankAcoountNo">الحد الاقصي للعموله:</label> <input class="form-control" id="BankAcoountNo" ng-model="payType.MaxCommission" placeholder="الحد الاقصي للعموله" type="text">
+                                </div>
+
+                                <div class="form-group col-md-4">
+                                    <label for="BankAcoountNo">نسبه الضريبه علي العموله:</label> <input class="form-control" id="BankAcoountNo" ng-model="payType.CommissionTaxRate" placeholder="نسبه الضريبه علي العموله" type="text">
+                                </div>
+
+                                <div class="form-group col-md-4">
+                                    <label for="BankNotes">ملاحظات:</label> <input class="form-control" id="BankNotes" ng-model="payType.PAY_TYPE_NOTES" placeholder="ملاحظات" type="text">
+                                </div>
+
+                                <div class="form-group col-md-4">
+                                    <label>تاريح الاضافه:</label>
+                                    <input type="date" class="form-control" name="AddedOn" placeholder="تاريخ الاضافه" ng-model="payType.AddedOn">
+                                </div>
+
+                                <div class="checkbox col-md-4">
+                                    <div class="checkbox clip-check check-primary">
+                                        <input id="deactiveBox" ng-model="payType.Disable" type="checkbox">
+                                        <label for="deactiveBox">تعطيل</label>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                        <!-- End Panel Body -->
+                        <!--Start Panel Body -->
+                        <div class="panel">
+                            <div class="panel-group accordion" id="accordion">
+                                <div class="panel panel-white">
+                                    <div class="panel-heading">
+                                        <h5 class="panel-title">
+                                            <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" data-target="#collapseTwo"> <i class="icon-arrow"></i>  طرق الدفع المعرفة سابقاً </a>
+                                        </h5>
+                                    </div>
+                                    <div id="collapseTwo" class="collapse">
+                                        <div class="panel-body">
+                                            <div class="col-md-12">
+                                                <div class="col-md-3 pull-left">
+                                                    <table class="table table-stylish">
+                                                        <tbody>
+                                                            <tr>
+                                                                <td class="center text-extra-large"><i class="ti-save"></i></td>
+                                                                <td><span class="text-dark block">طرق الدفع :</span></td>
+                                                                <td class="center">{{payTypeTotalCount}}</td>
+                                                                <td class="center"><i class="fa fa-caret-down text-red"></i></td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <!--/.col-md-3-->
+                                                <div class="col-md-12">
+                                                    <table class="table table-bordered table-hover">
+                                                        <tr class="center success">
+                                                            <th class="hidden-xs">#</th>
+                                                            <th>كود</th>
+                                                            <th>الاسم عربى</th>
+                                                            <th>الاسم انجليزى</th>
+                                                            <!--<th> الحساب</th>-->
+                                                            <th>نسبه العموله البنكيه</th>
+                                                            <th>الحد الاقصي للعموله</th>
+                                                            <th>نسبه الضريبه علي العموله</th>
+                                                            <th class="hidden-xs">ملاحظات</th>
+                                                            <th class="hidden-xs">تعطيل</th>
+                                                            <th>تعديل / حذف</th>
+                                                        </tr>
+                                                        <tr ng-repeat="item in payTypeList">
+                                                            <td class="hidden-xs">{{ item.PAY_TYPE_ID }}</td>
+                                                            <td>{{ item.PAY_TYPE_CODE }}</td>
+                                                            <td>{{ item.PAY_TYPE_AR_NAME }}</td>
+                                                            <td>{{ item.PAY_TYPE_EN_NAME }}</td>
+                                                            <!--<td>{{ item.AccountID }}</td>-->
+
+                                                            <td>{{ item.BankCommissionRate }}</td>
+                                                            <td>{{ item.MaxCommission }}</td>
+                                                            <td>{{ item.CommissionTaxRate }}</td>
+                                                            <td>{{ item.Notes }}</td>
+                                                            <td>
+                                                                <div class="checkbox clip-check check-primary">
+                                                                    <input id="deactive{{item.PAY_TYPE_ID}}" ng-checked="item.Disable" type="checkbox">
+                                                                    <label for="deactive{{item.PAY_TYPE_ID}}"></label>
+                                                                </div>
+                                                            </td>
+                                                            <td class="center">
+
+                                                                <div class="visible-md visible-lg hidden-sm hidden-xs">
+                                                                    <a href="" ng-click="editEntity(item)" class="btn btn-transparent btn-xs" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fa fa-pencil"></i></a>
+                                                                    <a href="" ng-click="deleteEntity(item)" class="btn btn-transparent btn-xs tooltips" data-toggle="tooltip" data-placement="top" title="Remove"><i class="fa fa-times fa fa-white"></i></a>
+                                                                </div>
+
+                                                                <div class="visible-xs visible-sm hidden-md hidden-lg">
+                                                                    <div class="btn-group dropdown ">
+                                                                        <button type="button" class="btn btn-primary btn-o btn-sm dropdown-toggle" data-toggle="dropdown"><i class="fa fa-cog"></i>&nbsp;<span class="caret"></span></button>
+
+                                                                        <ul class="dropdown-menu pull-right dropdown-light" role="menu">
+                                                                            <li><a href="" ng-click="editEntity(item)"> تعديل </a></li>
+                                                                            <li><a href="" ng-click="deleteEntity(item)"> حذف </a></li>
+                                                                        </ul>
+
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                    <ul boundary-links="true" class="pagination-sm" max-size="maxSize" ng-change="pageChanged()" ng-model="pageNum" num-pages="numPages" total-items="payTypeTotalCount" uib-pagination=""></ul>
+                                                    <pre>صفحه: {{pageNum}} / {{numPages}}</pre>
+                                                </div>
+                                                <!--/.col-md-12-->
+                                            </div>
+                                            <!--/.col-md-12-->
+                                        </div>
+                                        <!--/.panel-body-->
+                                    </div>
+                                    <!--/.panel-collapse-->
+                                </div>
+                                <!--/.panel-->
+                            </div>
+                            <!--/.panel-group-->
+                        </div>
+                        <!-- End Panel Body -->
+                    </div>
+                    <!--/.panel-->
+                </div>
+                <!--/.col-md-12-->
+            </div>
+            <!--/.container-fluid-->
+        </div>
+        <!--/.wrap-content-->
+    </div>
+    <!--/.main-content-->
+</div>
+<!--/.app-content-->

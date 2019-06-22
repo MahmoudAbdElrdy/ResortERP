@@ -1,0 +1,53 @@
+﻿<div class="app-content">
+    <div class="main-content">
+        <div class="wrap-content container" id="container">
+            <div class="container-fluid container-fullw">
+                <div class="col-xs-12 margin-bottom-10">
+                    <div class="panel-white panel-body no-margin">
+                        <button type="button" class="btn btn-o btn-default no-border" ng-disabled="test.$invalid" ng-click="save()"><i class="glyphicon glyphicon-save"></i>حفظ</button>
+                    </div>
+                </div>
+                <div class="col-xs-12 margin-top-10 margin-bottom-10">
+                    <div class="breadcrumb-wrapper no-margin">
+                        <h4 class="mainTitle no-margin"> اعدادات شاشة العرض الرئيسية </h4>
+                        <ul class="pull-right breadcrumb">
+                            <li><a href="#!"><i class="fa fa-home margin-left-5 text-large text-dark"></i>الرئيسية</a></li>
+                            <li>اعدادات شاشة العرض الرئيسية </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="panel-body panel-white">
+                        <div class="col-md-4">
+                            <label>الحسابات</label>
+                            <select style="height:300px" id="cust_Acc_ID" ng-model="cust_Acc_ID" multiple="multiple" class="multiselect js-example-basic-hide-search js-states form-control" ng-options="x.ACC_ID as x.ACC_AR_NAME for x in accountList"></select>
+                        </div>
+                       
+                    </div>
+                       
+                </div>
+
+                <!--/.col-md-12-->
+            </div>
+            <!--/.container-fluid-->
+        </div>
+        <!--/.wrap-content-->
+    </div>
+    <!--/.main-content-->
+</div>
+<!--/.app-content-->
+
+<style>
+    .ms-container {
+        width: 100%
+    }
+
+        .ms-container .ms-selectable {
+            float: right;
+        }
+
+        .ms-container .ms-selection {
+            float: left;
+        }
+</style>

@@ -1,0 +1,143 @@
+﻿@{ ViewBag.Title = "Index"; }
+
+<div class="app-content">
+    <div class="main-content">
+        <div class="wrap-content container" id="container">
+            <div class="container-fluid container-fullw">
+                
+                <div class="col-xs-12 margin-top-10 margin-bottom-10">
+                    <div class="breadcrumb-wrapper no-margin">
+                        <h4 class="mainTitle no-margin">صفحة البحث</h4>
+                        <ul class="pull-right breadcrumb">
+                            <li><a href="#!"><i class="fa fa-home margin-left-5 text-large text-dark"></i>الرئيسية</a></li>
+                            <li>صفحة البحث</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-xs-12 margin-bottom-10">
+                    <div class="panel-white panel-body no-margin">
+                        <button class="btn btn-o btn-default no-border"> <i class="ti-printer"></i>طباعة</button>
+                        <button class="btn btn-o btn-default no-border" ng-click="clearEnity()"> <i class="fa fa-refresh"></i>جديد</button>
+                        <button class="btn btn-o btn-default no-border" ng-click="GetSearchResult()"> <i class="fa fa-search"></i> بحث </button>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="panel">
+                            
+                        <!--Start Panel Body -->
+                        <!--<div class="panel-body panel-white">
+                            <div class="col-md-12">
+
+                                <div class="row">
+                                    <div class="col-lg-6 col-md-4 col-xs-6">
+                                        <div class="form-group">
+                                            <label>كود العملة</label>
+                                            <input type="text" name="firstName" ng-model="currency.CURRENCY_CODE" class="form-control" placeholder="كود العملة">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-6 col-md-4 col-xs-6">
+                                        <div class="form-group">
+                                            <label>سعر الصرف</label>
+                                            <input type="number" name="firstName" ng-model="currency.CURRENCY_RATE" class="form-control" placeholder="سعر الصرف">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-4 col-xs-6">
+                                        <div class="form-group">
+                                            <label class="control-label">اسم العملة العربى</label>
+                                            <input type="text" class="form-control" ng-model="currency.CURRENCY_AR_NAME" placeholder="اسم العملة العربى">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-4 col-xs-6">
+                                        <div class="form-group">
+                                            <label class="control-label">اسم العملة اللاتينى</label>
+                                            <input type="text" class="form-control" ng-model="currency.CURRENCY_EN_NAME" placeholder="اسم العملة اللاتينى">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-4 col-xs-6">
+                                        <div class="form-group">
+                                            <label class="control-label">اسم جزء العملة العربى</label>
+                                            <input type="text" class="form-control" ng-model="currency.CURRENCY_SUB_AR_NAME" placeholder="اسم جزء العملة العربى">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-4 col-xs-6">
+                                        <div class="form-group">
+                                            <label class="control-label">اسم جزء العملة اللاتينى</label>
+                                            <input type="text" class="form-control" ng-model="currency.CURRENCY_SUB_EN_NAME" placeholder="اسم جزء العملة اللاتينى">
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>-->
+                        <!-- End Panel Body -->
+                        <!--Start Panel Body -->
+                        <div class="panel">
+                            <div class="panel-group accordion" id="accordion">
+                                <div class="panel panel-white">
+                                    <div class="panel-heading">
+                                        <h5 class="panel-title"><a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" data-target="#collapseTwo"> <i class="icon-arrow"></i> العملات المعرفة سابقاً </a></h5>
+                                    </div>
+                                    <div id="collapseTwo" class="collapse">
+                                        <div class="panel-body">
+                                            <div class="col-md-12">
+                                                <div class="table-responsive">
+                                                    <div class="col-md-3 pull-left ">
+                                                        
+                                                    </div>
+
+                                                    <div class="col-md-12">
+                                                        <table class="table table-bordered table-hover">
+                                                            <tr class="success">
+                                                                <th class="hidden-xs">#</th>
+                                                                <th>كود</th>
+                                                                <th>الاسم عربى </th>
+                                                                <th>الاسم انجليزى</th>
+                                                                <th>رقم الحساب</th>
+                                                                <th>العمله</th>
+                                                                <th class="hidden-xs">ملاحظات</th>
+                                                              
+                                                            </tr>
+
+                                                            <tr ng-repeat="item in bankList">
+                                                                <td class="hidden-xs center">{{ item.ID }}</td>
+                                                                <td>{{ item.Code }}</td>
+                                                                <td>{{ item.ArName }}</td>
+                                                                <td>{{ item.LatName }}</td>
+                                                                <td>{{ item.AccountNo }}</td>
+                                                                <td>{{ item.CurrencyName }}</td>
+                                                                <td>{{ item.Notes }}</td>
+                                                               
+                                                            </tr>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                                <!--/.table-responsive-->
+                                                <ul uib-pagination total-items="bankCount" ng-model="pageNum" max-size="maxSize" class="pagination" boundary-links="true" num-pages="numPages" ng-change="pageChanged()"></ul>
+                                                <pre>صفحه: {{pageNum}} / {{numPages}}</pre>
+                                            </div>
+                                            <!--/.col-md-12-->
+                                        </div>
+                                        <!--/.panel-body-->
+                                    </div>
+                                    <!--/.panel-collapse-->
+                                </div>
+                                <!--/.panel-->
+                            </div>
+                            <!--/.panel-group-->
+                        </div>
+                        <!--/.panel /.panel-white-->
+                    </div>
+                    <!--/.panel-->
+                </div>
+                <!--/.col-md-12-->
+            </div>
+            <!--/.container-fluid-->
+        </div>
+        <!--/.wrap-content-->
+    </div>
+    <!--/.main-content-->
+</div>
+<!--/.app-content-->

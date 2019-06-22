@@ -1,0 +1,144 @@
+﻿
+<div class="main-content">
+    <div class="wrap-content container" id="container">
+        <!-- start: PAGE TITLE -->
+
+
+
+        <section id="page-title" class="padding-top-30 padding-bottom-15">
+            <div class="row">
+                <div class="col-sm-6">
+                    <h1 class="mainTitle">تقرير ضريبة المبيعات</h1>
+                    <span class="mainDescription ">
+                        ضريبة المبيعات
+                    </span>
+                </div>
+
+
+            </div>
+
+        </section>
+
+
+        <!-- end: PAGE TITLE -->
+        <!-- start: SEARCH RESULT -->
+        <div class="container-fluid container-fullw bg-white">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="search-classic">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label>الفرع</label>
+                                <div ng-dropdown-multiselect="" extra-settings="dropdownSetting" class="form-control"
+                                    options="UserBranches" selected-model="SelectedBranch"></div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>
+                                        من تاريخ
+                                    </label>
+                                    <input type="date" name="firstName" ng-model="startDate" class="form-control" placeholder="من تاريخ">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="control-label">
+                                        إلى تاريخ
+                                    </label>
+                                    <input type="date" class="form-control" ng-model="endDate" placeholder="إلى تاريخ">
+                                </div>
+                            </div>                          
+                            <!--</div>-->
+
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12  ">
+                                <button class="btn btn-wide btn-primary pull-left margin-right-10 margin-top-10" ng-click="PdfPrintReport()" ng-show="show_print"> طباعة <i class="ti-printer"></i></button>
+                                <button class="btn btn-wide btn-default pull-left margin-right-10 margin-top-10" ng-click="clearEnity()">جديد <i class="fa fa-refresh"></i></button>
+                                <button class="btn btn-wide btn-primary pull-left margin-right-10 margin-top-10" ng-click="GetSearchResult()"> بحث <i class="fa fa-search"></i> </button>
+
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="container-fluid container-fullw bg-white">
+                            <div class="row">
+                                <div class="col-md-12">
+
+                                    <div class="table-responsive">
+
+                                        <table class="table table-bordered table-hover" id="sample-table-1">
+                                            <thead>
+                                                <tr class="warning">
+                                                    <th class="center">مسلسل</th>
+                                                    <th class="center"> تاريخ السند</th>
+                                                    <th class="center">رقم السند</th>
+                                                    <th class="center">اسم السند</th>
+                                                    <th class="center">اسم العميل </th>
+                                                    <th class="center">رقم حساب العميل</th>
+                                                    <th class="center">المناولة</th>
+                                                    <th class="center">اجمالى وزن عيار 24</th>
+                                                    <th class="center">اجمالى وزن عيار 22</th>
+                                                    <th class="center">اجمالى وزن عيار 21</th>
+                                                    <th class="center">اجمالى وزن عيار 18</th>
+                                                    <th class="center">الاجمالى قبل الضريبة</th>
+                                                    <th class="center">الخصم</th>
+                                                    <!--<th class="center">صافى الفاتورة</th>-->
+                                                    <th class="center">المبلغ الغير خاضع للضريبة</th>
+                                                    <th class="center"> المبلغ الخاضع بنسبة 5%</th>
+                                                    <th class="center">الضريبة على الخاضع بنسبة 5%</th>
+                                                    <th class="center">المبلغ الخاضع بنسبة 0 % </th>
+                                                    <th class="center">الضريبة على الخاضع بنسبة 0 %</th>
+                                                    <th class="center">المبلغ المعفى من الضريبة</th>
+                                                    <th class="center"> الضريبة على المعفى</th>
+                                                    <th class="center">اجمالي الضريبة على المبيعات</th>
+                                                    <th class="center">الاجمالي شامل الضريبة</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="acc in ReportData">
+                                                    <td class="center">{{ $index + 1 }}</td>
+                                                    <td class="center">{{ acc.BILL_DATE | date: "yyyy-MM-dd"}}</td>
+                                                    <td class="center">{{ acc.BILL_NUMBER }}</td>
+                                                    <td class="center">{{ acc.BILL_ABRV_AR }}</td>
+                                                    <td class="center">{{ acc.ACC_AR_NAME }}</td>
+                                                    <td class="center">{{ acc.ACC_CODE }}</td>
+                                                    <td class="center">{{ acc.DeliveryPersonName }}</td>
+                                                    <td class="center">{{ (acc.TransTotalGold24 || 0).toFixed(2) }}</td>
+                                                    <td class="center">{{ (acc.TransTotalGold22 || 0).toFixed(2)  }}</td>
+                                                    <td class="center">{{ (acc.TransTotalGold21 || 0).toFixed(2) }}</td>
+                                                    <td class="center">{{ (acc.TransTotalGold18 || 0).toFixed(2) }}</td>
+                                                    <td class="center">{{ (acc.TotalBeforeTax || 0).toFixed(2) }}</td>
+                                                    <td class="center">{{ (acc.TotalAllDisc || 0).toFixed(2) }}</td>
+                                                    <!--<td class="center">{{ (acc.TotalMustPaid || 0).toFixed(2) }}</td>-->
+                                                    <td class="center">{{ (acc.TotalNotTaxableAmount || 0).toFixed(2) }}</td>
+                                                    <td class="center">{{ (acc.TotalMainVat || 0).toFixed(2) }}</td>
+                                                    <td class="center">{{ (acc.MainVatValue || 0).toFixed(2) }}</td>
+                                                    <td class="center">{{ (acc.TotalZeroVat || 0).toFixed(2) }}</td>
+                                                    <td class="center">{{ (acc.ZeroVatValue || 0).toFixed(2) }}</td>
+                                                    <td class="center">{{ (acc.TotalExemptOfTax || 0).toFixed(2) }}</td>
+                                                    <td class="center">{{ (acc.ExemptOfTaxValue || 0).toFixed(2) }}</td>
+                                                    <td class="center">{{ (acc.TotalVatValue || 0).toFixed(2) }}</td>
+                                                    <td class="center">{{ (acc.TotalAfterTax || 0).toFixed(2) }}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!--<ul uib-pagination total-items="currencyCount" ng-model="pageNum" max-size="maxSize" class="pagination" boundary-links="true" num-pages="numPages" ng-change="pageChanged()"></ul>
+                        <pre>صفحه: {{pageNum}} / {{numPages}}</pre>-->
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end: SEARCH RESULT -->
+    </div>
+</div>
+
+<style>
+
+    .ui-select-toggle .ng-binding.ng-scope {
+        text-align: right;
+    }
+</style>

@@ -1,0 +1,194 @@
+﻿<header class="navbar navbar-default navbar-static-top" >
+    <!-- start: NAVBAR HEADER -->
+    <div class="navbar-header">
+        <button class="sidebar-mobile-toggler pull-right btn no-radius hidden-md hidden-lg btn btn-navbar sidebar-toggle" data-toggle-class="app-slide-off" data-toggle-target="#app" data-toggle-click-outside="#sidebar">
+            <i class="fa fa-bars"></i>
+        </button>
+        <a class="navbar-brand" href="#">
+            <!--@*<img src="~/Content/assets/images/logo.png" alt="" width="160" height="46" />*@-->
+            <img ng-src="data:image/JPEG;base64,{{logo}}" ng-init="GetLogo()" alt="" width="160" height="46" />
+        </a>
+        <a class="navbar-brand navbar-brand-collapsed" href="#"> <img src="/Content/assets/images/logo-collapsed.png" alt="" /></a>
+
+        <button class="btn pull-right menu-toggler visible-xs-block" id="menu-toggler" data-toggle="collapse" href=".navbar-collapse" data-toggle-class="menu-open">
+            <i class="fa fa-folder closed-icon"></i><i class="fa fa-folder-open open-icon"></i><small><i class="fa fa-caret-down margin-right-5"></i></small>
+        </button>
+    </div>
+    <!-- end: NAVBAR HEADER -->
+    <!-- start: NAVBAR COLLAPSE -->
+    <div class="navbar-collapse collapse">
+        <ul class="nav navbar-left hidden-sm hidden-xs">
+            <li class="sidebar-toggler-wrapper">
+                <div>
+                    <button href="javascript:void(0)" class="btn sidebar-toggler visible-md visible-lg">
+                        <i class="fa fa-bars"></i>
+                    </button>
+                </div>
+            </li>
+            <li>
+                <a href="#" class="toggle-fullscreen"> <i class="fa fa-expand expand-off"></i><i class="fa fa-compress expand-on"></i></a>
+            </li>
+            <li>
+                <form role="search" class="navbar-form main-search">
+                    <div class="form-group">
+                        <input type="text" placeholder="Search . . ." class="form-control">
+                        <button class="btn search-button" type="submit">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+                </form>
+            </li>
+        </ul>
+        <ul class="nav navbar-right">
+            <!-- start: MESSAGES DROPDOWN -->
+            <li class="dropdown">
+                <a href="" class="dropdown-toggle" data-toggle="dropdown"> <span class="badge" ng-if="unReadMsgListCount>0 && unReadMsgListCount!= null && unReadMsgListCount!= undefined">{{unReadMsgListCount}} </span> <i class="fa ti-world"></i> </a>
+                <ul class="dropdown-menu dropdown-light dropdown-messages dropdown-large animated fadeInUpShort">
+                    <li ng-if="unReadMsgListCount > 0">
+                        <span class="dropdown-header">new {{unReadMsgListCount}} Unread messages</span>
+                    </li>
+                    <li style="max-height: 330px;overflow-y: auto !important;">
+                        <div class="drop-down-wrapper ps-container">
+                            <ul ng-repeat="msg in MessagesList">
+                                <li>
+                                    <a href="javascript:;" ng-class="{'unRead': !msg.isMsgReaded}" ng-click="UpdateReadStatus(msg.MessageID)">
+                                        <div class="clearfix">
+                                            <div class="thread-image">
+                                                <img src="{{msg.MessageTypeIconURL}}" style="max-height:50px;" alt="">
+                                            </div>
+                                            <div class="thread-content">
+                                                <span class="author">{{msg.FromUserFullName}}</span>
+                                                <span class="preview">{{msg.MessageBody}}</span>
+                                                <span class="time"> {{msg.CreationDate | date:'dd/MM/yyyy @ h:mma'}}</span>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="view-all">
+                        <a href="#" ng-if="MessagesCount > 0"> See All </a>
+                        <a href="#" ng-if="MessagesCount <= 0 || MessagesCount == null || MessagesCount == undefined"> No Messages </a>
+                    </li>
+                </ul>
+            </li>
+            <!-- end: MESSAGES DROPDOWN -->
+            <!-- start: ACTIVITIES DROPDOWN -->
+            <li class="dropdown">
+                <a href="" class="dropdown-toggle" data-toggle="dropdown" ng-blur="updateReadedNotifcation()"> <span class="badge" ng-if="unReadListCount>0 && unReadListCount!= null && unReadListCount!= undefined"> {{unReadListCount}} </span> <i class="fa fa-bell"></i> </a>
+                <ul class="dropdown-menu dropdown-light dropdown-messages dropdown-large animated fadeInUpShort">
+                    <li ng-if="unReadListCount > 0">
+                        <span class="dropdown-header"> You have {{unReadListCount}} new notifications</span>
+                    </li>
+                    <li style="max-height:304px;overflow-y:auto;">
+                        <div class="drop-down-wrapper ps-container">
+                            <div class="list-group no-margin" ng-repeat="notify in NotificationsList">
+                                <a class="media list-group-item" href=""> <img class="img-circle" style="max-height: 60px;" alt="..." src="{{notify.NotificationTypeIconURL}}"> <span class="media-body block no-margin"> {{notify.Body}} <small class="block text-grey">By : {{notify.FromUserFullName}}</small> </span> </a>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="view-all">
+                        <a href="#" ng-if="NotifcationsCount > 0"> See All </a>
+                        <a href="#" ng-if="NotifcationsCount <= 0 || NotificationsList == null || NotificationsList == undefined"> No Notification </a>
+                    </li>
+                </ul>
+            </li>
+
+            <!-- end: ACTIVITIES DROPDOWN -->
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown">
+                    <i class="ti-search"></i>
+                </a>
+
+                <ul class="dropdown-menu dropdown-light dropdown-messages dropdown-large">
+                    <li>
+                        <div class="panel-body">
+                            <form role="form">
+                                <div class="form-group">
+                                    <label>
+                                        Test text
+                                    </label>
+                                    <span class="input-icon">
+                                        <input type="text" placeholder="text" id="form-field-14" class="form-control">
+                                        <i class="ti-user"></i>
+                                    </span>
+                                </div>
+                                <div class="form-group">
+                                    <label>
+                                        Test text
+                                    </label>
+                                    <span class="input-icon">
+                                        <input type="text" placeholder="Test text" id="form-field-14" class="form-control">
+                                        <i class="ti-user"></i>
+                                    </span>
+                                    <div class="form-group">
+                                        <label>
+                                            Test text
+                                        </label>
+                                        <span class="input-icon">
+                                            <input type="text" placeholder="Test text" id="form-field-14" class="form-control">
+                                            <i class="ti-user"></i>
+                                        </span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>
+                                            Test text
+                                        </label>
+                                        <span class="input-icon">
+                                            <input type="text" placeholder="Test text" id="form-field-14" class="form-control">
+                                            <i class="ti-user"></i>
+                                        </span>
+
+                                    </div>
+                                    <div class="form-group">
+                                        <button class="btn btn-primary btn-wide pull-left">
+                                            <i class="fa fa-search"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </li>
+                    <li class="view-all">
+                        <a href="#">
+                            Advanced Search
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <!-- start: LANGUAGE SWITCHER -->
+            <li class="dropdown">
+                <a href="/Support">
+                    <i class="fa fa-phone-square"></i>
+                </a>
+
+
+            </li>
+            <li class="dropdown">
+                <a href="" class="dropdown-toggle" data-toggle="dropdown"> <i class="flag-icon flag-icon-squared flag-icon-us"></i> English </a>
+                <ul role="menu" class="dropdown-menu dropdown-light fadeInUpShort">
+                    <li>
+                        <a href="" class="menu-toggler" ng-click="ChangeLanguage('ar')"><i class="flag-icon flag-icon-squared flag-icon-sa"></i> Arabic </a>
+                    </li>
+
+                </ul>
+            </li>
+
+            <!-- end: LANGUAGE SWITCHER -->
+        </ul>
+        <!-- start: MENU TOGGLER FOR MOBILE DEVICES -->
+        <div class="close-handle visible-xs-block menu-toggler" data-toggle="collapse" href=".navbar-collapse">
+            <div class="arrow-left"></div>
+            <div class="arrow-right"></div>
+        </div>
+        <!-- end: MENU TOGGLER FOR MOBILE DEVICES -->
+    </div>
+    <button class="sidebar-mobile-toggler dropdown-off-sidebar btn hidden-md hidden-lg" data-toggle-class="app-offsidebar-open" data-toggle-target="#app" data-toggle-click-outside="#off-sidebar">
+        &nbsp;
+    </button>
+    <button class="dropdown-off-sidebar btn hidden-sm hidden-xs" data-toggle-class="app-offsidebar-open" data-toggle-target="#app" data-toggle-click-outside="#off-sidebar">
+        &nbsp;
+    </button>
+    <!-- end: NAVBAR COLLAPSE -->
+</header>
